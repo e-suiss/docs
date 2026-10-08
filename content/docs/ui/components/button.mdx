@@ -1,0 +1,261 @@
+---
+title: Button
+description: A pressable control that starts an action, in eight variants and ten sizes, built on the Base UI button.
+eyebrow: React Component
+---
+
+## Installation
+
+### CLI
+
+```bash title="Terminal"
+npx @esuiss/ui@latest add button
+```
+
+`init` also adds the button, so a project set up with `init` already has it.
+
+### Manual
+
+Install the dependencies:
+
+```bash title="Terminal"
+npm install @base-ui/react class-variance-authority cn
+```
+
+Then copy the source of `components/ui/button.tsx` from the [suiss UI repository](https://github.com/e-suiss/ui/blob/main/components/ui/button.tsx) into `components/ui/button.tsx` in your project.
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<Button>Continue</Button>
+```
+
+## Examples
+
+### Default
+
+<Preview>
+  <Button variant="default">Default</Button>
+</Preview>
+
+```tsx
+<Button variant="default">Default</Button>
+```
+
+### Outline
+
+<Preview>
+  <Button variant="outline">Outline</Button>
+</Preview>
+
+```tsx
+<Button variant="outline">Outline</Button>
+```
+
+### Secondary
+
+<Preview>
+  <Button variant="secondary">Secondary</Button>
+</Preview>
+
+```tsx
+<Button variant="secondary">Secondary</Button>
+```
+
+### Tinted
+
+<Preview>
+  <Button variant="tinted">Tinted</Button>
+</Preview>
+
+```tsx
+<Button variant="tinted">Tinted</Button>
+```
+
+### Ghost
+
+<Preview>
+  <Button variant="ghost">Ghost</Button>
+</Preview>
+
+```tsx
+<Button variant="ghost">Ghost</Button>
+```
+
+### Plain
+
+<Preview>
+  <Button variant="plain">Plain</Button>
+</Preview>
+
+```tsx
+<Button variant="plain">Plain</Button>
+```
+
+### Destructive
+
+<Preview>
+  <Button variant="destructive">Destructive</Button>
+</Preview>
+
+```tsx
+<Button variant="destructive">Destructive</Button>
+```
+
+### Link
+
+<Preview>
+  <Button variant="link">Link</Button>
+</Preview>
+
+```tsx
+<Button variant="link">Link</Button>
+```
+
+### Extra small
+
+<Preview>
+  <Button size="xs">Extra small</Button>
+</Preview>
+
+```tsx
+<Button size="xs">Extra small</Button>
+```
+
+### Small
+
+<Preview>
+  <Button size="sm">Small</Button>
+</Preview>
+
+```tsx
+<Button size="sm">Small</Button>
+```
+
+### Default size
+
+<Preview>
+  <Button size="default">Default</Button>
+</Preview>
+
+```tsx
+<Button size="default">Default</Button>
+```
+
+### Large
+
+<Preview>
+  <Button size="lg">Large</Button>
+</Preview>
+
+```tsx
+<Button size="lg">Large</Button>
+```
+
+### Extra large
+
+<Preview>
+  <Button size="xl">Extra large</Button>
+</Preview>
+
+```tsx
+<Button size="xl">Extra large</Button>
+```
+
+### Icon
+
+Icon sizes make a square button. Give it an `aria-label`, since it has no visible text.
+
+<Preview>
+  <Button size="icon" aria-label="Add">+</Button>
+</Preview>
+
+```tsx
+<Button size="icon" aria-label="Add">+</Button>
+```
+
+### Icon extra small
+
+<Preview>
+  <Button size="icon-xs" aria-label="Add">+</Button>
+</Preview>
+
+```tsx
+<Button size="icon-xs" aria-label="Add">+</Button>
+```
+
+### Icon small
+
+<Preview>
+  <Button size="icon-sm" aria-label="Add">+</Button>
+</Preview>
+
+```tsx
+<Button size="icon-sm" aria-label="Add">+</Button>
+```
+
+### Icon large
+
+<Preview>
+  <Button size="icon-lg" aria-label="Add">+</Button>
+</Preview>
+
+```tsx
+<Button size="icon-lg" aria-label="Add">+</Button>
+```
+
+### Icon extra large
+
+<Preview>
+  <Button size="icon-xl" aria-label="Add">+</Button>
+</Preview>
+
+```tsx
+<Button size="icon-xl" aria-label="Add">+</Button>
+```
+
+### Block
+
+`block` makes the button fill the width of its container. Block buttons use a rounded rectangle instead of a pill, scaled to their size.
+
+<Preview>
+  <Button block>Add to Bag</Button>
+</Preview>
+
+```tsx
+<Button block>Add to Bag</Button>
+```
+
+### With an icon
+
+Mark an icon with `data-icon="inline-start"` or `data-icon="inline-end"` so the button tightens its padding on that side. Icons without a size class are sized automatically.
+
+```tsx
+import { ArrowRightIcon, PlusIcon } from "@phosphor-icons/react"
+
+<Button>
+  <PlusIcon data-icon="inline-start" />
+  New project
+</Button>
+<Button variant="outline">
+  Continue
+  <ArrowRightIcon data-icon="inline-end" />
+</Button>
+```
+
+## API Reference
+
+`Button` accepts every prop of the Base UI `Button`, plus the props below.
+
+| Prop | Type | Default |
+| --- | --- | --- |
+| `variant` | `"default" \| "outline" \| "secondary" \| "tinted" \| "ghost" \| "plain" \| "destructive" \| "link"` | `"default"` |
+| `size` | `"default" \| "xs" \| "sm" \| "lg" \| "xl" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg" \| "icon-xl"` | `"default"` |
+| `block` | `boolean` | — |
+| `className` | `string` | — |
+
+The file also exports `buttonVariants`, the class-variance-authority function behind these props, so you can apply button styles to other elements.

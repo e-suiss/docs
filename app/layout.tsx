@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
-import { RootProvider } from "fumadocs-ui/provider/next";
+import { Inter } from "next/font/google";
+
+import { Footer } from "@/components/site/footer";
+import { GlobalNav } from "@/components/site/global-nav";
+import { ThemeProvider, ThemeScript } from "@/components/ui/theme";
+import { strings } from "@/lib/strings";
 import "./globals.css";
 
 const fontInter = Inter({
@@ -8,33 +12,26 @@ const fontInter = Inter({
   variable: "--font-inter",
 });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: {
-    template: "%s | e-suiss Docs",
-    default: "e-suiss Docs",
+    template: `%s – ${strings.brand} ${strings.developer}`,
+    default: `${strings.brand} ${strings.developer}`,
   },
-  description: "e-suiss dokümantasyonu",
+  description: strings.heroSubtitle,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="tr"
-      className={`${fontInter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="flex flex-col min-h-screen">
-        <RootProvider>{children}</RootProvider>
+    <html lang="en" className={fontInter.variable} suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="flex min-h-svh flex-col bg-surface text-label antialiased">
+        <ThemeProvider>
+          <GlobalNav />
+          <div className="flex flex-1 flex-col">{children}</div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

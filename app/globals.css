@@ -1,7 +1,5 @@
 @import "tailwindcss";
 @import "@esuiss/tailwind";
-@import "fumadocs-ui/css/neutral.css";
-@import "fumadocs-ui/css/preset.css";
 
 :root {
   --surface: oklch(1 0 0);
@@ -133,6 +131,7 @@
 
 @theme inline {
   --font-sans: -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
 
   --color-surface: var(--surface);
   --color-surface-secondary: var(--surface-secondary);
@@ -202,4 +201,165 @@
   --radius-xl: calc(var(--radius) * 1.2);
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.8);
+}
+
+/* ---------------------------------------------------------------------------
+ * Documentation
+ * Type scale and spacing follow developer.apple.com (DocC): 17px body with
+ * tightening letter-spacing, 15px code, hairline rules.
+ * ------------------------------------------------------------------------ */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--spacing) * 17);
+}
+
+body {
+  font-size: 17px;
+  line-height: 1.47059;
+  letter-spacing: -0.022em;
+}
+
+.prose {
+  color: var(--color-label);
+  overflow-wrap: break-word;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote {
+  margin-top: 0.8em;
+}
+
+.prose h2 {
+  margin-top: 1.9em;
+  padding-top: 1.1em;
+  border-top: 1px solid var(--color-separator);
+  font-size: 32px;
+  line-height: 1.125;
+  font-weight: 600;
+  letter-spacing: 0.004em;
+}
+
+.prose h3 {
+  margin-top: 1.6em;
+  font-size: 24px;
+  line-height: 1.16667;
+  font-weight: 600;
+  letter-spacing: 0.009em;
+}
+
+.prose h4 {
+  margin-top: 1.4em;
+  font-size: 19px;
+  line-height: 1.21;
+  font-weight: 600;
+  letter-spacing: 0.012em;
+}
+
+.prose :is(h2, h3, h4) + * {
+  margin-top: 0.8em;
+}
+
+.prose a:not([data-card]) {
+  color: var(--color-link);
+}
+
+.prose a:not([data-card]):hover {
+  text-decoration: underline;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose ul {
+  list-style: disc;
+  padding-inline-start: 1.25em;
+}
+
+.prose ol {
+  list-style: decimal;
+  padding-inline-start: 1.25em;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose li::marker {
+  color: var(--color-label-tertiary);
+}
+
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  letter-spacing: -0.027em;
+}
+
+.prose hr {
+  margin-block: 2em;
+  border-color: var(--color-separator);
+}
+
+.prose blockquote {
+  padding-inline-start: 1em;
+  border-inline-start: 2px solid var(--color-separator);
+  color: var(--color-label-secondary);
+}
+
+.prose table {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.42859;
+  letter-spacing: -0.016em;
+  border-collapse: collapse;
+}
+
+.prose th {
+  text-align: start;
+  font-weight: 600;
+}
+
+.prose :is(th, td) {
+  padding: 0.6em 1em 0.6em 0;
+  border-bottom: 1px solid var(--color-separator);
+  vertical-align: top;
+}
+
+.prose td {
+  color: var(--color-label-secondary);
+}
+
+.prose td code {
+  color: var(--color-label);
+}
+
+/* Shiki renders both themes as CSS variables. */
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+}
+
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
+/* A preview followed by its code reads as one block, like shadcn's preview/code pair. */
+[data-slot="preview"]:has(+ [data-slot="code-block"]) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+[data-slot="preview"] + [data-slot="code-block"] {
+  margin-top: 0;
+  border-top: 1px solid var(--color-separator);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

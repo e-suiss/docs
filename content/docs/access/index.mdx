@@ -1,0 +1,68 @@
+---
+title: Overview
+description: Open-source identity and authority for people, organizations and AI agents.
+eyebrow: Access
+---
+
+<Callout type="warning" title="Pre-alpha">
+Access is in active design. Implementation has not started, and there is nothing to install yet. These pages describe the specification.
+</Callout>
+
+## What Access is
+
+Access is a complete identity provider with an authority layer on top. It is one product made of two planes:
+
+- **Identity plane.** A full identity provider (IdP). It authenticates people, services, devices and AI agents, manages accounts, passwords, passkeys and sessions, and speaks the standard protocols.
+- **Authority plane.** It records where an authority comes from, how it is delegated and within which bounds. For each requested action it decides **ALLOW**, **DENY** or **REQUIRE_ACTION**, and produces an immutable, verifiable record of that decision.
+
+Access answers a single question:
+
+> May this actor, on this authority, do this exact thing now?
+
+## Why Access
+
+Most identity systems answer *who are you?* and stop there. Authorization is left to roles, scopes and application code, and it breaks down as soon as AI agents act on someone's behalf.
+
+Today's IdPs answer "who is this?" well, but not "on whose authority, within which bounds, may this agent do this right now, and how do we prove it afterwards?". Access treats identity and authority as two first-class questions.
+
+## Features
+
+| Area | What the specification covers |
+| --- | --- |
+| Identity provider | OpenID Connect and OAuth 2.1 (PKCE, PAR, DPoP, token exchange, CIBA, FAPI 2); SAML 2.0, SCIM 2.0, LDAP, Kerberos, RADIUS, WS-Federation, OpenID Federation; passkeys (WebAuthn), TOTP, passwordless email, step-up authentication; B2B organizations with invitations, verified domains and self-service SSO and SCIM setup |
+| Authority | Grants, mandates and delegation chains that can only narrow; allow, deny and require-action decisions with explanations; approvals bound to the exact intent; immediate revocation with cascade; signed decision records and an offline verifier |
+| AI agents | Agent identities with accountable human owners; an MCP authorization server, token vault and scoped release of upstream credentials; human approval flows for agent actions |
+| Operations | Self-hosted or Suiss-hosted with the same code and no paid-only features; PostgreSQL storage; hardware-backed signing keys (HSM/KMS); audit logs, webhooks, SIEM streams, multi-region cells |
+
+## What Access is not
+
+Access decides whether something may be done. It does not do the work itself.
+
+- It does not execute work, such as making a payment or sending a message.
+- It does not own business data or business rules. It uses a domain's claims as input.
+- It is not a notification system. [Relay](/docs/relay) delivers its messages.
+- It is not an agent runtime. It manages the agent's identity and authority.
+- It is not a global trust or reputation scoring system.
+
+## Firm rules
+
+- **Signing in does not grant authority.** No login, token, group membership, session or risk score produces authority on its own.
+- **No impersonation.** Support staff act with the user's permission, under their own identity, and on the record.
+- **No customer code runs inside Access.** Customization is done through data, templates and call-outs to the customer's own servers.
+- **Fail closed.** If something cannot be verified, the answer is not ALLOW.
+
+## Status
+
+| Item | Detail |
+| --- | --- |
+| Stage | Pre-alpha, in active design |
+| Planned stack | Rust backend, PostgreSQL, NATS, HSM/KMS-backed keys, React for UI components |
+| License | Apache License 2.0 |
+| Repository | [github.com/e-suiss/access](https://github.com/e-suiss/access) |
+
+Access and Relay are parts of one system and are always deployed together. Access sends its messages through Relay, and Relay uses Access for sign-in, credentials and approvals.
+
+## Learn more
+
+- [Concepts](/docs/access/concepts): the terms the specification is built on.
+- [Guarantees](/docs/access/guarantees): the invariants Access holds.

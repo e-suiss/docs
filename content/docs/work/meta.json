@@ -1,0 +1,5 @@
+{
+  "title": "Work",
+  "root": true,
+  "pages": ["---Get Started---", "index", "---Learn---", "concepts", "guarantees"]
+}

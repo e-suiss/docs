@@ -1,0 +1,88 @@
+---
+title: Installation
+description: Set up an Expo or React Native project once with init, then add the components you need.
+eyebrow: suiss UIM
+---
+
+## Requirements
+
+- An Expo project, or a React Native project without Expo
+- TypeScript (a `tsconfig.json` in the project root)
+- Tailwind CSS v4, if Tailwind CSS is already installed
+- Node.js 18 or later
+- NativeWind v5 only: an Expo project
+
+## Set up your project
+
+Run `init` once, in the root of your project.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init
+```
+
+To choose the styling library up front, pass `--styling`:
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init --styling uniwind
+npx @esuiss/uim@latest init --styling nativewind
+```
+
+### What init does
+
+1. Detects Expo or React Native, and checks for TypeScript and Tailwind CSS v4.
+2. Picks the styling library: the one already in your project, the one passed with `--styling`, or the one you choose when asked.
+3. Adds the `@/*` import alias to `tsconfig.json` if it is missing.
+4. Installs the styling library and `@rn-primitives/portal`. In Expo projects, packages are installed with `expo install`.
+5. Writes the theme stylesheet to `global.css`, in `src/` if your project has one and in the project root otherwise. It asks before replacing a stylesheet that already has content.
+6. Configures Metro with the styling library, creating `metro.config.js` if there is none.
+7. Imports the stylesheet and renders `<PortalHost />` in your root component: `src/app/_layout.tsx`, `app/_layout.tsx`, `src/App.tsx` or `App.tsx`.
+8. In React Native projects without Expo, adds the `@/*` alias to Babel with `babel-plugin-module-resolver`.
+9. Adds the `button` component.
+
+When a step cannot be applied automatically, `init` prints what to do by hand.
+
+<Callout type="important" title="Portal host">
+Dialogs, popovers, menus and other overlays render into the portal host. Keep `<PortalHost />` from `@rn-primitives/portal` as the last child of your root component.
+</Callout>
+
+## Add components
+
+Pass one or more component names to `add`.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add dialog
+```
+
+Components are written to `components/ui/` under your `@/*` alias root, together with the components and packages they depend on. When a component needs Reanimated, `add` also adds its Babel plugin in React Native projects without Expo.
+
+Then import and use them:
+
+```tsx title="components/example.tsx"
+import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
+
+export function Example() {
+  return (
+    <Button>
+      <Text>Continue</Text>
+    </Button>
+  )
+}
+```
+
+### iOS without Expo
+
+In React Native projects without Expo, install pods after adding components that bring new packages:
+
+```bash title="Terminal"
+cd ios && pod install
+```
+
+## Update components
+
+`add` keeps local files that differ from the registry. Review the latest version first, then replace your copy if you want it.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add button --diff
+npx @esuiss/uim@latest add button --overwrite
+```

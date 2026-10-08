@@ -1,0 +1,62 @@
+---
+title: Guarantees
+description: The invariants Work holds. Breaking one is an implementation bug; the architecture changes to keep it, never the invariant.
+eyebrow: Work
+---
+
+<Callout type="note">
+These statements summarize the invariants (INV-1 to INV-35) of the Work specification, which is in active design.
+</Callout>
+
+## Identity, records and time
+
+- **Work never stores changing data on a Work's root.** Name, status, owner, priority, dates and visibility are records, relations or projections. *(INV-1)*
+- **Work never edits a record in place.** Every record has a Party as its author. Corrections are new records that supersede the old ones. *(INV-2)*
+- **Work never deletes physically.** No work, commitment or outcome record is deleted by TTL, expiry or cleanup. *(INV-3)*
+- **Work never applies a Declaration retroactively.** Undo, cancellation and revocation apply going forward. Irreversible effects are met only with compensation. *(INV-4)*
+- **Work always orders by ledger time.** An author's claimed time cannot override cancellation, deadline or conflict rules. *(INV-5)*
+- **Work never lets derived state override a record.** If a projection contradicts the records, the projection is wrong and is rebuilt. *(INV-6)*
+- **Work always derives the same result from the same inputs.** *(INV-7)*
+- **Work never requires an online Suiss service to verify records.** *(INV-8)*
+
+## Normative and epistemic state
+
+- **Work only changes normative state through an eligible Party's Declaration.** Claims, acts, chat, tool output and protocol state create no binding effect. *(INV-9)*
+- **Work always keeps a decision bound to its basis.** Re-evaluation is a new record. *(INV-10)*
+- **Work never treats silence as approval.** No reply, expiry, notification delivery or lack of objection produces acceptance, approval or authority. *(INV-11)*
+- **Work only records approvals bound to exact content.** An approval is tied to a Commitment or a Gate. A generic "Do you approve?" is invalid. *(INV-12)*
+- **Work never invents a status.** When reports or evidence are missing, the result is "unknown" or "stale". *(INV-13)*
+
+## Authority
+
+- **Work never creates authority.** It never extends or delegates authority, or overrides an Access DENY. A closed Gate is not an ALLOW. *(INV-14)*
+- **Work always keeps autonomy within authority.** *(INV-15)*
+- **Work never lets content grant authority.** External pages, emails, documents and tool results can inform reasoning, but cannot create authority or instructions. *(INV-16)*
+- **Work never grants access by assignment.** Missing access is requested from Access and shown as a wait. *(INV-17)*
+- **Work never derives authority from an actor's kind.** *(INV-18)*
+
+## Attribution and accountability
+
+- **Work always ends accountability in a single Party.** It is never dropped silently. *(INV-19)*
+- **Work always attributes automation to a Party.** *(INV-20)*
+- **Work only lets agents act from a recorded basis.** *(INV-21)*
+- **Work never allows an unrecorded agent action.** *(INV-22)*
+- **Work never hides the actor's kind.** An agent is never shown as a person. *(INV-23)*
+
+## Visibility and boundaries
+
+- **Work never widens visibility implicitly.** *(INV-24)*
+- **Work never lets internal structure cross a trust boundary implicitly.** *(INV-25)*
+- **Work only admits private context through explicit, minimal disclosure.** *(INV-26)*
+- **Work never drops a record silently.** A record from an authenticated counterparty is accepted, quarantined or rejected with a reason. *(INV-27)*
+- **Work never owns external reality.** *(INV-28)*
+
+## Product integrity
+
+- **Work never executes work.** Execution belongs to the executor, delivery to Relay and payment to Pay. *(INV-29)*
+- **Work never gains semantic ownership through packaging.** *(INV-30)*
+- **Work never lets a Practice change the core.** A Practice can only constrain. *(INV-31)*
+- **Work only promises the control an executor declares.** Revoked authority is not "stopped", and a sent stop request is not "stopped". *(INV-32)*
+- **Work never emits a signal before the record is durable.** *(INV-33)*
+- **Work never states more than its guarantees allow.** *(INV-34)*
+- **Work always reviews changes against these rules.** A feature that would break one does not pass architectural review. *(INV-35)*

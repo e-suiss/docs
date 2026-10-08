@@ -1,0 +1,111 @@
+---
+title: Guarantees
+description: The invariants Relay holds. No configuration, tenant setting, request field, operator action or environment can relax them.
+eyebrow: Relay
+---
+
+<Callout type="note">
+These statements summarize the invariants (INV-1 to INV-60) of the Relay specification, which is in active design. Breaking one is an implementation bug; the architecture changes to keep it, never the invariant.
+</Callout>
+
+## Loss and visibility
+
+- **Relay never loses a notification silently.** Every notification or delivery that is not sent is recorded with a decision and a `rule_id`, and is visible in the dashboard, in an outgoing event and in metrics. *(INV-1)*
+- **Relay never loses an accepted request.** A request accepted with `202` is durable in the same transaction as its queue job. A request that cannot be stored durably is rejected with `503`. *(INV-2)*
+- **Relay never drops pending content.** Digests, early replies, held agent notifications and undeliverable events are kept, not deleted. *(INV-3)*
+- **Relay always keeps dead letters visible.** The dead-letter queue is durable, listable, filterable and replayable. *(INV-4)*
+- **Relay never invents `delivered` or `failed`.** Without definite evidence, the state is `unknown`. On channels that offer no evidence, such as push, `delivered` is never claimed. *(INV-5)*
+
+## The delivery ledger
+
+- **Relay always derives delivery state from the ledger.** Delivery events are append-only, and status is a projection that can be rebuilt at any time. *(INV-6)*
+- **Relay never moves delivery state backwards.** A late lower state is recorded but does not roll back the status. A late definite event always upgrades `unknown`. *(INV-7)*
+- **Relay never hides a contradiction.** Double delivery and conflicting evidence stay visible and are counted. *(INV-8)*
+- **Relay never resends on its own.** An `unknown` result is not automatically resent. *(INV-9)*
+- **Relay never breaks its external contract silently.** Breaking changes go only through the versioned contract process. *(INV-10)*
+
+## Duplicates and uniqueness
+
+- **Relay always requires an `Idempotency-Key` on changing requests.** A request without one is rejected with `400`. The same key with a different body returns `422`. *(INV-11)*
+- **Relay always enforces uniqueness with database constraints.** The queue library's job uniqueness is only a pre-filter. *(INV-12)*
+- **Relay never retries without duplicate protection.** The guarantee is at-least-once delivery with effectively exactly-once processing through durable idempotency. *(INV-13)*
+- **Relay never retries a permanent failure.** The provider's `Retry-After` is always respected. *(INV-14)*
+
+## Gates, classes and compliance
+
+- **Relay never lets a gate be bypassed.** Suppression, opt-out, missing İYS consent, the kill switch, a dead channel and a scope mismatch cannot be skipped by any flag, class, priority, request field or operator action. *(INV-15)*
+- **Relay never changes a message's class.** The class is fixed on acceptance, and the lane derives only from it. *(INV-16)*
+- **Relay only lets a tenant tighten compliance rules.** There is no flag that relaxes them. *(INV-17)*
+- **Relay always applies an opt-out immediately.** It lifts only with new, explicit consent. *(INV-18)*
+- **Relay always fails closed for İYS.** Within İYS scope, commercial messages are not sent without consent or with a stale copy. *(INV-19)*
+- **Relay never lets the `security` class or locked categories be turned off.** *(INV-20)*
+- **Relay never converts a template's type.** Transactional and marketing templates cannot be turned into each other. *(INV-21)*
+
+## Security messages and one-time codes
+
+- **Relay never generates, stores or verifies codes.** The sender does. *(INV-22)*
+- **Relay never sends `otp_oob` codes by email.** *(INV-23)*
+- **Relay never delays an OTP.** OTPs are not scheduled, digested, delayed, collapsed or shed under load. *(INV-24)*
+- **Relay never tracks security messages.** No open pixels or link wrapping, and one-time links are not consumed by `GET`. *(INV-25)*
+- **Relay never stores rendered OTP content.** *(INV-26)*
+- **Relay never makes a decision from an untrusted signal.** Email open data is never used. *(INV-27)*
+
+## Agents, replies and authority
+
+- **Relay never treats content as authority.** No delivery, reply, acknowledgement, read receipt or wait resolution produces authority or approval. *(INV-28)*
+- **Relay is never an approval gate.** A button press, SMS reply or protocol reply is never an approval. Approval items deep-link to the Access approval surface. *(INV-29)*
+- **Relay never writes instructions to an agent.** Agents receive structured messages. Free text from people or external sources is marked as untrusted content. *(INV-30)*
+- **Relay always enforces wait rules in the database.** An expired wait cannot be resolved, and a resolved wait does not change. *(INV-31)*
+- **Relay never waits forever.** Every wait has a deadline. *(INV-32)*
+- **Relay never puts reply authority in the agent's hands.** *(INV-33)*
+- **Relay always holds, never drops, notifications over an agent's ceiling.** *(INV-34)*
+- **Relay never treats a push as state.** Wake-up signals are hints; state lives in the mailbox and the wait record. *(INV-35)*
+
+## Tenant isolation
+
+- **Relay never runs a query without tenant context.** Row-level security is mandatory and forced. *(INV-36)*
+- **Relay never links one tenant's records to another's.** *(INV-37)*
+- **Relay never reveals that another tenant's resource exists.** Every cross-tenant access returns `404`. *(INV-38)*
+- **Relay never takes the tenant or environment from the client.** *(INV-39)*
+- **Relay never lets a noisy neighbor stop another tenant.** *(INV-40)*
+- **Relay never moves data out of its region.** *(INV-41)*
+- **Relay always applies a suspension at every entry point.** *(INV-42)*
+
+## Failing safely
+
+- **Relay never sends when a gate's input is uncertain.** *(INV-43)*
+- **Relay never falls back to "no limit".** If Valkey is unreachable, rate limiting falls back to PostgreSQL. *(INV-44)*
+- **Relay only fails open in explicitly named schedulers.** *(INV-45)*
+- **Relay never applies a silent default.** Unknown configuration and request fields are rejected, not ignored. *(INV-46)*
+
+## Data and immutability
+
+- **Relay never deletes physically.** Deletion is a soft delete. Personal data is erased by crypto-shredding. *(INV-47)*
+- **Relay never changes a published version.** *(INV-48)*
+- **Relay never changes evidence records.** The audit log is append-only and sealed with signed checkpoints. *(INV-49)*
+- **Relay always has one authority for time.** The database stores UTC only. *(INV-50)*
+- **Relay never reads a secret back.** *(INV-51)*
+
+## Source of truth and signals
+
+- **Relay always keeps the truth in PostgreSQL.** Valkey holds only short-lived counters and signals. *(INV-52)*
+- **Relay always publishes after commit.** There are no phantom notifications. *(INV-53)*
+- **Relay always computes counters on the server.** *(INV-54)*
+- **Relay never makes an external call inside a transaction.** *(INV-55)*
+
+## Product integrity
+
+- **Relay always works through Access.** Capabilities that depend on Access have no alternative path. *(INV-56)*
+- **Relay never locks a feature.** Nothing is cloud-only or license-gated. *(INV-57)*
+- **Relay always runs test and live through the same pipeline.** *(INV-58)*
+- **Relay never announces its own outage through itself.** *(INV-59)*
+
+## What Relay never claims
+
+Relay never claims a guarantee it does not give. *(INV-60)* In particular:
+
+- There is no delivery guarantee on any channel. Provider acceptance is not delivery, and delivery is not display.
+- Delivery order is not guaranteed. Outgoing events are at-least-once and may repeat.
+- There is no exactly-once delivery. Effectively exactly-once processing comes from idempotency.
+- Cancelling only withdraws notifications not yet handed to a provider. Sent SMS, email and push cannot be recalled.
+- `priority` is not a channel SLA.

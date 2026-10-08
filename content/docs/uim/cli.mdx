@@ -1,0 +1,64 @@
+---
+title: CLI
+description: The @esuiss/uim command sets up Uniwind or NativeWind in your project and copies components into it.
+eyebrow: suiss UIM
+---
+
+## Overview
+
+`@esuiss/uim` runs with `npx`. It has two commands: `init` and `add`. It supports React Native and Expo projects with TypeScript.
+
+## init
+
+Sets up Uniwind or NativeWind, the `@/*` import alias, the theme stylesheet, the Metro config, the portal host and the `button` component. See [Installation](/docs/uim/installation) for every step.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest init [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `-s, --styling <uniwind\|nativewind>` | Styling library. Detected from the project when omitted |
+| `-y, --yes` | Skip confirmation prompts |
+| `-c, --cwd <dir>` | Project directory. Defaults to the current directory |
+| `-h, --help` | Show help |
+| `-v, --version` | Show the version |
+
+<Callout type="note">
+NativeWind v5 needs Expo's Metro config. In React Native projects without Expo, use `--styling uniwind`.
+</Callout>
+
+## add
+
+Copies components into your project, together with the components and packages they depend on.
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add <component...> [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `-o, --overwrite` | Replace local files that differ from the registry |
+| `--diff` | Show how local files differ from the registry |
+| `-a, --all` | Add every component |
+| `-y, --yes` | Skip confirmation prompts |
+| `-c, --cwd <dir>` | Project directory. Defaults to the current directory |
+| `-h, --help` | Show help |
+| `-v, --version` | Show the version |
+
+```bash title="Terminal"
+npx @esuiss/uim@latest add button dialog
+npx @esuiss/uim@latest add button --diff
+npx @esuiss/uim@latest add button --overwrite
+```
+
+## Where files are written
+
+Components are written to `components/ui/` under your `@/*` alias root.
+
+| Project | Packages are installed with | After adding |
+| --- | --- | --- |
+| Expo | `expo install`, so native modules match the Expo SDK | Nothing else |
+| React Native without Expo | Your package manager | Run `cd ios && pod install` before building for iOS |
+
+In React Native projects without Expo, `add` also adds the Reanimated Babel plugin when a component needs it.

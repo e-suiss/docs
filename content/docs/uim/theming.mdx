@@ -1,0 +1,106 @@
+---
+title: Theming
+description: Semantic color tokens with a light and a dark value, based on the Apple system colors, and a fixed radius scale.
+eyebrow: suiss UIM
+---
+
+## How the theme works
+
+`init` writes the theme to `global.css`. Its contents depend on the styling library.
+
+- **Uniwind.** Colors are defined in `@layer theme`, with one set under `@variant light` and one under `@variant dark`. The radius scale is in an `@theme` block.
+- **NativeWind v5.** Colors and the radius scale are in an `@theme` block, with dark values under `@media (prefers-color-scheme: dark)`.
+
+Each color is a Tailwind color, so `--color-primary` gives you `bg-primary`, `text-primary`, `border-primary` and so on.
+
+```css title="global.css (Uniwind)"
+@import "tailwindcss";
+@import "uniwind";
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-background: #ffffff;
+      --color-foreground: #000000;
+      --color-primary: #0088ff;
+    }
+
+    @variant dark {
+      --color-background: #000000;
+      --color-foreground: #ffffff;
+      --color-primary: #0091ff;
+    }
+  }
+}
+```
+
+## Using tokens
+
+```tsx
+<View className="rounded-lg border border-border bg-card p-4">
+  <Text className="text-card-foreground">Title</Text>
+  <Text className="text-muted-foreground">Supporting text</Text>
+</View>
+```
+
+Tokens come in pairs. A background token such as `primary` has a matching `-foreground` token for the text on it.
+
+## Color tokens
+
+Values are from the default stylesheet.
+
+| Token | Light | Dark | Used for |
+| --- | --- | --- | --- |
+| `background` | `#ffffff` | `#000000` | The app background |
+| `foreground` | `#000000` | `#ffffff` | Text on the background |
+| `card` | `#ffffff` | `#1c1c1e` | Cards |
+| `card-foreground` | `#000000` | `#ffffff` | Text on cards |
+| `popover` | `#ffffff` | `#2c2c2e` | Popovers and menus |
+| `popover-foreground` | `#000000` | `#ffffff` | Text on popovers |
+| `primary` | `#0088ff` | `#0091ff` | Primary actions |
+| `primary-foreground` | `#ffffff` | `#ffffff` | Text on primary |
+| `secondary` | `rgb(118 118 128 / 0.12)` | `rgb(118 118 128 / 0.24)` | Secondary actions |
+| `secondary-foreground` | `#000000` | `#ffffff` | Text on secondary |
+| `muted` | `#f2f2f7` | `#1c1c1e` | Subdued backgrounds |
+| `muted-foreground` | `rgb(60 60 67 / 0.6)` | `rgb(235 235 245 / 0.6)` | Secondary text |
+| `accent` | `rgb(118 118 128 / 0.12)` | `rgb(118 118 128 / 0.24)` | Pressed and highlighted items |
+| `accent-foreground` | `#000000` | `#ffffff` | Text on accent |
+| `destructive` | `#ff383c` | `#ff4245` | Destructive actions |
+| `border` | `rgb(60 60 67 / 0.12)` | `rgb(84 84 88 / 0.5)` | Borders and separators |
+| `input` | `#c6c6c8` | `#38383a` | Input fields and borders |
+| `ring` | `#0088ff` | `#0091ff` | Focus rings |
+| `chart-1` | `#00c0e8` | `#3cd3fe` | Charts |
+| `chart-2` | `#0088ff` | `#0091ff` | Charts |
+| `chart-3` | `#6155f5` | `#6d7cff` | Charts |
+| `chart-4` | `#cb30e0` | `#db34f2` | Charts |
+| `chart-5` | `#ff2d55` | `#ff375f` | Charts |
+
+## Opacity with NativeWind
+
+NativeWind v5 can't apply opacity modifiers such as `bg-destructive/10` to theme colors that change with dark mode. The NativeWind stylesheet and components use precomputed tokens instead:
+
+| Uniwind class | NativeWind class |
+| --- | --- |
+| `bg-destructive/10` | `bg-destructive-10` |
+| `bg-primary/80` | `bg-primary-80` |
+| `bg-muted/50` | `bg-muted-50` |
+
+When you choose NativeWind, `add` copies the NativeWind version of each component, so you get these classes automatically.
+
+## Radius
+
+| Class | Value |
+| --- | --- |
+| `rounded-sm` | `0.45rem` |
+| `rounded-md` | `0.6rem` |
+| `rounded-lg` | `0.75rem` |
+| `rounded-xl` | `1.05rem` |
+| `rounded-2xl` | `1.35rem` |
+| `rounded-3xl` | `1.65rem` |
+| `rounded-4xl` | `1.95rem` |
+
+## Customize
+
+- **Change a color.** Edit its light and dark values in `global.css`.
+- **Add a color.** Define a `--color-*` variable with a light and a dark value. Its classes, such as `bg-brand` for `--color-brand`, become available.
+- **Change the radius.** Edit the `--radius-*` values.

@@ -1,0 +1,122 @@
+---
+title: Concepts
+description: The tenants, recipients, messages, deliveries and wait points that Relay's delivery model is built on.
+eyebrow: Relay
+---
+
+<Callout type="note">
+These definitions summarize the Relay specification, which is in active design. The specification is written in Turkish and is normative on any difference.
+</Callout>
+
+## Principles of the model
+
+- **Relay's object is the message and its delivery.** The meaning of an event and the accuracy of its content belong to the producer. Relay carries them without owning them.
+- **Append-only records are canonical; states are derived.** The delivery ledger, wait records, mailboxes and the audit log are never changed in place.
+- **Notification, delivery and attempt are three separate levels.** "Was it sent?" is not the same question as "did the provider return 200?".
+- **A decision is not an error.** Skipped, deferred, suppressed and expired are decisions, recorded with a reason.
+- **Consent is not preference.** Consent is a legal record. Preference is what the recipient wants. One never turns into the other.
+- **Class, category and sender type are independent.** None is derived from another.
+- **Delivery is not authority.** No Relay record changes authority state.
+- **A wait is a record, not running work.** A wait is a database row plus a timer.
+
+## Tenancy
+
+### Tenant
+
+A customer using Relay, with its own data, keys and settings. Every tenant is bound to an Access organization when it is created.
+
+### Sub-tenant
+
+A single-level brand or customer unit inside a tenant. It inherits settings from the tenant.
+
+### Environment
+
+Separate `live` and `test` data planes per tenant. The processing pipeline is the same, and a notification sent with a `test` credential does not reach a real user.
+
+## Recipients
+
+### Recipient
+
+The person a notification is meant to reach. A recipient (subscriber) has addresses, devices, a language and a time zone.
+
+### Agent recipient
+
+An AI agent registered in Relay, with delivery endpoints and a mailbox.
+
+## Messages
+
+### Event
+
+A "this happened" input arriving at Relay. It triggers a workflow.
+
+### Notification, delivery and attempt
+
+| Level | Meaning |
+| --- | --- |
+| Notification | The logical message for one recipient. It is created once |
+| Delivery | Sending that notification on one channel to one destination |
+| Attempt | A single external request to the provider for a delivery |
+
+### Message class
+
+One of seven fixed top-level classes: `security`, `transactional`, `operational`, `social`, `marketing`, `system` and `action_required`. The class is assigned on acceptance and never changes. Lanes, priority ceilings, preference and compliance rules derive from it.
+
+### Category
+
+A notification type defined by the tenant, such as "Shipping status". It is bound to exactly one message class.
+
+### Template
+
+Versioned content in a channel × language matrix.
+
+## Flow and routing
+
+### Workflow
+
+A versioned definition of the steps to take for an event, for example: send a push, wait an hour, then email if it was not seen.
+
+### Route policy
+
+A named rule for the order in which channels are tried, or which channels are used together.
+
+### Topic
+
+A subject recipients can subscribe to. Fan-out happens through it.
+
+## Policy and decisions
+
+### Preference
+
+The recipient's notification wishes: category × channel, quiet hours and digest.
+
+### Consent
+
+A legal opt-in or opt-out record for commercial messages, kept separate from preference.
+
+### Skip reason
+
+The machine-readable reason and rule (`reason` and `rule_id`) for a notification that was not sent.
+
+### Kill switch
+
+The single mechanism that stops sending by scope × destination × class.
+
+## Records
+
+### Delivery ledger
+
+The immutable record of every delivery event. Delivery status is derived from it.
+
+### Mailbox
+
+A durable, sequence-numbered message record per recipient. Its human face is the inbox. Its agent face is lease and acknowledge.
+
+## Agents and waiting
+
+### Wait point
+
+A record that says "a reply is expected for this key, by this deadline", for example an agent asking "Do you approve this order?".
+
+### Event destination
+
+An external endpoint to which Relay delivers events: an HTTPS webhook, a queue or an object store.
