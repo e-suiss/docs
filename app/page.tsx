@@ -4,16 +4,11 @@ import type * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
 import { Gradient } from "@/components/site/gradient";
-import {
-  CommitmentsVisual,
-  NotificationsVisual,
-  OrbVisual,
-  PasskeyVisual,
-} from "@/components/site/home-visuals";
 import { InstallCommand } from "@/components/site/install-command";
+import { PlatformScroller } from "@/components/site/platform-scroller";
 import { Bento } from "@/components/site/bento";
 import { Search } from "@/components/site/search";
-import { getProduct, type ProductSlug, products } from "@/lib/products";
+import { getProduct, products } from "@/lib/products";
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
 
@@ -22,38 +17,6 @@ function Label({ index, children }: { index: string; children: React.ReactNode }
     <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">
       ({index}) {children}
     </p>
-  );
-}
-
-function Pill({
-  href,
-  tone,
-  children,
-}: {
-  href: string;
-  tone: "solid" | "glass";
-  children: React.ReactNode;
-}) {
-  return (
-    <Anchor
-      href={href}
-      className={cn(
-        "group inline-flex h-12 items-center gap-2 rounded-full ps-6 pe-2 text-[15px] font-medium tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:focus-ring [--focus-ring-offset:3px]",
-        tone === "solid"
-          ? "bg-[#1d1d1f] text-white hover:bg-black"
-          : "bg-white/40 text-[#1d1d1f] backdrop-blur-xl hover:bg-white/60",
-      )}
-    >
-      {children}
-      <span
-        className={cn(
-          "flex size-8 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:rotate-45",
-          tone === "solid" ? "bg-white text-[#1d1d1f]" : "bg-[#1d1d1f] text-white",
-        )}
-      >
-        <ArrowUpRightIcon weight="bold" className="size-3.5" />
-      </span>
-    </Anchor>
   );
 }
 
@@ -130,47 +93,6 @@ function ProductIndex() {
   );
 }
 
-function Card({
-  slug,
-  visual,
-  className,
-}: {
-  slug: ProductSlug;
-  visual: React.ReactNode;
-  className?: string;
-}) {
-  const product = getProduct(slug);
-  if (!product) return null;
-
-  return (
-    <Anchor
-      href={`/docs/${slug}`}
-      className={cn(
-        "group relative flex min-h-[560px] flex-col overflow-hidden rounded-[32px] outline-none focus-visible:focus-ring md:min-h-[680px]",
-        className,
-      )}
-    >
-      <div className="flex items-start justify-between gap-6 p-7 md:p-10">
-        <div className="flex flex-col gap-2">
-          <p className="font-mono text-xs tracking-[0.02em] uppercase opacity-60">suiss</p>
-          <h3 className="text-[clamp(2.5rem,4.5vw,4.5rem)] leading-[0.92] font-semibold tracking-[-0.05em]">
-            {product.name}
-          </h3>
-          <p className="mt-1 max-w-xs text-[17px] leading-[1.35] tracking-[-0.02em] opacity-70">
-            {product.summary}
-          </p>
-        </div>
-        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-current/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:rotate-45">
-          <ArrowUpRightIcon className="size-4" />
-        </span>
-      </div>
-      <div className="mt-auto transition-transform duration-700 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:-translate-y-3">
-        {visual}
-      </div>
-    </Anchor>
-  );
-}
-
 const interfaceProducts = [
   { slug: "ui", platforms: "React · Next.js · Vite", count: "221", unit: "pieces" },
   { slug: "uim", platforms: "React Native · Expo", count: "32", unit: "components" },
@@ -244,47 +166,17 @@ function Interface() {
 
 function Platform() {
   return (
-    <section className="dark bg-surface py-32 text-label md:py-48">
-      <div className={frame}>
-        <div className="mb-10 grid gap-6 md:mb-16 md:grid-cols-[1fr_3fr]">
+    <PlatformScroller
+      header={
+        <div className={cn(frame, "grid gap-6 md:grid-cols-[1fr_3fr]")}>
           <Label index="04">Platform</Label>
-          <h2 className="text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
-            Open services.
-            <br />
+          <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[0.92] font-semibold tracking-[-0.055em]">
+            Open services.{" "}
             <span className="text-label-tertiary">Built for people and agents.</span>
           </h2>
         </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          <Card slug="access" visual={<PasskeyVisual />} className="bg-surface-secondary" />
-          <Card slug="relay" visual={<NotificationsVisual />} className="bg-surface-secondary" />
-          <Card slug="work" visual={<CommitmentsVisual />} className="bg-surface-secondary" />
-          <Card slug="one" visual={<OrbVisual />} className="bg-surface-secondary" />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Closing() {
-  return (
-    <section className="p-3">
-      <div className="relative flex min-h-[80svh] flex-col justify-between overflow-hidden rounded-[32px] p-7 text-white md:p-12">
-        <Gradient preset="Universe" />
-        <p className="relative font-mono text-xs tracking-[0.02em] uppercase">(05) Start</p>
-        <div className="relative flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-          <h2 className="text-[clamp(4rem,13vw,13rem)] leading-[0.84] font-semibold tracking-[-0.06em]">
-            Start
-            <br />
-            building.
-          </h2>
-          <div className="flex flex-wrap gap-3 md:pb-4">
-            <Pill href="/docs" tone="glass">
-              Read the docs
-            </Pill>
-          </div>
-        </div>
-      </div>
-    </section>
+      }
+    />
   );
 }
 
@@ -296,7 +188,6 @@ export default function Home() {
       <ProductIndex />
       <Interface />
       <Platform />
-      <Closing />
     </main>
   );
 }

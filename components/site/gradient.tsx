@@ -18,6 +18,7 @@ const fallbacks: Record<GradientPreset, string> = {
   Mint: "bg-[radial-gradient(120%_90%_at_30%_40%,#94ffd1_0%,#6bf5ff_50%,#ffffff_100%)]",
   Interstella: "bg-[radial-gradient(120%_90%_at_30%_40%,#ff810a_0%,#73bfc4_50%,#8da0ce_100%)]",
   "Nighty night": "bg-[radial-gradient(120%_90%_at_30%_40%,#8d7dca_0%,#606080_50%,#212121_100%)]",
+  Sunset: "bg-[radial-gradient(120%_90%_at_30%_40%,#ffc53d_0%,#ff7a33_45%,#33a0ff_100%)]",
 };
 
 /** Mounts WebGL only while the gradient is on or near the screen. */
@@ -27,7 +28,7 @@ function useNearViewport(ref: React.RefObject<HTMLElement | null>) {
     const element = ref.current;
     if (!element) return;
     const observer = new IntersectionObserver(([entry]) => setNear(entry?.isIntersecting ?? false), {
-      rootMargin: "300px 0px",
+      rootMargin: "300px",
     });
     observer.observe(element);
     return () => observer.disconnect();

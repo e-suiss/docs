@@ -2,7 +2,14 @@
 
 import { type GradientT, presetsArray, ShaderGradient, ShaderGradientCanvas } from "@shadergradient/react";
 
-export type GradientPreset = "Halo" | "Pensive" | "Universe" | "Mint" | "Interstella" | "Nighty night";
+export type GradientPreset =
+  | "Halo"
+  | "Pensive"
+  | "Universe"
+  | "Mint"
+  | "Interstella"
+  | "Nighty night"
+  | "Sunset";
 
 /**
  * Per-preset adjustments for wide, short containers: the camera moves closer

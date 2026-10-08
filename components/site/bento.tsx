@@ -11,6 +11,7 @@ import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } f
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { ThemeToggle } from "@/components/ui/theme";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 function Tile({
@@ -111,6 +112,23 @@ const avatars = [
   { initials: "EP", tint: "from-[#ff6482] to-[#ff2d55] dark:from-[#ff6482] dark:to-[#ff2d55]" },
 ];
 
+/** Switches the theme of the whole page, so the tile demonstrates itself. */
+function AppearanceTile() {
+  return (
+    <Tile file="theme.tsx" className="md:col-span-6">
+      <div className="flex flex-1 items-center justify-between gap-6">
+        <div className="flex flex-col gap-1">
+          <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">Light and dark.</p>
+          <p className="text-[15px] text-label-secondary">
+            Every token has a dark twin. Try it: this switches the whole page.
+          </p>
+        </div>
+        <ThemeToggle effect="rectangle" origin="bottom-up" className="size-14 shrink-0" />
+      </div>
+    </Tile>
+  );
+}
+
 /** A bento grid of real suiss UI components and charts. */
 export function Bento() {
   return (
@@ -195,28 +213,13 @@ export function Bento() {
         </div>
         <form className="mt-auto flex gap-2 pt-6" onSubmit={(event) => event.preventDefault()}>
           <Input type="email" placeholder="you@example.com" aria-label="Email" className="h-11 flex-1" />
-          <Button size="lg" type="submit">
+          <Button size="lg" type="submit" className="rounded-lg">
             Subscribe
           </Button>
         </form>
       </Tile>
 
-      <li className="dark flex flex-col gap-6 overflow-hidden rounded-[28px] bg-surface p-6 text-label md:col-span-6 md:p-7">
-        <p className="font-mono text-[11px] tracking-[0.02em] text-label-secondary">globals.css · .dark</p>
-        <div className="flex flex-col gap-1">
-          <p className="text-[28px] leading-[1.1] font-semibold tracking-[-0.03em]">Every token has a dark twin.</p>
-          <p className="text-[15px] text-label-secondary">The same components, after one class on the root.</p>
-        </div>
-        <div className="mt-auto flex flex-wrap items-center gap-3">
-          <SegmentPicker defaultValue="dark" aria-label="Appearance">
-            <SegmentPickerItem value="light">Light</SegmentPickerItem>
-            <SegmentPickerItem value="dark">Dark</SegmentPickerItem>
-            <SegmentPickerItem value="auto">Auto</SegmentPickerItem>
-          </SegmentPicker>
-          <Switch defaultChecked aria-label="Reduce transparency" />
-          <Button variant="secondary">Done</Button>
-        </div>
-      </li>
+      <AppearanceTile />
     </ul>
   );
 }

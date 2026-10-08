@@ -1,96 +1,172 @@
 "use client";
 
+import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
+import { cn } from "cn";
+import * as React from "react";
+
 import { Anchor } from "@/components/site/anchor";
-import { strings } from "@/lib/strings";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { ThemeToggle } from "@/components/ui/theme";
 import { products } from "@/lib/products";
+import { strings } from "@/lib/strings";
 
-export function Footer() {
+const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
+const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 
-  const sections = [
-    {
-      title: strings.interfaceFamily,
-      links: products
-        .filter((product) => product.family === "interface")
-        .map((product) => ({
-          label: product.name,
-          href: `/docs/${product.slug}`,
-        })),
-    },
-    {
-      title: strings.platformFamily,
-      links: products
-        .filter((product) => product.family === "platform")
-        .map((product) => ({
-          label: product.name,
-          href: `/docs/${product.slug}`,
-        })),
-    },
-    {
-      title: strings.resources,
-      links: [
-        { label: strings.documentation, href: "/docs" },
-        { label: strings.github, href: "https://github.com/e-suiss" },
-      ],
-    },
-  ];
+const paths = [
+  { label: "Install UI", href: "/docs/ui/installation" },
+  { label: "Install UIM", href: "/docs/uim/installation" },
+  { label: "Read the specs", href: "/docs/access/concepts" },
+];
+
+type Column = { title: string; links: { label: string; href: string }[] };
+
+const columns: Column[] = [
+  {
+    title: "Get started",
+    links: [
+      { label: "Install UI", href: "/docs/ui/installation" },
+      { label: "Install UIM", href: "/docs/uim/installation" },
+      { label: "Theming", href: "/docs/ui/theming" },
+      { label: "CLI", href: "/docs/ui/cli" },
+      { label: "Components", href: "/docs/ui/components/button" },
+    ],
+  },
+  {
+    title: strings.interfaceFamily,
+    links: products
+      .filter((product) => product.family === "interface")
+      .map((product) => ({ label: `suiss ${product.name}`, href: `/docs/${product.slug}` })),
+  },
+  {
+    title: strings.platformFamily,
+    links: products
+      .filter((product) => product.family === "platform")
+      .map((product) => ({ label: `suiss ${product.name}`, href: `/docs/${product.slug}` })),
+  },
+  {
+    title: "Source",
+    links: products
+      .filter((product) => product.repository !== "https://github.com/e-suiss")
+      .map((product) => ({ label: `e-suiss/${product.slug}`, href: product.repository }))
+      .concat({ label: "All repositories", href: "https://github.com/e-suiss" }),
+  },
+];
+
+/** One word set at whatever size makes it exactly as wide as its container. */
+function FitWord({ children, className }: { children: string; className?: string }) {
+  const box = React.useRef<HTMLDivElement>(null);
+  const word = React.useRef<HTMLSpanElement>(null);
+
+  React.useLayoutEffect(() => {
+    const container = box.current;
+    const text = word.current;
+    if (!container || !text) return;
+    const fit = () => {
+      text.style.fontSize = "100px";
+      text.style.fontSize = `${(100 * container.clientWidth) / text.scrollWidth}px`;
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(container);
+    document.fonts?.ready.then(fit);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <footer className="bg-surface-secondary text-xs text-label-secondary">
-      <div className="mx-auto flex max-w-245 flex-col gap-4 px-5.5 pt-6 pb-5.5">
-        <nav aria-label="Directory" className="hidden grid-cols-5 gap-5 md:grid">
-          {sections.map((section) => (
-            <div key={section.title} className="flex flex-col gap-2">
-              <h3 className="font-semibold text-label">{section.title}</h3>
-              <ul className="flex flex-col gap-2">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Anchor href={link.href} className="hover:underline">
-                      {link.label}
-                    </Anchor>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
-        <Accordion aria-label="Directory" className="md:hidden">
-          {sections.map((section) => (
-            <AccordionItem
-              key={section.title}
-              value={section.title}
-              className="ms-0 border-b border-separator not-first:border-t-0"
-            >
-              <AccordionTrigger className="pe-0 text-sm text-label hover:no-underline">
-                {section.title}
-              </AccordionTrigger>
-              <AccordionContent className="pe-0 pb-3.5 [&_a]:no-underline [&_a]:hover:underline">
-                <ul className="flex flex-col gap-2.5 ps-3">
-                  {section.links.map((link) => (
-                    <li key={link.label}>
-                      <Anchor href={link.href} className="text-sm text-label">
-                        {link.label}
-                      </Anchor>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-separator pt-2.5 md:mt-4">
-          <span>{strings.copyright}</span>
-          <span>{strings.license}</span>
-          <div className="flex items-center gap-3 md:ms-auto">
-            <ThemeToggle size="icon-xs" className="size-5" />
-          </div>
+    <div ref={box} className="w-full">
+      <span ref={word} className={cn("block w-max whitespace-nowrap", className)}>
+        {children}
+      </span>
+    </div>
+  );
+}
+
+/**
+ * The site footer: a call to start, a directory of every product and repository,
+ * and the wordmark set edge to edge, cropped by the bottom of the page.
+ */
+export function Footer() {
+  return (
+    <footer className="dark overflow-hidden bg-surface text-label">
+      <div className={cn(frame, "grid gap-12 pt-24 pb-16 md:grid-cols-[1fr_minmax(0,34rem)] md:pt-32")}>
+        <div className="flex flex-col gap-6">
+          <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">(05) Start</p>
+          <h2 className="text-[clamp(3.5rem,8vw,8rem)] leading-[0.84] font-semibold tracking-[-0.065em]">
+            Start
+            <br />
+            building.
+          </h2>
         </div>
+        <ul className="flex flex-col justify-end">
+          {paths.map((path) => (
+            <li key={path.href} className="border-t border-label/15 last:border-b">
+              <Anchor
+                href={path.href}
+                className="group flex items-center justify-between gap-6 py-4 outline-none focus-visible:focus-ring md:py-5"
+              >
+                <span
+                  className={cn(
+                    "text-[clamp(1.5rem,2.4vw,2.25rem)] leading-none font-semibold tracking-[-0.045em] transition-transform duration-700 group-hover:translate-x-3",
+                    ease,
+                  )}
+                >
+                  {path.label}
+                </span>
+                <span
+                  className={cn(
+                    "flex size-12 shrink-0 items-center justify-center rounded-full bg-label/10 transition-[rotate,background-color,color] duration-700 group-hover:rotate-45 group-hover:bg-label group-hover:text-surface",
+                    ease,
+                  )}
+                >
+                  <ArrowUpRightIcon className="size-4.5" />
+                </span>
+              </Anchor>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className={cn(frame, "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-label/15 py-14 md:grid-cols-4")}>
+        {columns.map((column) => (
+          <nav key={column.title} aria-label={column.title} className="flex flex-col gap-4">
+            <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">{column.title}</p>
+            <ul className="flex flex-col gap-2.5">
+              {column.links.map((link) => (
+                <li key={link.href + link.label}>
+                  <Anchor
+                    href={link.href}
+                    className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label"
+                  >
+                    {link.label}
+                  </Anchor>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
+
+      <div className={cn(frame, "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary")}>
+        <span>{strings.copyright}</span>
+        <span>{strings.license}</span>
+        <div className="ms-auto flex items-center gap-3">
+          <ThemeToggle effect="rectangle" origin="bottom-up" size="icon-sm" className="size-8" />
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="group flex h-8 items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-label outline-none transition-colors hover:bg-label/15 focus-visible:focus-ring"
+          >
+            Back to top
+            <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
+              <ArrowUpIcon weight="bold" className={cn("size-3 transition-transform duration-500 group-hover:-translate-y-0.5", ease)} />
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* The wordmark runs past the bottom edge; the end padding returns the last letter's negative tracking. */}
+      <div aria-hidden className={cn(frame, "mb-[-4.5vw] select-none")}>
+        <FitWord className="pe-[0.075em] leading-[0.8] font-semibold tracking-[-0.075em]">suiss</FitWord>
       </div>
     </footer>
   );
