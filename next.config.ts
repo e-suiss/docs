@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
+    // The suiss UI stories double as live previews; their Storybook imports resolve to stand-ins.
+    resolveAlias: {
+      "storybook/test": "./lib/storybook/test.ts",
+      "@storybook/react-vite": "./lib/storybook/react-vite.ts",
+    },
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],

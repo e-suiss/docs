@@ -4,14 +4,17 @@ import type * as React from "react";
 import { Anchor } from "@/components/site/anchor";
 import { Callout } from "@/components/site/callout";
 import { CodeBlock } from "@/components/site/code-block";
+import { ComponentPreview } from "@/components/site/component-preview";
+import { RegistryIndex } from "@/components/site/registry-index";
 import { Button } from "@/components/ui/button";
 
-/** A live component example, shown on a gray tile like apple.com's product tiles. */
+/** A live component example on the page surface, framed by a hairline. */
 function Preview({ children }: { children: React.ReactNode }) {
   return (
     <div
       data-slot="preview"
-      className="not-prose mt-[1.2em] flex min-h-44 flex-wrap items-center justify-center gap-3 rounded-[18px] bg-surface-secondary p-10"
+      data-not-prose
+      className="mt-[1.2em] flex min-h-44 flex-wrap items-center justify-center gap-3 rounded-[24px] bg-surface p-10 ring-1 ring-label/10"
     >
       {children}
     </div>
@@ -32,6 +35,8 @@ export function getMDXComponents(components?: MDXComponents) {
     pre: (props) => <CodeBlock {...props} />,
     table: Table,
     Callout,
+    ComponentPreview,
+    RegistryIndex,
     Preview,
     Button,
     ...components,

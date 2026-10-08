@@ -2,6 +2,7 @@
 
 import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import { cn } from "cn";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
@@ -81,11 +82,63 @@ function FitWord({ children, className }: { children: string; className?: string
   );
 }
 
-/**
- * The site footer: a call to start, a directory of every product and repository,
- * and the wordmark set edge to edge, cropped by the bottom of the page.
- */
+function Directory() {
+  return (
+    <div className={cn(frame, "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-label/15 py-14 md:grid-cols-4")}>
+      {columns.map((column) => (
+        <nav key={column.title} aria-label={column.title} className="flex flex-col gap-4">
+          <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">{column.title}</p>
+          <ul className="flex flex-col gap-2.5">
+            {column.links.map((link) => (
+              <li key={link.href + link.label}>
+                <Anchor
+                  href={link.href}
+                  className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label"
+                >
+                  {link.label}
+                </Anchor>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+
+  );
+}
+
+function BottomBar() {
+  return (
+    <div className={cn(frame, "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary")}>
+      <span>{strings.copyright}</span>
+      <span>{strings.license}</span>
+      <div className="ms-auto flex items-center gap-3">
+        <ThemeToggle effect="rectangle" origin="bottom-up" size="icon-sm" className="size-8" />
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="group flex h-8 items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-label outline-none transition-colors hover:bg-label/15 focus-visible:focus-ring"
+        >
+          Back to top
+          <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
+            <ArrowUpIcon weight="bold" className={cn("size-3 transition-transform duration-500 group-hover:-translate-y-0.5", ease)} />
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname !== "/") {
+    return (
+      <footer className="bg-surface text-label">
+        <BottomBar />
+      </footer>
+    );
+  }
+
   return (
     <footer className="dark overflow-hidden bg-surface text-label">
       <div className={cn(frame, "grid gap-12 pt-24 pb-16 md:grid-cols-[1fr_minmax(0,34rem)] md:pt-32")}>
@@ -126,45 +179,10 @@ export function Footer() {
         </ul>
       </div>
 
-      <div className={cn(frame, "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-label/15 py-14 md:grid-cols-4")}>
-        {columns.map((column) => (
-          <nav key={column.title} aria-label={column.title} className="flex flex-col gap-4">
-            <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">{column.title}</p>
-            <ul className="flex flex-col gap-2.5">
-              {column.links.map((link) => (
-                <li key={link.href + link.label}>
-                  <Anchor
-                    href={link.href}
-                    className="text-[17px] tracking-[-0.02em] text-label/80 transition-colors hover:text-label"
-                  >
-                    {link.label}
-                  </Anchor>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))}
-      </div>
+      <Directory />
+      <BottomBar />
 
-      <div className={cn(frame, "flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-label/15 py-6 text-sm text-label-secondary")}>
-        <span>{strings.copyright}</span>
-        <span>{strings.license}</span>
-        <div className="ms-auto flex items-center gap-3">
-          <ThemeToggle effect="rectangle" origin="bottom-up" size="icon-sm" className="size-8" />
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group flex h-8 items-center gap-2 rounded-full bg-label/10 ps-3.5 pe-1 text-label outline-none transition-colors hover:bg-label/15 focus-visible:focus-ring"
-          >
-            Back to top
-            <span className="flex size-6 items-center justify-center rounded-full bg-label text-surface">
-              <ArrowUpIcon weight="bold" className={cn("size-3 transition-transform duration-500 group-hover:-translate-y-0.5", ease)} />
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* The wordmark runs past the bottom edge; the end padding returns the last letter's negative tracking. */}
+    
       <div aria-hidden className={cn(frame, "mb-[-4.5vw] select-none")}>
         <FitWord className="pe-[0.075em] leading-[0.8] font-semibold tracking-[-0.075em]">suiss</FitWord>
       </div>

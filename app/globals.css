@@ -205,6 +205,8 @@
 
 /* ---------------------------------------------------------------------------
  * Documentation
+ * Prose rules skip anything inside [data-not-prose] (live previews, indexes),
+ * so components render exactly as the library designs them.
  * Type scale and spacing follow developer.apple.com (DocC): 17px body with
  * tightening letter-spacing, 15px code, hairline rules.
  * ------------------------------------------------------------------------ */
@@ -225,95 +227,95 @@ body {
   overflow-wrap: break-word;
 }
 
-.prose > :first-child {
+.prose > :first-child:not([data-not-prose] *) {
   margin-top: 0;
 }
 
-.prose p,
-.prose ul,
-.prose ol,
-.prose blockquote {
+.prose p:not([data-not-prose] *),
+.prose ul:not([data-not-prose] *),
+.prose ol:not([data-not-prose] *),
+.prose blockquote:not([data-not-prose] *) {
   margin-top: 0.8em;
 }
 
-.prose h2 {
-  margin-top: 1.9em;
-  padding-top: 1.1em;
-  border-top: 1px solid var(--color-separator);
-  font-size: 32px;
-  line-height: 1.125;
+.prose h2:not([data-not-prose] *) {
+  margin-top: 2.4em;
+  padding-top: 1.2em;
+  border-top: 1px solid color-mix(in oklab, var(--color-label) 12%, transparent);
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  line-height: 1;
   font-weight: 600;
-  letter-spacing: 0.004em;
+  letter-spacing: -0.04em;
 }
 
-.prose h3 {
-  margin-top: 1.6em;
-  font-size: 24px;
-  line-height: 1.16667;
+.prose h3:not([data-not-prose] *) {
+  margin-top: 1.8em;
+  font-size: 22px;
+  line-height: 1.15;
   font-weight: 600;
-  letter-spacing: 0.009em;
+  letter-spacing: -0.03em;
 }
 
-.prose h4 {
-  margin-top: 1.4em;
-  font-size: 19px;
-  line-height: 1.21;
+.prose h4:not([data-not-prose] *) {
+  margin-top: 1.5em;
+  font-size: 18px;
+  line-height: 1.2;
   font-weight: 600;
-  letter-spacing: 0.012em;
+  letter-spacing: -0.02em;
 }
 
-.prose :is(h2, h3, h4) + * {
+.prose :is(h2, h3, h4) + *:not([data-not-prose] *) {
   margin-top: 0.8em;
 }
 
-.prose a:not([data-card]) {
+.prose a:not([data-card]):not([data-not-prose] *) {
   color: var(--color-link);
 }
 
-.prose a:not([data-card]):hover {
+.prose a:not([data-card]):hover:not([data-not-prose] *) {
   text-decoration: underline;
 }
 
-.prose strong {
+.prose strong:not([data-not-prose] *) {
   font-weight: 600;
 }
 
-.prose ul {
+.prose ul:not([data-not-prose] *) {
   list-style: disc;
   padding-inline-start: 1.25em;
 }
 
-.prose ol {
+.prose ol:not([data-not-prose] *) {
   list-style: decimal;
   padding-inline-start: 1.25em;
 }
 
-.prose li + li {
+.prose li + li:not([data-not-prose] *) {
   margin-top: 0.4em;
 }
 
-.prose li::marker {
+.prose li:not([data-not-prose] *)::marker {
   color: var(--color-label-tertiary);
 }
 
-.prose :not(pre) > code {
+.prose :not(pre) > code:not([data-not-prose] *) {
   font-family: var(--font-mono);
   font-size: 0.88em;
   letter-spacing: -0.027em;
 }
 
-.prose hr {
+.prose hr:not([data-not-prose] *) {
   margin-block: 2em;
   border-color: var(--color-separator);
 }
 
-.prose blockquote {
+.prose blockquote:not([data-not-prose] *) {
   padding-inline-start: 1em;
   border-inline-start: 2px solid var(--color-separator);
   color: var(--color-label-secondary);
 }
 
-.prose table {
+.prose table:not([data-not-prose] *) {
   width: 100%;
   font-size: 14px;
   line-height: 1.42859;
@@ -321,22 +323,31 @@ body {
   border-collapse: collapse;
 }
 
-.prose th {
+.prose th:not([data-not-prose] *) {
   text-align: start;
   font-weight: 600;
 }
 
-.prose :is(th, td) {
-  padding: 0.6em 1em 0.6em 0;
-  border-bottom: 1px solid var(--color-separator);
+.prose th:not([data-not-prose] *) {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-label-tertiary);
+}
+
+.prose :is(th, td):not([data-not-prose] *) {
+  padding: 0.75em 1em 0.75em 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-label) 12%, transparent);
   vertical-align: top;
 }
 
-.prose td {
+.prose td:not([data-not-prose] *) {
   color: var(--color-label-secondary);
 }
 
-.prose td code {
+.prose td code:not([data-not-prose] *) {
   color: var(--color-label);
 }
 
@@ -362,4 +373,11 @@ body {
   border-top: 1px solid var(--color-separator);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* Terminal listings prompt each command with a quiet `$`. */
+[data-terminal] .line:not(:empty)::before {
+  content: "$ ";
+  color: var(--color-label-tertiary);
+  user-select: none;
 }

@@ -26,7 +26,7 @@ function Tile({
   return (
     <li
       className={cn(
-        "relative flex min-h-60 flex-col overflow-hidden rounded-[28px] bg-surface-secondary p-6 md:p-7",
+        "relative flex min-h-44 flex-col overflow-hidden rounded-[28px] bg-surface-secondary p-6 md:min-h-60 md:p-7",
         className,
       )}
     >
@@ -132,7 +132,7 @@ function AppearanceTile() {
 /** A bento grid of real suiss UI components and charts. */
 export function Bento() {
   return (
-    <ul className="grid auto-rows-[minmax(15rem,auto)] gap-3 md:grid-cols-12">
+    <ul className="grid auto-rows-[minmax(11rem,auto)] gap-3 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-12">
       <ChartTile />
 
       <Tile file="switch.tsx" className="md:col-span-3">

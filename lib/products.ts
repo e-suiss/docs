@@ -14,11 +14,18 @@ export type Product = {
   status?: "pre-alpha";
 };
 
-const interfaceSections: ProductLink[] = [
-  { label: "Overview", path: "" },
-  { label: "Installation", path: "/installation" },
-  { label: "Theming", path: "/theming" },
-  { label: "CLI", path: "/cli" },
+/** UI's sections: the guides, then one per registry category. */
+const uiSections: ProductLink[] = [
+  { label: "Docs", path: "" },
+  { label: "Components", path: "/components" },
+  { label: "Patterns", path: "/patterns" },
+  { label: "Interactions", path: "/interactions" },
+  { label: "Charts", path: "/charts" },
+  { label: "Blocks", path: "/blocks" },
+];
+
+const uimSections: ProductLink[] = [
+  { label: "Docs", path: "" },
   { label: "Components", path: "/components/button" },
 ];
 
@@ -40,7 +47,7 @@ export const products: Product[] = [
     tagline: "Components for the web.",
     summary: "Copy-paste React components with a clean, minimal design, built on Base UI and Tailwind CSS.",
     repository: "https://github.com/e-suiss/ui",
-    sections: interfaceSections,
+    sections: uiSections,
   },
   {
     slug: "uim",
@@ -49,7 +56,7 @@ export const products: Product[] = [
     tagline: "Components for iOS and Android.",
     summary: "The same components for React Native and Expo, styled with Uniwind or NativeWind.",
     repository: "https://github.com/e-suiss/uim",
-    sections: interfaceSections,
+    sections: uimSections,
   },
   {
     slug: "access",

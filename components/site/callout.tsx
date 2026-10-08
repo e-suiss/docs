@@ -30,9 +30,9 @@ export function Callout({
     <aside
       data-slot="callout"
       data-type={type}
-      className={cn("mt-[1.2em] rounded-[15px] border px-4 py-3.5 [&>p:first-of-type]:mt-1", styles[type])}
+      className={cn("mt-[1.2em] rounded-[20px] border px-5 py-4 [&>p:first-of-type]:mt-1", styles[type])}
     >
-      <p className="font-semibold">{title ?? strings[type]}</p>
+      <p className="font-mono text-[11px] tracking-[0.02em] uppercase">{title ?? strings[type]}</p>
       {children}
     </aside>
   );

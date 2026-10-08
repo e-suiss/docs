@@ -75,7 +75,7 @@ export function GlobalNav() {
     <header
       // The home hero is always light, so the bar keeps dark text over it in either theme.
       style={home && !menuOpen ? ({ "--label": "oklch(0.2316 0.0038 286.09)" } as React.CSSProperties) : undefined}
-      className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative bg-surface")}
+className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative border-b border-label/10 bg-surface")}
     >
       <nav
         aria-label="Global"

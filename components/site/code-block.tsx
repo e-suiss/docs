@@ -1,20 +1,45 @@
 "use client";
 
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { cn } from "cn";
 import * as React from "react";
 
+import { isPackageCommand, PackageCommand } from "@/components/site/package-command";
 import { strings } from "@/lib/strings";
-import { Button } from "@/components/ui/button";
 
 const RESET_AFTER = 1500;
 
-/** A borderless DocC-style listing with an optional title and a text copy button. */
+/** Code fences titled "Terminal", or tagged with Shiki's shell icon, are commands. */
+function isTerminal(title: string | undefined, icon: unknown) {
+  return title === "Terminal" || (typeof icon === "string" && icon.includes("m 4,4 a 1,1"));
+}
+
+/** The plain text of rendered Shiki output, which arrives as nested spans. */
+function textOf(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (React.isValidElement<{ children?: React.ReactNode; className?: string }>(node)) {
+    const text = textOf(node.props.children);
+    return node.props.className === "line" ? `${text}\n` : text;
+  }
+  return "";
+}
+
+/**
+ * A code listing with an optional mono title and a copy button. Package
+ * commands get pnpm / npm / yarn / bun tabs; other shell lines get a `$` prompt.
+ */
 export function CodeBlock({
   title,
   className,
   children,
   ...props
-}: React.ComponentProps<"pre"> & { title?: string }) {
+}: React.ComponentProps<"pre"> & { title?: string; icon?: unknown }) {
+  const { icon, ...rest } = props;
+  const terminal = isTerminal(title, icon);
+  const command = terminal ? textOf(children).trim() : "";
+  // Shell listings drop their "Terminal" title; the prompt already says what they are.
+  const caption = terminal ? undefined : title;
   const ref = React.useRef<HTMLPreElement>(null);
   const [copied, setCopied] = React.useState(false);
 
@@ -30,31 +55,43 @@ export function CodeBlock({
     setCopied(true);
   };
 
+  if (terminal && isPackageCommand(command)) return <PackageCommand command={command} />;
+
   return (
     <figure
       data-slot="code-block"
-      className="group/code relative mt-[0.8em] overflow-hidden rounded-[15px] bg-surface-secondary"
+      data-terminal={terminal ? "" : undefined}
+      className="group/code relative mt-[0.8em] overflow-hidden rounded-[20px] bg-surface-secondary"
     >
-      {title && (
-        <figcaption className="flex h-10 items-center border-b border-separator ps-4 pe-16 text-xs text-label-secondary">
-          <span className="truncate">{title}</span>
-        </figcaption>
-      )}
-      <Button
-        variant="plain"
-        size="xs"
-        onClick={copy}
-        className="absolute end-1.5 top-2 text-xs"
+      <div
+        className={cn(
+          "flex h-11 items-center gap-3 ps-4 pe-1.5",
+          caption && "border-b border-label/10",
+          !caption && "absolute inset-x-0 top-0 z-10 justify-end",
+        )}
       >
-        {copied ? strings.copied : strings.copy}
-      </Button>
+        {caption && (
+          <figcaption className="truncate font-mono text-[11px] tracking-[0.02em] text-label-secondary uppercase">
+            {caption}
+          </figcaption>
+        )}
+        <button
+          type="button"
+          aria-label={copied ? strings.copied : strings.copy}
+          onClick={copy}
+          className="ms-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-label-secondary outline-none transition-colors hover:bg-label/8 hover:text-label focus-visible:focus-ring"
+        >
+          {copied ? <CheckIcon className="size-3.5" /> : <CopyIcon className="size-3.5" />}
+        </button>
+      </div>
       <pre
         ref={ref}
         className={cn(
-          "overflow-x-auto py-3.5 ps-4 pe-20 font-mono text-[15px] leading-[1.667] tracking-[-0.027em]",
+          "overflow-x-auto py-3.5 ps-4 font-mono text-[15px] leading-[1.667] tracking-[-0.027em]",
+          caption ? "pe-4" : "pe-24",
           className,
         )}
-        {...props}
+        {...rest}
       >
         {children}
       </pre>

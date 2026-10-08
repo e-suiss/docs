@@ -10,6 +10,8 @@ const docs = defineDocs({
       /** Small label above the title, e.g. "React Component" or "Service". */
       eyebrow: z.string().optional(),
     }),
+    // Lets each page be served as Markdown for "Copy page" and AI tools.
+    postprocess: { includeProcessedMarkdown: true },
   },
 });
 

@@ -1,16 +1,17 @@
 "use client";
 
-import { SidebarIcon } from "@phosphor-icons/react";
+import { ArrowUpRightIcon, SidebarIcon } from "@phosphor-icons/react";
 import { cn } from "cn";
 import { usePathname } from "next/navigation";
 
 import { Anchor } from "@/components/site/anchor";
-import { strings } from "@/lib/strings";
-import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 import { getProduct, type ProductSlug } from "@/lib/products";
+import { strings } from "@/lib/strings";
 
-/** The sticky product bar, modelled on apple.com's local navigation. */
+const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
+
+/** The sticky section tabs under the global nav; the product itself is chosen up there. */
 export function LocalNav({ slug }: { slug: ProductSlug }) {
   const pathname = usePathname();
   const { toggleSidebar } = useSidebar();
@@ -19,10 +20,14 @@ export function LocalNav({ slug }: { slug: ProductSlug }) {
   if (!product) return null;
   const base = `/docs/${product.slug}`;
   // A section owns every page under its first path segment, e.g. /components/*.
-  const isActive = (path: string) => {
-    if (path === "") return pathname === base;
+  // The "" section (the guides) owns whatever no other section claims.
+  const owns = (path: string) => {
     const prefix = `${base}/${path.split("/")[1]}`;
     return pathname === prefix || pathname.startsWith(`${prefix}/`);
+  };
+  const isActive = (path: string) => {
+    if (path !== "") return owns(path);
+    return !product.sections.some((section) => section.path !== "" && owns(section.path));
   };
 
   const cta =
@@ -31,44 +36,32 @@ export function LocalNav({ slug }: { slug: ProductSlug }) {
       : { label: strings.github, href: product.repository };
 
   return (
-    <div
-      className="sticky top-0 z-40 border-b border-label/16 bg-surface/80 backdrop-blur-xl backdrop-saturate-180 transition-colors duration-300 dark:border-label/24"
-    >
+    <div className="sticky top-0 z-40 border-b border-label/10 bg-surface/85 backdrop-blur-xl backdrop-saturate-180">
       <nav
         aria-label={product.name}
-        className="mx-auto flex h-13 max-w-360 items-center gap-2 px-4 md:px-5.5"
+        className="mx-auto flex h-12 w-full max-w-[1680px] items-stretch gap-6 px-5 md:px-10"
       >
-        <Button
-          variant="ghost"
-          size="icon-sm"
+        <button
+          type="button"
           aria-label={strings.menu}
           onClick={toggleSidebar}
-          className="-ms-2 md:hidden"
+          className="-ms-1.5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-label/6 focus-visible:focus-ring md:hidden"
         >
-          <SidebarIcon />
-        </Button>
-        <Anchor
-          href={base}
-          className="rounded-sm text-[21px] leading-none font-semibold tracking-[0.011em] outline-none focus-visible:focus-ring max-md:text-[19px]"
-        >
-          {product.name}
-        </Anchor>
-        {product.status && (
-          <span className="ms-1 rounded-sm bg-control px-1.5 py-0.5 text-2xs font-medium text-label-secondary">
-            {strings.preAlpha}
-          </span>
-        )}
-        <ul className="ms-auto hidden items-center gap-6 md:flex">
+          <SidebarIcon className="size-4.5" />
+        </button>
+        <ul className="no-scrollbar flex min-w-0 items-stretch gap-6 overflow-x-auto max-sm:[mask-image:linear-gradient(to_right,black_85%,transparent)] max-sm:pe-6">
           {product.sections.map((section) => {
-            const href = `${base}${section.path}`;
+            const active = isActive(section.path);
             return (
-              <li key={section.path}>
+              <li key={section.path} className="flex">
                 <Anchor
-                  href={href}
-                  aria-current={isActive(section.path) ? "page" : undefined}
+                  href={`${base}${section.path}`}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-xs text-label/80 transition-colors hover:text-link",
-                    "aria-[current=page]:text-label aria-[current=page]:opacity-56 aria-[current=page]:hover:text-label",
+                    "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:focus-ring",
+                    active
+                      ? "text-label after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-label"
+                      : "text-label/55 hover:text-label",
                   )}
                 >
                   {section.label}
@@ -77,13 +70,23 @@ export function LocalNav({ slug }: { slug: ProductSlug }) {
             );
           })}
         </ul>
-        <Button
-          size="xs"
-          render={<Anchor href={cta.href} />}
-          className="ms-auto h-6 px-2.75 text-xs md:ms-6"
-        >
-          {cta.label}
-        </Button>
+        <div className="ms-auto hidden shrink-0 items-center gap-4 sm:flex">
+          {product.status && (
+            <span className="hidden rounded-full bg-label/6 px-2.5 py-0.5 font-mono text-[11px] tracking-[0.02em] text-label-secondary uppercase sm:inline">
+              {strings.preAlpha}
+            </span>
+          )}
+          <Anchor
+            href={cta.href}
+            className="group flex items-center gap-1 text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none focus-visible:focus-ring"
+          >
+            {cta.label}
+            <ArrowUpRightIcon
+              weight="bold"
+              className={cn("size-3 transition-transform duration-500 group-hover:rotate-45", ease)}
+            />
+          </Anchor>
+        </div>
       </nav>
     </div>
   );

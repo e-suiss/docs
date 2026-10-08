@@ -23,7 +23,7 @@ export default async function ProductLayout(
   return (
     <SidebarProvider className="min-h-0 flex-1 flex-col">
       <LocalNav slug={product.slug} />
-      <div className="mx-auto flex w-full max-w-360 flex-1">
+      <div className="mx-auto flex w-full max-w-[1680px] flex-1 md:ps-6">
         <DocsSidebar nodes={nodes} />
         <div className="min-w-0 flex-1">{props.children}</div>
       </div>
