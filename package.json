@@ -8,12 +8,27 @@
     "start": "next start"
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
+    "@esuiss/tailwind": "^0.9.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "class-variance-authority": "^0.7.1",
+    "cmdk": "^1.1.1",
+    "cn": "^0.4.0",
+    "embla-carousel-react": "^8.6.0",
+    "fumadocs-core": "^16.16.2",
+    "fumadocs-mdx": "^15.4.6",
+    "fumadocs-ui": "^16.16.2",
+    "input-otp": "^1.5.0",
     "next": "16.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-day-picker": "^10.0.2",
+    "react-dom": "19.3.0",
+    "react-resizable-panels": "^4.14.2",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
+    "@types/mdx": "^2.0.14",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
