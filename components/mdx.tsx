@@ -5,6 +5,8 @@ import { Anchor } from "@/components/site/anchor";
 import { Callout } from "@/components/site/callout";
 import { CodeBlock } from "@/components/site/code-block";
 import { ComponentPreview } from "@/components/site/component-preview";
+import { Example } from "@/components/site/example";
+import { SourceCode } from "@/components/site/source-code";
 import { RegistryIndex } from "@/components/site/registry-index";
 import { Button } from "@/components/ui/button";
 
@@ -36,6 +38,8 @@ export function getMDXComponents(components?: MDXComponents) {
     table: Table,
     Callout,
     ComponentPreview,
+    Example,
+    SourceCode,
     RegistryIndex,
     Preview,
     Button,

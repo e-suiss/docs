@@ -1,0 +1,6 @@
+{
+  "description": "A check-your-inbox screen after signup, with open mail and resend actions and a cooldown timer.",
+  "overview": "A centered layout with a mail icon and an unread badge, a heading that grows at `md:`, and a message naming the address the link was sent to. Two `Button` actions follow: Open Mail and an outline Resend button that is disabled during a 45-second cooldown and shows the seconds remaining. A closing line offers a link to change the address. The verified state shows a confirmation with a Start over link.",
+  "usage": "The address comes from the `EMAIL` constant at the top of the file; pass the real address in as a prop or from your session. The verified flag and the seconds left are held in `React.useState`, and a `React.useEffect` counts the cooldown down. In the sample, Open Mail marks the email as verified; in production, verification happens when the user follows the link, so point this button at the user's mail app or remove it. Connect Resend to your email service and point `#change` at your account settings.",
+  "notes": "The unread badge includes visually hidden new message text. The success animation is disabled with `motion-reduce:`."
+}

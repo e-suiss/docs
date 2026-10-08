@@ -1,0 +1,6 @@
+{
+  "description": "Daily step counts plotted against a labeled dashed goal line at 10,000 steps.",
+  "overview": "Uses `LineChart` with one `Line` (`type=\"monotone\"`, `strokeWidth={2.5}`, 3.5-pixel dots) and a `ReferenceLine` at `y={GOAL}` drawn in `var(--green)` with `strokeDasharray=\"4 4\"` and a `label` reading Goal at `insideTopLeft`. `chartData` holds seven `{ day, steps }` records, and `chartConfig.steps` uses `var(--orange)`. A right-hand `YAxis` formats ticks in thousands.",
+  "usage": "Replace `chartData` with your daily values and set `GOAL` to your target. The tooltip uses `hideIndicator` and a `formatter` that prints the value with `Intl.NumberFormat` followed by `steps`; adjust it for your unit, and change the `YAxis` `tickFormatter` if your values aren't in the thousands.",
+  "notes": "`accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between days."
+}

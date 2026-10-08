@@ -1,0 +1,6 @@
+{
+  "description": "A horizontally scrolling carousel of product cards with previous and next controls.",
+  "overview": "A two-tone heading sits above a `Carousel` with `CarouselContent` and one `CarouselItem` per product, aligned to the start. Each card is a link with an optional uppercase kicker, the product name, a tagline, a starting price, and an image, and it scales up slightly on hover. Cards are capped at 22.5rem or the viewport width minus 4rem, whichever is smaller. `CarouselPrevious` and `CarouselNext` sit below the track at the end of the row, and side padding grows at `md:`. The block holds no state.",
+  "usage": "Replace the `products` array at the top of the file; each product has an optional `kicker`, a `name`, `tagline`, preformatted `price`, `image`, and `alt`. Card links are hash anchors built from the product name, so point them at your product pages. Change the heading copy inline.",
+  "notes": "The carousel has `aria-label=\"Latest products\"`, and each image has descriptive `alt` text from the data. Images load from Unsplash through the `photo` helper; replace them with your own. The card hover transition is disabled with `motion-reduce:`."
+}

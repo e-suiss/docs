@@ -1,0 +1,6 @@
+{
+  "description": "A single solid radar shape with no grid and no outline, leaving only the shape and axis labels.",
+  "overview": "Uses `RadarChart` with `outerRadius=\"70%\"`, a `PolarAngleAxis` on `skill` and one `Radar` for `thisMonth` with `fillOpacity={0.55}` and `stroke=\"none\"`. There is no `PolarGrid`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
+  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. Add a `PolarGrid` back if readers need to estimate values rather than compare overall shape.",
+  "notes": "`accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+}

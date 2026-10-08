@@ -1,0 +1,6 @@
+{
+  "description": "A weekly activity view where picking a day animates three large rings and updates each ring's totals.",
+  "overview": "Like the rings variant, this doesn't use Recharts or `ChartContainer`. A `Rings` component draws nested SVG `circle` tracks and progress arcs for each entry in `RINGS` (`move`, `exercise`, `stand` with `var(--red)`, `var(--green)`, `var(--cyan)`, each with a `unit` and `goal`). `WEEK` holds seven `{ day, values }` records. A seven-column `ToggleGroup` shows a small `Rings` per day and stores the selected index with `React.useState` (Sunday by default). The large `Rings` receives values from `useMorph`, which animates from the previous day over `FILL_DURATION`, and a definition list shows each ring's value, goal, unit and percentage.",
+  "usage": "Replace `WEEK` with your daily values in the same order as `RINGS`, and edit `RINGS` to change labels, units, goals or colors. Adjust `FILL_DURATION` to change the animation length; the `size` and `bar` props on `Rings` set each instance's dimensions.",
+  "notes": "Both `Rings` instances are `aria-hidden`; the values are exposed through the definition list, which is an `aria-live=\"polite\"` region. Each day button has an `aria-label` with the full day name, and the group is labeled Day. `useMorph` skips the animation under `prefers-reduced-motion: reduce`."
+}

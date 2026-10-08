@@ -1,0 +1,6 @@
+{
+  "description": "A single series of rounded vertical bars, one per month.",
+  "overview": "Uses `BarChart` with one `Bar` (`radius={6}`, `maxBarSize={36}`), a dashed horizontal `CartesianGrid` and an `XAxis` on `month` whose `tickFormatter` shortens labels to three letters. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted, filled with `chartConfig.desktop` (`var(--blue)`). `ChartTooltip` has `cursor={false}` and uses `ChartTooltipContent` with `hideLabel`.",
+  "usage": "Replace `chartData` keeping a category key for `XAxis dataKey` and a numeric key for `Bar dataKey`; rename the `chartConfig` entry and the `var(--color-desktop)` fill to match. Adjust `radius` for corner rounding and `maxBarSize` to cap bar width when there are few categories.",
+  "notes": "`accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between bars."
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A 240-degree gauge arc showing an air quality reading with its value and rating below the center.",
+  "overview": "Uses `RadialBarChart` with `innerRadius=\"72%\"`, `startAngle={210}`, `endAngle={-30}` and `barSize={14}`, and one `RadialBar` with `cornerRadius={20}` and a 22% `color-mix` tinted background. `chartData` holds a single `{ name, value, fill }` record with `value` 38 and `fill` set to `var(--color-value)`; `chartConfig.value` uses `var(--green)`. A `PolarAngleAxis` with `type=\"number\"` and `domain={[0, 100]}` (ticks and axis line hidden) makes the bar's length a percentage of the full arc rather than of the largest value. An overlay positioned at 44% from the top shows the value and the rating Good.",
+  "usage": "Set `value` to your reading and adjust the `PolarAngleAxis` `domain` to your scale. The overlay text is static; update the number and rating with your data. To reflect thresholds, choose the `chartConfig.value` color based on the value.",
+  "notes": "There is no tooltip; the center text carries the value. `accessibilityLayer` is set on `RadialBarChart`, so the chart is focusable from the keyboard."
+}

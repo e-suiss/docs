@@ -1,0 +1,6 @@
+{
+  "description": "Concentric radial bars with each category's name printed at the start of its bar.",
+  "overview": "Uses `RadialBarChart` with `innerRadius=\"28%\"`, `barSize={16}`, `startAngle={90}` and `endAngle={-200}`, and one `RadialBar` (`cornerRadius={10}`, `var(--control)` background) containing a `LabelList` on `device` with `position=\"insideStart\"`. The label `formatter` looks up each device's `label` in `chartConfig`. `chartData` holds four `{ device, users, fill }` records, where each `fill` is `var(--color-<device>)`, and `chartConfig` defines `users` (label only) plus `phone`, `laptop`, `tablet` and `watch` colored `var(--blue)`, `var(--teal)`, `var(--indigo)` and `var(--orange)`. The tooltip uses `hideLabel` and `nameKey=\"device\"`.",
+  "usage": "Replace `chartData` with your categories, giving each a `fill` of `var(--color-<key>)`, and add a matching `chartConfig` entry with `label` and `color`. Update the tooltip's `nameKey` if you rename the `device` field. Labels come from `chartConfig` labels through the `LabelList` `formatter`; keep them short so they fit inside the bar, or increase `barSize`.",
+  "notes": "Labels use the `fill-on-accent` class so they stay legible on top of the colored bars. `accessibilityLayer` is set on `RadialBarChart`, so the chart is focusable from the keyboard."
+}

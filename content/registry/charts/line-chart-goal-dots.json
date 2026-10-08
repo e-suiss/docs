@@ -1,0 +1,6 @@
+{
+  "description": "Nightly sleep hours with a goal line and dots colored green or orange depending on whether the goal was met.",
+  "overview": "Uses `LineChart` with one `Line` (`type=\"monotone\"`) whose `dot` is a render function returning a `circle` filled with `var(--green)` when `payload.hours` is at least `GOAL` and `var(--orange)` otherwise. A dashed `ReferenceLine` in `var(--green)` marks `GOAL` (7 hours). `chartData` holds seven `{ day, hours }` records, and `chartConfig.hours` uses `var(--indigo)` for the line. A right-hand `YAxis` uses `domain={[5, 9]}` and `ticks={[5, 7, 9]}` with an `h` suffix.",
+  "usage": "Replace `chartData` and set `GOAL` to your threshold; the dot colors and reference line both read from it. Change the comparison or colors inside the `dot` render function for other rules. The tooltip uses `hideIndicator` and formats values with `formatHours`, which converts decimal hours to hours and minutes.",
+  "notes": "Each custom dot has a `var(--surface-secondary)` stroke so it separates from the line. Because met and missed nights differ by color, the header text also explains the meaning. The header uses plain paragraphs rather than `CardTitle`. `accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between days."
+}

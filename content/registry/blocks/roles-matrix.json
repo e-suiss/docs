@@ -1,0 +1,6 @@
+{
+  "description": "A permissions matrix with a checkbox for every permission and role, grouped by area, with a save action.",
+  "overview": "The block is wrapped in the `AppShell` pattern with an admin navigation. The header has the Permissions title, a note that Admin permissions are fixed, and a Save `Button` that is enabled only after a change. The matrix is a CSS grid of a permission column and four role columns, with a shared header row of role names and one rounded list per permission group; each cell holds a `Checkbox`. The matrix keeps a minimum width and scrolls horizontally on narrow screens.",
+  "usage": "Edit `roles` for the column names and `groups` for the permission rows; each permission has a `name` and a `grants` array with a 1 or 0 for each role, in the order of `roles`. The matrix, a `dirty` flag, and a `saved` flag are held in `React.useState`. The first role column is always disabled, matching the Admin note. Replace the Save `onClick`, which only updates the flags, with a call to your API.",
+  "notes": "Each `Checkbox` has an `aria-label` that combines the group, permission, and role, such as Orders Issue refunds for Support, so the cells are understandable without the visual header row, which is `aria-hidden`."
+}

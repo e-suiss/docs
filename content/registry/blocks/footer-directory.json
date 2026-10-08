@@ -1,0 +1,6 @@
+{
+  "description": "A full site footer with footnotes, a breadcrumb, a five-column link directory, and legal links.",
+  "overview": "The footer opens with numbered footnotes and a `Breadcrumb` for the current page. At `md:` the directory is a five-column grid inside a `nav`, with several sections stacked in some columns; below `md:` the same sections render as an `Accordion` of `AccordionItem`, `AccordionTrigger`, and `AccordionContent`. A closing row holds the copyright, a list of legal links separated by borders, and a region link that moves to the end of the row at `md:`. It is a server component with no state.",
+  "usage": "Edit `sections` for the directory titles and links, `columns` for which section indexes share each desktop column, and `legal` for the bottom links. URLs are hash anchors produced by the `slug` helper; replace it with your routing. Footnotes, the breadcrumb trail, the phone number, and the copyright text are inline.",
+  "notes": "The element is a `footer` landmark. The desktop directory is a `nav` with `aria-label=\"Directory\"`, and the mobile accordion carries the same label; only one is visible at a time through `hidden md:grid` and `md:hidden`."
+}

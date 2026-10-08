@@ -1,0 +1,18 @@
+{
+  "name": "log-activity",
+  "type": "block",
+  "files": [
+    "components/blocks/log-activity.tsx"
+  ],
+  "requires": [
+    "app-shell",
+    "button",
+    "collapsible",
+    "select"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A borderless radar shape over shaded circular rings separated by surface-colored lines.",
+  "overview": "Uses `RadarChart` with `outerRadius=\"70%\"`, a `PolarAngleAxis` on `skill` and a `PolarGrid` with `gridType=\"circle\"`, `fill=\"var(--control)\"` at `fillOpacity={0.5}`, and a 2-pixel `var(--surface-secondary)` stroke. One `Radar` for `thisMonth` uses `fillOpacity={0.45}` and `strokeWidth={0}`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
+  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. Change the `PolarGrid` `fill` and `fillOpacity` to make the rings more or less prominent.",
+  "notes": "The grid's stroke matches the card surface, so it reads as gaps between the shaded rings. `accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+}

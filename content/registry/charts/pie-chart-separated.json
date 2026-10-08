@@ -1,0 +1,6 @@
+{
+  "description": "A donut whose slices are pulled apart with wide gaps and rounded corners.",
+  "overview": "Uses `PieChart` with one `Pie` (`innerRadius=\"55%\"`, `outerRadius=\"85%\"`) that sets `paddingAngle={5}` and `cornerRadius={8}` with `strokeWidth={0}`. `chartData` holds five `{ device, users, fill }` records, where each `fill` is `var(--color-<device>)`. `chartConfig` defines `users` (label only) plus `phone`, `laptop`, `tablet`, `watch` and `other` colored `var(--blue)`, `var(--teal)`, `var(--indigo)`, `var(--orange)` and `var(--gray)`. The tooltip uses `ChartTooltipContent` with `hideLabel` and `nameKey=\"device\"`.",
+  "usage": "Replace `chartData` with your categories, giving each record a `fill` of `var(--color-<key>)`, and add a matching `chartConfig` entry with `label` and `color` for every key. Keep `dataKey` and `nameKey` on `Pie` pointed at your value and category fields, and update the tooltip's `nameKey` if you rename the category field. Tune the separation with `paddingAngle` and the rounding with `cornerRadius`; very small slices can disappear if the padding is larger than their angle.",
+  "notes": "`accessibilityLayer` is set on `PieChart`, so the chart is focusable and arrow keys move between slices."
+}

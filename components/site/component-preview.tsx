@@ -24,11 +24,60 @@ type Meta = {
   parameters?: { layout?: Layout };
 };
 
+/**
+ * Overlays start closed in the docs: their stories open them on mount for
+ * Storybook, which here would cover the page before anyone asks for them.
+ */
+const overlays = new Set([
+  "action-menu",
+  "alert-dialog",
+  "alert-sheet",
+  "combobox",
+  "command-palette",
+  "confirm",
+  "context-menu",
+  "dialog",
+  "drawer",
+  "dropdown-menu",
+  "flyout",
+  "fullscreen-menu",
+  "hover-card",
+  "menubar",
+  "modal",
+  "popover",
+  "preview",
+  "select",
+  "sheet",
+  "tooltip",
+]);
+
+/** A story's identity once it is forced closed: its render and its other args. */
+function closedKey(story: Story) {
+  const { defaultOpen: _defaultOpen, open: _open, ...rest } = story.args ?? {};
+  return { render: story.render, args: JSON.stringify(rest) };
+}
+
+/**
+ * Drops stories that, closed, are the same as an earlier one, like
+ * "OpenByDefault" next to "Default". Variants that were only opened for
+ * Storybook's screenshots stay.
+ */
+function withoutClosedDuplicates(entries: (readonly [string, Story])[]) {
+  const seen: ReturnType<typeof closedKey>[] = [];
+  return entries.filter(([, story]) => {
+    const key = closedKey(story);
+    if (seen.some((other) => other.render === key.render && other.args === key.args)) return false;
+    seen.push(key);
+    return true;
+  });
+}
+
 /** "WithIcon" → "With icon". */
-function labelOf(key: string, story: Story) {
-  if (story.name) return story.name;
-  const words = key.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase();
-  return words.charAt(0).toUpperCase() + words.slice(1);
+function labelOf(key: string, story: Story, closed: boolean) {
+  const name = story.name ?? key.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase();
+  // "Open left" reads wrong for a preview that now starts closed.
+  const label = closed ? name.replace(/^open\s+/i, "") : name;
+  return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
 /** Keeps one failing example from taking the page down. */
@@ -48,8 +97,12 @@ class Boundary extends React.Component<{ children: React.ReactNode }, { failed: 
 }
 
 /** Renders a story the way Storybook does: its own decorators inside the file's. */
-function StoryView({ meta, story }: { meta: Meta; story: Story }) {
-  const args = { ...meta.args, ...story.args };
+function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?: boolean }) {
+  const args: Args = { ...meta.args, ...story.args };
+  if (closed) {
+    args.defaultOpen = false;
+    delete args.open;
+  }
   const context: Context = {
     args,
     parameters: { ...meta.parameters, ...story.parameters },
@@ -125,7 +178,7 @@ function ComponentPreviewOf({ name, wide }: { name: string; wide: boolean }) {
 }
 
 /** Components, patterns and interactions: every story, the first one as the hero. */
-function StoryPreviewOf({ name }: { name: string }) {
+function StoryPreviewOf({ name, story: only }: { name: string; story?: string }) {
   const [module, setModule] = React.useState<Record<string, unknown>>();
   React.useEffect(() => {
     stories[name]?.().then(setModule);
@@ -133,19 +186,23 @@ function StoryPreviewOf({ name }: { name: string }) {
   if (!module) return <Loading />;
 
   const meta = (module.default ?? {}) as Meta;
-  const entries = Object.entries(module)
+  const closed = overlays.has(name);
+  const all = Object.entries(module)
     .filter(([key, value]) => key !== "default" && value && typeof value === "object")
     .map(([key, value]) => [key, value as Story] as const);
+  const deduped = closed ? withoutClosedDuplicates(all) : all;
+  // A single named story renders alone and unlabeled, inside an Example.
+  const entries = only ? all.filter(([key]) => key === only) : deduped;
 
   return (
     <>
       {entries.map(([key, story], index) => (
         <Frame
           key={key}
-          label={index === 0 ? undefined : labelOf(key, story)}
+          label={index === 0 || only ? undefined : labelOf(key, story, closed)}
           layout={story.parameters?.layout ?? meta.parameters?.layout}
         >
-          <StoryView meta={meta} story={story} />
+          <StoryView meta={meta} story={story} closed={closed} />
         </Frame>
       ))}
     </>
@@ -153,7 +210,7 @@ function StoryPreviewOf({ name }: { name: string }) {
 }
 
 /** A live preview of a suiss UI registry item. */
-export function ComponentPreview({ kind, name }: { kind: Kind; name: string }) {
+export function ComponentPreview({ kind, name, story }: { kind: Kind; name: string; story?: string }) {
   if (kind === "chart" || kind === "block") return <ComponentPreviewOf name={name} wide={kind === "block"} />;
-  return <StoryPreviewOf name={name} />;
+  return <StoryPreviewOf name={name} story={story} />;
 }

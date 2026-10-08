@@ -117,7 +117,7 @@ export const Default: Story = {
 }
 
 export const Open: Story = {
-  render: () => <MenuExample defaultOpen />,
+  render: () => <MenuExample />,
   play: async ({ step }) => {
     await step("renders the primary links and sections", async () => {
       const menu = await screen.findByRole("dialog", { name: "Menu" })

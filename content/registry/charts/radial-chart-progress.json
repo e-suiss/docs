@@ -1,0 +1,6 @@
+{
+  "description": "A three-quarter arc tracking progress toward a goal, with the count shown in the center.",
+  "overview": "Uses `RadialBarChart` with `innerRadius=\"72%\"`, `startAngle={225}`, `endAngle={-45}` and `barSize={16}`, and one `RadialBar` with `cornerRadius={20}` and a 22% `color-mix` tinted background. `chartData` holds a single `{ name, value, fill }` record with `value` 64 and `fill` set to `var(--color-value)`; `chartConfig.value` uses `var(--orange)`. A `PolarAngleAxis` with `type=\"number\"` and `domain={[0, 100]}` (ticks and axis line hidden) makes the bar's length a percentage of the full arc rather than of the largest value. An absolutely positioned overlay shows 16 / 25 and a caption.",
+  "usage": "Set `value` to your progress as a percentage of the goal and update the overlay text, which is static. Change `startAngle` and `endAngle` to open or close the arc.",
+  "notes": "There is no tooltip; the center text carries the value. `accessibilityLayer` is set on `RadialBarChart`, so the chart is focusable from the keyboard."
+}

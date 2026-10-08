@@ -1,0 +1,6 @@
+{
+  "description": "A bar chart with a tooltip rendered entirely from custom markup instead of ChartTooltipContent.",
+  "overview": "Uses `BarChart` with one `Bar` (`dataKey=\"steps\"`, `radius={4}`, `maxBarSize={26}`) and an `XAxis` on `day`. `chartData` holds seven `{ day, steps }` records, and `chartConfig.steps` uses `var(--orange)`. `ChartTooltip` receives a `content` function that reads `active`, `payload` and `label`, returns `null` when inactive, and otherwise renders a raised card with a Total caption, the value formatted with `toLocaleString`, the unit `steps` and the day name. `ChartTooltip` sets `defaultIndex={5}` so the tooltip is visible on load, and `cursor={false}`; the chart's top `margin` of 70 leaves room for it above the bars.",
+  "usage": "Write your own `content` function when the built-in rows aren't enough. Read values from `payload` (one entry per series) and the category from `label`, and always return `null` when `active` is false. Style the container with surface tokens such as `bg-surface-raised` so it follows the theme.",
+  "notes": "A custom `content` function bypasses `ChartTooltipContent`, so labels and colors from `chartConfig` are only used if you read them yourself. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between categories."
+}

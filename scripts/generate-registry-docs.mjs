@@ -13,6 +13,8 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
+import { componentApi, storyExamples } from "./lib/extract.mjs";
+
 const root = path.resolve(import.meta.dirname, "..");
 const uiRepo = path.resolve(root, process.argv[2] ?? "../ui");
 const registry = JSON.parse(readFileSync(path.join(uiRepo, "registry.json"), "utf8"));
@@ -30,6 +32,13 @@ const categories = {
 
 const items = registry.items.filter((item) => item.type in categories && item.name !== "theme");
 const byName = new Map(items.map((item) => [item.name, item]));
+
+/** Popups whose stories open them on mount; kept in sync with component-preview.tsx. */
+const overlays = new Set([
+  "action-menu", "alert-dialog", "alert-sheet", "combobox", "command-palette", "confirm",
+  "context-menu", "dialog", "drawer", "dropdown-menu", "flyout", "fullscreen-menu",
+  "hover-card", "menubar", "modal", "popover", "preview", "select", "sheet", "tooltip",
+]);
 
 const pascal = (name) => name.replace(/(^|-)([a-z0-9])/g, (_, __, letter) => letter.toUpperCase());
 const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
@@ -71,7 +80,9 @@ for (const item of items) {
   const story = `${item.name}.stories.tsx`;
   if (!storyFiles.has(story)) continue;
   // The stories' `play` tests are never run here, so they are not type-checked either.
-  const source = readFileSync(path.join(uiRepo, "stories", story), "utf8");
+  let source = readFileSync(path.join(uiRepo, "stories", story), "utf8");
+  // Overlays start closed in the docs, even where a story opens one in JSX.
+  if (overlays.has(item.name)) source = source.replace(/\sdefaultOpen(?:=\{true\})?(?=[\s>/])/g, "");
   writeFileSync(path.join(demos, "stories", story), `// @ts-nocheck\n${source}`);
   storyLoaders.push(`  "${item.name}": () => import("./stories/${item.name}.stories"),`);
 }
@@ -121,41 +132,135 @@ function requiresLinks(item) {
     .join(", ");
 }
 
+/** Escapes MDX-significant characters outside inline code. */
+function mdx(text = "") {
+  return text
+    .split(/(`[^`]*`)/)
+    .map((part) => (part.startsWith("`") ? part : part.replace(/[{}<>]/g, (char) => `\\${char}`)))
+    .join("");
+}
+
+const fence = (code, lang = "tsx", title) => `\`\`\`${lang}${title ? ` title="${title}"` : ""}\n${code.trimEnd()}\n\`\`\``;
+
+function readSource(file) {
+  const local = path.join(root, file);
+  return existsSync(local) ? readFileSync(local, "utf8") : readFileSync(path.join(uiRepo, file), "utf8");
+}
+
+/** Hand-written prose for an item, merged into its generated page. */
+function prose(item) {
+  const file = path.join(root, "content/registry", categories[item.type].folder, `${item.name}.json`);
+  return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : {};
+}
+
+/** Story examples, without the ones that are duplicates once overlays start closed. */
+function examplesOf(item) {
+  const story = path.join(uiRepo, "stories", `${item.name}.stories.tsx`);
+  if (!existsSync(story)) return [];
+  const all = storyExamples(story, readFileSync(story, "utf8"), { itemName: item.name, overlay: overlays.has(item.name) });
+  const seen = new Set();
+  return all.filter((example) => {
+    if (seen.has(example.jsx)) return false;
+    seen.add(example.jsx);
+    return true;
+  });
+}
+
+const labelOf = (key) => {
+  const words = key.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase().replace(/^open\s+/, "");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+};
+
+function propsTable(part, text) {
+  const rows = part.props.map((prop) => {
+    const type = prop.type.replace(/\|/g, "\\|");
+    const fallback = prop.default ? `\`${prop.default.replace(/\|/g, "\\|")}\`` : prop.required ? "Required" : "—";
+    return `| \`${prop.name}\` | \`${type}\` | ${fallback} | ${mdx(text?.[prop.name] ?? "")} |`;
+  });
+  return ["| Prop | Type | Default | Description |", "| --- | --- | --- | --- |", ...rows].join("\n");
+}
+
 function page(item) {
   const category = categories[item.type];
-  const sources = item.files
-    .map((file) => {
-      const local = path.join(root, file);
-      const code = existsSync(local) ? readFileSync(local, "utf8") : readFileSync(path.join(uiRepo, file), "utf8");
-      return `\`\`\`tsx title="${file}"\n${code.trimEnd()}\n\`\`\``;
-    })
-    .join("\n\n");
-
+  const text = prose(item);
+  const visual = item.type === "chart" || item.type === "block";
   const lines = [
     "---",
     `title: ${item.title}`,
+    ...(text.description ? [`description: ${JSON.stringify(text.description)}`] : []),
     `eyebrow: ${category.eyebrow}`,
     "---",
     "",
     MARKER,
     "",
-    `<ComponentPreview kind="${item.type}" name="${item.name}" />`,
-    "",
-    "## Installation",
-    "",
-    '```bash title="Terminal"',
-    `npx @esuiss/ui@latest add ${category.add}${item.name}`,
-    "```",
-    "",
   ];
-  if (item.dependencies.length > 0 || item.requires.length > 0) {
-    lines.push("## Dependencies", "");
-    if (item.dependencies.length > 0) {
-      lines.push(`Packages: ${item.dependencies.map((name) => `\`${name}\``).join(", ")}.`, "");
-    }
-    if (item.requires.length > 0) lines.push(`Uses: ${requiresLinks(item)}.`, "");
+
+  const examples = visual ? [] : examplesOf(item);
+  const parts = visual ? [] : item.files.flatMap((file) => componentApi(file, readSource(file)));
+  const main = visual ? pascal(item.name) : undefined;
+
+  // Hero
+  if (visual) {
+    lines.push(`<Example kind="${item.type}" name="${item.name}">`, "", fence(readSource(item.files[0]), "tsx", item.files[0]), "", "</Example>", "");
+  } else if (examples[0]) {
+    lines.push(`<Example kind="${item.type}" name="${item.name}" story="${examples[0].key}">`, "", fence(examples[0].code), "", "</Example>", "");
   }
-  lines.push("## Source", "", sources, "");
+  if (text.overview) lines.push(mdx(text.overview), "");
+
+  // Installation
+  const files = item.files.map((file) => `\`${file}\``).join(", ");
+  lines.push("## Installation", "", "### CLI", "", fence(`npx @esuiss/ui@latest add ${category.add}${item.name}`, "bash", "Terminal"), "");
+  lines.push("### Manual", "");
+  let step = 1;
+  if (item.dependencies.length > 0) {
+    lines.push(`${step++}. Install the dependencies:`, "", fence(`npm install ${item.dependencies.join(" ")}`, "bash", "Terminal"), "");
+  }
+  if (item.requires.length > 0) {
+    lines.push(`${step++}. Add the pieces it builds on: ${requiresLinks(item)}.`, "");
+  }
+  lines.push(`${step++}. Copy the source into ${files}:`, "");
+  for (const file of item.files) lines.push("<SourceCode>", "", fence(readSource(file), "tsx", file), "", "</SourceCode>", "");
+  lines.push(`${step}. Update the import paths to match your project.`, "");
+
+  // Usage
+  lines.push("## Usage", "");
+  const importPath = `@/${item.files[0].replace(/\.tsx$/, "")}`;
+  const names = visual ? [main] : parts.map((part) => part.name);
+  if (names.length) lines.push(fence(`import { ${names.join(", ")} } from "${importPath}"`), "");
+  if (visual) lines.push(fence(`<${main} />`), "");
+  else if (examples[0]) lines.push(fence(examples[0].jsx), "");
+  if (text.usage) lines.push(mdx(text.usage), "");
+
+  // Examples
+  if (examples.length > 1) {
+    lines.push("## Examples", "");
+    for (const example of examples.slice(1)) {
+      lines.push(`### ${example.name ?? labelOf(example.key)}`, "");
+      if (text.examples?.[example.key]) lines.push(mdx(text.examples[example.key]), "");
+      lines.push(`<Example kind="${item.type}" name="${item.name}" story="${example.key}">`, "", fence(example.code), "", "</Example>", "");
+    }
+  }
+
+  // API reference
+  const documented = parts.filter((part) => part.props.length > 0 || part.extends.length > 0);
+  if (documented.length) {
+    lines.push("## API Reference", "");
+    for (const part of documented) {
+      lines.push(`### ${part.name}`, "");
+      if (text.parts?.[part.name]) lines.push(mdx(text.parts[part.name]), "");
+      if (part.extends.length) lines.push(`Accepts every prop of ${part.extends.map((type) => `\`${type}\``).join(" and ")}.`, "");
+      if (part.props.length) lines.push(propsTable(part, text.props?.[part.name]), "");
+    }
+  }
+
+  if (text.accessibility) lines.push("## Accessibility", "", mdx(text.accessibility), "");
+  if (text.notes) lines.push("## Notes", "", mdx(text.notes), "");
+
+  // Context for writers of content/registry/*.json.
+  const api = { name: item.name, type: item.type, files: item.files, requires: item.requires, dependencies: item.dependencies, examples: examples.map((e) => e.key), parts };
+  mkdirSync(path.join(demos, "api", category.folder), { recursive: true });
+  writeFileSync(path.join(demos, "api", category.folder, `${item.name}.json`), `${JSON.stringify(api, null, 2)}\n`);
+
   return lines.join("\n");
 }
 

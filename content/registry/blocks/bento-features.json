@@ -1,0 +1,6 @@
+{
+  "description": "A bento grid of product feature tiles mixing photography, gradient figures, and short claims.",
+  "overview": "Under a Why Phone Pro heading, tiles stack in one column and become a four-column, two-row grid at `md:`. A large camera tile spans two columns and two rows, two stat tiles show a Phosphor icon (`CpuIcon`, `BatteryFullIcon`) with gradient text figures, and a wide tile spans two columns with copy beside an image. The block uses plain markup and design tokens such as `bg-surface` and `text-label-secondary`; it does not use suiss UI components or hold any state.",
+  "usage": "All copy is inline in the JSX: replace the heading, tile titles, figures (S19 Pro, 33 hrs), and descriptions directly. Images are built with the `photo` helper, which takes an Unsplash photo ID and a width. Change the gradient colors through the `from-` and `to-` classes on each figure.",
+  "notes": "Both images have descriptive `alt` text. They load from Unsplash; replace them with your own product photography."
+}

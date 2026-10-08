@@ -102,7 +102,7 @@ export const Sides: Story = {
     <div className="grid grid-cols-2 place-items-center gap-x-24 gap-y-16">
       {(["top", "right", "left", "bottom"] as const).map((side) => (
         <TooltipProvider key={side}>
-          <Tooltip defaultOpen>
+          <Tooltip>
             <TooltipTrigger render={<Button variant="outline" />}>
               {side}
             </TooltipTrigger>

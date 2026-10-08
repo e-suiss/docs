@@ -1,0 +1,6 @@
+{
+  "description": "A single line drawn with straight segments between readings instead of a smoothed curve.",
+  "overview": "Same structure as the default line chart (`LineChart`, dashed `CartesianGrid`, an `XAxis` on `month` abbreviated to three letters), but the `Line` uses `type=\"linear\"` with `strokeWidth={2.5}` and `dot={false}`. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted with `chartConfig.desktop` (`var(--blue)`). The tooltip uses `hideLabel`.",
+  "usage": "Replace `chartData` with your own records and rename the series in `chartConfig` and the `stroke` reference when you change `dataKey`. Use `type=\"linear\"` when the line should not suggest values that overshoot the actual readings.",
+  "notes": "`accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between points."
+}

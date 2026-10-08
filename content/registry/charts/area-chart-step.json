@@ -1,0 +1,6 @@
+{
+  "description": "A single filled area drawn as steps, holding each value flat until the next reading.",
+  "overview": "Uses `AreaChart` with one `Area` set to `type=\"step\"`, a dashed horizontal `CartesianGrid`, and an `XAxis` on `month` abbreviated to three letters. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is drawn with `chartConfig.desktop` (`var(--blue)`) at `fillOpacity={0.18}`. The tooltip uses `indicator=\"line\"`.",
+  "usage": "Replace `chartData` with readings that change in discrete jumps, such as prices, plan tiers or counts. Keep the `month` and `desktop` keys or rename them along with `chartConfig`. Recharts also accepts `\"stepBefore\"` and `\"stepAfter\"` for `type` if you need the step to occur at a different point.",
+  "notes": "`accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between months."
+}

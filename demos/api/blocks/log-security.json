@@ -1,0 +1,17 @@
+{
+  "name": "log-security",
+  "type": "block",
+  "files": [
+    "components/blocks/log-security.tsx"
+  ],
+  "requires": [
+    "app-shell",
+    "button",
+    "toggle-group"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "examples": [],
+  "parts": []
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A centered product launch hero with an eyebrow, headline, two actions, a wide image, and a pricing line.",
+  "overview": "A static, centered composition: a New eyebrow, a product name and tagline that grow at `md:`, two `Button` actions (a filled Learn more and an outline Buy styled with the accent color), a `2:1` product image, and a small pricing line. The text, buttons, and image fade and rise in with staggered delays using `starting:` styles. It is a server component with no state.",
+  "usage": "Replace the copy inline and the image URL in the `image` constant at the top of the file. The buttons have no handlers; wrap them in links or add `onClick` handlers for your learn more and purchase destinations. Update the pricing footnote to match your offer.",
+  "notes": "The image has descriptive `alt` text and loads from Unsplash; replace it with your own product photography. Entry animations are disabled with `motion-reduce:`."
+}

@@ -1,0 +1,6 @@
+{
+  "description": "Three nested activity rings for move, exercise and stand, drawn as plain SVG circles.",
+  "overview": "This variant doesn't use Recharts or `ChartContainer`. It renders an `svg` rotated by -90 degrees with one pair of `circle` elements per entry in `rings`: a track stroked with a 22% `color-mix` tint and a progress arc whose length is set with `strokeDasharray`. Each ring entry is `{ key, label, value, goal, color }`, using `var(--red)`, `var(--green)` and `var(--cyan)`. Progress is `value / goal`, capped at one full circle. `SIZE` and `BAR` set the viewBox and stroke width.",
+  "usage": "Replace the `rings` values and goals with your own, or add entries with a `color` token; each additional ring is placed further inward. Change `SIZE` and `BAR` to resize the rings and their thickness.",
+  "notes": "The `svg` has `role=\"img\"` and an `aria-label` built from each ring's label, value and goal. Values above the goal render as a full ring; there is no overlap lap."
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A single line drawn as horizontal steps, holding each value until the next reading.",
+  "overview": "Uses `LineChart` with one `Line` set to `type=\"step\"` (`strokeWidth={2.5}`, `dot={false}`), a dashed horizontal `CartesianGrid` and an `XAxis` on `month` abbreviated to three letters. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted with `chartConfig.desktop` (`var(--blue)`). The tooltip uses `hideLabel`.",
+  "usage": "Use this variant for values that change in discrete jumps. Replace `chartData` and rename the `chartConfig` entry as needed. Recharts also accepts `\"stepBefore\"` and `\"stepAfter\"` for `type` to move where each step occurs.",
+  "notes": "`accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between points."
+}

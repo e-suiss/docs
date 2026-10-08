@@ -1,0 +1,6 @@
+{
+  "description": "A product lineup comparing models side by side, each with finish swatches, a price, and buy actions.",
+  "overview": "A centered heading sits above a grid of models that shows two columns and four at `lg:`. Each model is rendered by a local `LineupModel` component: an image, a `ToggleGroup` of small round `ToggleGroupItem` swatches, an optional kicker, the name, a tagline, a starting price, a `Button`, and a Learn more link. Fixed minimum heights on the kicker and tagline keep the cards aligned.",
+  "usage": "Edit the `models` array at the top of the file; each model has a `name`, `tagline`, preformatted `price`, optional `kicker`, `image`, `alt`, and a list of `finishes` with a `label` and CSS `color`. Each `LineupModel` keeps its selected finish in `React.useState`; selecting a swatch changes only the selection, not the image, so add per-finish images if you need them. The Buy buttons have no handler, and the Learn more links point to `#learn`.",
+  "notes": "Each swatch group has an `aria-label` such as Phone Pro finish, each swatch is labeled with its finish name, and an `after:` pseudo-element enlarges the small swatches' hit area. Images have descriptive `alt` text and load from Unsplash through the `photo` helper; replace them with your own."
+}

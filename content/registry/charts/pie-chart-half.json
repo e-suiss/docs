@@ -1,0 +1,6 @@
+{
+  "description": "A semicircular gauge-style pie showing battery share by device, with a caption under the arc.",
+  "overview": "Uses `PieChart` with one `Pie` drawn from `startAngle={180}` to `endAngle={0}`, centered low with `cy=\"88%\"`, using `innerRadius=\"105%\"` and `outerRadius=\"150%\"`, `paddingAngle={1.5}`, `cornerRadius={4}` and `stroke=\"none\"`. `chartData` holds four `{ device, share, fill }` records that add up to 100, and `chartConfig` defines `share` plus `phone`, `laptop`, `tablet` and `watch` with `var(--blue)`, `var(--teal)`, `var(--indigo)` and `var(--orange)`. An absolutely positioned caption sits under the arc.",
+  "usage": "Replace `chartData` with your shares and add matching `chartConfig` entries. Because the radii are percentages of the container, adjust `cy`, `innerRadius` and `outerRadius` together if you change the container height. The tooltip `formatter` prints the `chartConfig` label followed by the value with a percent sign; change it for non-percentage values. The caption text is static, so update it with your data.",
+  "notes": "`accessibilityLayer` is set on `PieChart`, so the chart is focusable and arrow keys move between slices."
+}

@@ -1,0 +1,6 @@
+{
+  "description": "Twenty-four thin bars of screen time per hour, with a dashed line marking the hourly average.",
+  "overview": "Uses `BarChart` with one `Bar` (`dataKey=\"minutes\"`, `radius={[3, 3, 0, 0]}`, `maxBarSize={8}`). `chartData` is mapped from a 24-value array into `{ hour, minutes }` records, and `chartConfig.minutes` uses `var(--blue)`. The `XAxis` shows only `ticks={[0, 6, 12, 18]}` formatted as hours, a right-hand `YAxis` shows three ticks in minutes, and a dashed `ReferenceLine` in `var(--green)` sits at the computed `average`. The header shows the day's `total` in hours and minutes.",
+  "usage": "Replace the 24-value array with your own hourly figures; `total` and `average` are derived from `chartData`. The tooltip uses `hideIndicator`, a `labelFormatter` that prints the hour as `H:00`, and a `formatter` that appends `min`; change these for other units. Remove the `ReferenceLine` if you don't need the average.",
+  "notes": "The header uses plain paragraphs rather than `CardTitle`. `accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between hours."
+}

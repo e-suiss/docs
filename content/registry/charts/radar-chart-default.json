@@ -1,0 +1,6 @@
+{
+  "description": "A single filled radar shape showing this month's scores across six training skills.",
+  "overview": "Uses `RadarChart` with `outerRadius=\"70%\"`, a `PolarAngleAxis` on `skill`, a `PolarGrid` stroked with `var(--separator)`, and one `Radar` for `thisMonth` at `fillOpacity={0.3}` with `strokeWidth={2}`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records; only `thisMonth` is plotted. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
+  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. Add another `Radar` with its own `dataKey` to compare series, as in the multiple variant.",
+  "notes": "`accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+}

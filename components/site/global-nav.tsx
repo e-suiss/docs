@@ -12,6 +12,7 @@ import { products } from "@/lib/products";
 import { strings } from "@/lib/strings";
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
+const MENU_EXIT = 500;
 
 /** A link whose label rolls up to an identical copy on hover. */
 function RollLink({
@@ -53,6 +54,16 @@ function RollLink({
 export function GlobalNav() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  // The menu stays mounted while it animates out, then unmounts.
+  const [menuMounted, setMenuMounted] = React.useState(false);
+  React.useEffect(() => {
+    if (menuOpen) {
+      setMenuMounted(true);
+      return;
+    }
+    const timeout = setTimeout(() => setMenuMounted(false), MENU_EXIT);
+    return () => clearTimeout(timeout);
+  }, [menuOpen]);
   const home = pathname === "/";
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu on navigation
@@ -143,16 +154,27 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
         </div>
       </nav>
 
-      {menuOpen && (
-        <div className="fixed inset-0 flex flex-col overflow-y-auto bg-surface px-5 pt-24 pb-10 md:px-10 lg:hidden">
+      {menuMounted && (
+        <div
+          data-state={menuOpen ? "open" : "closed"}
+          className={cn(
+            "fixed inset-0 flex flex-col overflow-y-auto bg-surface px-5 pt-24 pb-10 transition-opacity duration-500 md:px-10 lg:hidden",
+            ease,
+            menuOpen ? "opacity-100 starting:opacity-0" : "pointer-events-none opacity-0",
+          )}
+        >
           <ul className="flex flex-col">
             {products.map((product, index) => (
               <li
                 key={product.slug}
-                style={{ transitionDelay: `${index * 40}ms` }}
+                // Rows arrive top to bottom and leave bottom to top.
+                style={{ transitionDelay: `${(menuOpen ? index : products.length - 1 - index) * 40}ms` }}
                 className={cn(
-                  "border-t border-label/15 transition-[opacity,translate] duration-700 starting:translate-y-4 starting:opacity-0",
+                  "border-t border-label/15 transition-[opacity,translate] duration-500",
                   ease,
+                  menuOpen
+                    ? "translate-y-0 opacity-100 starting:translate-y-4 starting:opacity-0"
+                    : "-translate-y-2 opacity-0",
                 )}
               >
                 <Anchor

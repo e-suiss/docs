@@ -1,0 +1,6 @@
+{
+  "description": "A single filled area whose points are joined by straight segments instead of a smoothed curve.",
+  "overview": "Identical in structure to the default area chart (`AreaChart`, `CartesianGrid`, `XAxis` on `month`), but the `Area` uses `type=\"linear\"`. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted with `chartConfig.desktop` (`var(--blue)`) at `fillOpacity={0.18}`. The tooltip uses `indicator=\"line\"`.",
+  "usage": "Replace `chartData` with your own records, keeping a category key for the x-axis and a numeric key for the area. Rename the series in `chartConfig` and in the `var(--color-<key>)` references when you change `dataKey`. Use `type=\"linear\"` when exact values between readings matter more than a smooth trend.",
+  "notes": "`accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between months."
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A single radar shape with a solid dot marking the value on every axis.",
+  "overview": "Uses `RadarChart` with `outerRadius=\"70%\"`, a `PolarAngleAxis` on `skill`, a `PolarGrid` stroked with `var(--separator)`, and one `Radar` for `thisMonth` at `fillOpacity={0.2}` whose `dot` prop draws 4-pixel markers with `fillOpacity: 1`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
+  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. Change the `r` value in `dot` to resize the markers, or pass a render function to `dot` for custom shapes.",
+  "notes": "`accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+}

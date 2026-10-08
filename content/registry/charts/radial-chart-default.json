@@ -1,0 +1,6 @@
+{
+  "description": "Concentric radial bars, one per device, each running around a gray background track.",
+  "overview": "Uses `RadialBarChart` with `innerRadius=\"25%\"`, `outerRadius=\"100%\"` and `barSize={12}`, and one `RadialBar` (`dataKey=\"users\"`, `cornerRadius={10}`) with `background={{ fill: \"var(--control)\" }}`. `chartData` holds four `{ device, users, fill }` records, where each `fill` is `var(--color-<device>)`, and `chartConfig` defines `users` (label only) plus `phone`, `laptop`, `tablet` and `watch` colored `var(--blue)`, `var(--teal)`, `var(--indigo)` and `var(--orange)`. The tooltip uses `hideLabel` and `nameKey=\"device\"`.",
+  "usage": "Replace `chartData` with your categories, giving each a `fill` of `var(--color-<key>)`, and add a matching `chartConfig` entry with `label` and `color`. Update the tooltip's `nameKey` if you rename the `device` field. Without a `PolarAngleAxis`, bar lengths are scaled relative to the largest value; add one with a numeric `domain` if you need a fixed scale.",
+  "notes": "`accessibilityLayer` is set on `RadialBarChart`, so the chart is focusable from the keyboard."
+}

@@ -1,0 +1,6 @@
+{
+  "description": "A pair of promotional hero tiles, each with a title, tagline, two actions, and a product image.",
+  "overview": "Tiles stack in one column and sit side by side in a two-column grid at `md:`. Each tile is an `article` with a centered heading, a tagline, a filled and an outline `Button`, and an image below. A tile with `dark` set applies the `dark` class so it renders in the dark palette and prefixes its title with suiss. It is a server component with no state.",
+  "usage": "Edit the `tiles` array at the top of the file; each tile has a `title`, `text`, `image`, `alt`, and a `dark` flag. Images are built with the `photo` helper from Unsplash photo IDs. The Learn more and Buy buttons have no handlers; connect them to your product pages.",
+  "notes": "Each image has descriptive `alt` text from the data. Images load from Unsplash; replace them with your own."
+}

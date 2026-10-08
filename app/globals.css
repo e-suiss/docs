@@ -381,3 +381,20 @@ body {
   color: var(--color-label-tertiary);
   user-select: none;
 }
+
+/*
+ * Story previews: decorators sized to Storybook's viewport (min-h-svh, h-svh)
+ * get a preview-sized box instead, and the transform makes fixed elements
+ * (sidebars, app shells) position against the preview rather than the page.
+ */
+[data-slot="preview"] {
+  transform: translateZ(0);
+}
+
+[data-slot="preview"] :is(.min-h-svh, .min-h-dvh, .min-h-screen) {
+  min-height: 20rem;
+}
+
+[data-slot="preview"] :is(.h-svh, .h-dvh, .h-screen) {
+  height: 32rem;
+}

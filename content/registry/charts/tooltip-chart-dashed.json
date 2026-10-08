@@ -1,0 +1,6 @@
+{
+  "description": "A stacked bar chart whose tooltip marks each series with a dashed outline indicator.",
+  "overview": "Uses a `BarChart` with two `Bar` elements, `desktop` and `mobile`, stacked with `stackId=\"a\"` (`maxBarSize={30}`, outer corners rounded), and an `XAxis` on `month` abbreviated to three letters. `chartData` holds six months of `{ month, desktop, mobile }` records, and `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. The tooltip is `ChartTooltipContent` with `indicator=\"dashed\"`, which draws the indicator as a dashed border in the series color. `ChartTooltip` sets `defaultIndex={2}` so the tooltip is visible on load, and `cursor={false}`; the chart's top `margin` of 70 leaves room for it above the bars.",
+  "usage": "Replace `chartData` and `chartConfig` with your own series; the tooltip reads each row's label and color from `chartConfig`. Remove `defaultIndex` if the tooltip should appear only on hover or focus. The dashed style pairs well with series that are drawn with dashed strokes, such as forecasts.",
+  "notes": "`accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between categories."
+}

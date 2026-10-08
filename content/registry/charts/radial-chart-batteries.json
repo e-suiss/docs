@@ -1,0 +1,6 @@
+{
+  "description": "A row of small battery rings, one per device, that turn red when charge is at or below 20%.",
+  "overview": "Each `Battery` renders a compact `RadialBarChart` (`innerRadius=\"78%\"`, `startAngle={90}`, `endAngle={-270}`, `barSize={6}`) with a single `{ level, fill }` record and a `PolarAngleAxis` fixed to `domain={[0, 100]}`. Its `chartConfig` is built per device: `level` uses `var(--red)` when `level` is at or below `LOW` and `var(--green)` otherwise. The `RadialBar` has `cornerRadius={6}`, no animation, and a background tinted to 22% of the color with `color-mix`. The `devices` array supplies `{ name, level }` pairs.",
+  "usage": "Replace `devices` with your own names and levels from 0 to 100, and change `LOW` to move the warning threshold. The ring's center shows the first letter of `name`; swap that span for an icon if you prefer.",
+  "notes": "Each ring is decorative: `ChartContainer` is `aria-hidden` with `accessibilityLayer={false}`, and the percentage and device name are rendered as text beneath it."
+}

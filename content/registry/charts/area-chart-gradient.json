@@ -1,0 +1,6 @@
+{
+  "description": "Two overlapping areas whose fills fade out toward the bottom using SVG linear gradients.",
+  "overview": "Uses `AreaChart` with two `Area` series (`mobile` drawn first, then `desktop`), both `type=\"natural\"`. `chartData` holds six months of `{ month, desktop, mobile }` records; `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. Each series has its own `linearGradient` in `<defs>` running from `stopOpacity` 0.38 at the top to 0.02 at the bottom, and each `Area` references it with `fill={`url(#...)`}`. The tooltip uses the default `ChartTooltipContent` dot indicator.",
+  "usage": "Replace `chartData` keeping the `month`, `desktop` and `mobile` keys, or rename them in `chartConfig`. To add a series, add a `chartConfig` entry, a matching `linearGradient` with stops using `var(--color-<key>)`, and an `Area` whose `fill` points at that gradient. Tune the fade by changing the two `stopOpacity` values.",
+  "notes": "Gradient ids are derived from `React.useId()`, which keeps them unique when the chart appears more than once. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between months."
+}

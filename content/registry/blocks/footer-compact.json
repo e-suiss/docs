@@ -1,0 +1,6 @@
+{
+  "description": "A narrow site footer with a breadcrumb, a collapsible link directory, and legal lines.",
+  "overview": "A single centered column limited to `max-w-md`, suited to small screens at every width. A `Breadcrumb` (`BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbSeparator`, `BreadcrumbPage`) shows the current page, followed by an `Accordion` where each `AccordionItem` expands to a list of links. The footer ends with a store and phone line, a copyright notice, and a region link. It is a server component with no state.",
+  "usage": "Edit the `sections` array at the top of the file; each section has a `title` and a list of `links`. Link URLs are generated as hash anchors by the `slug` helper, so replace it with a mapping to your real routes. Update the breadcrumb trail, phone number, copyright line, and region link inline.",
+  "notes": "The element is a `footer` landmark, and the accordion has `aria-label=\"Directory\"`. The breadcrumb marks the current page with `BreadcrumbPage`."
+}

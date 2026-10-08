@@ -1,0 +1,6 @@
+{
+  "description": "A gradient area with visible dots and a value axis on the right edge of the plot.",
+  "overview": "Uses `AreaChart` with one `Area` (`type=\"monotone\"`) plus both an `XAxis` on `month` and a `YAxis` with `orientation=\"right\"`, `tickCount={4}` and `width=\"auto\"`. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is drawn, colored by `chartConfig.desktop` (`var(--blue)`). The fill is a vertical `linearGradient` in `<defs>` that fades from `stopOpacity` 0.38 to 0.02, and `dot` renders a 3-pixel point at each value.",
+  "usage": "Replace `chartData` with your records and keep the `month` and `desktop` keys, or rename them along with `XAxis dataKey`, `Area dataKey` and the `chartConfig` entry. Move the value axis by changing `orientation` on `YAxis`, and control its density with `tickCount`. Remove the `dot` prop to hide the point markers.",
+  "notes": "The gradient `id` comes from `React.useId()`, so several instances on one page don't share or overwrite each other's gradients. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between months."
+}
