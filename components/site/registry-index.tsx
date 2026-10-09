@@ -5,7 +5,6 @@ import items from "@/demos/items.json";
 
 type Item = { name: string; title: string; group: string | null };
 
-/** Every item in a registry category, grouped where the category has groups. */
 export function RegistryIndex({ category }: { category: keyof typeof items }) {
   const list = items[category] as Item[];
   const groups = new Map<string, Item[]>();

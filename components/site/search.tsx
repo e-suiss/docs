@@ -18,7 +18,6 @@ import { CommandEmpty, CommandInput, CommandItem, CommandList } from "@/componen
 
 const MARK = /<mark>|<\/mark>/;
 
-/** Search results arrive as text with `<mark>` around the matched words. */
 function Highlighted({ text }: { text: string }) {
   return text.split(MARK).map((part, index) =>
     index % 2 === 1 ? (
@@ -45,9 +44,7 @@ export function Search({
   hotkey = true,
 }: {
   className?: string;
-  /** "field" renders a wide search box with a ⌘K hint instead of an icon button. */
   variant?: "icon" | "field";
-  /** Only one Search on the page should own the ⌘K shortcut. */
   hotkey?: boolean;
 }) {
   const router = useRouter();

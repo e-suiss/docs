@@ -10,7 +10,6 @@ import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar";
 
 type Group = { label?: string; nodes: PageTree.Node[] };
 
-/** Splits a folder's children into groups at each separator ("---Label---" in meta.json). */
 function groupNodes(nodes: PageTree.Node[]) {
   const groups: Group[] = [{ nodes: [] }];
   for (const node of nodes) {
@@ -23,7 +22,6 @@ function groupNodes(nodes: PageTree.Node[]) {
   return groups.filter((group) => group.nodes.length > 0);
 }
 
-/** Every page URL inside a folder, its own index page included. */
 function urlsOf(nodes: PageTree.Node[]): string[] {
   return nodes.flatMap((node) => {
     if (node.type === "page") return [node.url];
@@ -32,10 +30,6 @@ function urlsOf(nodes: PageTree.Node[]): string[] {
   });
 }
 
-/**
- * A folder's own URL prefix: the path its pages share. Fumadocs lists a
- * folder's index.mdx as an ordinary child, so the prefix comes from the URLs.
- */
 function prefixOf(folder: PageTree.Folder) {
   const urls = urlsOf(folder.index ? [folder.index, ...folder.children] : folder.children);
   if (urls.length === 0) return undefined;
@@ -49,11 +43,6 @@ function prefixOf(folder: PageTree.Folder) {
   return shared.join("/");
 }
 
-/**
- * Each folder (Components, Charts, …) is its own section with its own tab, so
- * the sidebar shows only the section being read: that folder's pages, or the
- * guides when the page is in none of them.
- */
 function sectionOf(nodes: PageTree.Node[], pathname: string): { title: string; nodes: PageTree.Node[] } {
   const folders = nodes.filter((node): node is PageTree.Folder => node.type === "folder");
   const current = folders.find((folder) => {
@@ -73,10 +62,6 @@ function sectionOf(nodes: PageTree.Node[], pathname: string): { title: string; n
   return { title: "Docs", nodes: nodes.filter((node) => node.type !== "folder") };
 }
 
-/**
- * One entry: the page being read gets a rule in the margin and full weight;
- * others slide on hover.
- */
 function Row({ page, group }: { page: PageTree.Item; group?: string }) {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
@@ -110,7 +95,6 @@ function Row({ page, group }: { page: PageTree.Item; group?: string }) {
   );
 }
 
-/** Under a group label, "Area Chart Axes" reads as "Axes". */
 function shortName(name: string, group?: string) {
   if (!group) return name;
   const rest = name.replace(new RegExp(`^${group}( Chart)? `, "i"), "");
@@ -130,10 +114,6 @@ const pagesOf = (nodes: PageTree.Node[]) =>
     node.type === "page" ? [node] : node.type === "folder" ? [...(node.index ? [node.index] : []), ...pagesOf(node.children)] : [],
   );
 
-/**
- * The docs navigator: a mono section header, mono group labels and quiet
- * entries marked with a rule, in the style of the table of contents.
- */
 export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
   const pathname = usePathname();
   const section = sectionOf(all, pathname);

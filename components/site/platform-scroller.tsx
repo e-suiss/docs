@@ -11,9 +11,6 @@ import { strings } from "@/lib/strings";
 
 type Slide = { slug: ProductSlug; image: string };
 
-// Still frames rendered from shadergradient.co (Access: the Halo preset recolored
-// blue; then Interstella, Nighty night, Universe), so the cards match the hero
-// without running WebGL.
 const slides: Slide[] = [
   { slug: "access", image: "/images/platform-access-v4.jpg" },
   { slug: "relay", image: "/images/platform-relay.jpg" },
@@ -21,7 +18,6 @@ const slides: Slide[] = [
   { slug: "one", image: "/images/platform-one.jpg" },
 ];
 
-// Fine film grain drawn by an SVG turbulence filter.
 const grain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
@@ -86,10 +82,6 @@ function Card({ slide, index }: { slide: Slide; index: number }) {
   );
 }
 
-/**
- * Pins to the viewport while vertical scrolling moves the cards sideways.
- * Below `md` it is a plain swipeable row.
- */
 export function PlatformScroller({ header }: { header: React.ReactNode }) {
   const sectionRef = React.useRef<HTMLElement>(null);
   const trackRef = React.useRef<HTMLDivElement>(null);
@@ -137,7 +129,6 @@ export function PlatformScroller({ header }: { header: React.ReactNode }) {
   return (
     <section
       ref={sectionRef}
-      // The extra height is the runway the horizontal travel consumes.
       style={{ height: distance > 0 ? `calc(100svh + ${distance}px)` : undefined }}
       className="relative"
     >

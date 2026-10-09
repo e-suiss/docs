@@ -7,7 +7,6 @@ import { strings } from "@/lib/strings";
 
 type CalloutType = "note" | "tip" | "important" | "warning" | "deprecated";
 
-// DocC asides: a tinted fill and a 1px border in the same hue.
 const styles: Record<CalloutType, string> = {
   note: "border-separator bg-surface-secondary",
   tip: "border-teal/50 bg-teal/8",

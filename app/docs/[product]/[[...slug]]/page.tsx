@@ -19,7 +19,6 @@ function getDocPage(params: { product: string; slug?: string[] }) {
   return source.getPage([params.product, ...(params.slug ?? [])]);
 }
 
-/** Previous or next page as a full-width row, like the home page's product index. */
 function Neighbour({
   direction,
   href,
@@ -73,7 +72,6 @@ export default async function Page(props: PageProps<"/docs/[product]/[[...slug]]
 
   const product = getProduct(params.product);
   const number = product ? String(products.indexOf(product) + 1).padStart(2, "0") : "";
-  // Eyebrows like "suiss UI" only repeat the product; keep the ones that add a kind.
   const eyebrow = page.data.eyebrow;
   const kind =
     eyebrow && product && eyebrow !== product.name && eyebrow !== `suiss ${product.name}` ? eyebrow : undefined;

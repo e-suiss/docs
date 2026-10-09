@@ -6,7 +6,6 @@ import * as React from "react";
 
 import type { GradientPreset } from "@/components/site/shader-gradient";
 
-// WebGL only runs in the browser; the CSS fallback below shows until it loads.
 const ShaderGradientBackground = dynamic(() => import("@/components/site/shader-gradient"), {
   ssr: false,
 });
@@ -21,7 +20,6 @@ const fallbacks: Record<GradientPreset, string> = {
   Sunset: "bg-[radial-gradient(120%_90%_at_30%_40%,#ffc53d_0%,#ff7a33_45%,#33a0ff_100%)]",
 };
 
-/** Mounts WebGL only while the gradient is on or near the screen. */
 function useNearViewport(ref: React.RefObject<HTMLElement | null>) {
   const [near, setNear] = React.useState(false);
   React.useEffect(() => {
@@ -42,7 +40,6 @@ export function Gradient({ preset, className }: { preset: GradientPreset; classN
 
   return (
     <div ref={ref} aria-hidden className={cn("absolute inset-0 overflow-hidden", fallbacks[preset], className)}>
-      {/* Render at least one screen tall so short sections keep the preset's framing. */}
       <div className="absolute inset-x-0 top-1/2 h-[max(100%,100svh)] -translate-y-1/2">
         {near && <ShaderGradientBackground preset={preset} />}
       </div>

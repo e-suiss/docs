@@ -15,7 +15,6 @@ function containsUrl(nodes: PageTree.Node[], prefix: string): boolean {
   });
 }
 
-/** The root folder (`"root": true` in meta.json) that holds a product's pages. */
 export function getProductTree(product: string) {
   const tree = source.getPageTree();
   const page = source.getPage([product]);

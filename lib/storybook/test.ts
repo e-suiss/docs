@@ -1,7 +1,3 @@
-/**
- * Stand-in for "storybook/test". The suiss UI stories import these for their
- * `play` interaction tests, which the docs never run; previews only render.
- */
 const noop = () => undefined;
 const chain: unknown = new Proxy(noop, { get: () => chain, apply: () => chain });
 

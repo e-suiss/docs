@@ -9,12 +9,10 @@ export type Product = {
   tagline: string;
   summary: string;
   repository: string;
-  /** Sections shown in the product bar and the global menu, relative to /docs/<slug>. */
   sections: ProductLink[];
   status?: "pre-alpha";
 };
 
-/** UI's sections: the guides, then one per registry category. */
 const uiSections: ProductLink[] = [
   { label: "Docs", path: "" },
   { label: "Components", path: "/components" },

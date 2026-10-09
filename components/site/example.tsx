@@ -7,7 +7,6 @@ import { ComponentPreview } from "@/components/site/component-preview";
 
 type Kind = React.ComponentProps<typeof ComponentPreview>["kind"];
 
-/** A live example with its code one tab away, like shadcn's preview / code pair. */
 export function Example({
   kind,
   name,
@@ -42,7 +41,6 @@ export function Example({
           </button>
         ))}
       </div>
-      {/* Both stay mounted so a preview keeps its state across tab switches. */}
       <div hidden={tab !== "preview"}>
         <ComponentPreview kind={kind} name={name} story={story} />
       </div>

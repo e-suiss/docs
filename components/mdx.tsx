@@ -12,7 +12,6 @@ import { SourceCode } from "@/components/site/source-code";
 import { RegistryIndex } from "@/components/site/registry-index";
 import { Button } from "@/components/ui/button";
 
-/** A live component example on the page surface, framed by a hairline. */
 function Preview({ children }: { children: React.ReactNode }) {
   return (
     <div

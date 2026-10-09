@@ -54,7 +54,6 @@ function Lines({ nodes, depth }: { nodes: AnatomyNode[]; depth: number }) {
   });
 }
 
-/** How a component's parts nest, each linking to its reference below. */
 export function Anatomy({ tree }: { tree: AnatomyNode[] }) {
   return (
     <figure data-not-prose className="mt-6 overflow-hidden rounded-3xl bg-surface-secondary">
@@ -73,7 +72,6 @@ function count(nodes: AnatomyNode[]): number {
   return nodes.reduce((total, node) => total + 1 + count(node.children), 0);
 }
 
-/** One numbered part of the API reference: heading, description and props. */
 export function ApiPart({ index, children }: { index: number; children: React.ReactNode }) {
   return (
     <section className="relative mt-6 overflow-hidden rounded-3xl pt-6 ring-1 ring-label/10 [&>:not([data-slot=props-table])]:px-6 [&>h3]:mt-0! [&>h3]:pe-14 [&>[data-slot=props-table]]:mt-5 [&>[data-slot=props-table]]:rounded-none [&>[data-slot=props-table]]:border-t [&>[data-slot=props-table]]:border-label/10 [&>[data-slot=props-table]]:ring-0">

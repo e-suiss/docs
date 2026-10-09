@@ -54,7 +54,6 @@ const chartConfig: ChartConfig = {
 
 const total = pieces.reduce((sum, piece) => sum + piece.count, 0);
 
-/** What ships in suiss UI, read from its registry, as a donut. */
 function ChartTile() {
   return (
     <Tile file="pie-chart.tsx" className="md:col-span-7 md:row-span-2">
@@ -78,7 +77,6 @@ function ChartTile() {
         </div>
         <ChartContainer
           config={chartConfig}
-          // Slices scale from the pie's center on hover; the SVG may overflow so they never clip.
           className="aspect-square w-full max-w-90 justify-self-center [&_.recharts-pie-sector]:origin-center [&_.recharts-pie-sector]:cursor-pointer [&_.recharts-pie-sector]:transition-[scale] [&_.recharts-pie-sector]:duration-500 [&_.recharts-pie-sector]:ease-[cubic-bezier(0.32,0.08,0.24,1)] [&_.recharts-pie-sector]:[transform-box:view-box] [&_.recharts-pie-sector:hover]:scale-[1.06] [&_svg]:overflow-visible"
         >
           <PieChart>
@@ -112,7 +110,6 @@ const avatars = [
   { initials: "EP", tint: "from-[#ff6482] to-[#ff2d55] dark:from-[#ff6482] dark:to-[#ff2d55]" },
 ];
 
-/** Switches the theme of the whole page, so the tile demonstrates itself. */
 function AppearanceTile() {
   return (
     <Tile file="theme.tsx" className="md:col-span-6">
@@ -129,7 +126,6 @@ function AppearanceTile() {
   );
 }
 
-/** A bento grid of real suiss UI components and charts. */
 export function Bento() {
   return (
     <ul className="grid auto-rows-[minmax(11rem,auto)] gap-3 md:auto-rows-[minmax(15rem,auto)] md:grid-cols-12">

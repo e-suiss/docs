@@ -1,11 +1,3 @@
-/**
- * Reads suiss UI sources with the TypeScript compiler:
- *
- * - storyExamples(): each Storybook story as a self-contained example, with
- *   its args written into the JSX and the imports it uses,
- * - componentApi(): each exported component's own props, cva variants and
- *   defaults, and the props type it extends.
- */
 import ts from "typescript";
 
 const STORYBOOK = new Set(["storybook/test", "@storybook/react-vite"]);
@@ -39,14 +31,12 @@ function objectArgs(literal, source) {
   const args = new Map();
   if (!literal || !ts.isObjectLiteralExpression(literal)) return args;
   for (const member of literal.properties) {
-    // `"aria-label": …` keys are string literals; JSX wants the bare name.
     if (ts.isPropertyAssignment(member)) args.set(ts.isStringLiteral(member.name) ? member.name.text : member.name.getText(source), member.initializer);
     else if (ts.isShorthandPropertyAssignment(member)) args.set(member.name.getText(source), member.name);
   }
   return args;
 }
 
-/** Removes the common leading indentation of every line after the first. */
 function dedent(text) {
   const lines = text.split("\n");
   const indents = lines
@@ -65,14 +55,12 @@ function indent(text, spaces) {
     .join("\n");
 }
 
-/** Args as JSX attributes; `children` is returned separately. */
 function attributes(args, source, skipOpen) {
   const parts = [];
   const list = [];
   let children;
   for (const [name, value] of args) {
     if (skipOpen && OPEN_ARGS.has(name)) continue;
-    // Storybook control defaults add noise to a copyable example.
     if (value.kind === ts.SyntaxKind.FalseKeyword) continue;
     if (ts.isStringLiteral(value) && value.text === "default" && name !== "children") continue;
     if (name === "children") {
@@ -92,12 +80,6 @@ function attributes(args, source, skipOpen) {
 
 const pascal = (name) => name.replace(/(^|-)([a-z0-9])/g, (_, __, letter) => letter.toUpperCase());
 
-/**
- * @param {string} file
- * @param {string} source
- * @param {{ itemName: string, overlay: boolean }} options
- * @returns {{ key: string, name: string, code: string, jsx: string }[]}
- */
 export function storyExamples(file, source, { itemName, overlay }) {
   const tree = parse(file, source);
   const imports = [];
@@ -134,7 +116,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
   const component = property(meta, "component")?.initializer?.getText(tree);
   const byKey = new Map(stories.map((story) => [story.key, story]));
 
-  /** The render initializer, following `render: Other.render`. */
   const metaRender = unwrap(property(meta, "render")?.initializer);
   function renderOf(story, depth = 0) {
     const render = unwrap(property(story.value, "render")?.initializer) ?? metaRender;
@@ -152,7 +133,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
     const { text: attrs, list: attrList, children } = attributes(args, tree, overlay);
     const render = renderOf(story);
 
-    // `({ side, ...args }) =>` takes some args by name; the rest spreads.
     const bound = new Map();
     let restName = "args";
     const first = render && (ts.isArrowFunction(render) || ts.isFunctionExpression(render)) ? render.parameters[0] : undefined;
@@ -177,18 +157,14 @@ export function storyExamples(file, source, { itemName, overlay }) {
     } else if ((ts.isArrowFunction(render) || ts.isFunctionExpression(render)) && !ts.isBlock(render.body)) {
       jsx = dedent(unwrap(render.body).getText(tree));
     } else {
-      // A render with its own body (hooks, state): keep it as a helper component.
       const body = ts.isBlock(render.body) ? render.body.getText(tree) : `{ return ${render.body.getText(tree)} }`;
       const params = render.parameters.map((p) => p.getText(tree)).join(", ");
-      // A name the story file doesn't already use.
       let helperName = `${pascal(story.key)}Preview`;
       while (declarations.has(helperName)) helperName += "Story";
       helper = dedent(`function ${helperName}(${params ? "args" : ""}) ${body}`);
       jsx = `<${helperName} />`;
     }
 
-    // Decorators that wrap `<Story />` in JSX (providers, sizing) become part of
-    // the example, innermost first, so the copied code works on its own.
     const decorators = [
       ...(unwrap(property(story.value, "decorators")?.initializer)?.elements ?? []),
       ...(unwrap(property(meta, "decorators")?.initializer)?.elements ?? []),
@@ -203,8 +179,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
       jsx = wrapper.replace(/<Story\s*\/>/, indent(jsx, pad).trimStart());
     }
 
-    // Write the story's args into the JSX in place of `{...args}`, leaving out
-    // any the element already sets itself.
     const spreadInto = (text) =>
       text.replace(new RegExp(`\\s*\\{\\s*\\.\\.\\.${restName}\\s*\\}`, "g"), (match, offset) => {
         const start = text.lastIndexOf("<", offset);
@@ -215,7 +189,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
         );
         return kept.length ? ` ${kept.map(([, attr]) => attr).join(" ")}` : "";
       });
-    // Inline `args.key` and destructured names with their values.
     const inline = (text) => {
       let out = text.replace(/\bargs\.(\w+)\b/g, (match, key) => valueText(key) ?? "undefined");
       for (const [local, key] of bound) {
@@ -233,8 +206,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
     helper = tidy(inline(spreadInto(helper))).replace(/\(args\)/, "()");
     if (overlay) jsx = jsx.replace(/\sdefaultOpen(?:=\{true\})?(?=[\s>/])/g, "");
 
-    // Keep only the local helpers the example uses (and the ones they use),
-    // then the imports any of that code needs.
     let body = `${helper}\n${jsx}`;
     const uses = (text, identifier) => new RegExp(`\\b${identifier}\\b`).test(text);
     const picked = new Set();
@@ -259,7 +230,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
       if (namespace && used(namespace)) lines.push(`import * as ${namespace} from "${from}"`);
       if (fallback && used(fallback)) lines.push(`import ${fallback} from "${from}"`);
     }
-    // Locals keep their source order.
     const locals = [...declarations]
       .filter(([name]) => picked.has(name))
       .map(([, statement]) => statement)
@@ -286,9 +256,6 @@ export function storyExamples(file, source, { itemName, overlay }) {
   }
   return examples;
 }
-
-// ---------------------------------------------------------------------------
-// Props
 
 function variantsOf(tree) {
   const map = new Map();
@@ -351,9 +318,6 @@ function membersOf(type, tree, variants, out) {
   }
 }
 
-/**
- * @returns {{ name: string, extends: string[], props: { name: string, type: string, default?: string, required: boolean }[] }[]}
- */
 export function componentApi(file, source) {
   const tree = parse(file, source);
   const variants = variantsOf(tree);
@@ -378,7 +342,6 @@ export function componentApi(file, source) {
     const out = { name, extends: [], props: [] };
     if (parameter) {
       membersOf(parameter.type, tree, variants, out);
-      // Defaults come from the destructuring pattern.
       if (ts.isObjectBindingPattern(parameter.name)) {
         for (const element of parameter.name.elements) {
           if (!element.initializer) continue;

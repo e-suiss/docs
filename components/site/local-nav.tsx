@@ -11,7 +11,6 @@ import { strings } from "@/lib/strings";
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 
-/** The sticky section tabs under the global nav; the product itself is chosen up there. */
 export function LocalNav({ slug }: { slug: ProductSlug }) {
   const pathname = usePathname();
   const { toggleSidebar } = useSidebar();
@@ -19,8 +18,6 @@ export function LocalNav({ slug }: { slug: ProductSlug }) {
 
   if (!product) return null;
   const base = `/docs/${product.slug}`;
-  // A section owns every page under its first path segment, e.g. /components/*.
-  // The "" section (the guides) owns whatever no other section claims.
   const owns = (path: string) => {
     const prefix = `${base}/${path.split("/")[1]}`;
     return pathname === prefix || pathname.startsWith(`${prefix}/`);

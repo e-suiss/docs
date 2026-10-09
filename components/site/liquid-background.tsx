@@ -2,11 +2,6 @@
 
 import * as React from "react";
 
-/**
- * The card image, warped by slowly shifting noise while the card is hovered so
- * its shapes flow like the hero's shader. The warp eases in and out; at rest
- * the filter is removed entirely so scrolling stays cheap.
- */
 export function LiquidBackground({ image, active }: { image: string; active: boolean }) {
   const id = `liquid-${React.useId().replace(/:/g, "")}`;
   const layer = React.useRef<HTMLDivElement>(null);

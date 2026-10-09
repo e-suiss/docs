@@ -12,7 +12,6 @@ const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 const pad = (value: number) => String(value).padStart(2, "0");
 const idOf = (item: TOCItemType) => decodeURIComponent(item.url.slice(1));
 
-/** Groups each subheading under the section heading above it. */
 function sectionsOf(items: TableOfContents) {
   const sections: Section[] = [];
   for (const item of items) {
@@ -22,11 +21,6 @@ function sectionsOf(items: TableOfContents) {
   return sections;
 }
 
-/**
- * The heading being read: the last one whose top has passed a line a little
- * below the sticky bars. It only moves forward or back as you scroll, so the
- * index never flickers between two headings that are both on screen.
- */
 function useActiveHeading(ids: string[]) {
   const [active, setActive] = React.useState<string>();
 
@@ -41,7 +35,6 @@ function useActiveHeading(ids: string[]) {
           const heading = document.getElementById(id);
           if (heading && heading.getBoundingClientRect().top <= line) current = id;
         }
-        // At the very bottom, the last heading may never reach the line.
         const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
         setActive(atEnd ? ids.at(-1) : current);
       });
@@ -59,10 +52,6 @@ function useActiveHeading(ids: string[]) {
   return active;
 }
 
-/**
- * "On this page": a numbered index of the page's sections with their
- * subheadings; the heading being read darkens and its rule lengthens.
- */
 export function Toc({ items }: { items: TableOfContents }) {
   const headings = React.useMemo(() => items.filter((item) => item.depth <= 3), [items]);
   const sections = React.useMemo(() => sectionsOf(headings), [headings]);

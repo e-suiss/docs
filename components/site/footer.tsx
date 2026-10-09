@@ -53,7 +53,6 @@ const columns: Column[] = [
   },
 ];
 
-/** One word set at whatever size makes it exactly as wide as its container. */
 function FitWord({ children, className }: { children: string; className?: string }) {
   const box = React.useRef<HTMLDivElement>(null);
   const word = React.useRef<HTMLSpanElement>(null);

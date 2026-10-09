@@ -16,7 +16,6 @@ const CHANGE_EVENT = "package-manager-change";
 const NPX = /^npx\s+/;
 const NPM_INSTALL = /^npm\s+(?:install|i)(?=\s|$)/;
 
-/** Rewrites one npm-flavored command for another package manager. */
 function convertLine(line: string, manager: Manager) {
   if (manager === "npm") return line;
   if (NPX.test(line)) {
@@ -30,12 +29,10 @@ function convertLine(line: string, manager: Manager) {
   return line;
 }
 
-/** True when at least one line can be written for every package manager. */
 export function isPackageCommand(text: string) {
   return text.split("\n").some((line) => NPX.test(line.trim()) || NPM_INSTALL.test(line.trim()));
 }
 
-/** The chosen package manager, remembered and shared by every block on the site. */
 function useManager() {
   const [manager, setManager] = React.useState<Manager>("pnpm");
 
@@ -89,7 +86,6 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-/** One command line: a quiet prompt, the tool in full color, its arguments softer. */
 function Line({ line }: { line: string }) {
   const [tool, ...rest] = line.split(" ");
   return (
@@ -101,11 +97,6 @@ function Line({ line }: { line: string }) {
   );
 }
 
-/**
- * One terminal line for the chosen package manager. The managers stack on the
- * left; the chosen one carries the long rule used for the current item in the
- * sidebar and "On this page".
- */
 export function PackageCommand({ command }: { command: string }) {
   const [manager, choose] = useManager();
   const lines = command
@@ -118,7 +109,6 @@ export function PackageCommand({ command }: { command: string }) {
       data-slot="code-block"
       className="mt-[1em] grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-3 border-y border-label/12 py-3 sm:grid-cols-[auto_1fr_auto]"
     >
-      {/* A fixed width keeps the separator still while the active rule grows. */}
       <div
         role="radiogroup"
         aria-label="Package manager"

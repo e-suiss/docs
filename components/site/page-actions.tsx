@@ -21,7 +21,6 @@ function External({ label, onClick }: { label: string; onClick: () => void }) {
   );
 }
 
-/** Copy the page as Markdown, view it, or hand it to an AI chat; set in the header's mono style. */
 export function PageActions({ markdownUrl }: { markdownUrl: string }) {
   const [copied, setCopied] = React.useState(false);
   const cache = React.useRef<string | undefined>(undefined);

@@ -24,10 +24,6 @@ type Meta = {
   parameters?: { layout?: Layout };
 };
 
-/**
- * Overlays start closed in the docs: their stories open them on mount for
- * Storybook, which here would cover the page before anyone asks for them.
- */
 const overlays = new Set([
   "action-menu",
   "alert-dialog",
@@ -51,17 +47,11 @@ const overlays = new Set([
   "tooltip",
 ]);
 
-/** A story's identity once it is forced closed: its render and its other args. */
 function closedKey(story: Story) {
   const { defaultOpen: _defaultOpen, open: _open, ...rest } = story.args ?? {};
   return { render: story.render, args: JSON.stringify(rest) };
 }
 
-/**
- * Drops stories that, closed, are the same as an earlier one, like
- * "OpenByDefault" next to "Default". Variants that were only opened for
- * Storybook's screenshots stay.
- */
 function withoutClosedDuplicates(entries: (readonly [string, Story])[]) {
   const seen: ReturnType<typeof closedKey>[] = [];
   return entries.filter(([, story]) => {
@@ -72,15 +62,12 @@ function withoutClosedDuplicates(entries: (readonly [string, Story])[]) {
   });
 }
 
-/** "WithIcon" → "With icon". */
 function labelOf(key: string, story: Story, closed: boolean) {
   const name = story.name ?? key.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase();
-  // "Open left" reads wrong for a preview that now starts closed.
   const label = closed ? name.replace(/^open\s+/i, "") : name;
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
-/** Keeps one failing example from taking the page down. */
 class Boundary extends React.Component<{ children: React.ReactNode }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() {
@@ -96,7 +83,6 @@ class Boundary extends React.Component<{ children: React.ReactNode }, { failed: 
   }
 }
 
-/** Renders a story the way Storybook does: its own decorators inside the file's. */
 function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?: boolean }) {
   const args: Args = { ...meta.args, ...story.args };
   if (closed) {
@@ -142,7 +128,6 @@ function Frame({
         className={cn(
           "overflow-hidden rounded-[24px]",
           "bg-surface ring-1 ring-label/10",
-          // Mirrors Storybook's layouts: centered by default, padded, or edge to edge.
           !wide && layout === "centered" && "flex min-h-56 flex-wrap items-center justify-center gap-3 p-10",
           !wide && layout === "padded" && "min-h-56 p-6",
         )}
@@ -157,7 +142,6 @@ function Loading({ wide }: { wide?: boolean }) {
   return <div data-not-prose className={cn("mt-[1.2em] animate-pulse rounded-[24px] bg-surface-secondary", wide ? "h-96" : "h-56")} />;
 }
 
-/** Charts and blocks: the registry item itself. */
 function ComponentPreviewOf({ name, wide }: { name: string; wide: boolean }) {
   const [Component, setComponent] = React.useState<React.ComponentType>();
   React.useEffect(() => {
@@ -177,7 +161,6 @@ function ComponentPreviewOf({ name, wide }: { name: string; wide: boolean }) {
   );
 }
 
-/** Components, patterns and interactions: every story, the first one as the hero. */
 function StoryPreviewOf({ name, story: only }: { name: string; story?: string }) {
   const [module, setModule] = React.useState<Record<string, unknown>>();
   React.useEffect(() => {
@@ -191,7 +174,6 @@ function StoryPreviewOf({ name, story: only }: { name: string; story?: string })
     .filter(([key, value]) => key !== "default" && value && typeof value === "object")
     .map(([key, value]) => [key, value as Story] as const);
   const deduped = closed ? withoutClosedDuplicates(all) : all;
-  // A single named story renders alone and unlabeled, inside an Example.
   const entries = only ? all.filter(([key]) => key === only) : deduped;
 
   return (
@@ -209,7 +191,6 @@ function StoryPreviewOf({ name, story: only }: { name: string; story?: string })
   );
 }
 
-/** A live preview of a suiss UI registry item. */
 export function ComponentPreview({ kind, name, story }: { kind: Kind; name: string; story?: string }) {
   if (kind === "chart" || kind === "block") return <ComponentPreviewOf name={name} wide={kind === "block"} />;
   return <StoryPreviewOf name={name} story={story} />;

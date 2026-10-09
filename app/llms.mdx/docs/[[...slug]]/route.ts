@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 
 import { source } from "@/lib/source";
 
-/** Serves a docs page as Markdown, for "Copy page" and AI tools. */
 export async function GET(_request: Request, context: RouteContext<"/llms.mdx/docs/[[...slug]]">) {
   const { slug } = await context.params;
   const page = source.getPage(slug);

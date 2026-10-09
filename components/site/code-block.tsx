@@ -9,12 +9,10 @@ import { strings } from "@/lib/strings";
 
 const RESET_AFTER = 1500;
 
-/** Code fences titled "Terminal", or tagged with Shiki's shell icon, are commands. */
 function isTerminal(title: string | undefined, icon: unknown) {
   return title === "Terminal" || (typeof icon === "string" && icon.includes("m 4,4 a 1,1"));
 }
 
-/** The plain text of rendered Shiki output, which arrives as nested spans. */
 function textOf(node: React.ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(textOf).join("");
@@ -25,10 +23,6 @@ function textOf(node: React.ReactNode): string {
   return "";
 }
 
-/**
- * A code listing with an optional mono title and a copy button. Package
- * commands get pnpm / npm / yarn / bun tabs; other shell lines get a `$` prompt.
- */
 export function CodeBlock({
   title,
   className,
@@ -38,7 +32,6 @@ export function CodeBlock({
   const { icon, ...rest } = props;
   const terminal = isTerminal(title, icon);
   const command = terminal ? textOf(children).trim() : "";
-  // Shell listings drop their "Terminal" title; the prompt already says what they are.
   const caption = terminal ? undefined : title;
   const ref = React.useRef<HTMLPreElement>(null);
   const [copied, setCopied] = React.useState(false);

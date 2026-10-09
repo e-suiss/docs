@@ -14,7 +14,6 @@ import { strings } from "@/lib/strings";
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 const MENU_EXIT = 500;
 
-/** A link whose label rolls up to an identical copy on hover. */
 function RollLink({
   href,
   active,
@@ -54,7 +53,6 @@ function RollLink({
 export function GlobalNav() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
-  // The menu stays mounted while it animates out, then unmounts.
   const [menuMounted, setMenuMounted] = React.useState(false);
   React.useEffect(() => {
     if (menuOpen) {
@@ -84,7 +82,6 @@ export function GlobalNav() {
 
   return (
     <header
-      // The home hero is always light, so the bar keeps dark text over it in either theme.
       style={home && !menuOpen ? ({ "--label": "oklch(0.2316 0.0038 286.09)" } as React.CSSProperties) : undefined}
 className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative border-b border-label/10 bg-surface")}
     >
@@ -118,7 +115,6 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
         </ul>
 
         <div className="ms-auto flex items-center gap-2">
-          {/* The home hero has its own search field. */}
           {!home && (
             <Search className="size-10 rounded-full bg-label/5 text-label transition-colors duration-300 hover:bg-label/10" />
           )}
@@ -167,7 +163,6 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
             {products.map((product, index) => (
               <li
                 key={product.slug}
-                // Rows arrive top to bottom and leave bottom to top.
                 style={{ transitionDelay: `${(menuOpen ? index : products.length - 1 - index) * 40}ms` }}
                 className={cn(
                   "border-t border-label/15 transition-[opacity,translate] duration-500",

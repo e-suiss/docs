@@ -3,7 +3,6 @@
 import { cn } from "cn";
 import * as React from "react";
 
-/** A long listing shown folded, with a button to read the rest. */
 export function SourceCode({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
 

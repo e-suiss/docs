@@ -203,14 +203,6 @@
   --radius-3xl: calc(var(--radius) * 2.8);
 }
 
-/* ---------------------------------------------------------------------------
- * Documentation
- * Prose rules skip anything inside [data-not-prose] (live previews, indexes),
- * so components render exactly as the library designs them.
- * Type scale and spacing follow developer.apple.com (DocC): 17px body with
- * tightening letter-spacing, 15px code, hairline rules.
- * ------------------------------------------------------------------------ */
-
 html {
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--spacing) * 17);
@@ -351,7 +343,6 @@ body {
   color: var(--color-label);
 }
 
-/* Shiki renders both themes as CSS variables. */
 .shiki,
 .shiki span {
   color: var(--shiki-light);
@@ -362,7 +353,6 @@ body {
   color: var(--shiki-dark);
 }
 
-/* A preview followed by its code reads as one block, like shadcn's preview/code pair. */
 [data-slot="preview"]:has(+ [data-slot="code-block"]) {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -375,18 +365,12 @@ body {
   border-top-right-radius: 0;
 }
 
-/* Terminal listings prompt each command with a quiet `$`. */
 [data-terminal] .line:not(:empty)::before {
   content: "$ ";
   color: var(--color-label-tertiary);
   user-select: none;
 }
 
-/*
- * Story previews: decorators sized to Storybook's viewport (min-h-svh, h-svh)
- * get a preview-sized box instead, and the transform makes fixed elements
- * (sidebars, app shells) position against the preview rather than the page.
- */
 [data-slot="preview"] {
   transform: translateZ(0);
 }

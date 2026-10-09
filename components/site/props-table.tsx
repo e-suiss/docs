@@ -12,7 +12,6 @@ export interface PropRow {
   description?: string;
 }
 
-/** Splits a TypeScript union at its top level, ignoring `|` inside brackets. */
 function unionOf(type: string) {
   const members: string[] = [];
   let depth = 0;
@@ -29,7 +28,6 @@ function unionOf(type: string) {
   return members.filter(Boolean);
 }
 
-/** The short form of a type shown in the closed row. */
 function summaryOf(type: string) {
   const members = unionOf(type);
   if (members.length > 3) return `union (${members.length})`;
@@ -37,7 +35,6 @@ function summaryOf(type: string) {
   return type;
 }
 
-/** Renders `code` spans in prose written with Markdown backticks. */
 function Inline({ text }: { text: string }) {
   return text.split(/(`[^`]+`)/).map((chunk, index) =>
     chunk.startsWith("`") ? (
@@ -118,7 +115,6 @@ function Row({ prop }: { prop: PropRow }) {
   );
 }
 
-/** A part's props as compact rows that open to show the description and full type. */
 export function PropsTable({ extends: bases = [], props = [] }: { extends?: string[]; props?: PropRow[] }) {
   return (
     <div data-not-prose data-slot="props-table" className="mt-5 overflow-hidden rounded-2xl ring-1 ring-label/10">
