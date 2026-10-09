@@ -7,16 +7,7 @@ generated: true
 
 <Example kind="ui" name="toggle" story="Default">
 
-```tsx
-import { TextBIcon } from "@phosphor-icons/react"
-import { Toggle } from "@/components/ui/toggle"
-
-export function ToggleExample() {
-  return (
-    <Toggle aria-label="Toggle bold"><TextBIcon /></Toggle>
-  )
-}
-```
+<Code lang="tsx" code={"import { TextBIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleExample() {\n  return (\n    <Toggle aria-label=\"Toggle bold\"><TextBIcon /></Toggle>\n  )\n}"} />
 
 </Example>
 
@@ -28,82 +19,25 @@ Use a toggle for a single on-off option such as bold text or a bookmark. To choo
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add toggle
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toggle"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/toggle.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/toggle.tsx"
-"use client"
-
-import { Toggle as TogglePrimitive } from "@base-ui/react/toggle"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-
-const toggleVariants = cva(
-  "inline-flex items-center justify-center gap-1 rounded-lg text-sm whitespace-nowrap transition-[color,background-color,scale] duration-200 ease-[cubic-bezier(0.3,1.25,0.5,1)] outline-none active:scale-96 motion-reduce:active:scale-100 hover:bg-item-hover hover:text-label focus-visible:focus-ring disabled:pointer-events-none disabled:text-label-quaternary aria-invalid:border-danger aria-pressed:bg-item-hover aria-pressed:text-link aria-pressed:hover:bg-item-hover aria-pressed:hover:text-link aria-pressed:active:bg-item-pressed disabled:aria-pressed:bg-control-disabled disabled:aria-pressed:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  {
-    variants: {
-      variant: {
-        default: "bg-transparent",
-        outline: "border border-separator bg-transparent hover:bg-item-hover",
-      },
-      size: {
-        default:
-          "h-9 min-w-9 px-3 has-data-[icon=inline-end]:pe-2.5 has-data-[icon=inline-start]:ps-2.5",
-        sm: "h-8 min-w-8 px-3 has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
-        lg: "h-10 min-w-10 px-4 has-data-[icon=inline-end]:pe-3 has-data-[icon=inline-start]:ps-3",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-function Toggle({
-  className,
-  variant,
-  size,
-  ...props
-}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
-  return (
-    <TogglePrimitive
-      data-slot="toggle"
-      className={cn(toggleVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
-}
-
-export { Toggle, toggleVariants }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/toggle.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Toggle } from "@/components/ui/toggle"
-```
+<Code lang="tsx" code={"import { Toggle } from \"@/components/ui/toggle\""} />
 
-```tsx
-<Toggle aria-label="Toggle bold"><TextBIcon /></Toggle>
-```
+<Code lang="tsx" code={"<Toggle aria-label=\"Toggle bold\"><TextBIcon /></Toggle>"} />
 
 Use `defaultPressed` for an uncontrolled toggle, or `pressed` with `onPressedChange` to control it. Mark an icon beside a label with `data-icon="inline-start"` or `data-icon="inline-end"` to tighten the padding on that side.
 
@@ -115,16 +49,7 @@ Starts in the pressed state.
 
 <Example kind="ui" name="toggle" story="Pressed">
 
-```tsx
-import { TextBIcon } from "@phosphor-icons/react"
-import { Toggle } from "@/components/ui/toggle"
-
-export function TogglePressedExample() {
-  return (
-    <Toggle aria-label="Toggle bold" defaultPressed><TextBIcon /></Toggle>
-  )
-}
-```
+<Code lang="tsx" code={"import { TextBIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function TogglePressedExample() {\n  return (\n    <Toggle aria-label=\"Toggle bold\" defaultPressed><TextBIcon /></Toggle>\n  )\n}"} />
 
 </Example>
 
@@ -134,18 +59,7 @@ Compares the `default` and `outline` variants.
 
 <Example kind="ui" name="toggle" story="Variants">
 
-```tsx
-import { Toggle } from "@/components/ui/toggle"
-
-export function ToggleVariantsExample() {
-  return (
-    <div className="flex items-center gap-3">
-      <Toggle aria-label="Toggle bold" variant="default" />
-      <Toggle aria-label="Toggle bold" variant="outline" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleVariantsExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle bold\" variant=\"default\" />\n      <Toggle aria-label=\"Toggle bold\" variant=\"outline\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -155,19 +69,7 @@ Compares the `sm`, `default` and `lg` sizes.
 
 <Example kind="ui" name="toggle" story="Sizes">
 
-```tsx
-import { Toggle } from "@/components/ui/toggle"
-
-export function ToggleSizesExample() {
-  return (
-    <div className="flex items-center gap-3">
-      <Toggle aria-label="Toggle bold" size="sm" />
-      <Toggle aria-label="Toggle bold" size="default" />
-      <Toggle aria-label="Toggle bold" size="lg" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle bold\" size=\"sm\" />\n      <Toggle aria-label=\"Toggle bold\" size=\"default\" />\n      <Toggle aria-label=\"Toggle bold\" size=\"lg\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -177,25 +79,7 @@ Pairs an icon with a text label.
 
 <Example kind="ui" name="toggle" story="WithText">
 
-```tsx
-import { BookmarkSimpleIcon, TextItalicIcon } from "@phosphor-icons/react"
-import { Toggle } from "@/components/ui/toggle"
-
-export function ToggleWithTextExample() {
-  return (
-    <div className="flex items-center gap-3">
-      <Toggle aria-label="Toggle italic">
-        <TextItalicIcon data-icon="inline-start" />
-        Italic
-      </Toggle>
-      <Toggle variant="outline" aria-label="Save for later">
-        <BookmarkSimpleIcon data-icon="inline-start" />
-        Save
-      </Toggle>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookmarkSimpleIcon, TextItalicIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleWithTextExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle italic\">\n        <TextItalicIcon data-icon=\"inline-start\" />\n        Italic\n      </Toggle>\n      <Toggle variant=\"outline\" aria-label=\"Save for later\">\n        <BookmarkSimpleIcon data-icon=\"inline-start\" />\n        Save\n      </Toggle>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -205,16 +89,7 @@ Disables the toggle so it ignores clicks.
 
 <Example kind="ui" name="toggle" story="Disabled">
 
-```tsx
-import { TextBIcon } from "@phosphor-icons/react"
-import { Toggle } from "@/components/ui/toggle"
-
-export function ToggleDisabledExample() {
-  return (
-    <Toggle disabled aria-label="Toggle bold"><TextBIcon /></Toggle>
-  )
-}
-```
+<Code lang="tsx" code={"import { TextBIcon } from \"@phosphor-icons/react\"\nimport { Toggle } from \"@/components/ui/toggle\"\n\nexport function ToggleDisabledExample() {\n  return (\n    <Toggle disabled aria-label=\"Toggle bold\"><TextBIcon /></Toggle>\n  )\n}"} />
 
 </Example>
 

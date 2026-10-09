@@ -7,17 +7,7 @@ generated: true
 
 <Example kind="ui" name="progress" story="Default">
 
-```tsx
-import { Progress } from "@/components/ui/progress"
-
-export function ProgressExample() {
-  return (
-    <div className="w-80">
-      <Progress value={60} aria-label="Upload progress" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Progress } from \"@/components/ui/progress\"\n\nexport function ProgressExample() {\n  return (\n    <div className=\"w-80\">\n      <Progress value={60} aria-label=\"Upload progress\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -29,122 +19,25 @@ Use Progress for determinate or indeterminate task progress.
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add progress
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add progress"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Copy the source into `components/ui/progress.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/progress.tsx"
-"use client"
-
-import { Progress as ProgressPrimitive } from "@base-ui/react/progress"
-import { cn } from "cn"
-
-function Progress({
-  className,
-  children,
-  value,
-  ...props
-}: ProgressPrimitive.Root.Props) {
-  return (
-    <ProgressPrimitive.Root
-      value={value}
-      data-slot="progress"
-      className={cn("flex flex-wrap gap-3", className)}
-      {...props}
-    >
-      {children}
-      <ProgressTrack>
-        <ProgressIndicator />
-      </ProgressTrack>
-    </ProgressPrimitive.Root>
-  )
-}
-
-function ProgressTrack({ className, ...props }: ProgressPrimitive.Track.Props) {
-  return (
-    <ProgressPrimitive.Track
-      className={cn(
-        "relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-surface-secondary",
-        className
-      )}
-      data-slot="progress-track"
-      {...props}
-    />
-  )
-}
-
-function ProgressIndicator({
-  className,
-  ...props
-}: ProgressPrimitive.Indicator.Props) {
-  return (
-    <ProgressPrimitive.Indicator
-      data-slot="progress-indicator"
-      className={cn("h-full bg-accent transition-[width]", className)}
-      {...props}
-    />
-  )
-}
-
-function ProgressLabel({ className, ...props }: ProgressPrimitive.Label.Props) {
-  return (
-    <ProgressPrimitive.Label
-      className={cn("text-sm", className)}
-      data-slot="progress-label"
-      {...props}
-    />
-  )
-}
-
-function ProgressValue({ className, ...props }: ProgressPrimitive.Value.Props) {
-  return (
-    <ProgressPrimitive.Value
-      className={cn(
-        "ms-auto text-sm text-label-secondary tabular-nums",
-        className
-      )}
-      data-slot="progress-value"
-      {...props}
-    />
-  )
-}
-
-export {
-  Progress,
-  ProgressIndicator,
-  ProgressLabel,
-  ProgressTrack,
-  ProgressValue,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/progress.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValue } from "@/components/ui/progress"
-```
+<Code lang="tsx" code={"import { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValue } from \"@/components/ui/progress\""} />
 
-```tsx
-<div className="w-80">
-  <Progress value={60} aria-label="Upload progress" />
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-80\">\n  <Progress value={60} aria-label=\"Upload progress\" />\n</div>"} />
 
 Pass `value` as a number between `min` and `max` (by default `0` and `100`). Set `value={null}` for an indeterminate state when the amount of work is unknown.
 
@@ -158,20 +51,7 @@ A bar with a label and its current value shown above the track.
 
 <Example kind="ui" name="progress" story="WithLabel">
 
-```tsx
-import { Progress, ProgressLabel, ProgressValue } from "@/components/ui/progress"
-
-export function ProgressWithLabelExample() {
-  return (
-    <div className="w-80">
-      <Progress value={42}>
-        <ProgressLabel>Uploading files</ProgressLabel>
-        <ProgressValue />
-      </Progress>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Progress, ProgressLabel, ProgressValue } from \"@/components/ui/progress\"\n\nexport function ProgressWithLabelExample() {\n  return (\n    <div className=\"w-80\">\n      <Progress value={42}>\n        <ProgressLabel>Uploading files</ProgressLabel>\n        <ProgressValue />\n      </Progress>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -181,20 +61,7 @@ A labelled bar at `100`.
 
 <Example kind="ui" name="progress" story="Complete">
 
-```tsx
-import { Progress, ProgressLabel, ProgressValue } from "@/components/ui/progress"
-
-export function ProgressCompleteExample() {
-  return (
-    <div className="w-80">
-      <Progress value={100}>
-        <ProgressLabel>Uploading files</ProgressLabel>
-        <ProgressValue />
-      </Progress>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Progress, ProgressLabel, ProgressValue } from \"@/components/ui/progress\"\n\nexport function ProgressCompleteExample() {\n  return (\n    <div className=\"w-80\">\n      <Progress value={100}>\n        <ProgressLabel>Uploading files</ProgressLabel>\n        <ProgressValue />\n      </Progress>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -204,19 +71,7 @@ A labelled bar with `value={null}` for work of unknown length.
 
 <Example kind="ui" name="progress" story="Indeterminate">
 
-```tsx
-import { Progress, ProgressLabel } from "@/components/ui/progress"
-
-export function ProgressIndeterminateExample() {
-  return (
-    <div className="w-80">
-      <Progress value={null}>
-        <ProgressLabel>Preparing export</ProgressLabel>
-      </Progress>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Progress, ProgressLabel } from \"@/components/ui/progress\"\n\nexport function ProgressIndeterminateExample() {\n  return (\n    <div className=\"w-80\">\n      <Progress value={null}>\n        <ProgressLabel>Preparing export</ProgressLabel>\n      </Progress>\n    </div>\n  )\n}"} />
 
 </Example>
 

@@ -7,63 +7,7 @@ generated: true
 
 <Example kind="ui" name="command" story="Default">
 
-```tsx
-import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from "@phosphor-icons/react"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command"
-
-function CommandItems() {
-  return (
-    <>
-      <CommandEmpty>No results found.</CommandEmpty>
-      <CommandGroup heading="Suggestions">
-        <CommandItem>
-          <CalendarBlankIcon />
-          Calendar
-        </CommandItem>
-        <CommandItem>
-          <SmileyIcon />
-          Search emoji
-        </CommandItem>
-        <CommandItem disabled>
-          <CalculatorIcon />
-          Calculator
-        </CommandItem>
-      </CommandGroup>
-      <CommandSeparator />
-      <CommandGroup heading="Settings">
-        <CommandItem>
-          <UserIcon />
-          Profile
-          <CommandShortcut mod>P</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <CreditCardIcon />
-          Billing
-          <CommandShortcut mod>B</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <GearIcon />
-          Settings
-          <CommandShortcut mod>S</CommandShortcut>
-        </CommandItem>
-      </CommandGroup>
-    </>
-  )
-}
-
-export function CommandExample() {
-  return (
-    <div className="w-140">
-      <Command className="ring-label/5 shadow-md ring-1">
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-          <CommandItems />
-        </CommandList>
-      </Command>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\n\nfunction CommandItems() {\n  return (\n    <>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Suggestions\">\n        <CommandItem>\n          <CalendarBlankIcon />\n          Calendar\n        </CommandItem>\n        <CommandItem>\n          <SmileyIcon />\n          Search emoji\n        </CommandItem>\n        <CommandItem disabled>\n          <CalculatorIcon />\n          Calculator\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Settings\">\n        <CommandItem>\n          <UserIcon />\n          Profile\n          <CommandShortcut mod>P</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <CreditCardIcon />\n          Billing\n          <CommandShortcut mod>B</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <GearIcon />\n          Settings\n          <CommandShortcut mod>S</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n    </>\n  )\n}\n\nexport function CommandExample() {\n  return (\n    <div className=\"w-140\">\n      <Command className=\"ring-label/5 shadow-md ring-1\">\n        <CommandInput placeholder=\"Type a command or search...\" />\n        <CommandList>\n          <CommandItems />\n        </CommandList>\n      </Command>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -75,251 +19,27 @@ Command is built on cmdk. The `Command` root filters and orders its items as peo
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add command
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add command"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @phosphor-icons/react cmdk cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cmdk cn"} />
 
 2. Add the pieces it builds on: [Dialog](/docs/ui/components/dialog), `use-platform`.
 
 3. Copy the source into `components/ui/command.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/command.tsx"
-"use client"
-
-import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { Command as CommandPrimitive } from "cmdk"
-import { cn } from "cn"
-import type * as React from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { useModifierKey } from "@/hooks/use-platform"
-
-function Command({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
-  return (
-    <CommandPrimitive
-      data-slot="command"
-      className={cn(
-        "flex size-full flex-col overflow-hidden rounded-2xl bg-surface-raised text-label in-data-[slot=dialog-content]:rounded-none in-data-[slot=dialog-content]:bg-transparent",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CommandDialog({
-  title = "Command Palette",
-  description = "Search for a command to run...",
-  children,
-  className,
-  showCloseButton = false,
-  ...props
-}: Omit<React.ComponentProps<typeof Dialog>, "children"> & {
-  title?: string
-  description?: string
-  className?: string
-  showCloseButton?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <Dialog {...props}>
-      <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
-      <DialogContent
-        className={cn(
-          "top-[18vh] translate-y-0 gap-0 overflow-hidden rounded-3xl! bg-surface-raised/92 p-0 shadow-2xl ring-label/10 backdrop-blur-2xl backdrop-saturate-150 sm:max-w-160 dark:bg-surface-raised/85",
-          className
-        )}
-        showCloseButton={showCloseButton}
-      >
-        {children}
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function CommandInput({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
-  return (
-    <div
-      data-slot="command-input-wrapper"
-      className="flex h-14 shrink-0 items-center gap-3 border-b border-separator px-4"
-    >
-      <MagnifyingGlassIcon
-        aria-hidden="true"
-        className="size-5.5 shrink-0 text-label-secondary"
-      />
-      <CommandPrimitive.Input
-        data-slot="command-input"
-        className={cn(
-          "h-full w-full min-w-0 bg-transparent text-xl caret-accent outline-hidden placeholder:text-label-tertiary disabled:cursor-not-allowed disabled:text-label-quaternary",
-          className
-        )}
-        {...props}
-      />
-    </div>
-  )
-}
-
-function CommandList({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.List>) {
-  return (
-    <CommandPrimitive.List
-      data-slot="command-list"
-      className={cn(
-        "no-scrollbar max-h-80 scroll-py-1.5 overflow-x-hidden overflow-y-auto p-1.5 outline-none",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CommandEmpty({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
-  return (
-    <CommandPrimitive.Empty
-      data-slot="command-empty"
-      className={cn(
-        "py-10 text-center text-base text-label-secondary",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CommandGroup({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Group>) {
-  return (
-    <CommandPrimitive.Group
-      data-slot="command-group"
-      className={cn(
-        "overflow-hidden text-label not-first:pt-2 **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-1 **:[[cmdk-group-heading]]:pb-1.5 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-semibold **:[[cmdk-group-heading]]:text-label-secondary",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CommandSeparator({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Separator>) {
-  return (
-    <CommandPrimitive.Separator
-      data-slot="command-separator"
-      className={cn("mx-3 my-2 h-px bg-separator", className)}
-      {...props}
-    />
-  )
-}
-
-function CommandItem({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Item>) {
-  return (
-    <CommandPrimitive.Item
-      data-slot="command-item"
-      className={cn(
-        "group/command-item relative flex h-10 cursor-default items-center gap-3 rounded-lg px-3 text-base outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:text-label-quaternary data-selected:bg-accent data-selected:text-on-accent [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 [&_svg]:text-label-secondary data-selected:[&_svg]:text-on-accent",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <CheckIcon className="ms-auto opacity-0 group-has-data-[slot=command-shortcut]/command-item:hidden group-data-[checked=true]/command-item:opacity-100" />
-    </CommandPrimitive.Item>
-  )
-}
-
-function CommandShortcut({
-  className,
-  mod,
-  children,
-  ...props
-}: React.ComponentProps<"span"> & { mod?: boolean }) {
-  const modifier = useModifierKey(children != null)
-
-  return (
-    <span
-      data-slot="command-shortcut"
-      className={cn(
-        "max-md:hidden ms-auto text-sm tracking-widest text-label-secondary group-data-selected/command-item:text-on-accent",
-        className
-      )}
-      {...props}
-    >
-      {mod && modifier}
-      {children}
-    </span>
-  )
-}
-
-export {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/command.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandSeparator, CommandItem, CommandShortcut } from "@/components/ui/command"
-```
+<Code lang="tsx" code={"import { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandSeparator, CommandItem, CommandShortcut } from \"@/components/ui/command\""} />
 
-```tsx
-<div className="w-140">
-  <Command className="ring-label/5 shadow-md ring-1">
-    <CommandInput placeholder="Type a command or search..." />
-    <CommandList>
-      <CommandItems />
-    </CommandList>
-  </Command>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-140\">\n  <Command className=\"ring-label/5 shadow-md ring-1\">\n    <CommandInput placeholder=\"Type a command or search...\" />\n    <CommandList>\n      <CommandItems />\n    </CommandList>\n  </Command>\n</div>"} />
 
 Compose `CommandInput` and `CommandList` inside `Command`, and put groups and items in the list. For a palette, wrap the `Command` in `CommandDialog` and control it with `open` and `onOpenChange`. Respond to a chosen item with its `onSelect` callback, and set `disabled` on items that are unavailable.
 
@@ -333,22 +53,7 @@ A command menu with no items that always shows its empty message.
 
 <Example kind="ui" name="command" story="Empty">
 
-```tsx
-import { Command, CommandEmpty, CommandInput, CommandList } from "@/components/ui/command"
-
-export function CommandEmptyExample() {
-  return (
-    <div className="w-140">
-      <Command className="ring-label/5 shadow-md ring-1">
-        <CommandInput placeholder="Search projects..." />
-        <CommandList>
-          <CommandEmpty>No projects found.</CommandEmpty>
-        </CommandList>
-      </Command>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Command, CommandEmpty, CommandInput, CommandList } from \"@/components/ui/command\"\n\nexport function CommandEmptyExample() {\n  return (\n    <div className=\"w-140\">\n      <Command className=\"ring-label/5 shadow-md ring-1\">\n        <CommandInput placeholder=\"Search projects...\" />\n        <CommandList>\n          <CommandEmpty>No projects found.</CommandEmpty>\n        </CommandList>\n      </Command>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -358,84 +63,7 @@ A command palette in a dialog, opened from a button, that closes with Escape and
 
 <Example kind="ui" name="command" story="Dialog">
 
-```tsx
-import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from "@phosphor-icons/react"
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command"
-
-function CommandItems() {
-  return (
-    <>
-      <CommandEmpty>No results found.</CommandEmpty>
-      <CommandGroup heading="Suggestions">
-        <CommandItem>
-          <CalendarBlankIcon />
-          Calendar
-        </CommandItem>
-        <CommandItem>
-          <SmileyIcon />
-          Search emoji
-        </CommandItem>
-        <CommandItem disabled>
-          <CalculatorIcon />
-          Calculator
-        </CommandItem>
-      </CommandGroup>
-      <CommandSeparator />
-      <CommandGroup heading="Settings">
-        <CommandItem>
-          <UserIcon />
-          Profile
-          <CommandShortcut mod>P</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <CreditCardIcon />
-          Billing
-          <CommandShortcut mod>B</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <GearIcon />
-          Settings
-          <CommandShortcut mod>S</CommandShortcut>
-        </CommandItem>
-      </CommandGroup>
-    </>
-  )
-}
-
-function CommandDialogExample({
-  defaultOpen = false,
-}: {
-  defaultOpen?: boolean
-}) {
-  const [open, setOpen] = React.useState(defaultOpen)
-
-  return (
-    <>
-      <Button variant="outline" onClick={() => setOpen(true)}>
-        Open command palette
-      </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <Command>
-          <CommandInput placeholder="Type a command or search..." />
-          <CommandList>
-            <CommandItems />
-          </CommandList>
-        </Command>
-      </CommandDialog>
-    </>
-  )
-}
-
-export function CommandDialogExampleDemo() {
-  return (
-    <div className="w-140">
-      <CommandDialogExample />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\n\nfunction CommandItems() {\n  return (\n    <>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Suggestions\">\n        <CommandItem>\n          <CalendarBlankIcon />\n          Calendar\n        </CommandItem>\n        <CommandItem>\n          <SmileyIcon />\n          Search emoji\n        </CommandItem>\n        <CommandItem disabled>\n          <CalculatorIcon />\n          Calculator\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Settings\">\n        <CommandItem>\n          <UserIcon />\n          Profile\n          <CommandShortcut mod>P</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <CreditCardIcon />\n          Billing\n          <CommandShortcut mod>B</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <GearIcon />\n          Settings\n          <CommandShortcut mod>S</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n    </>\n  )\n}\n\nfunction CommandDialogExample({\n  defaultOpen = false,\n}: {\n  defaultOpen?: boolean\n}) {\n  const [open, setOpen] = React.useState(defaultOpen)\n\n  return (\n    <>\n      <Button variant=\"outline\" onClick={() => setOpen(true)}>\n        Open command palette\n      </Button>\n      <CommandDialog open={open} onOpenChange={setOpen}>\n        <Command>\n          <CommandInput placeholder=\"Type a command or search...\" />\n          <CommandList>\n            <CommandItems />\n          </CommandList>\n        </Command>\n      </CommandDialog>\n    </>\n  )\n}\n\nexport function CommandDialogExampleDemo() {\n  return (\n    <div className=\"w-140\">\n      <CommandDialogExample />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -445,84 +73,7 @@ A command palette that is open when the page loads.
 
 <Example kind="ui" name="command" story="DialogOpen">
 
-```tsx
-import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from "@phosphor-icons/react"
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command"
-
-function CommandItems() {
-  return (
-    <>
-      <CommandEmpty>No results found.</CommandEmpty>
-      <CommandGroup heading="Suggestions">
-        <CommandItem>
-          <CalendarBlankIcon />
-          Calendar
-        </CommandItem>
-        <CommandItem>
-          <SmileyIcon />
-          Search emoji
-        </CommandItem>
-        <CommandItem disabled>
-          <CalculatorIcon />
-          Calculator
-        </CommandItem>
-      </CommandGroup>
-      <CommandSeparator />
-      <CommandGroup heading="Settings">
-        <CommandItem>
-          <UserIcon />
-          Profile
-          <CommandShortcut mod>P</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <CreditCardIcon />
-          Billing
-          <CommandShortcut mod>B</CommandShortcut>
-        </CommandItem>
-        <CommandItem>
-          <GearIcon />
-          Settings
-          <CommandShortcut mod>S</CommandShortcut>
-        </CommandItem>
-      </CommandGroup>
-    </>
-  )
-}
-
-function CommandDialogExample({
-  defaultOpen = false,
-}: {
-  defaultOpen?: boolean
-}) {
-  const [open, setOpen] = React.useState(defaultOpen)
-
-  return (
-    <>
-      <Button variant="outline" onClick={() => setOpen(true)}>
-        Open command palette
-      </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <Command>
-          <CommandInput placeholder="Type a command or search..." />
-          <CommandList>
-            <CommandItems />
-          </CommandList>
-        </Command>
-      </CommandDialog>
-    </>
-  )
-}
-
-export function CommandDialogOpenExample() {
-  return (
-    <div className="w-140">
-      <CommandDialogExample defaultOpen />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalculatorIcon, CalendarBlankIcon, CreditCardIcon, GearIcon, SmileyIcon, UserIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from \"@/components/ui/command\"\n\nfunction CommandItems() {\n  return (\n    <>\n      <CommandEmpty>No results found.</CommandEmpty>\n      <CommandGroup heading=\"Suggestions\">\n        <CommandItem>\n          <CalendarBlankIcon />\n          Calendar\n        </CommandItem>\n        <CommandItem>\n          <SmileyIcon />\n          Search emoji\n        </CommandItem>\n        <CommandItem disabled>\n          <CalculatorIcon />\n          Calculator\n        </CommandItem>\n      </CommandGroup>\n      <CommandSeparator />\n      <CommandGroup heading=\"Settings\">\n        <CommandItem>\n          <UserIcon />\n          Profile\n          <CommandShortcut mod>P</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <CreditCardIcon />\n          Billing\n          <CommandShortcut mod>B</CommandShortcut>\n        </CommandItem>\n        <CommandItem>\n          <GearIcon />\n          Settings\n          <CommandShortcut mod>S</CommandShortcut>\n        </CommandItem>\n      </CommandGroup>\n    </>\n  )\n}\n\nfunction CommandDialogExample({\n  defaultOpen = false,\n}: {\n  defaultOpen?: boolean\n}) {\n  const [open, setOpen] = React.useState(defaultOpen)\n\n  return (\n    <>\n      <Button variant=\"outline\" onClick={() => setOpen(true)}>\n        Open command palette\n      </Button>\n      <CommandDialog open={open} onOpenChange={setOpen}>\n        <Command>\n          <CommandInput placeholder=\"Type a command or search...\" />\n          <CommandList>\n            <CommandItems />\n          </CommandList>\n        </Command>\n      </CommandDialog>\n    </>\n  )\n}\n\nexport function CommandDialogOpenExample() {\n  return (\n    <div className=\"w-140\">\n      <CommandDialogExample defaultOpen />\n    </div>\n  )\n}"} />
 
 </Example>
 

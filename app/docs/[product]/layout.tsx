@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import * as React from "react";
 
 import { DocsSidebar } from "@/components/site/docs-sidebar";
 import { LocalNav } from "@/components/site/local-nav";
@@ -10,9 +11,19 @@ export function generateStaticParams() {
   return products.map((product) => ({ product: product.slug }));
 }
 
-export default async function ProductLayout(
-  props: LayoutProps<"/docs/[product]">,
-) {
+function ChromeSkeleton() {
+  return <div className="h-12 border-b border-label/10 bg-surface" />;
+}
+
+export default function ProductLayout(props: LayoutProps<"/docs/[product]">) {
+  return (
+    <React.Suspense fallback={<ChromeSkeleton />}>
+      <ProductChrome params={props.params}>{props.children}</ProductChrome>
+    </React.Suspense>
+  );
+}
+
+async function ProductChrome(props: { params: LayoutProps<"/docs/[product]">["params"]; children: React.ReactNode }) {
   const { product: slug } = await props.params;
   const product = getProduct(slug);
   if (!product) notFound();

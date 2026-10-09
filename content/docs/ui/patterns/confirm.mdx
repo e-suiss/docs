@@ -7,35 +7,7 @@ generated: true
 
 <Example kind="pattern" name="confirm" story="Default">
 
-```tsx
-import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from "@/components/patterns/confirm"
-import { Button } from "@/components/ui/button"
-
-export function ConfirmExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Confirm>
-        <ConfirmTrigger render={<Button variant="outline" />}>
-          Delete order
-        </ConfirmTrigger>
-        <ConfirmContent>
-          <ConfirmHeader>
-            <ConfirmTitle>Delete order?</ConfirmTitle>
-            <ConfirmDescription>
-              Order #1042 will be permanently deleted. This action cannot be
-              undone.
-            </ConfirmDescription>
-          </ConfirmHeader>
-          <ConfirmFooter>
-            <ConfirmCancel>Cancel</ConfirmCancel>
-            <ConfirmAction variant="destructive">Delete</ConfirmAction>
-          </ConfirmFooter>
-        </ConfirmContent>
-      </Confirm>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ConfirmExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Confirm>\n        <ConfirmTrigger render={<Button variant=\"outline\" />}>\n          Delete order\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete order?</ConfirmTitle>\n            <ConfirmDescription>\n              Order #1042 will be permanently deleted. This action cannot be\n              undone.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -47,9 +19,7 @@ Use it before destructive or irreversible actions, such as deleting a record, wh
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns confirm
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns confirm"} />
 
 ### Manual
 
@@ -57,200 +27,15 @@ npx @esuiss/ui@latest add patterns confirm
 
 2. Copy the source into `components/patterns/confirm.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/confirm.tsx"
-"use client"
-
-import * as React from "react"
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import {
-  AlertSheet,
-  AlertSheetAction,
-  AlertSheetCancel,
-  AlertSheetContent,
-  AlertSheetDescription,
-  AlertSheetGroup,
-  AlertSheetHeader,
-  AlertSheetTitle,
-  AlertSheetTrigger,
-} from "@/components/ui/alert-sheet"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type ConfirmContextProps = {
-  isMobile: boolean
-}
-
-const ConfirmContext = React.createContext<ConfirmContextProps | null>(null)
-
-function useConfirm() {
-  const context = React.useContext(ConfirmContext)
-
-  if (!context) {
-    throw new Error("useConfirm must be used within a <Confirm />")
-  }
-
-  return context
-}
-
-function Confirm({
-  dismissible = false,
-  ...props
-}: React.ComponentProps<typeof AlertSheet>) {
-  const isMobile = useIsMobile()
-
-  return (
-    <ConfirmContext.Provider value={{ isMobile }}>
-      {isMobile ? (
-        <AlertSheet data-slot="confirm" dismissible={dismissible} {...props} />
-      ) : (
-        <AlertDialog data-slot="confirm" {...props} />
-      )}
-    </ConfirmContext.Provider>
-  )
-}
-
-function ConfirmTrigger(
-  props: React.ComponentProps<typeof AlertDialogTrigger>
-) {
-  const { isMobile } = useConfirm()
-  const Trigger = isMobile ? AlertSheetTrigger : AlertDialogTrigger
-
-  return <Trigger data-slot="confirm-trigger" {...props} />
-}
-
-function ConfirmContent({
-  size,
-  children,
-  ...props
-}: React.ComponentProps<typeof AlertDialogContent>) {
-  const { isMobile } = useConfirm()
-
-  if (!isMobile) {
-    return (
-      <AlertDialogContent data-slot="confirm-content" size={size} {...props}>
-        {children}
-      </AlertDialogContent>
-    )
-  }
-
-  const nodes = React.Children.toArray(children)
-  const footer = nodes.find(
-    (node): node is React.ReactElement<{ children?: React.ReactNode }> =>
-      React.isValidElement(node) && node.type === ConfirmFooter
-  )
-  const buttons = React.Children.toArray(footer?.props.children)
-  const isCancel = (node: React.ReactNode) =>
-    React.isValidElement(node) && node.type === ConfirmCancel
-
-  return (
-    <AlertSheetContent data-slot="confirm-content" {...props}>
-      <AlertSheetGroup>
-        {nodes.filter((node) => node !== footer)}
-        {buttons.filter((node) => !isCancel(node))}
-      </AlertSheetGroup>
-      {buttons.filter(isCancel)}
-    </AlertSheetContent>
-  )
-}
-
-function ConfirmHeader(props: React.ComponentProps<"div">) {
-  const { isMobile } = useConfirm()
-  const Header = isMobile ? AlertSheetHeader : AlertDialogHeader
-
-  return <Header data-slot="confirm-header" {...props} />
-}
-
-function ConfirmFooter(props: React.ComponentProps<"div">) {
-  return <AlertDialogFooter data-slot="confirm-footer" {...props} />
-}
-
-function ConfirmTitle(props: React.ComponentProps<typeof AlertDialogTitle>) {
-  const { isMobile } = useConfirm()
-  const Title = isMobile ? AlertSheetTitle : AlertDialogTitle
-
-  return <Title data-slot="confirm-title" {...props} />
-}
-
-function ConfirmDescription(
-  props: React.ComponentProps<typeof AlertDialogDescription>
-) {
-  const { isMobile } = useConfirm()
-  const Description = isMobile ? AlertSheetDescription : AlertDialogDescription
-
-  return <Description data-slot="confirm-description" {...props} />
-}
-
-function ConfirmAction(props: React.ComponentProps<typeof AlertSheetAction>) {
-  const { isMobile } = useConfirm()
-  const Action = isMobile ? AlertSheetAction : AlertDialogAction
-
-  return <Action data-slot="confirm-action" {...props} />
-}
-
-function ConfirmCancel(props: React.ComponentProps<typeof AlertSheetCancel>) {
-  const { isMobile } = useConfirm()
-  const Cancel = isMobile ? AlertSheetCancel : AlertDialogCancel
-
-  return <Cancel data-slot="confirm-cancel" {...props} />
-}
-
-export {
-  Confirm,
-  ConfirmAction,
-  ConfirmCancel,
-  ConfirmContent,
-  ConfirmDescription,
-  ConfirmFooter,
-  ConfirmHeader,
-  ConfirmTitle,
-  ConfirmTrigger,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/confirm.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from "@/components/patterns/confirm"
-```
+<Code lang="tsx" code={"import { Confirm, ConfirmTrigger, ConfirmContent, ConfirmHeader, ConfirmFooter, ConfirmTitle, ConfirmDescription, ConfirmAction, ConfirmCancel } from \"@/components/patterns/confirm\""} />
 
-```tsx
-<div className="flex min-h-svh items-center justify-center">
-  <Confirm>
-    <ConfirmTrigger render={<Button variant="outline" />}>
-      Delete order
-    </ConfirmTrigger>
-    <ConfirmContent>
-      <ConfirmHeader>
-        <ConfirmTitle>Delete order?</ConfirmTitle>
-        <ConfirmDescription>
-          Order #1042 will be permanently deleted. This action cannot be
-          undone.
-        </ConfirmDescription>
-      </ConfirmHeader>
-      <ConfirmFooter>
-        <ConfirmCancel>Cancel</ConfirmCancel>
-        <ConfirmAction variant="destructive">Delete</ConfirmAction>
-      </ConfirmFooter>
-    </ConfirmContent>
-  </Confirm>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <Confirm>\n    <ConfirmTrigger render={<Button variant=\"outline\" />}>\n      Delete order\n    </ConfirmTrigger>\n    <ConfirmContent>\n      <ConfirmHeader>\n        <ConfirmTitle>Delete order?</ConfirmTitle>\n        <ConfirmDescription>\n          Order #1042 will be permanently deleted. This action cannot be\n          undone.\n        </ConfirmDescription>\n      </ConfirmHeader>\n      <ConfirmFooter>\n        <ConfirmCancel>Cancel</ConfirmCancel>\n        <ConfirmAction variant=\"destructive\">Delete</ConfirmAction>\n      </ConfirmFooter>\n    </ConfirmContent>\n  </Confirm>\n</div>"} />
 
 Write the content once with the desktop structure: `ConfirmHeader` holding `ConfirmTitle` and `ConfirmDescription`, then `ConfirmFooter` holding `ConfirmCancel` and `ConfirmAction`. Keep `ConfirmCancel` and `ConfirmAction` as direct children of `ConfirmFooter` so the mobile layout can find them. `Confirm` accepts `open`, `defaultOpen` and `onOpenChange` for controlled or uncontrolled use. The mobile sheet is not dismissible by default; pass `dismissible` to let an outside press close it.
 
@@ -262,35 +47,7 @@ Sets `dismissible` so the mobile sheet also closes when the user presses outside
 
 <Example kind="pattern" name="confirm" story="Dismissible">
 
-```tsx
-import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from "@/components/patterns/confirm"
-import { Button } from "@/components/ui/button"
-
-export function ConfirmDismissibleExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Confirm dismissible>
-        <ConfirmTrigger render={<Button variant="outline" />}>
-          Delete order
-        </ConfirmTrigger>
-        <ConfirmContent>
-          <ConfirmHeader>
-            <ConfirmTitle>Delete order?</ConfirmTitle>
-            <ConfirmDescription>
-              Order #1042 will be permanently deleted. This action cannot be
-              undone.
-            </ConfirmDescription>
-          </ConfirmHeader>
-          <ConfirmFooter>
-            <ConfirmCancel>Cancel</ConfirmCancel>
-            <ConfirmAction variant="destructive">Delete</ConfirmAction>
-          </ConfirmFooter>
-        </ConfirmContent>
-      </Confirm>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Confirm, ConfirmAction, ConfirmCancel, ConfirmContent, ConfirmDescription, ConfirmFooter, ConfirmHeader, ConfirmTitle, ConfirmTrigger } from \"@/components/patterns/confirm\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ConfirmDismissibleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Confirm dismissible>\n        <ConfirmTrigger render={<Button variant=\"outline\" />}>\n          Delete order\n        </ConfirmTrigger>\n        <ConfirmContent>\n          <ConfirmHeader>\n            <ConfirmTitle>Delete order?</ConfirmTitle>\n            <ConfirmDescription>\n              Order #1042 will be permanently deleted. This action cannot be\n              undone.\n            </ConfirmDescription>\n          </ConfirmHeader>\n          <ConfirmFooter>\n            <ConfirmCancel>Cancel</ConfirmCancel>\n            <ConfirmAction variant=\"destructive\">Delete</ConfirmAction>\n          </ConfirmFooter>\n        </ConfirmContent>\n      </Confirm>\n    </div>\n  )\n}"} />
 
 </Example>
 

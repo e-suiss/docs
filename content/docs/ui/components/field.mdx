@@ -7,24 +7,7 @@ generated: true
 
 <Example kind="ui" name="field" story="Default">
 
-```tsx
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-
-export function FieldExample() {
-  return (
-    <div className="w-96">
-      <Field orientation="vertical">
-        <FieldLabel htmlFor="field-username">Username</FieldLabel>
-        <Input id="field-username" placeholder="janedoe" />
-        <FieldDescription>
-          Choose a unique name for your account.
-        </FieldDescription>
-      </Field>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-username\">Username</FieldLabel>\n        <Input id=\"field-username\" placeholder=\"janedoe\" />\n        <FieldDescription>\n          Choose a unique name for your account.\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -36,333 +19,27 @@ A `Field` wraps one control together with its `FieldLabel`, an optional `FieldDe
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add field
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add field"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
 
 2. Add the pieces it builds on: [Label](/docs/ui/components/label), [Separator](/docs/ui/components/separator).
 
 3. Copy the source into `components/ui/field.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/field.tsx"
-"use client"
-
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import { useId, useLayoutEffect, useMemo, useRef } from "react"
-
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-
-function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
-  return (
-    <fieldset
-      data-slot="field-set"
-      className={cn(
-        "flex flex-col gap-6 has-[>[data-slot=radio-group]]:gap-3 has-[>[data-variant=inset]]:gap-2 has-[>[data-variant=inset]]:*:data-[slot=field-description]:ps-4 has-[>[data-variant=inset]]:*:data-[slot=field-description]:text-xs has-[>[data-variant=inset]]:*:data-[slot=field-legend]:mb-0 has-[>[data-variant=inset]]:*:data-[slot=field-legend]:ps-4 has-[>[data-variant=inset]]:*:data-[slot=field-legend]:text-xs has-[>[data-variant=inset]]:*:data-[slot=field-legend]:font-normal has-[>[data-variant=inset]]:*:data-[slot=field-legend]:text-label-secondary has-[>[data-variant=inset]]:*:data-[slot=field-legend]:uppercase",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function FieldLegend({
-  className,
-  variant = "legend",
-  ...props
-}: React.ComponentProps<"legend"> & { variant?: "legend" | "label" }) {
-  return (
-    <legend
-      data-slot="field-legend"
-      data-variant={variant}
-      className={cn(
-        "mb-3 font-semibold data-[variant=label]:text-base data-[variant=legend]:text-base",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function FieldGroup({
-  className,
-  variant = "default",
-  ...props
-}: React.ComponentProps<"div"> & { variant?: "default" | "inset" }) {
-  return (
-    <div
-      data-slot="field-group"
-      data-variant={variant}
-      className={cn(
-        "group/field-group @container/field-group flex w-full flex-col gap-7 *:data-[slot=field-group]:gap-4",
-        "data-[variant=inset]:gap-0 data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-surface-secondary data-[variant=inset]:*:data-[slot=field]:relative data-[variant=inset]:*:data-[slot=field]:min-h-11 data-[variant=inset]:*:data-[slot=field]:px-4 data-[variant=inset]:*:data-[slot=field]:py-1.5 data-[variant=inset]:*:data-[slot=field]:not-first:before:absolute data-[variant=inset]:*:data-[slot=field]:not-first:before:inset-e-0 data-[variant=inset]:*:data-[slot=field]:not-first:before:inset-s-4 data-[variant=inset]:*:data-[slot=field]:not-first:before:top-0 data-[variant=inset]:*:data-[slot=field]:not-first:before:h-px data-[variant=inset]:*:data-[slot=field]:not-first:before:bg-separator",
-        "data-[variant=inset]:**:data-[slot=field-label]:font-normal data-[variant=inset]:**:data-[slot=input]:h-8 data-[variant=inset]:**:data-[slot=input]:bg-transparent data-[variant=inset]:**:data-[slot=input]:px-0 data-[variant=inset]:**:data-[slot=input]:text-end data-[variant=inset]:**:data-[slot=input]:outline-none!",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-const fieldVariants = cva("group/field flex w-full gap-3", {
-  variants: {
-    orientation: {
-      vertical: "flex-col *:w-full [&>.sr-only]:w-auto",
-      horizontal:
-        "flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-0.75",
-      responsive:
-        "flex-col *:w-full @md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-0.75",
-    },
-  },
-  defaultVariants: {
-    orientation: "vertical",
-  },
-})
-
-const FIELD_CONTROL =
-  "input:not([type=hidden]):not([aria-hidden=true]), textarea, select, [role=checkbox], [role=switch], [role=radiogroup], [role=radio], [role=slider], [role=combobox], [role=spinbutton]"
-const FIELD_NOTE = "[data-slot=field-description], [data-slot=field-error]"
-const WHITESPACE = /\s+/
-
-function Field({
-  className,
-  orientation = "vertical",
-  ref,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
-  const fieldRef = useRef<HTMLDivElement | null>(null)
-  const linkedRef = useRef<string[]>([])
-  const noteId = useId()
-
-  useLayoutEffect(() => {
-    const field = fieldRef.current
-    if (!field) return
-    const own = (element: Element) =>
-      element.closest("[data-slot=field]") === field
-    const link = () => {
-      const control = Array.from(field.querySelectorAll(FIELD_CONTROL)).find(
-        own
-      )
-      const notes = Array.from(
-        field.querySelectorAll<HTMLElement>(FIELD_NOTE)
-      ).filter(own)
-      const ids = notes.map((note, index) => {
-        if (!note.id) note.id = `${noteId}-${index}`
-        return note.id
-      })
-      if (!control) return
-      const kept = (control.getAttribute("aria-describedby") ?? "")
-        .split(WHITESPACE)
-        .filter((id) => id && !linkedRef.current.includes(id))
-      const next = [...kept, ...ids.filter((id) => !kept.includes(id))]
-      linkedRef.current = ids
-      if (next.length) control.setAttribute("aria-describedby", next.join(" "))
-      else control.removeAttribute("aria-describedby")
-    }
-    link()
-    const observer = new MutationObserver(link)
-    observer.observe(field, { childList: true, subtree: true })
-    return () => observer.disconnect()
-  }, [noteId])
-
-  return (
-    <div
-      ref={(node) => {
-        fieldRef.current = node
-        if (typeof ref === "function") return ref(node)
-        if (ref) ref.current = node
-      }}
-      role="group"
-      data-slot="field"
-      data-orientation={orientation}
-      className={cn(fieldVariants({ orientation }), className)}
-      {...props}
-    />
-  )
-}
-
-function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="field-content"
-      className={cn("flex flex-1 flex-col gap-1", className)}
-      {...props}
-    />
-  )
-}
-
-function FieldLabel({
-  className,
-  ...props
-}: React.ComponentProps<typeof Label>) {
-  return (
-    <Label
-      data-slot="field-label"
-      className={cn(
-        "group/field-label flex w-fit gap-2 group-data-[disabled=true]/field:text-label-quaternary has-[>[data-slot=field]]:has-data-checked:border-accent has-[>[data-slot=field]]:has-data-checked:ring-1 has-[>[data-slot=field]]:has-data-checked:ring-accent has-[>[data-slot=field]]:rounded-xl has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-item-hover has-[>[data-slot=field]]:has-focus-visible:focus-ring *:data-[slot=field]:p-4",
-        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="field-label"
-      className={cn(
-        "flex w-fit items-center gap-2 text-base font-semibold group-data-[disabled=true]/field:text-label-quaternary",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
-  return (
-    <p
-      data-slot="field-description"
-      className={cn(
-        "text-start text-sm font-normal text-label-secondary group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
-        "last:mt-0 nth-last-2:-mt-1",
-        "[&>a]:text-link [&>a]:underline [&>a]:underline-offset-2",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function FieldSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  children?: React.ReactNode
-}) {
-  return (
-    <div
-      data-slot="field-separator"
-      data-content={!!children}
-      className={cn(
-        "relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2",
-        className
-      )}
-      {...props}
-    >
-      <Separator className="absolute inset-0 top-1/2" />
-      {children && (
-        <span
-          className="relative mx-auto block w-fit bg-surface px-2 text-label-secondary"
-          data-slot="field-separator-content"
-        >
-          {children}
-        </span>
-      )}
-    </div>
-  )
-}
-
-function FieldError({
-  className,
-  children,
-  errors,
-  ...props
-}: React.ComponentProps<"div"> & {
-  errors?: Array<{ message?: string } | undefined>
-}) {
-  const content = useMemo(() => {
-    if (children) {
-      return children
-    }
-
-    if (!errors?.length) {
-      return null
-    }
-
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ]
-
-    if (uniqueErrors?.length === 1) {
-      return uniqueErrors[0]?.message
-    }
-
-    return (
-      <ul className="ms-4 flex list-disc flex-col gap-1">
-        {uniqueErrors.map(
-          (error) =>
-            error?.message && <li key={error.message}>{error.message}</li>
-        )}
-      </ul>
-    )
-  }, [children, errors])
-
-  if (!content) {
-    return null
-  }
-
-  return (
-    <div
-      role="alert"
-      data-slot="field-error"
-      className={cn("text-sm font-normal text-danger", className)}
-      {...props}
-    >
-      {content}
-    </div>
-  )
-}
-
-export {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldTitle,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/field.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from "@/components/ui/field"
-```
+<Code lang="tsx" code={"import { FieldSet, FieldLegend, FieldGroup, Field, FieldContent, FieldLabel, FieldTitle, FieldDescription, FieldSeparator, FieldError } from \"@/components/ui/field\""} />
 
-```tsx
-<div className="w-96">
-  <Field orientation="vertical">
-    <FieldLabel htmlFor="field-username">Username</FieldLabel>
-    <Input id="field-username" placeholder="janedoe" />
-    <FieldDescription>
-      Choose a unique name for your account.
-    </FieldDescription>
-  </Field>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Field orientation=\"vertical\">\n    <FieldLabel htmlFor=\"field-username\">Username</FieldLabel>\n    <Input id=\"field-username\" placeholder=\"janedoe\" />\n    <FieldDescription>\n      Choose a unique name for your account.\n    </FieldDescription>\n  </Field>\n</div>"} />
 
 Connect each `FieldLabel` to its control with `htmlFor` and `id`. Set `orientation="horizontal"` to place the label beside the control, for example for a checkbox or switch, or `responsive` to switch from vertical to horizontal when the surrounding `FieldGroup` is wide enough.
 
@@ -378,25 +55,7 @@ A description that contains a link, styled with the link color and an underline.
 
 <Example kind="ui" name="field" story="WithHelpLink">
 
-```tsx
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-
-export function FieldWithHelpLinkExample() {
-  return (
-    <div className="w-96">
-      <Field orientation="vertical">
-        <FieldLabel htmlFor="field-serial">Serial number</FieldLabel>
-        <Input id="field-serial" placeholder="C02XL0GTJGH5" />
-        <FieldDescription>
-          Printed on the back of the device.{" "}
-          <a href="#serial-help">Find your serial number</a>
-        </FieldDescription>
-      </Field>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldWithHelpLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-serial\">Serial number</FieldLabel>\n        <Input id=\"field-serial\" placeholder=\"C02XL0GTJGH5\" />\n        <FieldDescription>\n          Printed on the back of the device.{\" \"}\n          <a href=\"#serial-help\">Find your serial number</a>\n        </FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -406,38 +65,7 @@ Horizontal fields in an `inset` field group, forming a rounded settings list wit
 
 <Example kind="ui" name="field" story="Inset">
 
-```tsx
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
-
-export function FieldInsetExample() {
-  return (
-    <div className="w-96">
-      <FieldSet className="w-96">
-        <FieldLegend>Account</FieldLegend>
-        <FieldGroup variant="inset">
-          <Field orientation="horizontal">
-            <FieldLabel htmlFor="inset-name">Name</FieldLabel>
-            <Input id="inset-name" defaultValue="Jordan Lee" />
-          </Field>
-          <Field orientation="horizontal">
-            <FieldLabel htmlFor="inset-email">Email</FieldLabel>
-            <Input id="inset-email" defaultValue="jordan@acme.com" />
-          </Field>
-          <Field orientation="horizontal">
-            <FieldLabel htmlFor="inset-updates">Product updates</FieldLabel>
-            <Switch id="inset-updates" defaultChecked />
-          </Field>
-        </FieldGroup>
-        <FieldDescription>
-          Your name and email appear on invoices.
-        </FieldDescription>
-      </FieldSet>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldInsetExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldSet className=\"w-96\">\n        <FieldLegend>Account</FieldLegend>\n        <FieldGroup variant=\"inset\">\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-name\">Name</FieldLabel>\n            <Input id=\"inset-name\" defaultValue=\"Jordan Lee\" />\n          </Field>\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-email\">Email</FieldLabel>\n            <Input id=\"inset-email\" defaultValue=\"jordan@acme.com\" />\n          </Field>\n          <Field orientation=\"horizontal\">\n            <FieldLabel htmlFor=\"inset-updates\">Product updates</FieldLabel>\n            <Switch id=\"inset-updates\" defaultChecked />\n          </Field>\n        </FieldGroup>\n        <FieldDescription>\n          Your name and email appear on invoices.\n        </FieldDescription>\n      </FieldSet>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -447,26 +75,7 @@ A field that labels and describes a `Textarea`.
 
 <Example kind="ui" name="field" story="WithTextarea">
 
-```tsx
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
-import { Textarea } from "@/components/ui/textarea"
-
-export function FieldWithTextareaExample() {
-  return (
-    <div className="w-96">
-      <Field orientation="vertical">
-        <FieldLabel htmlFor="field-feedback">Feedback</FieldLabel>
-        <Textarea
-          id="field-feedback"
-          placeholder="Tell us what you think..."
-          rows={4}
-        />
-        <FieldDescription>Your feedback helps us improve.</FieldDescription>
-      </Field>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldWithTextareaExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\">\n        <FieldLabel htmlFor=\"field-feedback\">Feedback</FieldLabel>\n        <Textarea\n          id=\"field-feedback\"\n          placeholder=\"Tell us what you think...\"\n          rows={4}\n        />\n        <FieldDescription>Your feedback helps us improve.</FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -476,22 +85,7 @@ An invalid field with an error message announced as an alert.
 
 <Example kind="ui" name="field" story="Invalid">
 
-```tsx
-import { Field, FieldError, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-
-export function FieldInvalidExample() {
-  return (
-    <div className="w-96">
-      <Field orientation="vertical" data-invalid>
-        <FieldLabel htmlFor="field-email">Email</FieldLabel>
-        <Input id="field-email" type="email" defaultValue="jane@" aria-invalid />
-        <FieldError>Enter a valid email address.</FieldError>
-      </Field>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldInvalidExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-invalid>\n        <FieldLabel htmlFor=\"field-email\">Email</FieldLabel>\n        <Input id=\"field-email\" type=\"email\" defaultValue=\"jane@\" aria-invalid />\n        <FieldError>Enter a valid email address.</FieldError>\n      </Field>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -501,32 +95,7 @@ A `FieldError` that renders an `errors` array as a bulleted list.
 
 <Example kind="ui" name="field" story="MultipleErrors">
 
-```tsx
-import { Field, FieldError, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-
-export function FieldMultipleErrorsExample() {
-  return (
-    <div className="w-96">
-      <Field orientation="vertical" data-invalid>
-        <FieldLabel htmlFor="field-password">Password</FieldLabel>
-        <Input
-          id="field-password"
-          type="password"
-          defaultValue="abc"
-          aria-invalid
-        />
-        <FieldError
-          errors={[
-            { message: "Password must be at least 8 characters." },
-            { message: "Password must contain a number." },
-          ]}
-        />
-      </Field>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldMultipleErrorsExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-invalid>\n        <FieldLabel htmlFor=\"field-password\">Password</FieldLabel>\n        <Input\n          id=\"field-password\"\n          type=\"password\"\n          defaultValue=\"abc\"\n          aria-invalid\n        />\n        <FieldError\n          errors={[\n            { message: \"Password must be at least 8 characters.\" },\n            { message: \"Password must contain a number.\" },\n          ]}\n        />\n      </Field>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -536,22 +105,7 @@ A disabled field with a dimmed label and a disabled input.
 
 <Example kind="ui" name="field" story="Disabled">
 
-```tsx
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-
-export function FieldDisabledExample() {
-  return (
-    <div className="w-96">
-      <Field orientation="vertical" data-disabled>
-        <FieldLabel htmlFor="field-disabled">Workspace URL</FieldLabel>
-        <Input id="field-disabled" defaultValue="acme.example.com" disabled />
-        <FieldDescription>Contact an admin to change this.</FieldDescription>
-      </Field>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldDescription, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldDisabledExample() {\n  return (\n    <div className=\"w-96\">\n      <Field orientation=\"vertical\" data-disabled>\n        <FieldLabel htmlFor=\"field-disabled\">Workspace URL</FieldLabel>\n        <Input id=\"field-disabled\" defaultValue=\"acme.example.com\" disabled />\n        <FieldDescription>Contact an admin to change this.</FieldDescription>\n      </Field>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -561,35 +115,7 @@ Horizontal fields with a checkbox and a switch, one with a description in `Field
 
 <Example kind="ui" name="field" story="Horizontal">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { Switch } from "@/components/ui/switch"
-
-export function FieldHorizontalExample() {
-  return (
-    <div className="w-96">
-      <FieldGroup>
-        <Field orientation="horizontal">
-          <Checkbox id="field-terms" defaultChecked />
-          <FieldLabel htmlFor="field-terms">
-            Accept terms and conditions
-          </FieldLabel>
-        </Field>
-        <Field orientation="horizontal">
-          <FieldContent>
-            <FieldLabel htmlFor="field-marketing">Marketing emails</FieldLabel>
-            <FieldDescription>
-              Receive emails about new products and features.
-            </FieldDescription>
-          </FieldContent>
-          <Switch id="field-marketing" />
-        </Field>
-      </FieldGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function FieldHorizontalExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldGroup>\n        <Field orientation=\"horizontal\">\n          <Checkbox id=\"field-terms\" defaultChecked />\n          <FieldLabel htmlFor=\"field-terms\">\n            Accept terms and conditions\n          </FieldLabel>\n        </Field>\n        <Field orientation=\"horizontal\">\n          <FieldContent>\n            <FieldLabel htmlFor=\"field-marketing\">Marketing emails</FieldLabel>\n            <FieldDescription>\n              Receive emails about new products and features.\n            </FieldDescription>\n          </FieldContent>\n          <Switch id=\"field-marketing\" />\n        </Field>\n      </FieldGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -599,45 +125,7 @@ Radio options presented as selectable cards by nesting a `Field` inside a `Field
 
 <Example kind="ui" name="field" story="ChoiceCards">
 
-```tsx
-import { Field, FieldContent, FieldDescription, FieldLabel, FieldLegend, FieldSet, FieldTitle } from "@/components/ui/field"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-export function FieldChoiceCardsExample() {
-  return (
-    <div className="w-96">
-      <FieldSet>
-        <FieldLegend variant="label">Plan</FieldLegend>
-        <FieldDescription>Select the plan that fits your team.</FieldDescription>
-        <RadioGroup defaultValue="pro">
-          <FieldLabel htmlFor="plan-starter">
-            <Field orientation="horizontal">
-              <FieldContent>
-                <FieldTitle>Starter</FieldTitle>
-                <FieldDescription>
-                  For individuals and small projects.
-                </FieldDescription>
-              </FieldContent>
-              <RadioGroupItem value="starter" id="plan-starter" />
-            </Field>
-          </FieldLabel>
-          <FieldLabel htmlFor="plan-pro">
-            <Field orientation="horizontal">
-              <FieldContent>
-                <FieldTitle>Pro</FieldTitle>
-                <FieldDescription>
-                  For growing teams that need more.
-                </FieldDescription>
-              </FieldContent>
-              <RadioGroupItem value="pro" id="plan-pro" />
-            </Field>
-          </FieldLabel>
-        </RadioGroup>
-      </FieldSet>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Field, FieldContent, FieldDescription, FieldLabel, FieldLegend, FieldSet, FieldTitle } from \"@/components/ui/field\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function FieldChoiceCardsExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldSet>\n        <FieldLegend variant=\"label\">Plan</FieldLegend>\n        <FieldDescription>Select the plan that fits your team.</FieldDescription>\n        <RadioGroup defaultValue=\"pro\">\n          <FieldLabel htmlFor=\"plan-starter\">\n            <Field orientation=\"horizontal\">\n              <FieldContent>\n                <FieldTitle>Starter</FieldTitle>\n                <FieldDescription>\n                  For individuals and small projects.\n                </FieldDescription>\n              </FieldContent>\n              <RadioGroupItem value=\"starter\" id=\"plan-starter\" />\n            </Field>\n          </FieldLabel>\n          <FieldLabel htmlFor=\"plan-pro\">\n            <Field orientation=\"horizontal\">\n              <FieldContent>\n                <FieldTitle>Pro</FieldTitle>\n                <FieldDescription>\n                  For growing teams that need more.\n                </FieldDescription>\n              </FieldContent>\n              <RadioGroupItem value=\"pro\" id=\"plan-pro\" />\n            </Field>\n          </FieldLabel>\n        </RadioGroup>\n      </FieldSet>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -647,84 +135,7 @@ A complete payment form built from field sets, groups, a separator and actions.
 
 <Example kind="ui" name="field" story="Form">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-
-export function FieldFormExample() {
-  return (
-    <div className="w-96">
-      <form onSubmit={(event) => event.preventDefault()}>
-        <FieldGroup>
-          <FieldSet>
-            <FieldLegend>Payment method</FieldLegend>
-            <FieldDescription>
-              All transactions are secure and encrypted.
-            </FieldDescription>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="form-name">Name on card</FieldLabel>
-                <Input id="form-name" placeholder="Jane Doe" required />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="form-number">Card number</FieldLabel>
-                <Input
-                  id="form-number"
-                  placeholder="1234 5678 9012 3456"
-                  required
-                />
-                <FieldDescription>Enter your 16-digit number.</FieldDescription>
-              </Field>
-              <div className="grid grid-cols-2 gap-4">
-                <Field>
-                  <FieldLabel htmlFor="form-exp">Expiry</FieldLabel>
-                  <Input id="form-exp" placeholder="MM/YY" />
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor="form-cvv">CVV</FieldLabel>
-                  <Input id="form-cvv" placeholder="123" />
-                </Field>
-              </div>
-            </FieldGroup>
-          </FieldSet>
-          <FieldSeparator />
-          <FieldSet>
-            <FieldLegend>Billing address</FieldLegend>
-            <FieldGroup>
-              <Field orientation="horizontal">
-                <Checkbox id="form-same" defaultChecked />
-                <FieldLabel htmlFor="form-same" className="font-normal">
-                  Same as shipping address
-                </FieldLabel>
-              </Field>
-            </FieldGroup>
-          </FieldSet>
-          <FieldSet>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="form-notes">Notes</FieldLabel>
-                <Textarea
-                  id="form-notes"
-                  placeholder="Add any additional comments"
-                />
-              </Field>
-            </FieldGroup>
-          </FieldSet>
-          <Field orientation="horizontal">
-            <Button type="submit">Submit</Button>
-            <Button variant="outline" type="button">
-              Cancel
-            </Button>
-          </Field>
-        </FieldGroup>
-      </form>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSeparator, FieldSet } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function FieldFormExample() {\n  return (\n    <div className=\"w-96\">\n      <form onSubmit={(event) => event.preventDefault()}>\n        <FieldGroup>\n          <FieldSet>\n            <FieldLegend>Payment method</FieldLegend>\n            <FieldDescription>\n              All transactions are secure and encrypted.\n            </FieldDescription>\n            <FieldGroup>\n              <Field>\n                <FieldLabel htmlFor=\"form-name\">Name on card</FieldLabel>\n                <Input id=\"form-name\" placeholder=\"Jane Doe\" required />\n              </Field>\n              <Field>\n                <FieldLabel htmlFor=\"form-number\">Card number</FieldLabel>\n                <Input\n                  id=\"form-number\"\n                  placeholder=\"1234 5678 9012 3456\"\n                  required\n                />\n                <FieldDescription>Enter your 16-digit number.</FieldDescription>\n              </Field>\n              <div className=\"grid grid-cols-2 gap-4\">\n                <Field>\n                  <FieldLabel htmlFor=\"form-exp\">Expiry</FieldLabel>\n                  <Input id=\"form-exp\" placeholder=\"MM/YY\" />\n                </Field>\n                <Field>\n                  <FieldLabel htmlFor=\"form-cvv\">CVV</FieldLabel>\n                  <Input id=\"form-cvv\" placeholder=\"123\" />\n                </Field>\n              </div>\n            </FieldGroup>\n          </FieldSet>\n          <FieldSeparator />\n          <FieldSet>\n            <FieldLegend>Billing address</FieldLegend>\n            <FieldGroup>\n              <Field orientation=\"horizontal\">\n                <Checkbox id=\"form-same\" defaultChecked />\n                <FieldLabel htmlFor=\"form-same\" className=\"font-normal\">\n                  Same as shipping address\n                </FieldLabel>\n              </Field>\n            </FieldGroup>\n          </FieldSet>\n          <FieldSet>\n            <FieldGroup>\n              <Field>\n                <FieldLabel htmlFor=\"form-notes\">Notes</FieldLabel>\n                <Textarea\n                  id=\"form-notes\"\n                  placeholder=\"Add any additional comments\"\n                />\n              </Field>\n            </FieldGroup>\n          </FieldSet>\n          <Field orientation=\"horizontal\">\n            <Button type=\"submit\">Submit</Button>\n            <Button variant=\"outline\" type=\"button\">\n              Cancel\n            </Button>\n          </Field>\n        </FieldGroup>\n      </form>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -734,28 +145,7 @@ A `FieldSeparator` with text between a sign-in button and an email field.
 
 <Example kind="ui" name="field" story="SeparatorWithText">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Field, FieldGroup, FieldLabel, FieldSeparator } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-
-export function FieldSeparatorWithTextExample() {
-  return (
-    <div className="w-96">
-      <FieldGroup>
-        <Field>
-          <Button variant="outline">Continue with Apple</Button>
-        </Field>
-        <FieldSeparator>Or continue with</FieldSeparator>
-        <Field>
-          <FieldLabel htmlFor="sep-email">Email</FieldLabel>
-          <Input id="sep-email" type="email" placeholder="jane@example.com" />
-        </Field>
-      </FieldGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Field, FieldGroup, FieldLabel, FieldSeparator } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function FieldSeparatorWithTextExample() {\n  return (\n    <div className=\"w-96\">\n      <FieldGroup>\n        <Field>\n          <Button variant=\"outline\">Continue with Apple</Button>\n        </Field>\n        <FieldSeparator>Or continue with</FieldSeparator>\n        <Field>\n          <FieldLabel htmlFor=\"sep-email\">Email</FieldLabel>\n          <Input id=\"sep-email\" type=\"email\" placeholder=\"jane@example.com\" />\n        </Field>\n      </FieldGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 

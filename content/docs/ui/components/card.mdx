@@ -7,35 +7,7 @@ generated: true
 
 <Example kind="ui" name="card" story="Default">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function CardExample() {
-  return (
-    <div className="w-96">
-      <Card>
-        <CardHeader>
-          <CardTitle>Team plan</CardTitle>
-          <CardDescription>
-            Everything your team needs to ship faster.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Unlimited projects, shared workspaces, and priority support for up to
-            ten members.
-          </p>
-        </CardContent>
-        <CardFooter className="gap-2">
-          <Button>Upgrade</Button>
-          <Button variant="ghost">Learn more</Button>
-        </CardFooter>
-      </Card>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <CardHeader>\n          <CardTitle>Team plan</CardTitle>\n          <CardDescription>\n            Everything your team needs to ship faster.\n          </CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>\n            Unlimited projects, shared workspaces, and priority support for up to\n            ten members.\n          </p>\n        </CardContent>\n        <CardFooter className=\"gap-2\">\n          <Button>Upgrade</Button>\n          <Button variant=\"ghost\">Learn more</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -47,161 +19,25 @@ Use a card to present a self-contained summary, such as a plan, a metric or a pl
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add card
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add card"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Copy the source into `components/ui/card.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/card.tsx"
-import { cn } from "cn"
-import type * as React from "react"
-
-function Card({
-  className,
-  size = "default",
-  variant = "default",
-  ...props
-}: React.ComponentProps<"div"> & {
-  size?: "default" | "sm"
-  variant?: "default" | "filled"
-}) {
-  return (
-    <div
-      data-slot="card"
-      data-size={size}
-      data-variant={variant}
-      className={cn(
-        "flex flex-col gap-(--card-spacing) overflow-hidden rounded-2xl bg-surface-raised py-(--card-spacing) text-base text-label shadow-md ring-1 ring-label/5 [--card-spacing:--spacing(6)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(4)] dark:ring-label/10 data-[variant=filled]:bg-surface-secondary data-[variant=filled]:shadow-none data-[variant=filled]:ring-0 *:[img:first-child]:rounded-t-2xl *:[img:last-child]:rounded-b-2xl",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-header"
-      className={cn(
-        "@container/card-header grid auto-rows-min items-start gap-1.5 rounded-t-2xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-title"
-      className={cn("text-base font-semibold", className)}
-      {...props}
-    />
-  )
-}
-
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-description"
-      className={cn("text-sm text-label-secondary", className)}
-      {...props}
-    />
-  )
-}
-
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn(
-        "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("px-(--card-spacing)", className)}
-      {...props}
-    />
-  )
-}
-
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-footer"
-      className={cn(
-        "flex items-center rounded-b-2xl px-(--card-spacing) [.border-t]:pt-(--card-spacing)",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/card.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from "@/components/ui/card"
-```
+<Code lang="tsx" code={"import { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter } from \"@/components/ui/card\""} />
 
-```tsx
-<div className="w-96">
-  <Card>
-    <CardHeader>
-      <CardTitle>Team plan</CardTitle>
-      <CardDescription>
-        Everything your team needs to ship faster.
-      </CardDescription>
-    </CardHeader>
-    <CardContent>
-      <p>
-        Unlimited projects, shared workspaces, and priority support for up to
-        ten members.
-      </p>
-    </CardContent>
-    <CardFooter className="gap-2">
-      <Button>Upgrade</Button>
-      <Button variant="ghost">Learn more</Button>
-    </CardFooter>
-  </Card>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Card>\n    <CardHeader>\n      <CardTitle>Team plan</CardTitle>\n      <CardDescription>\n        Everything your team needs to ship faster.\n      </CardDescription>\n    </CardHeader>\n    <CardContent>\n      <p>\n        Unlimited projects, shared workspaces, and priority support for up to\n        ten members.\n      </p>\n    </CardContent>\n    <CardFooter className=\"gap-2\">\n      <Button>Upgrade</Button>\n      <Button variant=\"ghost\">Learn more</Button>\n    </CardFooter>\n  </Card>\n</div>"} />
 
 All parts are plain `div` elements, so you can omit any of them. Add `border-b` to `CardHeader` or `border-t` to `CardFooter` to draw a divider; the card adds matching padding on that side.
 
@@ -215,35 +51,7 @@ The `sm` size with tighter spacing.
 
 <Example kind="ui" name="card" story="Small">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function CardSmallExample() {
-  return (
-    <div className="w-96">
-      <Card size="sm">
-        <CardHeader>
-          <CardTitle>Team plan</CardTitle>
-          <CardDescription>
-            Everything your team needs to ship faster.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Unlimited projects, shared workspaces, and priority support for up to
-            ten members.
-          </p>
-        </CardContent>
-        <CardFooter className="gap-2">
-          <Button>Upgrade</Button>
-          <Button variant="ghost">Learn more</Button>
-        </CardFooter>
-      </Card>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardSmallExample() {\n  return (\n    <div className=\"w-96\">\n      <Card size=\"sm\">\n        <CardHeader>\n          <CardTitle>Team plan</CardTitle>\n          <CardDescription>\n            Everything your team needs to ship faster.\n          </CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>\n            Unlimited projects, shared workspaces, and priority support for up to\n            ten members.\n          </p>\n        </CardContent>\n        <CardFooter className=\"gap-2\">\n          <Button>Upgrade</Button>\n          <Button variant=\"ghost\">Learn more</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -253,35 +61,7 @@ The `filled` variant on a flat secondary surface with no shadow.
 
 <Example kind="ui" name="card" story="Filled">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function CardFilledExample() {
-  return (
-    <div className="w-96">
-      <Card variant="filled">
-        <CardHeader>
-          <CardTitle>Team plan</CardTitle>
-          <CardDescription>
-            Everything your team needs to ship faster.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Unlimited projects, shared workspaces, and priority support for up to
-            ten members.
-          </p>
-        </CardContent>
-        <CardFooter className="gap-2">
-          <Button>Upgrade</Button>
-          <Button variant="ghost">Learn more</Button>
-        </CardFooter>
-      </Card>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardFilledExample() {\n  return (\n    <div className=\"w-96\">\n      <Card variant=\"filled\">\n        <CardHeader>\n          <CardTitle>Team plan</CardTitle>\n          <CardDescription>\n            Everything your team needs to ship faster.\n          </CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>\n            Unlimited projects, shared workspaces, and priority support for up to\n            ten members.\n          </p>\n        </CardContent>\n        <CardFooter className=\"gap-2\">\n          <Button>Upgrade</Button>\n          <Button variant=\"ghost\">Learn more</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -291,32 +71,7 @@ Places an icon button in the header with `CardAction`.
 
 <Example kind="ui" name="card" story="WithAction">
 
-```tsx
-import { DotsThreeIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function CardWithActionExample() {
-  return (
-    <div className="w-96">
-      <Card>
-        <CardHeader>
-          <CardTitle>Monthly revenue</CardTitle>
-          <CardDescription>Updated five minutes ago</CardDescription>
-          <CardAction>
-            <Button variant="ghost" size="icon-sm" aria-label="More options">
-              <DotsThreeIcon />
-            </Button>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <p className="text-3xl font-semibold tabular-nums">$24,380</p>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { DotsThreeIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardWithActionExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <CardHeader>\n          <CardTitle>Monthly revenue</CardTitle>\n          <CardDescription>Updated five minutes ago</CardDescription>\n          <CardAction>\n            <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"More options\">\n              <DotsThreeIcon />\n            </Button>\n          </CardAction>\n        </CardHeader>\n        <CardContent>\n          <p className=\"text-3xl font-semibold tabular-nums\">$24,380</p>\n        </CardContent>\n      </Card>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -326,29 +81,7 @@ Separates the header and footer with borders.
 
 <Example kind="ui" name="card" story="WithBorders">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function CardWithBordersExample() {
-  return (
-    <div className="w-96">
-      <Card>
-        <CardHeader className="border-b">
-          <CardTitle>Notifications</CardTitle>
-          <CardDescription>Choose what you want to hear about.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>You have three unread messages and one pending invite.</p>
-        </CardContent>
-        <CardFooter className="justify-end border-t">
-          <Button variant="outline">Mark all as read</Button>
-        </CardFooter>
-      </Card>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardWithBordersExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <CardHeader className=\"border-b\">\n          <CardTitle>Notifications</CardTitle>\n          <CardDescription>Choose what you want to hear about.</CardDescription>\n        </CardHeader>\n        <CardContent>\n          <p>You have three unread messages and one pending invite.</p>\n        </CardContent>\n        <CardFooter className=\"justify-end border-t\">\n          <Button variant=\"outline\">Mark all as read</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -358,31 +91,7 @@ Leads with a full-bleed image above the header.
 
 <Example kind="ui" name="card" story="WithImage">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-export function CardWithImageExample() {
-  return (
-    <div className="w-96">
-      <Card>
-        <img
-          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
-          alt="Mountain lake at sunrise"
-          className="aspect-video w-full object-cover"
-        />
-        <CardHeader>
-          <CardTitle>Lake Louise</CardTitle>
-          <CardDescription>Banff National Park, Canada</CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <Button className="w-full">Book a stay</Button>
-        </CardFooter>
-      </Card>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Card, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\n\nexport function CardWithImageExample() {\n  return (\n    <div className=\"w-96\">\n      <Card>\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"aspect-video w-full object-cover\"\n        />\n        <CardHeader>\n          <CardTitle>Lake Louise</CardTitle>\n          <CardDescription>Banff National Park, Canada</CardDescription>\n        </CardHeader>\n        <CardFooter>\n          <Button className=\"w-full\">Book a stay</Button>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}"} />
 
 </Example>
 

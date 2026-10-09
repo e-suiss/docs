@@ -7,32 +7,7 @@ generated: true
 
 <Example kind="ui" name="alert-dialog" story="Default">
 
-```tsx
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-
-export function AlertDialogExample() {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="outline" />}>
-        Sign out
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>
-          <AlertDialogDescription>
-            You will need to sign in again to access your projects and settings.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Sign out</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
-```
+<Code lang="tsx" code={"import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertDialogExample() {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n        Sign out\n      </AlertDialogTrigger>\n      <AlertDialogContent>\n        <AlertDialogHeader>\n          <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>\n          <AlertDialogDescription>\n            You will need to sign in again to access your projects and settings.\n          </AlertDialogDescription>\n        </AlertDialogHeader>\n        <AlertDialogFooter>\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\n          <AlertDialogAction>Sign out</AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  )\n}"} />
 
 </Example>
 
@@ -44,241 +19,27 @@ Use it when a decision must be made before continuing, such as signing out or de
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add alert-dialog
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert-dialog"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Add the pieces it builds on: [Button](/docs/ui/components/button).
 
 3. Copy the source into `components/ui/alert-dialog.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/alert-dialog.tsx"
-"use client"
-
-import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
-import { cn } from "cn"
-import type * as React from "react"
-
-import { Button } from "@/components/ui/button"
-
-function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
-  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
-}
-
-function AlertDialogTrigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
-  return (
-    <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-  )
-}
-
-function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
-  return (
-    <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-  )
-}
-
-function AlertDialogOverlay({
-  className,
-  ...props
-}: AlertDialogPrimitive.Backdrop.Props) {
-  return (
-    <AlertDialogPrimitive.Backdrop
-      data-slot="alert-dialog-overlay"
-      className={cn(
-        "fixed inset-0 isolate z-50 bg-scrim duration-100 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogContent({
-  className,
-  size = "default",
-  ...props
-}: AlertDialogPrimitive.Popup.Props & {
-  size?: "default" | "sm"
-}) {
-  return (
-    <AlertDialogPortal>
-      <AlertDialogOverlay />
-      <AlertDialogPrimitive.Popup
-        data-slot="alert-dialog-content"
-        data-size={size}
-        className={cn(
-          "fixed top-1/2 inset-s-1/2 z-50 grid w-full -translate-x-1/2 rtl:translate-x-1/2 -translate-y-1/2 gap-6 rounded-2xl bg-surface-raised p-6 text-label shadow-xl ring-1 ring-label/5 duration-100 outline-none max-w-xs data-[size=default]:max-w-85 dark:ring-label/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-          className
-        )}
-        {...props}
-      />
-    </AlertDialogPortal>
-  )
-}
-
-function AlertDialogHeader({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-dialog-header"
-      className={cn(
-        "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-6",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogFooter({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-dialog-footer"
-      className={cn("grid grid-cols-2 gap-2", className)}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogMedia({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-dialog-media"
-      className={cn(
-        "mb-2 inline-flex size-16 items-center justify-center rounded-full bg-surface-secondary *:[svg:not([class*='size-'])]:size-8",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
-  return (
-    <AlertDialogPrimitive.Title
-      data-slot="alert-dialog-title"
-      className={cn("text-lg font-semibold", className)}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogDescription({
-  className,
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
-  return (
-    <AlertDialogPrimitive.Description
-      data-slot="alert-dialog-description"
-      className={cn(
-        "text-sm text-balance text-label-secondary md:text-pretty *:[a]:underline *:[a]:hover:text-label",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogAction({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: AlertDialogPrimitive.Close.Props &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
-  return (
-    <AlertDialogPrimitive.Close
-      data-slot="alert-dialog-action"
-      className={className}
-      render={<Button variant={variant} size={size} />}
-      {...props}
-    />
-  )
-}
-
-function AlertDialogCancel({
-  className,
-  variant = "secondary",
-  size = "default",
-  ...props
-}: AlertDialogPrimitive.Close.Props &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
-  return (
-    <AlertDialogPrimitive.Close
-      data-slot="alert-dialog-cancel"
-      className={className}
-      render={<Button variant={variant} size={size} />}
-      {...props}
-    />
-  )
-}
-
-export {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogMedia,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/alert-dialog.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
-```
+<Code lang="tsx" code={"import { AlertDialog, AlertDialogTrigger, AlertDialogPortal, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogMedia, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from \"@/components/ui/alert-dialog\""} />
 
-```tsx
-<AlertDialog>
-  <AlertDialogTrigger render={<Button variant="outline" />}>
-    Sign out
-  </AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>
-      <AlertDialogDescription>
-        You will need to sign in again to access your projects and settings.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Sign out</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
-```
+<Code lang="tsx" code={"<AlertDialog>\n  <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n    Sign out\n  </AlertDialogTrigger>\n  <AlertDialogContent>\n    <AlertDialogHeader>\n      <AlertDialogTitle>Sign out of your account?</AlertDialogTitle>\n      <AlertDialogDescription>\n        You will need to sign in again to access your projects and settings.\n      </AlertDialogDescription>\n    </AlertDialogHeader>\n    <AlertDialogFooter>\n      <AlertDialogCancel>Cancel</AlertDialogCancel>\n      <AlertDialogAction>Sign out</AlertDialogAction>\n    </AlertDialogFooter>\n  </AlertDialogContent>\n</AlertDialog>"} />
 
 `AlertDialogContent` already includes `AlertDialogPortal` and `AlertDialogOverlay`, so you rarely use those parts directly.
 
@@ -294,32 +55,7 @@ A narrower dialog using `size="sm"` with a destructive action.
 
 <Example kind="ui" name="alert-dialog" story="Small">
 
-```tsx
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-
-export function AlertDialogSmallExample() {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="outline" />}>
-        Discard draft
-      </AlertDialogTrigger>
-      <AlertDialogContent size="sm">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Discard draft?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Your unsaved message will be lost.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Keep</AlertDialogCancel>
-          <AlertDialogAction variant="destructive">Discard</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
-```
+<Code lang="tsx" code={"import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertDialogSmallExample() {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger render={<Button variant=\"outline\" />}>\n        Discard draft\n      </AlertDialogTrigger>\n      <AlertDialogContent size=\"sm\">\n        <AlertDialogHeader>\n          <AlertDialogTitle>Discard draft?</AlertDialogTitle>\n          <AlertDialogDescription>\n            Your unsaved message will be lost.\n          </AlertDialogDescription>\n        </AlertDialogHeader>\n        <AlertDialogFooter>\n          <AlertDialogCancel>Keep</AlertDialogCancel>\n          <AlertDialogAction variant=\"destructive\">Discard</AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  )\n}"} />
 
 </Example>
 
@@ -329,37 +65,7 @@ Adds an icon above the title with `AlertDialogMedia`.
 
 <Example kind="ui" name="alert-dialog" story="WithMedia">
 
-```tsx
-import { TrashIcon } from "@phosphor-icons/react"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogMedia, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
-
-export function AlertDialogWithMediaExample() {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="destructive" />}>
-        Delete project
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogMedia className="bg-danger/10 text-danger">
-            <TrashIcon />
-          </AlertDialogMedia>
-          <AlertDialogTitle>Delete this project?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This permanently removes the project and all of its files. This
-            action cannot be undone.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
-```
+<Code lang="tsx" code={"import { TrashIcon } from \"@phosphor-icons/react\"\nimport { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogMedia, AlertDialogTitle, AlertDialogTrigger } from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertDialogWithMediaExample() {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger render={<Button variant=\"destructive\" />}>\n        Delete project\n      </AlertDialogTrigger>\n      <AlertDialogContent>\n        <AlertDialogHeader>\n          <AlertDialogMedia className=\"bg-danger/10 text-danger\">\n            <TrashIcon />\n          </AlertDialogMedia>\n          <AlertDialogTitle>Delete this project?</AlertDialogTitle>\n          <AlertDialogDescription>\n            This permanently removes the project and all of its files. This\n            action cannot be undone.\n          </AlertDialogDescription>\n        </AlertDialogHeader>\n        <AlertDialogFooter>\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\n          <AlertDialogAction variant=\"destructive\">Delete</AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  )\n}"} />
 
 </Example>
 

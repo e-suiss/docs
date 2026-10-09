@@ -7,46 +7,7 @@ generated: true
 
 <Example kind="ui" name="dialog" story="Default">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-export function DialogExample() {
-  return (
-    <Dialog>
-      <DialogTrigger render={<Button variant="outline" />}>
-        Edit profile
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Update your name and username. Click save when you are done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" defaultValue="Ada Lovelace" />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input id="username" defaultValue="@ada" />
-          </div>
-        </div>
-        <DialogFooter>
-          <DialogClose render={<Button variant="secondary" />}>
-            Cancel
-          </DialogClose>
-          <Button>Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function DialogExample() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant=\"outline\" />}>\n        Edit profile\n      </DialogTrigger>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Edit profile</DialogTitle>\n          <DialogDescription>\n            Update your name and username. Click save when you are done.\n          </DialogDescription>\n        </DialogHeader>\n        <div className=\"grid gap-4\">\n          <div className=\"grid gap-2\">\n            <Label htmlFor=\"name\">Name</Label>\n            <Input id=\"name\" defaultValue=\"Ada Lovelace\" />\n          </div>\n          <div className=\"grid gap-2\">\n            <Label htmlFor=\"username\">Username</Label>\n            <Input id=\"username\" defaultValue=\"@ada\" />\n          </div>\n        </div>\n        <DialogFooter>\n          <DialogClose render={<Button variant=\"secondary\" />}>\n            Cancel\n          </DialogClose>\n          <Button>Save changes</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}"} />
 
 </Example>
 
@@ -58,235 +19,27 @@ Use a dialog for a short, focused task such as editing a few fields. To confirm 
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add dialog
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add dialog"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react @phosphor-icons/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
 
 2. Add the pieces it builds on: [Button](/docs/ui/components/button).
 
 3. Copy the source into `components/ui/dialog.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/dialog.tsx"
-"use client"
-
-import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
-import { XIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-import type * as React from "react"
-import { Button } from "@/components/ui/button"
-
-function Dialog({ ...props }: DialogPrimitive.Root.Props) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />
-}
-
-function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
-  return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
-}
-
-function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
-}
-
-function DialogClose({ ...props }: DialogPrimitive.Close.Props) {
-  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
-}
-
-function DialogOverlay({
-  className,
-  ...props
-}: DialogPrimitive.Backdrop.Props) {
-  return (
-    <DialogPrimitive.Backdrop
-      data-slot="dialog-overlay"
-      className={cn(
-        "fixed inset-0 isolate z-50 bg-scrim duration-100 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function DialogContent({
-  className,
-  children,
-  showCloseButton = true,
-  closeLabel,
-  ...props
-}: DialogPrimitive.Popup.Props & {
-  showCloseButton?: boolean
-  closeLabel?: string
-}) {
-  return (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Popup
-        data-slot="dialog-content"
-        className={cn(
-          "has-[>[data-slot=dialog-close]]:*:first:pe-8 has-[>[data-slot=dialog-close][data-label]]:*:first:pe-18 fixed top-1/2 inset-s-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 rtl:translate-x-1/2 -translate-y-1/2 gap-6 rounded-2xl bg-surface-raised p-6 text-base text-label shadow-xl ring-1 ring-label/5 duration-100 outline-none sm:max-w-md dark:ring-label/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        {showCloseButton && (
-          <DialogPrimitive.Close
-            data-slot="dialog-close"
-            data-label={closeLabel ? "" : undefined}
-            render={
-              <Button
-                variant={closeLabel ? "plain" : "ghost"}
-                className={cn(
-                  "absolute top-4.75 inset-e-4",
-                  closeLabel && "text-base",
-                  !closeLabel &&
-                    "bg-surface-tertiary hover:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_5%)] active:bg-[color-mix(in_oklab,var(--surface-tertiary),var(--label)_10%)]"
-                )}
-                size={closeLabel ? "sm" : "icon-sm"}
-              />
-            }
-          >
-            {closeLabel ?? (
-              <>
-                <XIcon />
-                <span className="sr-only">Close</span>
-              </>
-            )}
-          </DialogPrimitive.Close>
-        )}
-      </DialogPrimitive.Popup>
-    </DialogPortal>
-  )
-}
-
-function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="dialog-header"
-      className={cn("flex flex-col gap-1.5", className)}
-      {...props}
-    />
-  )
-}
-
-function DialogFooter({
-  className,
-  showCloseButton = false,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
-  showCloseButton?: boolean
-}) {
-  return (
-    <div
-      data-slot="dialog-footer"
-      className={cn(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      {showCloseButton && (
-        <DialogPrimitive.Close render={<Button variant="secondary" />}>
-          Close
-        </DialogPrimitive.Close>
-      )}
-    </div>
-  )
-}
-
-function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
-  return (
-    <DialogPrimitive.Title
-      data-slot="dialog-title"
-      className={cn("text-base font-semibold", className)}
-      {...props}
-    />
-  )
-}
-
-function DialogDescription({
-  className,
-  ...props
-}: DialogPrimitive.Description.Props) {
-  return (
-    <DialogPrimitive.Description
-      data-slot="dialog-description"
-      className={cn(
-        "text-sm text-label-secondary *:[a]:underline *:[a]:hover:text-label",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/dialog.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-```
+<Code lang="tsx" code={"import { Dialog, DialogTrigger, DialogPortal, DialogClose, DialogOverlay, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from \"@/components/ui/dialog\""} />
 
-```tsx
-<Dialog>
-  <DialogTrigger render={<Button variant="outline" />}>
-    Edit profile
-  </DialogTrigger>
-  <DialogContent>
-    <DialogHeader>
-      <DialogTitle>Edit profile</DialogTitle>
-      <DialogDescription>
-        Update your name and username. Click save when you are done.
-      </DialogDescription>
-    </DialogHeader>
-    <div className="grid gap-4">
-      <div className="grid gap-2">
-        <Label htmlFor="name">Name</Label>
-        <Input id="name" defaultValue="Ada Lovelace" />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="username">Username</Label>
-        <Input id="username" defaultValue="@ada" />
-      </div>
-    </div>
-    <DialogFooter>
-      <DialogClose render={<Button variant="secondary" />}>
-        Cancel
-      </DialogClose>
-      <Button>Save changes</Button>
-    </DialogFooter>
-  </DialogContent>
-</Dialog>
-```
+<Code lang="tsx" code={"<Dialog>\n  <DialogTrigger render={<Button variant=\"outline\" />}>\n    Edit profile\n  </DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Edit profile</DialogTitle>\n      <DialogDescription>\n        Update your name and username. Click save when you are done.\n      </DialogDescription>\n    </DialogHeader>\n    <div className=\"grid gap-4\">\n      <div className=\"grid gap-2\">\n        <Label htmlFor=\"name\">Name</Label>\n        <Input id=\"name\" defaultValue=\"Ada Lovelace\" />\n      </div>\n      <div className=\"grid gap-2\">\n        <Label htmlFor=\"username\">Username</Label>\n        <Input id=\"username\" defaultValue=\"@ada\" />\n      </div>\n    </div>\n    <DialogFooter>\n      <DialogClose render={<Button variant=\"secondary\" />}>\n        Cancel\n      </DialogClose>\n      <Button>Save changes</Button>\n    </DialogFooter>\n  </DialogContent>\n</Dialog>"} />
 
 The dialog is uncontrolled by default; set `defaultOpen` to start open, or control it with `open` and `onOpenChange`. Render the trigger as another component, such as a `Button`, with the `render` prop. Use `DialogClose` with `render` for a Cancel button.
 
@@ -300,32 +53,7 @@ A dialog with no corner close button that adds a Close action to the footer inst
 
 <Example kind="ui" name="dialog" story="WithoutCloseButton">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-
-export function DialogWithoutCloseButtonExample() {
-  return (
-    <Dialog>
-      <DialogTrigger render={<Button variant="outline" />}>
-        Show terms
-      </DialogTrigger>
-      <DialogContent showCloseButton={false}>
-        <DialogHeader>
-          <DialogTitle>Terms updated</DialogTitle>
-          <DialogDescription>
-            We have updated our terms of service. Please review the changes
-            before continuing.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter showCloseButton>
-          <Button>Accept</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\n\nexport function DialogWithoutCloseButtonExample() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant=\"outline\" />}>\n        Show terms\n      </DialogTrigger>\n      <DialogContent showCloseButton={false}>\n        <DialogHeader>\n          <DialogTitle>Terms updated</DialogTitle>\n          <DialogDescription>\n            We have updated our terms of service. Please review the changes\n            before continuing.\n          </DialogDescription>\n        </DialogHeader>\n        <DialogFooter showCloseButton>\n          <Button>Accept</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}"} />
 
 </Example>
 
@@ -335,35 +63,7 @@ A dialog that confirms deleting a project, with a destructive action and a Cance
 
 <Example kind="ui" name="dialog" story="Destructive">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-
-export function DialogDestructiveExample() {
-  return (
-    <Dialog>
-      <DialogTrigger render={<Button variant="destructive" />}>
-        Delete project
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Delete this project?</DialogTitle>
-          <DialogDescription>
-            This permanently removes the project and all of its deployments.
-            This action cannot be undone.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose render={<Button variant="secondary" />}>
-            Cancel
-          </DialogClose>
-          <Button variant="destructive">Delete</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from \"@/components/ui/dialog\"\n\nexport function DialogDestructiveExample() {\n  return (\n    <Dialog>\n      <DialogTrigger render={<Button variant=\"destructive\" />}>\n        Delete project\n      </DialogTrigger>\n      <DialogContent>\n        <DialogHeader>\n          <DialogTitle>Delete this project?</DialogTitle>\n          <DialogDescription>\n            This permanently removes the project and all of its deployments.\n            This action cannot be undone.\n          </DialogDescription>\n        </DialogHeader>\n        <DialogFooter>\n          <DialogClose render={<Button variant=\"secondary\" />}>\n            Cancel\n          </DialogClose>\n          <Button variant=\"destructive\">Delete</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}"} />
 
 </Example>
 

@@ -7,87 +7,7 @@ generated: true
 
 <Example kind="chart" name="bar-chart-labeled">
 
-```tsx title="components/charts/bar-chart-labeled.tsx"
-"use client"
-
-import { Bar, BarChart, LabelList, XAxis } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 173, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 264, mobile: 140 },
-]
-
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
-} satisfies ChartConfig
-
-export function BarChartLabeled() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Labeled</CardTitle>
-        <CardDescription>The value sits above each bar</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-48 w-full"
-        >
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{ top: 22, right: 4, left: 4, bottom: 0 }}
-          >
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              interval={0}
-              tickFormatter={(value: string) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar
-              dataKey="desktop"
-              fill="var(--color-desktop)"
-              radius={6}
-              maxBarSize={36}
-            >
-              <LabelList
-                position="top"
-                offset={8}
-                className="fill-label font-semibold"
-                fontSize={12}
-              />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
-}
-```
+<SourceFile path="components/charts/bar-chart-labeled.tsx" fold={false} />
 
 </Example>
 
@@ -97,119 +17,27 @@ Uses `BarChart` with one `Bar` (`radius={6}`, `maxBarSize={36}`) containing a `L
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add charts bar-chart-labeled
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts bar-chart-labeled"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install recharts
-```
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
 
 2. Add the pieces it builds on: [Card](/docs/ui/components/card), [Chart](/docs/ui/components/chart).
 
 3. Copy the source into `components/charts/bar-chart-labeled.tsx`:
 
-<SourceCode>
-
-```tsx title="components/charts/bar-chart-labeled.tsx"
-"use client"
-
-import { Bar, BarChart, LabelList, XAxis } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 173, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 264, mobile: 140 },
-]
-
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
-} satisfies ChartConfig
-
-export function BarChartLabeled() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Labeled</CardTitle>
-        <CardDescription>The value sits above each bar</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-48 w-full"
-        >
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            margin={{ top: 22, right: 4, left: 4, bottom: 0 }}
-          >
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              interval={0}
-              tickFormatter={(value: string) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar
-              dataKey="desktop"
-              fill="var(--color-desktop)"
-              radius={6}
-              maxBarSize={36}
-            >
-              <LabelList
-                position="top"
-                offset={8}
-                className="fill-label font-semibold"
-                fontSize={12}
-              />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
-}
-```
-
-</SourceCode>
+<SourceFile path="components/charts/bar-chart-labeled.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { BarChartLabeled } from "@/components/charts/bar-chart-labeled"
-```
+<Code lang="tsx" code={"import { BarChartLabeled } from \"@/components/charts/bar-chart-labeled\""} />
 
-```tsx
-<BarChartLabeled />
-```
+<Code lang="tsx" code={"<BarChartLabeled />"} />
 
 Replace `chartData` keeping the category and value keys, and rename the `chartConfig` entry to match. Change `LabelList` `position` (for example `"inside"` or `"insideTop"`) to move labels, and pass a `formatter` to `LabelList` if values need units. Increase the top `margin` if larger labels are clipped.
 

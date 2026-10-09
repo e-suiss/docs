@@ -7,29 +7,7 @@ generated: true
 
 <Example kind="pattern" name="picker" story="Default">
 
-```tsx
-import { Picker, PickerItem } from "@/components/patterns/picker"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
-export function PickerExample() {
-  return (
-    <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48">{fruitItems}</Picker>
-  )
-}
-```
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>\n  )\n}"} />
 
 </Example>
 
@@ -41,9 +19,7 @@ You describe options once with `PickerItem`, `PickerGroup` and `PickerSeparator`
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns picker
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns picker"} />
 
 ### Manual
 
@@ -51,245 +27,15 @@ npx @esuiss/ui@latest add patterns picker
 
 2. Copy the source into `components/patterns/picker.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/picker.tsx"
-"use client"
-
-import * as React from "react"
-
-import {
-  NativeSelect,
-  NativeSelectOptGroup,
-  NativeSelectOption,
-} from "@/components/ui/native-select"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type PickerContextProps = {
-  isMobile: boolean
-}
-
-const PickerContext = React.createContext<PickerContextProps | null>(null)
-
-function usePicker() {
-  const context = React.useContext(PickerContext)
-
-  if (!context) {
-    throw new Error("usePicker must be used within a <Picker />")
-  }
-
-  return context
-}
-
-type PickerItemData = {
-  value: string
-  label: React.ReactNode
-}
-
-function collectItems(children: React.ReactNode): PickerItemData[] {
-  const items: PickerItemData[] = []
-
-  React.Children.forEach(children, (child) => {
-    if (
-      !React.isValidElement<{ value?: string; children?: React.ReactNode }>(
-        child
-      )
-    ) {
-      return
-    }
-    if (child.type === PickerItem && child.props.value !== undefined) {
-      items.push({ value: child.props.value, label: child.props.children })
-    } else if (child.props.children) {
-      items.push(...collectItems(child.props.children))
-    }
-  })
-
-  return items
-}
-
-function Picker({
-  value,
-  defaultValue,
-  onValueChange,
-  placeholder,
-  items: itemsProp,
-  size = "default",
-  id,
-  name,
-  disabled,
-  required,
-  className,
-  children,
-  "aria-invalid": ariaInvalid,
-  "aria-label": ariaLabel,
-  "aria-describedby": ariaDescribedBy,
-}: {
-  value?: string
-  defaultValue?: string
-  onValueChange?: (value: string) => void
-  placeholder?: string
-  items?: PickerItemData[]
-  size?: "sm" | "default"
-  id?: string
-  name?: string
-  disabled?: boolean
-  required?: boolean
-  className?: string
-  children?: React.ReactNode
-  "aria-invalid"?: boolean
-  "aria-label"?: string
-  "aria-describedby"?: string
-}) {
-  const isMobile = useIsMobile()
-  const items = React.useMemo(
-    () => itemsProp ?? collectItems(children),
-    [itemsProp, children]
-  )
-
-  return (
-    <PickerContext.Provider value={{ isMobile }}>
-      {isMobile ? (
-        <NativeSelect
-          data-slot="picker"
-          id={id}
-          name={name}
-          size={size}
-          disabled={disabled}
-          required={required}
-          className={className}
-          aria-invalid={ariaInvalid}
-          aria-label={ariaLabel}
-          aria-describedby={ariaDescribedBy}
-          value={value}
-          defaultValue={value === undefined ? (defaultValue ?? "") : undefined}
-          onChange={(event) => onValueChange?.(event.target.value)}
-        >
-          {placeholder && (
-            <NativeSelectOption value="" disabled>
-              {placeholder}
-            </NativeSelectOption>
-          )}
-          {children}
-        </NativeSelect>
-      ) : (
-        <Select
-          data-slot="picker"
-          items={items}
-          name={name}
-          disabled={disabled}
-          required={required}
-          value={value}
-          defaultValue={defaultValue}
-          onValueChange={(next) => {
-            if (typeof next === "string") onValueChange?.(next)
-          }}
-        >
-          <SelectTrigger
-            id={id}
-            size={size}
-            className={className}
-            aria-invalid={ariaInvalid}
-            aria-label={ariaLabel}
-            aria-describedby={ariaDescribedBy}
-          >
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-          <SelectContent>{children}</SelectContent>
-        </Select>
-      )}
-    </PickerContext.Provider>
-  )
-}
-
-function PickerGroup({
-  label,
-  children,
-}: {
-  label?: string
-  children?: React.ReactNode
-}) {
-  const { isMobile } = usePicker()
-
-  if (isMobile) {
-    return (
-      <NativeSelectOptGroup data-slot="picker-group" label={label}>
-        {children}
-      </NativeSelectOptGroup>
-    )
-  }
-
-  return (
-    <SelectGroup data-slot="picker-group">
-      {label && <SelectLabel>{label}</SelectLabel>}
-      {children}
-    </SelectGroup>
-  )
-}
-
-function PickerItem({
-  value,
-  disabled,
-  children,
-}: {
-  value: string
-  disabled?: boolean
-  children?: React.ReactNode
-}) {
-  const { isMobile } = usePicker()
-
-  if (isMobile) {
-    return (
-      <NativeSelectOption
-        data-slot="picker-item"
-        value={value}
-        disabled={disabled}
-      >
-        {children}
-      </NativeSelectOption>
-    )
-  }
-
-  return (
-    <SelectItem data-slot="picker-item" value={value} disabled={disabled}>
-      {children}
-    </SelectItem>
-  )
-}
-
-function PickerSeparator() {
-  const { isMobile } = usePicker()
-
-  if (isMobile) return null
-
-  return <SelectSeparator data-slot="picker-separator" />
-}
-
-export { Picker, PickerGroup, PickerItem, PickerSeparator }
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/picker.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
-```
+<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\""} />
 
-```tsx
-<Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48">{fruitItems}</Picker>
-```
+<Code lang="tsx" code={"<Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>"} />
 
 - The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it.
 - `Picker` collects the value and label of each `PickerItem` from its children so the desktop trigger can show the selected label. Pass `items` only when options are not rendered as direct or nested `PickerItem` elements.
@@ -304,29 +50,7 @@ Starts with an initial value through `defaultValue`.
 
 <Example kind="pattern" name="picker" story="WithValue">
 
-```tsx
-import { Picker, PickerItem } from "@/components/patterns/picker"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
-export function PickerWithValueExample() {
-  return (
-    <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48" defaultValue="banana">{fruitItems}</Picker>
-  )
-}
-```
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerWithValueExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" defaultValue=\"banana\">{fruitItems}</Picker>\n  )\n}"} />
 
 </Example>
 
@@ -336,34 +60,7 @@ Shows the `sm` and `default` sizes side by side.
 
 <Example kind="pattern" name="picker" story="Sizes">
 
-```tsx
-import { Picker, PickerItem } from "@/components/patterns/picker"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
-export function PickerSizesExample() {
-  return (
-    <div className="flex items-center gap-3">
-      <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48" size="sm">
-        {fruitItems}
-      </Picker>
-      <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48">{fruitItems}</Picker>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" size=\"sm\">\n        {fruitItems}\n      </Picker>\n      <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\">{fruitItems}</Picker>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -373,29 +70,7 @@ Organizes options under labelled groups with a separator and a disabled option.
 
 <Example kind="pattern" name="picker" story="Grouped">
 
-```tsx
-import { Picker, PickerGroup, PickerItem, PickerSeparator } from "@/components/patterns/picker"
-
-export function PickerGroupedExample() {
-  return (
-    <Picker placeholder="Select a time zone" aria-label="Time zone" className="w-64">
-      <PickerGroup label="North America">
-        <PickerItem value="est">Eastern Time</PickerItem>
-        <PickerItem value="cst">Central Time</PickerItem>
-        <PickerItem value="pst">Pacific Time</PickerItem>
-      </PickerGroup>
-      <PickerSeparator />
-      <PickerGroup label="Europe">
-        <PickerItem value="gmt">Greenwich Mean Time</PickerItem>
-        <PickerItem value="cet">Central European Time</PickerItem>
-        <PickerItem value="trt" disabled>
-          Turkey Time
-        </PickerItem>
-      </PickerGroup>
-    </Picker>
-  )
-}
-```
+<Code lang="tsx" code={"import { Picker, PickerGroup, PickerItem, PickerSeparator } from \"@/components/patterns/picker\"\n\nexport function PickerGroupedExample() {\n  return (\n    <Picker placeholder=\"Select a time zone\" aria-label=\"Time zone\" className=\"w-64\">\n      <PickerGroup label=\"North America\">\n        <PickerItem value=\"est\">Eastern Time</PickerItem>\n        <PickerItem value=\"cst\">Central Time</PickerItem>\n        <PickerItem value=\"pst\">Pacific Time</PickerItem>\n      </PickerGroup>\n      <PickerSeparator />\n      <PickerGroup label=\"Europe\">\n        <PickerItem value=\"gmt\">Greenwich Mean Time</PickerItem>\n        <PickerItem value=\"cet\">Central European Time</PickerItem>\n        <PickerItem value=\"trt\" disabled>\n          Turkey Time\n        </PickerItem>\n      </PickerGroup>\n    </Picker>\n  )\n}"} />
 
 </Example>
 
@@ -405,29 +80,7 @@ Prevents opening and changing the value.
 
 <Example kind="pattern" name="picker" story="Disabled">
 
-```tsx
-import { Picker, PickerItem } from "@/components/patterns/picker"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
-export function PickerDisabledExample() {
-  return (
-    <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48" disabled>{fruitItems}</Picker>
-  )
-}
-```
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerDisabledExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" disabled>{fruitItems}</Picker>\n  )\n}"} />
 
 </Example>
 
@@ -437,29 +90,7 @@ Shows the invalid style through `aria-invalid`.
 
 <Example kind="pattern" name="picker" story="Invalid">
 
-```tsx
-import { Picker, PickerItem } from "@/components/patterns/picker"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
-export function PickerInvalidExample() {
-  return (
-    <Picker placeholder="Select a fruit" aria-label="Fruit" className="w-48" aria-invalid>{fruitItems}</Picker>
-  )
-}
-```
+<Code lang="tsx" code={"import { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nexport function PickerInvalidExample() {\n  return (\n    <Picker placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" aria-invalid>{fruitItems}</Picker>\n  )\n}"} />
 
 </Example>
 
@@ -469,43 +100,7 @@ Owns the value in state with `value` and `onValueChange`.
 
 <Example kind="pattern" name="picker" story="Controlled">
 
-```tsx
-import * as React from "react"
-import { Picker, PickerItem } from "@/components/patterns/picker"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-const fruitItems = fruits.map((fruit) => (
-  <PickerItem key={fruit.value} value={fruit.value}>
-    {fruit.label}
-  </PickerItem>
-))
-
-function ControlledExample(args: React.ComponentProps<typeof Picker>) {
-  const [value, setValue] = React.useState("grapes")
-
-  return (
-    <div className="flex flex-col items-start gap-2">
-      <Picker {...args} value={value} onValueChange={setValue}>
-        {fruitItems}
-      </Picker>
-      <p className="text-sm text-label-secondary">Selected: {value}</p>
-    </div>
-  )
-}
-
-export function PickerControlledExample() {
-  return (
-    <ControlledExample placeholder="Select a fruit" aria-label="Fruit" className="w-48" />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Picker, PickerItem } from \"@/components/patterns/picker\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nconst fruitItems = fruits.map((fruit) => (\n  <PickerItem key={fruit.value} value={fruit.value}>\n    {fruit.label}\n  </PickerItem>\n))\n\nfunction ControlledExample(args: React.ComponentProps<typeof Picker>) {\n  const [value, setValue] = React.useState(\"grapes\")\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <Picker {...args} value={value} onValueChange={setValue}>\n        {fruitItems}\n      </Picker>\n      <p className=\"text-sm text-label-secondary\">Selected: {value}</p>\n    </div>\n  )\n}\n\nexport function PickerControlledExample() {\n  return (\n    <ControlledExample placeholder=\"Select a fruit\" aria-label=\"Fruit\" className=\"w-48\" />\n  )\n}"} />
 
 </Example>
 

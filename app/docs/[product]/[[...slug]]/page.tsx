@@ -2,7 +2,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "cn";
 import { findNeighbour } from "fumadocs-core/page-tree";
 import type { Metadata } from "next";
-import type * as React from "react";
+import * as React from "react";
 import { notFound } from "next/navigation";
 
 import { getMDXComponents } from "@/components/mdx";
@@ -65,7 +65,29 @@ function Neighbour({
   );
 }
 
-export default async function Page(props: PageProps<"/docs/[product]/[[...slug]]">) {
+function PageSkeleton() {
+  return (
+    <div className="flex gap-12 px-5 pt-14 pb-24 md:px-10 md:pt-20 xl:pe-10">
+      <div className="mx-auto flex w-full max-w-205 min-w-0 animate-pulse flex-col gap-5">
+        <div className="h-3 w-32 rounded-full bg-label/8" />
+        <div className="h-16 w-2/3 rounded-2xl bg-label/8" />
+        <div className="h-5 w-full max-w-xl rounded-full bg-label/6" />
+        <div className="mt-12 h-72 rounded-[24px] bg-label/5" />
+      </div>
+      <div className="hidden w-52 shrink-0 xl:block" />
+    </div>
+  );
+}
+
+export default function Page(props: PageProps<"/docs/[product]/[[...slug]]">) {
+  return (
+    <React.Suspense fallback={<PageSkeleton />}>
+      <DocPage params={props.params} />
+    </React.Suspense>
+  );
+}
+
+async function DocPage(props: { params: PageProps<"/docs/[product]/[[...slug]]">["params"] }) {
   const params = await props.params;
   const page = getDocPage(params);
   if (!page) notFound();
@@ -75,7 +97,7 @@ export default async function Page(props: PageProps<"/docs/[product]/[[...slug]]
   const eyebrow = page.data.eyebrow;
   const kind =
     eyebrow && product && eyebrow !== product.name && eyebrow !== `suiss ${product.name}` ? eyebrow : undefined;
-  const MDX = page.data.body;
+  const { body: MDX, toc } = await page.data.load();
   const { previous, next } = findNeighbour(source.getPageTree(), page.url, {
     separateRoot: true,
   });
@@ -111,7 +133,7 @@ export default async function Page(props: PageProps<"/docs/[product]/[[...slug]]
         )}
       </article>
       <aside className="sticky top-26 hidden h-fit w-52 shrink-0 xl:block">
-        <Toc items={page.data.toc} />
+        <Toc items={toc} />
       </aside>
     </div>
   );

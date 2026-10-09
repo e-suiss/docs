@@ -7,30 +7,7 @@ generated: true
 
 <Example kind="ui" name="separator" story="Default">
 
-```tsx
-import { Separator } from "@/components/ui/separator"
-
-export function SeparatorExample() {
-  return (
-    <div className="w-72">
-      <div className="flex flex-col gap-1">
-        <h4 className="text-sm font-medium">Account settings</h4>
-        <p className="text-label-secondary text-sm">
-          Manage your profile and preferences.
-        </p>
-      </div>
-      <Separator orientation="horizontal" className="my-4" />
-      <div className="flex h-5 items-center gap-4 text-sm">
-        <span>Profile</span>
-        <Separator orientation="vertical" />
-        <span>Billing</span>
-        <Separator orientation="vertical" />
-        <span>Security</span>
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorExample() {\n  return (\n    <div className=\"w-72\">\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-medium\">Account settings</h4>\n        <p className=\"text-label-secondary text-sm\">\n          Manage your profile and preferences.\n        </p>\n      </div>\n      <Separator orientation=\"horizontal\" className=\"my-4\" />\n      <div className=\"flex h-5 items-center gap-4 text-sm\">\n        <span>Profile</span>\n        <Separator orientation=\"vertical\" />\n        <span>Billing</span>\n        <Separator orientation=\"vertical\" />\n        <span>Security</span>\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -42,77 +19,25 @@ Use it between groups of content or between inline items. Inside menus and selec
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add separator
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add separator"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Copy the source into `components/ui/separator.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/separator.tsx"
-"use client"
-
-import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
-import { cn } from "cn"
-
-function Separator({
-  className,
-  orientation = "horizontal",
-  ...props
-}: SeparatorPrimitive.Props) {
-  return (
-    <SeparatorPrimitive
-      data-slot="separator"
-      orientation={orientation}
-      className={cn(
-        "shrink-0 bg-separator data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Separator }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/separator.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Separator } from "@/components/ui/separator"
-```
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\""} />
 
-```tsx
-<div className="w-72">
-  <div className="flex flex-col gap-1">
-    <h4 className="text-sm font-medium">Account settings</h4>
-    <p className="text-label-secondary text-sm">
-      Manage your profile and preferences.
-    </p>
-  </div>
-  <Separator orientation="horizontal" className="my-4" />
-  <div className="flex h-5 items-center gap-4 text-sm">
-    <span>Profile</span>
-    <Separator orientation="vertical" />
-    <span>Billing</span>
-    <Separator orientation="vertical" />
-    <span>Security</span>
-  </div>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-72\">\n  <div className=\"flex flex-col gap-1\">\n    <h4 className=\"text-sm font-medium\">Account settings</h4>\n    <p className=\"text-label-secondary text-sm\">\n      Manage your profile and preferences.\n    </p>\n  </div>\n  <Separator orientation=\"horizontal\" className=\"my-4\" />\n  <div className=\"flex h-5 items-center gap-4 text-sm\">\n    <span>Profile</span>\n    <Separator orientation=\"vertical\" />\n    <span>Billing</span>\n    <Separator orientation=\"vertical\" />\n    <span>Security</span>\n  </div>\n</div>"} />
 
 `orientation` defaults to `horizontal`. Set `orientation="vertical"` inside a flex row; the line stretches to the row's height, so give the row a height.
 
@@ -124,19 +49,7 @@ Divides two stacked lines of text.
 
 <Example kind="ui" name="separator" story="Horizontal">
 
-```tsx
-import { Separator } from "@/components/ui/separator"
-
-export function SeparatorHorizontalExample() {
-  return (
-    <div className="flex w-72 flex-col gap-3 text-sm">
-      <span>Recent activity</span>
-      <Separator orientation="horizontal" />
-      <span>Archived items</span>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorHorizontalExample() {\n  return (\n    <div className=\"flex w-72 flex-col gap-3 text-sm\">\n      <span>Recent activity</span>\n      <Separator orientation=\"horizontal\" />\n      <span>Archived items</span>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -146,21 +59,7 @@ Divides inline links in a row.
 
 <Example kind="ui" name="separator" story="Vertical">
 
-```tsx
-import { Separator } from "@/components/ui/separator"
-
-export function SeparatorVerticalExample() {
-  return (
-    <div className="flex h-6 items-center gap-4 text-sm">
-      <span>Docs</span>
-      <Separator orientation="vertical" />
-      <span>Blog</span>
-      <Separator orientation="vertical" />
-      <span>Changelog</span>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Separator } from \"@/components/ui/separator\"\n\nexport function SeparatorVerticalExample() {\n  return (\n    <div className=\"flex h-6 items-center gap-4 text-sm\">\n      <span>Docs</span>\n      <Separator orientation=\"vertical\" />\n      <span>Blog</span>\n      <Separator orientation=\"vertical\" />\n      <span>Changelog</span>\n    </div>\n  )\n}"} />
 
 </Example>
 

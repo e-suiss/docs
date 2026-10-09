@@ -7,15 +7,7 @@ generated: true
 
 <Example kind="ui" name="label" story="Default">
 
-```tsx
-import { Label } from "@/components/ui/label"
-
-export function LabelExample() {
-  return (
-    <Label>Email address</Label>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\n\nexport function LabelExample() {\n  return (\n    <Label>Email address</Label>\n  )\n}"} />
 
 </Example>
 
@@ -27,57 +19,25 @@ Use `Label` for standalone controls. Inside a `Field` layout, prefer the field's
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add label
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add label"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Copy the source into `components/ui/label.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/label.tsx"
-"use client"
-
-import { cn } from "cn"
-import type * as React from "react"
-
-function Label({ className, ...props }: React.ComponentProps<"label">) {
-  return (
-    <label
-      data-slot="label"
-      className={cn(
-        "flex items-center gap-2 text-base font-semibold select-none has-[>[data-slot=checkbox]]:font-normal has-[>[data-slot=radio-group-item]]:font-normal has-[>[data-slot=switch]]:font-normal peer-data-[slot=checkbox]:font-normal peer-data-[slot=radio-group-item]:font-normal peer-data-[slot=switch]:font-normal group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:text-label-quaternary peer-disabled:cursor-not-allowed peer-disabled:text-label-quaternary",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Label }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/label.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Label } from "@/components/ui/label"
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\""} />
 
-```tsx
-<Label>Email address</Label>
-```
+<Code lang="tsx" code={"<Label>Email address</Label>"} />
 
 Give the control an `id` and pass the same value to `htmlFor`. Next to a checkbox, radio item or switch, the label automatically switches to regular weight.
 
@@ -89,19 +49,7 @@ A label linked to a text input; clicking the label focuses the input.
 
 <Example kind="ui" name="label" story="WithInput">
 
-```tsx
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-export function LabelWithInputExample() {
-  return (
-    <div className="flex w-72 flex-col gap-2">
-      <Label htmlFor="label-email" />
-      <Input id="label-email" type="email" placeholder="you@example.com" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelWithInputExample() {\n  return (\n    <div className=\"flex w-72 flex-col gap-2\">\n      <Label htmlFor=\"label-email\" />\n      <Input id=\"label-email\" type=\"email\" placeholder=\"you@example.com\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -111,19 +59,7 @@ A label placed after a checkbox; clicking the label toggles it.
 
 <Example kind="ui" name="label" story="WithCheckbox">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-
-export function LabelWithCheckboxExample() {
-  return (
-    <div className="flex items-center gap-2">
-      <Checkbox id="label-terms" />
-      <Label htmlFor="label-terms" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelWithCheckboxExample() {\n  return (\n    <div className=\"flex items-center gap-2\">\n      <Checkbox id=\"label-terms\" />\n      <Label htmlFor=\"label-terms\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -133,24 +69,7 @@ A label shown in its dimmed style inside a disabled group, above a disabled inpu
 
 <Example kind="ui" name="label" story="Disabled">
 
-```tsx
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-export function LabelDisabledExample() {
-  return (
-    <div className="group flex w-72 flex-col gap-2" data-disabled="true">
-      <Label htmlFor="label-disabled" />
-      <Input
-        id="label-disabled"
-        type="email"
-        placeholder="you@example.com"
-        disabled
-      />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function LabelDisabledExample() {\n  return (\n    <div className=\"group flex w-72 flex-col gap-2\" data-disabled=\"true\">\n      <Label htmlFor=\"label-disabled\" />\n      <Input\n        id=\"label-disabled\"\n        type=\"email\"\n        placeholder=\"you@example.com\"\n        disabled\n      />\n    </div>\n  )\n}"} />
 
 </Example>
 

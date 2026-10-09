@@ -7,23 +7,7 @@ generated: true
 
 <Example kind="ui" name="native-select" story="Default">
 
-```tsx
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-
-export function NativeSelectExample() {
-  return (
-    <NativeSelect defaultValue="" aria-label="Fruit">
-      <NativeSelectOption value="" disabled>
-        Select a fruit
-      </NativeSelectOption>
-      <NativeSelectOption value="apple">Apple</NativeSelectOption>
-      <NativeSelectOption value="banana">Banana</NativeSelectOption>
-      <NativeSelectOption value="cherry">Cherry</NativeSelectOption>
-      <NativeSelectOption value="grape">Grape</NativeSelectOption>
-    </NativeSelect>
-  )
-}
-```
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectExample() {\n  return (\n    <NativeSelect defaultValue=\"\" aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
 
 </Example>
 
@@ -35,112 +19,25 @@ Because it uses the platform picker, it works well on touch devices and in plain
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add native-select
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add native-select"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @phosphor-icons/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
 
 2. Copy the source into `components/ui/native-select.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/native-select.tsx"
-"use client"
-
-import { CaretUpDownIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-import type * as React from "react"
-
-type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
-  size?: "sm" | "default"
-}
-
-function NativeSelect({
-  className,
-  size = "default",
-  ...props
-}: NativeSelectProps) {
-  return (
-    <div
-      className={cn(
-        "relative w-fit has-[select:disabled]:bg-control-disabled has-[select:disabled]:text-label-quaternary",
-        className
-      )}
-      data-slot="native-select-wrapper"
-      data-size={size}
-    >
-      <select
-        data-slot="native-select"
-        data-size={size}
-        className="h-11 w-full min-w-0 appearance-none rounded-lg border border-transparent bg-control py-1 pe-8 ps-3 text-base transition-[color,box-shadow,background-color] outline-none select-none selection:bg-accent selection:text-on-accent placeholder:text-label-secondary has-[option[value='']:checked]:text-label-secondary focus-visible:focus-ring disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-[size=sm]:h-9 data-[size=sm]:rounded-md"
-        {...props}
-      />
-      <CaretUpDownIcon
-        className="pointer-events-none absolute top-1/2 inset-e-2.5 size-4 -translate-y-1/2 text-label-secondary select-none"
-        aria-hidden="true"
-        data-slot="native-select-icon"
-      />
-    </div>
-  )
-}
-
-function NativeSelectOption({
-  className,
-  ...props
-}: React.ComponentProps<"option">) {
-  return (
-    <option
-      data-slot="native-select-option"
-      className={cn("bg-[Canvas] text-[CanvasText]", className)}
-      {...props}
-    />
-  )
-}
-
-function NativeSelectOptGroup({
-  className,
-  ...props
-}: React.ComponentProps<"optgroup">) {
-  return (
-    <optgroup
-      data-slot="native-select-optgroup"
-      className={cn("bg-[Canvas] text-[CanvasText]", className)}
-      {...props}
-    />
-  )
-}
-
-export { NativeSelect, NativeSelectOptGroup, NativeSelectOption }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/native-select.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from "@/components/ui/native-select"
-```
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption, NativeSelectOptGroup } from \"@/components/ui/native-select\""} />
 
-```tsx
-<NativeSelect defaultValue="" aria-label="Fruit">
-  <NativeSelectOption value="" disabled>
-    Select a fruit
-  </NativeSelectOption>
-  <NativeSelectOption value="apple">Apple</NativeSelectOption>
-  <NativeSelectOption value="banana">Banana</NativeSelectOption>
-  <NativeSelectOption value="cherry">Cherry</NativeSelectOption>
-  <NativeSelectOption value="grape">Grape</NativeSelectOption>
-</NativeSelect>
-```
+<Code lang="tsx" code={"<NativeSelect defaultValue=\"\" aria-label=\"Fruit\">\n  <NativeSelectOption value=\"\" disabled>\n    Select a fruit\n  </NativeSelectOption>\n  <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n  <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n  <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n  <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n</NativeSelect>"} />
 
 All standard `select` attributes, such as `value`, `defaultValue`, `onChange`, `name`, `disabled` and `required`, pass through to the `select` element. `className` is applied to the wrapper, not the `select`.
 
@@ -154,26 +51,7 @@ The `sm` and `default` sizes side by side.
 
 <Example kind="ui" name="native-select" story="Sizes">
 
-```tsx
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-
-export function NativeSelectSizesExample() {
-  return (
-    <div className="flex items-center gap-3">
-      <NativeSelect defaultValue="weekly" size="sm" aria-label="Frequency">
-        <NativeSelectOption value="daily">Daily</NativeSelectOption>
-        <NativeSelectOption value="weekly">Weekly</NativeSelectOption>
-        <NativeSelectOption value="monthly">Monthly</NativeSelectOption>
-      </NativeSelect>
-      <NativeSelect defaultValue="weekly" size="default" aria-label="Frequency">
-        <NativeSelectOption value="daily">Daily</NativeSelectOption>
-        <NativeSelectOption value="weekly">Weekly</NativeSelectOption>
-        <NativeSelectOption value="monthly">Monthly</NativeSelectOption>
-      </NativeSelect>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <NativeSelect defaultValue=\"weekly\" size=\"sm\" aria-label=\"Frequency\">\n        <NativeSelectOption value=\"daily\">Daily</NativeSelectOption>\n        <NativeSelectOption value=\"weekly\">Weekly</NativeSelectOption>\n        <NativeSelectOption value=\"monthly\">Monthly</NativeSelectOption>\n      </NativeSelect>\n      <NativeSelect defaultValue=\"weekly\" size=\"default\" aria-label=\"Frequency\">\n        <NativeSelectOption value=\"daily\">Daily</NativeSelectOption>\n        <NativeSelectOption value=\"weekly\">Weekly</NativeSelectOption>\n        <NativeSelectOption value=\"monthly\">Monthly</NativeSelectOption>\n      </NativeSelect>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -183,26 +61,7 @@ Options organized under labelled `NativeSelectOptGroup` headings.
 
 <Example kind="ui" name="native-select" story="WithGroups">
 
-```tsx
-import { NativeSelect, NativeSelectOptGroup, NativeSelectOption } from "@/components/ui/native-select"
-
-export function NativeSelectWithGroupsExample() {
-  return (
-    <NativeSelect defaultValue="berlin" aria-label="City">
-      <NativeSelectOptGroup label="Europe">
-        <NativeSelectOption value="berlin">Berlin</NativeSelectOption>
-        <NativeSelectOption value="lisbon">Lisbon</NativeSelectOption>
-        <NativeSelectOption value="zurich">Zurich</NativeSelectOption>
-      </NativeSelectOptGroup>
-      <NativeSelectOptGroup label="Asia">
-        <NativeSelectOption value="seoul">Seoul</NativeSelectOption>
-        <NativeSelectOption value="singapore">Singapore</NativeSelectOption>
-        <NativeSelectOption value="tokyo">Tokyo</NativeSelectOption>
-      </NativeSelectOptGroup>
-    </NativeSelect>
-  )
-}
-```
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOptGroup, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectWithGroupsExample() {\n  return (\n    <NativeSelect defaultValue=\"berlin\" aria-label=\"City\">\n      <NativeSelectOptGroup label=\"Europe\">\n        <NativeSelectOption value=\"berlin\">Berlin</NativeSelectOption>\n        <NativeSelectOption value=\"lisbon\">Lisbon</NativeSelectOption>\n        <NativeSelectOption value=\"zurich\">Zurich</NativeSelectOption>\n      </NativeSelectOptGroup>\n      <NativeSelectOptGroup label=\"Asia\">\n        <NativeSelectOption value=\"seoul\">Seoul</NativeSelectOption>\n        <NativeSelectOption value=\"singapore\">Singapore</NativeSelectOption>\n        <NativeSelectOption value=\"tokyo\">Tokyo</NativeSelectOption>\n      </NativeSelectOptGroup>\n    </NativeSelect>\n  )\n}"} />
 
 </Example>
 
@@ -212,23 +71,7 @@ A select with `disabled` set, shown with the disabled control colors.
 
 <Example kind="ui" name="native-select" story="Disabled">
 
-```tsx
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-
-export function NativeSelectDisabledExample() {
-  return (
-    <NativeSelect disabled defaultValue="" aria-label="Fruit">
-      <NativeSelectOption value="" disabled>
-        Select a fruit
-      </NativeSelectOption>
-      <NativeSelectOption value="apple">Apple</NativeSelectOption>
-      <NativeSelectOption value="banana">Banana</NativeSelectOption>
-      <NativeSelectOption value="cherry">Cherry</NativeSelectOption>
-      <NativeSelectOption value="grape">Grape</NativeSelectOption>
-    </NativeSelect>
-  )
-}
-```
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectDisabledExample() {\n  return (\n    <NativeSelect disabled defaultValue=\"\" aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
 
 </Example>
 
@@ -238,23 +81,7 @@ A select with `aria-invalid` set, shown with the danger border and tint.
 
 <Example kind="ui" name="native-select" story="Invalid">
 
-```tsx
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-
-export function NativeSelectInvalidExample() {
-  return (
-    <NativeSelect defaultValue="" aria-invalid aria-label="Fruit">
-      <NativeSelectOption value="" disabled>
-        Select a fruit
-      </NativeSelectOption>
-      <NativeSelectOption value="apple">Apple</NativeSelectOption>
-      <NativeSelectOption value="banana">Banana</NativeSelectOption>
-      <NativeSelectOption value="cherry">Cherry</NativeSelectOption>
-      <NativeSelectOption value="grape">Grape</NativeSelectOption>
-    </NativeSelect>
-  )
-}
-```
+<Code lang="tsx" code={"import { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function NativeSelectInvalidExample() {\n  return (\n    <NativeSelect defaultValue=\"\" aria-invalid aria-label=\"Fruit\">\n      <NativeSelectOption value=\"\" disabled>\n        Select a fruit\n      </NativeSelectOption>\n      <NativeSelectOption value=\"apple\">Apple</NativeSelectOption>\n      <NativeSelectOption value=\"banana\">Banana</NativeSelectOption>\n      <NativeSelectOption value=\"cherry\">Cherry</NativeSelectOption>\n      <NativeSelectOption value=\"grape\">Grape</NativeSelectOption>\n    </NativeSelect>\n  )\n}"} />
 
 </Example>
 

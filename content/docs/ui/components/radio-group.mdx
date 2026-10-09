@@ -7,31 +7,7 @@ generated: true
 
 <Example kind="ui" name="radio-group" story="Default">
 
-```tsx
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-const options = [
-  { value: "email", label: "Email" },
-  { value: "sms", label: "Text message" },
-  { value: "push", label: "Push notification" },
-]
-
-export function RadioGroupExample() {
-  return (
-    <div className="w-64">
-      <RadioGroup aria-label="Notification method" defaultValue="email">
-        {options.map((option) => (
-          <Label key={option.value}>
-            <RadioGroupItem value={option.value} />
-            {option.label}
-          </Label>
-        ))}
-      </RadioGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\">\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem value={option.value} />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -43,84 +19,25 @@ Use a radio group for a small set of mutually exclusive options that should all 
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add radio-group
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add radio-group"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Copy the source into `components/ui/radio-group.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/radio-group.tsx"
-"use client"
-
-import { Radio as RadioPrimitive } from "@base-ui/react/radio"
-import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group"
-import { cn } from "cn"
-
-function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
-  return (
-    <RadioGroupPrimitive
-      data-slot="radio-group"
-      className={cn("grid w-full gap-3", className)}
-      {...props}
-    />
-  )
-}
-
-function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
-  return (
-    <RadioPrimitive.Root
-      data-slot="radio-group-item"
-      className={cn(
-        "peer relative flex aspect-square size-4 shrink-0 rounded-full border border-label/25 bg-surface shadow-[0_0.5px_1px_color-mix(in_oklab,var(--label)_12%,transparent)] outline-none [--focus-ring-offset:0px] group-has-focus-visible/field-label:ring-0 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:focus-ring active:not-data-checked:bg-control dark:not-data-checked:border-transparent dark:not-data-checked:not-data-disabled:bg-label-quaternary dark:shadow-none dark:active:not-data-checked:bg-[color-mix(in_oklab,var(--label-quaternary),var(--label)_12%)] data-checked:border-accent data-checked:bg-accent data-checked:text-on-accent data-checked:shadow-none data-checked:active:border-accent-pressed data-checked:active:bg-accent-pressed data-disabled:cursor-not-allowed data-disabled:border-label/10 data-disabled:bg-control-disabled data-disabled:shadow-none data-disabled:data-checked:border-transparent data-disabled:data-checked:bg-accent-disabled aria-invalid:border-danger",
-        className
-      )}
-      {...props}
-    >
-      <RadioPrimitive.Indicator
-        data-slot="radio-group-indicator"
-        className="flex size-4 items-center justify-center"
-      >
-        <span className="absolute top-1/2 inset-s-1/2 size-2 -translate-x-1/2 rtl:translate-x-1/2 -translate-y-1/2 rounded-full bg-on-accent dark:size-2.5" />
-      </RadioPrimitive.Indicator>
-    </RadioPrimitive.Root>
-  )
-}
-
-export { RadioGroup, RadioGroupItem }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/radio-group.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-```
+<Code lang="tsx" code={"import { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\""} />
 
-```tsx
-<div className="w-64">
-  <RadioGroup aria-label="Notification method" defaultValue="email">
-    {options.map((option) => (
-      <Label key={option.value}>
-        <RadioGroupItem value={option.value} />
-        {option.label}
-      </Label>
-    ))}
-  </RadioGroup>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-64\">\n  <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\">\n    {options.map((option) => (\n      <Label key={option.value}>\n        <RadioGroupItem value={option.value} />\n        {option.label}\n      </Label>\n    ))}\n  </RadioGroup>\n</div>"} />
 
 Give each `RadioGroupItem` a unique `value`. The group is uncontrolled with `defaultValue`, or controlled with `value` and `onValueChange`. Set `disabled` on the group to disable every item, or on a single item.
 
@@ -134,48 +51,7 @@ Options with a title and a secondary description, linked with `aria-labelledby` 
 
 <Example kind="ui" name="radio-group" story="WithDescriptions">
 
-```tsx
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-export function RadioGroupWithDescriptionsExample() {
-  return (
-    <div className="w-64">
-      <RadioGroup aria-label="Shipping speed" defaultValue="standard">
-        {[
-          {
-            value: "standard",
-            label: "Standard",
-            description: "Arrives in 4 to 6 business days.",
-          },
-          {
-            value: "express",
-            label: "Express",
-            description: "Arrives in 1 to 2 business days.",
-          },
-        ].map((option) => (
-          <Label key={option.value} className="items-start">
-            <RadioGroupItem
-              value={option.value}
-              aria-labelledby={`${option.value}-label`}
-              aria-describedby={`${option.value}-description`}
-            />
-            <span className="flex flex-col gap-1">
-              <span id={`${option.value}-label`}>{option.label}</span>
-              <span
-                id={`${option.value}-description`}
-                className="text-label-secondary font-normal"
-              >
-                {option.description}
-              </span>
-            </span>
-          </Label>
-        ))}
-      </RadioGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function RadioGroupWithDescriptionsExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Shipping speed\" defaultValue=\"standard\">\n        {[\n          {\n            value: \"standard\",\n            label: \"Standard\",\n            description: \"Arrives in 4 to 6 business days.\",\n          },\n          {\n            value: \"express\",\n            label: \"Express\",\n            description: \"Arrives in 1 to 2 business days.\",\n          },\n        ].map((option) => (\n          <Label key={option.value} className=\"items-start\">\n            <RadioGroupItem\n              value={option.value}\n              aria-labelledby={`${option.value}-label`}\n              aria-describedby={`${option.value}-description`}\n            />\n            <span className=\"flex flex-col gap-1\">\n              <span id={`${option.value}-label`}>{option.label}</span>\n              <span\n                id={`${option.value}-description`}\n                className=\"text-label-secondary font-normal\"\n              >\n                {option.description}\n              </span>\n            </span>\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -185,34 +61,7 @@ A group where one option is disabled and skipped by arrow-key navigation.
 
 <Example kind="ui" name="radio-group" story="DisabledItem">
 
-```tsx
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-const options = [
-  { value: "email", label: "Email" },
-  { value: "sms", label: "Text message" },
-  { value: "push", label: "Push notification" },
-]
-
-export function RadioGroupDisabledItemExample() {
-  return (
-    <div className="w-64">
-      <RadioGroup aria-label="Notification method" defaultValue="email">
-        {options.map((option) => (
-          <Label key={option.value}>
-            <RadioGroupItem
-              value={option.value}
-              disabled={option.value === "push"}
-            />
-            {option.label}
-          </Label>
-        ))}
-      </RadioGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupDisabledItemExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\">\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem\n              value={option.value}\n              disabled={option.value === \"push\"}\n            />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -222,31 +71,7 @@ A fully disabled group that ignores clicks.
 
 <Example kind="ui" name="radio-group" story="Disabled">
 
-```tsx
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-const options = [
-  { value: "email", label: "Email" },
-  { value: "sms", label: "Text message" },
-  { value: "push", label: "Push notification" },
-]
-
-export function RadioGroupDisabledExample() {
-  return (
-    <div className="w-64">
-      <RadioGroup aria-label="Notification method" defaultValue="email" disabled>
-        {options.map((option) => (
-          <Label key={option.value}>
-            <RadioGroupItem value={option.value} />
-            {option.label}
-          </Label>
-        ))}
-      </RadioGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupDisabledExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue=\"email\" disabled>\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem value={option.value} />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -256,31 +81,7 @@ Items marked with `aria-invalid` and shown with a danger border.
 
 <Example kind="ui" name="radio-group" story="Invalid">
 
-```tsx
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-const options = [
-  { value: "email", label: "Email" },
-  { value: "sms", label: "Text message" },
-  { value: "push", label: "Push notification" },
-]
-
-export function RadioGroupInvalidExample() {
-  return (
-    <div className="w-64">
-      <RadioGroup aria-label="Notification method" defaultValue={undefined}>
-        {options.map((option) => (
-          <Label key={option.value}>
-            <RadioGroupItem value={option.value} aria-invalid />
-            {option.label}
-          </Label>
-        ))}
-      </RadioGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nconst options = [\n  { value: \"email\", label: \"Email\" },\n  { value: \"sms\", label: \"Text message\" },\n  { value: \"push\", label: \"Push notification\" },\n]\n\nexport function RadioGroupInvalidExample() {\n  return (\n    <div className=\"w-64\">\n      <RadioGroup aria-label=\"Notification method\" defaultValue={undefined}>\n        {options.map((option) => (\n          <Label key={option.value}>\n            <RadioGroupItem value={option.value} aria-invalid />\n            {option.label}\n          </Label>\n        ))}\n      </RadioGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 

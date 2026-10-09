@@ -7,24 +7,7 @@ generated: true
 
 <Example kind="ui" name="alert" story="Default">
 
-```tsx
-import { InfoIcon } from "@phosphor-icons/react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-export function AlertExample() {
-  return (
-    <div className="w-96">
-      <Alert>
-        <InfoIcon weight="fill" />
-        <AlertTitle>Update available</AlertTitle>
-        <AlertDescription>
-          A new version is ready to install. Restart the app to apply it.
-        </AlertDescription>
-      </Alert>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <InfoIcon weight=\"fill\" />\n        <AlertTitle>Update available</AlertTitle>\n        <AlertDescription>\n          A new version is ready to install. Restart the app to apply it.\n        </AlertDescription>\n      </Alert>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -36,120 +19,25 @@ Use an alert for inline, persistent messages such as updates, warnings or errors
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add alert
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add alert"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/alert.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/alert.tsx"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import type * as React from "react"
-
-const alertVariants = cva(
-  "group/alert relative grid w-full gap-0.5 rounded-2xl p-5 text-start text-base has-data-[slot=alert-action]:pe-24 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-3 has-data-[slot=alert-description]:*:[svg]:row-span-2 *:[svg]:translate-y-px *:[svg:not([class*='size-'])]:size-5",
-  {
-    variants: {
-      variant: {
-        default: "bg-surface-secondary text-label *:[svg]:text-accent",
-        destructive: "bg-surface-secondary text-label *:[svg]:text-danger",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-function Alert({
-  className,
-  variant,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
-  return (
-    <div
-      data-slot="alert"
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}
-    />
-  )
-}
-
-function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-title"
-      className={cn(
-        "font-semibold group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:hover:text-label",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertDescription({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-description"
-      className={cn(
-        "text-balance text-label-secondary md:text-pretty [&_a]:underline [&_a]:hover:text-label [&_p:not(:last-child)]:mb-4",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-action"
-      className={cn("absolute top-4 inset-e-4", className)}
-      {...props}
-    />
-  )
-}
-
-export { Alert, AlertAction, AlertDescription, AlertTitle }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/alert.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/components/ui/alert"
-```
+<Code lang="tsx" code={"import { Alert, AlertTitle, AlertDescription, AlertAction } from \"@/components/ui/alert\""} />
 
-```tsx
-<div className="w-96">
-  <Alert>
-    <InfoIcon weight="fill" />
-    <AlertTitle>Update available</AlertTitle>
-    <AlertDescription>
-      A new version is ready to install. Restart the app to apply it.
-    </AlertDescription>
-  </Alert>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Alert>\n    <InfoIcon weight=\"fill\" />\n    <AlertTitle>Update available</AlertTitle>\n    <AlertDescription>\n      A new version is ready to install. Restart the app to apply it.\n    </AlertDescription>\n  </Alert>\n</div>"} />
 
 Put a Phosphor icon (or any `svg`) first inside `Alert`; it is sized to `size-5` unless it already has a size class. When `AlertDescription` is present the icon spans both rows.
 
@@ -163,24 +51,7 @@ Tints the icon with the danger color for errors.
 
 <Example kind="ui" name="alert" story="Destructive">
 
-```tsx
-import { WarningCircleIcon } from "@phosphor-icons/react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-export function AlertDestructiveExample() {
-  return (
-    <div className="w-96">
-      <Alert variant="destructive">
-        <WarningCircleIcon weight="fill" />
-        <AlertTitle>Payment failed</AlertTitle>
-        <AlertDescription>
-          Your card was declined. Update your billing details to continue.
-        </AlertDescription>
-      </Alert>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { WarningCircleIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertDestructiveExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert variant=\"destructive\">\n        <WarningCircleIcon weight=\"fill\" />\n        <AlertTitle>Payment failed</AlertTitle>\n        <AlertDescription>\n          Your card was declined. Update your billing details to continue.\n        </AlertDescription>\n      </Alert>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -190,22 +61,7 @@ A title and description with no leading icon.
 
 <Example kind="ui" name="alert" story="WithoutIcon">
 
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-export function AlertWithoutIconExample() {
-  return (
-    <div className="w-96">
-      <Alert>
-        <AlertTitle>Scheduled maintenance</AlertTitle>
-        <AlertDescription>
-          The service will be unavailable on Sunday from 2:00 to 4:00 AM.
-        </AlertDescription>
-      </Alert>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertWithoutIconExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <AlertTitle>Scheduled maintenance</AlertTitle>\n        <AlertDescription>\n          The service will be unavailable on Sunday from 2:00 to 4:00 AM.\n        </AlertDescription>\n      </Alert>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -215,21 +71,7 @@ An icon with a single line of text and no description.
 
 <Example kind="ui" name="alert" story="TitleOnly">
 
-```tsx
-import { InfoIcon } from "@phosphor-icons/react"
-import { Alert, AlertTitle } from "@/components/ui/alert"
-
-export function AlertTitleOnlyExample() {
-  return (
-    <div className="w-96">
-      <Alert>
-        <InfoIcon weight="fill" />
-        <AlertTitle>Your changes have been saved.</AlertTitle>
-      </Alert>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertTitle } from \"@/components/ui/alert\"\n\nexport function AlertTitleOnlyExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <InfoIcon weight=\"fill\" />\n        <AlertTitle>Your changes have been saved.</AlertTitle>\n      </Alert>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -239,28 +81,7 @@ Places a small button in the top-end corner with `AlertAction`.
 
 <Example kind="ui" name="alert" story="WithAction">
 
-```tsx
-import { InfoIcon } from "@phosphor-icons/react"
-import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-
-export function AlertWithActionExample() {
-  return (
-    <div className="w-96">
-      <Alert>
-        <InfoIcon weight="fill" />
-        <AlertTitle>Storage almost full</AlertTitle>
-        <AlertDescription>
-          You have used 90% of your storage. Upgrade for more space.
-        </AlertDescription>
-        <AlertAction>
-          <Button size="xs">Upgrade</Button>
-        </AlertAction>
-      </Alert>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { InfoIcon } from \"@phosphor-icons/react\"\nimport { Alert, AlertAction, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function AlertWithActionExample() {\n  return (\n    <div className=\"w-96\">\n      <Alert>\n        <InfoIcon weight=\"fill\" />\n        <AlertTitle>Storage almost full</AlertTitle>\n        <AlertDescription>\n          You have used 90% of your storage. Upgrade for more space.\n        </AlertDescription>\n        <AlertAction>\n          <Button size=\"xs\">Upgrade</Button>\n        </AlertAction>\n      </Alert>\n    </div>\n  )\n}"} />
 
 </Example>
 

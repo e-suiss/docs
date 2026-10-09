@@ -109,6 +109,48 @@ function StoryView({ meta, story, closed }: { meta: Meta; story: Story; closed?:
   return <Rendered />;
 }
 
+function useFitOverflow(ref: React.RefObject<HTMLDivElement | null>) {
+  React.useEffect(() => {
+    const frame = ref.current;
+    if (!frame) return;
+    let queued = 0;
+    const fit = () => {
+      queued = 0;
+      frame.style.minHeight = "";
+      const overflow = frame.scrollHeight - frame.clientHeight;
+      if (overflow > 1) frame.style.minHeight = `${frame.offsetHeight + overflow}px`;
+    };
+    const schedule = () => {
+      if (!queued) queued = requestAnimationFrame(fit);
+    };
+    const events = ["pointerup", "transitionend", "animationend", "click", "keyup"] as const;
+    for (const type of events) frame.addEventListener(type, schedule);
+    schedule();
+    return () => {
+      cancelAnimationFrame(queued);
+      for (const type of events) frame.removeEventListener(type, schedule);
+    };
+  }, [ref]);
+}
+
+function useNearViewport<T extends Element>() {
+  const ref = React.useRef<T>(null);
+  const [near, setNear] = React.useState(false);
+  React.useEffect(() => {
+    const element = ref.current;
+    if (!element || near) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) setNear(true);
+      },
+      { rootMargin: "800px 0px" },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [near]);
+  return [ref, near] as const;
+}
+
 function Frame({
   wide,
   layout = "centered",
@@ -120,10 +162,13 @@ function Frame({
   label?: string;
   children: React.ReactNode;
 }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  useFitOverflow(ref);
   return (
     <div data-not-prose className="mt-[1.2em] flex flex-col gap-3">
       {label && <p className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">{label}</p>}
       <div
+        ref={ref}
         data-slot="preview"
         className={cn(
           "overflow-hidden rounded-[24px]",
@@ -192,6 +237,15 @@ function StoryPreviewOf({ name, story: only }: { name: string; story?: string })
 }
 
 export function ComponentPreview({ kind, name, story }: { kind: Kind; name: string; story?: string }) {
-  if (kind === "chart" || kind === "block") return <ComponentPreviewOf name={name} wide={kind === "block"} />;
+  const [ref, near] = useNearViewport<HTMLDivElement>();
+  const wide = kind === "block";
+  if (!near) {
+    return (
+      <div ref={ref}>
+        <Loading wide={wide} />
+      </div>
+    );
+  }
+  if (kind === "chart" || kind === "block") return <ComponentPreviewOf name={name} wide={wide} />;
   return <StoryPreviewOf name={name} story={story} />;
 }

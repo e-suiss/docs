@@ -7,29 +7,7 @@ generated: true
 
 <Example kind="ui" name="attachment" story="Default">
 
-```tsx
-import { XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-export function AttachmentExample() {
-  return (
-    <Attachment orientation="horizontal" state="done">
-      <AttachmentMedia variant="document">
-        <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-      </AttachmentMedia>
-      <AttachmentContent>
-        <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
-        <AttachmentDescription>2.4 MB</AttachmentDescription>
-      </AttachmentContent>
-      <AttachmentActions>
-        <AttachmentAction aria-label="Remove">
-          <XIcon />
-        </AttachmentAction>
-      </AttachmentActions>
-    </Attachment>
-  )
-}
-```
+<Code lang="tsx" code={"import { XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentMedia variant=\"document\">\n        <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>\n        <AttachmentDescription>2.4 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction aria-label=\"Remove\">\n          <XIcon />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
 
 </Example>
 
@@ -41,308 +19,27 @@ Wrap several attachments in an `AttachmentGroup` to render them as a single list
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add attachment
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add attachment"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
 
 2. Add the pieces it builds on: [Button](/docs/ui/components/button).
 
 3. Copy the source into `components/ui/attachment.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/attachment.tsx"
-import { mergeProps } from "@base-ui/react/merge-props"
-import { Progress as ProgressPrimitive } from "@base-ui/react/progress"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import type * as React from "react"
-
-import { Button } from "@/components/ui/button"
-
-const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-2xl bg-surface-secondary text-label transition-colors has-[[data-slot=attachment-trigger]:focus-visible]:focus-ring has-[>a,>button]:hover:bg-[color-mix(in_oklab,var(--surface-secondary),var(--label)_5%)] not-in-data-[slot=attachment-group]:data-[state=idle]:border not-in-data-[slot=attachment-group]:data-[state=idle]:border-dashed in-data-[slot=attachment-group]:w-full in-data-[slot=attachment-group]:rounded-none in-data-[slot=attachment-group]:[--focus-ring-offset:-3px] in-data-[slot=attachment-group]:not-first:before:absolute in-data-[slot=attachment-group]:not-first:before:inset-e-0 in-data-[slot=attachment-group]:not-first:before:top-0 in-data-[slot=attachment-group]:not-first:before:start-4 in-data-[slot=attachment-group]:not-first:before:border-t in-data-[slot=attachment-group]:not-first:before:border-separator in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-16",
-  {
-    variants: {
-      size: {
-        default:
-          "gap-3 px-4 py-3 text-sm data-[orientation=vertical]:gap-2 data-[orientation=vertical]:has-data-[slot=attachment-content]:px-2.5 data-[orientation=vertical]:has-data-[slot=attachment-content]:py-2 data-[orientation=vertical]:has-data-[slot=attachment-media]:p-2",
-        sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5 in-data-[slot=attachment-group]:not-first:before:start-2 in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-12",
-        xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1 in-data-[slot=attachment-group]:not-first:before:start-1.5 in-data-[slot=attachment-group]:not-first:has-data-[slot=attachment-media]:before:start-9.5",
-      },
-      orientation: {
-        horizontal: "min-w-40 items-center",
-        vertical: "w-24 flex-col has-data-[slot=attachment-content]:w-30",
-      },
-    },
-  }
-)
-
-function Attachment({
-  className,
-  state = "done",
-  size = "default",
-  orientation = "horizontal",
-  ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof attachmentVariants> & {
-    state?: "idle" | "uploading" | "processing" | "error" | "done"
-  }) {
-  return (
-    <div
-      data-slot="attachment"
-      data-state={state}
-      data-size={size}
-      data-orientation={orientation}
-      className={cn(attachmentVariants({ size, orientation }), className)}
-      {...props}
-    />
-  )
-}
-
-const attachmentMediaVariants = cva(
-  "relative flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-surface-secondary group-data-[orientation=vertical]/attachment:w-full group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-sm group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5",
-  {
-    variants: {
-      variant: {
-        icon: "h-11 w-9 rounded-sm border bg-surface text-label-secondary group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
-        document:
-          "h-11 w-9 items-end rounded-sm border bg-surface pb-1.5 group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5",
-        image:
-          "h-11 w-9 group-data-[orientation=vertical]/attachment:aspect-square group-data-[orientation=vertical]/attachment:h-auto group-data-[size=sm]/attachment:h-10 group-data-[size=xs]/attachment:h-8.5 *:[img]:size-full *:[img]:object-cover",
-      },
-    },
-    defaultVariants: {
-      variant: "icon",
-    },
-  }
-)
-
-function AttachmentLabel({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="attachment-label"
-      className={cn(
-        "rounded-xs bg-accent px-1 py-0.5 text-[0.5625rem] leading-none font-semibold text-on-accent uppercase",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AttachmentMedia({
-  className,
-  variant = "icon",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof attachmentMediaVariants>) {
-  return (
-    <div
-      data-slot="attachment-media"
-      data-variant={variant}
-      className={cn(attachmentMediaVariants({ variant }), className)}
-      {...props}
-    />
-  )
-}
-
-function AttachmentContent({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="attachment-content"
-      className={cn(
-        "max-w-full min-w-0 flex-1 group-data-[orientation=vertical]/attachment:px-1 has-data-[slot=attachment-progress]:*:data-[slot=attachment-title]:pe-12",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AttachmentTitle({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="attachment-title"
-      className={cn(
-        "block max-w-full min-w-0 truncate group-data-[size=default]/attachment:text-base group-data-[size=sm]/attachment:font-semibold group-data-[size=xs]/attachment:font-semibold",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AttachmentDescription({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="attachment-description"
-      className={cn(
-        "mt-0.5 block max-w-full min-w-0 truncate text-xs text-label-secondary group-data-[size=default]/attachment:text-sm group-data-[state=error]/attachment:text-danger",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AttachmentProgress({
-  className,
-  ...props
-}: ProgressPrimitive.Root.Props) {
-  return (
-    <ProgressPrimitive.Root
-      data-slot="attachment-progress"
-      className={cn("relative mt-2", className)}
-      {...props}
-    >
-      <ProgressPrimitive.Value className="absolute inset-e-0 bottom-full mb-2 text-sm text-label-secondary tabular-nums" />
-      <ProgressPrimitive.Track className="h-1 overflow-hidden rounded-full bg-label/10">
-        <ProgressPrimitive.Indicator
-          data-slot="attachment-progress-indicator"
-          className="h-full rounded-full bg-accent transition-[width]"
-        />
-      </ProgressPrimitive.Track>
-    </ProgressPrimitive.Root>
-  )
-}
-
-function AttachmentActions({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="attachment-actions"
-      className={cn(
-        "relative z-20 flex shrink-0 items-center group-data-[orientation=vertical]/attachment:absolute group-data-[orientation=vertical]/attachment:top-3 group-data-[orientation=vertical]/attachment:inset-e-3 group-data-[orientation=vertical]/attachment:gap-1",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AttachmentAction({
-  className,
-  variant = "secondary",
-  size,
-  ...props
-}: React.ComponentProps<typeof Button>) {
-  const isText = variant === "link"
-
-  return (
-    <Button
-      data-slot="attachment-action"
-      variant={variant}
-      size={size ?? (isText ? "sm" : "icon-xs")}
-      className={cn(
-        isText
-          ? "h-auto px-0 text-base"
-          : "relative size-7 text-label-secondary after:absolute after:-inset-2.25 group-data-[size=sm]/attachment:size-6 group-data-[size=sm]/attachment:after:-inset-2.75 group-data-[size=xs]/attachment:size-5 group-data-[size=xs]/attachment:after:-inset-3.25 hover:text-label group-data-[orientation=vertical]/attachment:bg-black/50 group-data-[orientation=vertical]/attachment:text-white group-data-[orientation=vertical]/attachment:backdrop-blur-sm group-data-[orientation=vertical]/attachment:hover:bg-black/60 group-data-[orientation=vertical]/attachment:hover:text-white group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-2.5",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AttachmentTrigger({
-  className,
-  render,
-  type,
-  ...props
-}: useRender.ComponentProps<"button">) {
-  return useRender({
-    defaultTagName: "button",
-    props: mergeProps<"button">(
-      {
-        type: render ? type : (type ?? "button"),
-        className: cn("absolute inset-0 z-10 outline-none", className),
-      },
-      props
-    ),
-    render,
-    state: {
-      slot: "attachment-trigger",
-    },
-  })
-}
-
-function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="attachment-group"
-      className={cn(
-        "flex w-full min-w-0 flex-col overflow-hidden rounded-2xl bg-surface-secondary",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export {
-  Attachment,
-  AttachmentAction,
-  AttachmentActions,
-  AttachmentContent,
-  AttachmentDescription,
-  AttachmentGroup,
-  AttachmentLabel,
-  AttachmentMedia,
-  AttachmentProgress,
-  AttachmentTitle,
-  AttachmentTrigger,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/attachment.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from "@/components/ui/attachment"
-```
+<Code lang="tsx" code={"import { Attachment, AttachmentLabel, AttachmentMedia, AttachmentContent, AttachmentTitle, AttachmentDescription, AttachmentProgress, AttachmentActions, AttachmentAction, AttachmentTrigger, AttachmentGroup } from \"@/components/ui/attachment\""} />
 
-```tsx
-<Attachment orientation="horizontal" state="done">
-  <AttachmentMedia variant="document">
-    <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-  </AttachmentMedia>
-  <AttachmentContent>
-    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>
-    <AttachmentDescription>2.4 MB</AttachmentDescription>
-  </AttachmentContent>
-  <AttachmentActions>
-    <AttachmentAction aria-label="Remove">
-      <XIcon />
-    </AttachmentAction>
-  </AttachmentActions>
-</Attachment>
-```
+<Code lang="tsx" code={"<Attachment orientation=\"horizontal\" state=\"done\">\n  <AttachmentMedia variant=\"document\">\n    <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n  </AttachmentMedia>\n  <AttachmentContent>\n    <AttachmentTitle>Quarterly report.pdf</AttachmentTitle>\n    <AttachmentDescription>2.4 MB</AttachmentDescription>\n  </AttachmentContent>\n  <AttachmentActions>\n    <AttachmentAction aria-label=\"Remove\">\n      <XIcon />\n    </AttachmentAction>\n  </AttachmentActions>\n</Attachment>"} />
 
 Set `state` to reflect the file's lifecycle. `idle` adds a dashed border (outside a group), and `error` colors the description with the danger color. The `state`, `size` and `orientation` values are also exposed as `data-*` attributes for your own styling.
 
@@ -358,33 +55,7 @@ Compares the `default`, `sm` and `xs` sizes.
 
 <Example kind="ui" name="attachment" story="Sizes">
 
-```tsx
-import { FileTextIcon, XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-export function AttachmentSizesExample() {
-  return (
-    <div className="flex flex-col items-start gap-3">
-      {(["default", "sm", "xs"] as const).map((size) => (
-        <Attachment key={size} orientation="horizontal" state="done" size={size}>
-          <AttachmentMedia>
-            <FileTextIcon />
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Meeting notes.docx</AttachmentTitle>
-            <AttachmentDescription>184 KB</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Remove">
-              <XIcon />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-      ))}
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { FileTextIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentSizesExample() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      {([\"default\", \"sm\", \"xs\"] as const).map((size) => (\n        <Attachment key={size} orientation=\"horizontal\" state=\"done\" size={size}>\n          <AttachmentMedia>\n            <FileTextIcon />\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Meeting notes.docx</AttachmentTitle>\n            <AttachmentDescription>184 KB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction aria-label=\"Remove\">\n              <XIcon />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n      ))}\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -394,81 +65,7 @@ Shows the `idle`, `uploading`, `processing`, `error` and `done` states.
 
 <Example kind="ui" name="attachment" story="States">
 
-```tsx
-import { UploadSimpleIcon, XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from "@/components/ui/attachment"
-import { Spinner } from "@/components/ui/spinner"
-
-export function AttachmentStatesExample() {
-  return (
-    <div className="flex w-96 flex-col gap-3">
-      <Attachment orientation="horizontal" state="idle" className="w-full">
-        <AttachmentMedia>
-          <UploadSimpleIcon />
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Drop a file here</AttachmentTitle>
-          <AttachmentDescription>
-            PDF, PNG or JPG up to 10 MB
-          </AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction variant="link">Choose File</AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="uploading" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
-          <AttachmentProgress value={64} aria-label="Uploading" />
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction aria-label="Cancel upload">
-            <XIcon />
-          </AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="processing" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
-          <AttachmentDescription>Processing…</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <Spinner className="size-5 text-label-secondary" />
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="error" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-orange-700">key</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Presentation.key</AttachmentTitle>
-          <AttachmentDescription>File type not supported</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction aria-label="Remove">
-            <XIcon />
-          </AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="done" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>
-          <AttachmentDescription>1.1 MB</AttachmentDescription>
-        </AttachmentContent>
-      </Attachment>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { UploadSimpleIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function AttachmentStatesExample() {\n  return (\n    <div className=\"flex w-96 flex-col gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"idle\" className=\"w-full\">\n        <AttachmentMedia>\n          <UploadSimpleIcon />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Drop a file here</AttachmentTitle>\n          <AttachmentDescription>\n            PDF, PNG or JPG up to 10 MB\n          </AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction variant=\"link\">Choose File</AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"uploading\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentProgress value={64} aria-label=\"Uploading\" />\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Cancel upload\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"processing\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentDescription>Processing…</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <Spinner className=\"size-5 text-label-secondary\" />\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"error\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-orange-700\">key</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Presentation.key</AttachmentTitle>\n          <AttachmentDescription>File type not supported</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice March.pdf</AttachmentTitle>\n          <AttachmentDescription>1.1 MB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -478,32 +75,7 @@ Uses an image thumbnail with the `image` media variant.
 
 <Example kind="ui" name="attachment" story="Image">
 
-```tsx
-import { XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-const imageUrl =
-"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
-export function AttachmentImageExample() {
-  return (
-    <Attachment orientation="horizontal" state="done">
-      <AttachmentMedia variant="image">
-        <img src={imageUrl} alt="Mountain lake" />
-      </AttachmentMedia>
-      <AttachmentContent>
-        <AttachmentTitle>Lake.jpg</AttachmentTitle>
-        <AttachmentDescription>3.2 MB</AttachmentDescription>
-      </AttachmentContent>
-      <AttachmentActions>
-        <AttachmentAction aria-label="Remove">
-          <XIcon />
-        </AttachmentAction>
-      </AttachmentActions>
-    </Attachment>
-  )
-}
-```
+<Code lang="tsx" code={"import { XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentImageExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentMedia variant=\"image\">\n        <img src={imageUrl} alt=\"Mountain lake\" />\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Lake.jpg</AttachmentTitle>\n        <AttachmentDescription>3.2 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction aria-label=\"Remove\">\n          <XIcon />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
 
 </Example>
 
@@ -513,39 +85,7 @@ Stacks the media above the content with `orientation="vertical"`.
 
 <Example kind="ui" name="attachment" story="Vertical">
 
-```tsx
-import { FilePdfIcon, XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-const imageUrl =
-"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
-export function AttachmentVerticalExample() {
-  return (
-    <div className="flex items-start gap-3">
-      <Attachment orientation="vertical" state="done">
-        <AttachmentMedia variant="image">
-          <img src={imageUrl} alt="Mountain lake" />
-        </AttachmentMedia>
-        <AttachmentActions>
-          <AttachmentAction variant="secondary" aria-label="Remove">
-            <XIcon />
-          </AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="vertical" state="done">
-        <AttachmentMedia>
-          <FilePdfIcon />
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Contract.pdf</AttachmentTitle>
-          <AttachmentDescription>860 KB</AttachmentDescription>
-        </AttachmentContent>
-      </Attachment>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { FilePdfIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentVerticalExample() {\n  return (\n    <div className=\"flex items-start gap-3\">\n      <Attachment orientation=\"vertical\" state=\"done\">\n        <AttachmentMedia variant=\"image\">\n          <img src={imageUrl} alt=\"Mountain lake\" />\n        </AttachmentMedia>\n        <AttachmentActions>\n          <AttachmentAction variant=\"secondary\" aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"vertical\" state=\"done\">\n        <AttachmentMedia>\n          <FilePdfIcon />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Contract.pdf</AttachmentTitle>\n          <AttachmentDescription>860 KB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -555,30 +95,7 @@ Makes the whole card a button with `AttachmentTrigger`, alongside a separate dow
 
 <Example kind="ui" name="attachment" story="Clickable">
 
-```tsx
-import { DownloadSimpleIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle, AttachmentTrigger } from "@/components/ui/attachment"
-
-export function AttachmentClickableExample() {
-  return (
-    <Attachment orientation="horizontal" state="done">
-      <AttachmentTrigger aria-label="Open Brand guidelines.pdf" />
-      <AttachmentMedia variant="document">
-        <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-      </AttachmentMedia>
-      <AttachmentContent>
-        <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>
-        <AttachmentDescription>5.8 MB</AttachmentDescription>
-      </AttachmentContent>
-      <AttachmentActions>
-        <AttachmentAction aria-label="Download">
-          <DownloadSimpleIcon />
-        </AttachmentAction>
-      </AttachmentActions>
-    </Attachment>
-  )
-}
-```
+<Code lang="tsx" code={"import { DownloadSimpleIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle, AttachmentTrigger } from \"@/components/ui/attachment\"\n\nexport function AttachmentClickableExample() {\n  return (\n    <Attachment orientation=\"horizontal\" state=\"done\">\n      <AttachmentTrigger aria-label=\"Open Brand guidelines.pdf\" />\n      <AttachmentMedia variant=\"document\">\n        <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n      </AttachmentMedia>\n      <AttachmentContent>\n        <AttachmentTitle>Brand guidelines.pdf</AttachmentTitle>\n        <AttachmentDescription>5.8 MB</AttachmentDescription>\n      </AttachmentContent>\n      <AttachmentActions>\n        <AttachmentAction aria-label=\"Download\">\n          <DownloadSimpleIcon />\n        </AttachmentAction>\n      </AttachmentActions>\n    </Attachment>\n  )\n}"} />
 
 </Example>
 
@@ -588,91 +105,7 @@ Combines several attachments in one `AttachmentGroup` list.
 
 <Example kind="ui" name="attachment" story="Group">
 
-```tsx
-import { CheckCircleIcon, XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentGroup, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from "@/components/ui/attachment"
-import { Spinner } from "@/components/ui/spinner"
-
-const imageUrl =
-"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
-export function AttachmentGroupExample() {
-  return (
-    <div className="w-96">
-      <AttachmentGroup>
-        <Attachment orientation="horizontal" state="uploading">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
-            <AttachmentProgress value={64} aria-label="Uploading" />
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Cancel upload">
-              <XIcon />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="processing">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-blue-600">docx</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Contract.docx</AttachmentTitle>
-            <AttachmentDescription>Processing…</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <Spinner className="size-5 text-label-secondary" />
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="done">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
-            <AttachmentDescription>2.4 MB</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <CheckCircleIcon
-              weight="fill"
-              aria-label="Uploaded"
-              className="size-6 text-success"
-            />
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="done">
-          <AttachmentMedia variant="image">
-            <img src={imageUrl} alt="Mountain lake" />
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Table_12.jpg</AttachmentTitle>
-            <AttachmentDescription>1.8 MB</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction aria-label="Remove">
-              <XIcon />
-            </AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-        <Attachment orientation="horizontal" state="error">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
-            <AttachmentDescription>Upload failed</AttachmentDescription>
-          </AttachmentContent>
-          <AttachmentActions>
-            <AttachmentAction variant="link">Try Again</AttachmentAction>
-          </AttachmentActions>
-        </Attachment>
-      </AttachmentGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CheckCircleIcon, XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentGroup, AttachmentLabel, AttachmentMedia, AttachmentProgress, AttachmentTitle } from \"@/components/ui/attachment\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentGroupExample() {\n  return (\n    <div className=\"w-96\">\n      <AttachmentGroup>\n        <Attachment orientation=\"horizontal\" state=\"uploading\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>\n            <AttachmentProgress value={64} aria-label=\"Uploading\" />\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction aria-label=\"Cancel upload\">\n              <XIcon />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"processing\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-blue-600\">docx</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Contract.docx</AttachmentTitle>\n            <AttachmentDescription>Processing…</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <Spinner className=\"size-5 text-label-secondary\" />\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-green-700\">xlsx</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n            <AttachmentDescription>2.4 MB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <CheckCircleIcon\n              weight=\"fill\"\n              aria-label=\"Uploaded\"\n              className=\"size-6 text-success\"\n            />\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"image\">\n            <img src={imageUrl} alt=\"Mountain lake\" />\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n            <AttachmentDescription>1.8 MB</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction aria-label=\"Remove\">\n              <XIcon />\n            </AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n        <Attachment orientation=\"horizontal\" state=\"error\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>\n            <AttachmentDescription>Upload failed</AttachmentDescription>\n          </AttachmentContent>\n          <AttachmentActions>\n            <AttachmentAction variant=\"link\">Try Again</AttachmentAction>\n          </AttachmentActions>\n        </Attachment>\n      </AttachmentGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -682,64 +115,7 @@ Uses colored `AttachmentLabel` tags to indicate file extensions.
 
 <Example kind="ui" name="attachment" story="FileTypes">
 
-```tsx
-import { Attachment, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-export function AttachmentFileTypesExample() {
-  return (
-    <div className="flex flex-col gap-3">
-      {[
-        {
-          name: "Invoice.pdf",
-          meta: "128 KB",
-          extension: "pdf",
-          tone: "bg-red-600",
-        },
-        {
-          name: "Menu.xlsx",
-          meta: "2.4 MB",
-          extension: "xlsx",
-          tone: "bg-green-700",
-        },
-        {
-          name: "Contract.docx",
-          meta: "84 KB",
-          extension: "docx",
-          tone: "bg-blue-600",
-        },
-        {
-          name: "Pitch.key",
-          meta: "12 MB",
-          extension: "key",
-          tone: "bg-orange-700",
-        },
-        { name: "Archive.zip", meta: "48 MB", extension: "zip", tone: "" },
-      ].map((file) => (
-        <Attachment key={file.name} orientation="horizontal" state="done">
-          <AttachmentMedia variant="document">
-            <AttachmentLabel className={file.tone}>
-              {file.extension}
-            </AttachmentLabel>
-          </AttachmentMedia>
-          <AttachmentContent>
-            <AttachmentTitle>{file.name}</AttachmentTitle>
-            <AttachmentDescription>{file.meta}</AttachmentDescription>
-          </AttachmentContent>
-        </Attachment>
-      ))}
-      <Attachment orientation="horizontal" state="done">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-blue-600">MD</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>README.md</AttachmentTitle>
-          <AttachmentDescription>4 KB</AttachmentDescription>
-        </AttachmentContent>
-      </Attachment>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Attachment, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nexport function AttachmentFileTypesExample() {\n  return (\n    <div className=\"flex flex-col gap-3\">\n      {[\n        {\n          name: \"Invoice.pdf\",\n          meta: \"128 KB\",\n          extension: \"pdf\",\n          tone: \"bg-red-600\",\n        },\n        {\n          name: \"Menu.xlsx\",\n          meta: \"2.4 MB\",\n          extension: \"xlsx\",\n          tone: \"bg-green-700\",\n        },\n        {\n          name: \"Contract.docx\",\n          meta: \"84 KB\",\n          extension: \"docx\",\n          tone: \"bg-blue-600\",\n        },\n        {\n          name: \"Pitch.key\",\n          meta: \"12 MB\",\n          extension: \"key\",\n          tone: \"bg-orange-700\",\n        },\n        { name: \"Archive.zip\", meta: \"48 MB\", extension: \"zip\", tone: \"\" },\n      ].map((file) => (\n        <Attachment key={file.name} orientation=\"horizontal\" state=\"done\">\n          <AttachmentMedia variant=\"document\">\n            <AttachmentLabel className={file.tone}>\n              {file.extension}\n            </AttachmentLabel>\n          </AttachmentMedia>\n          <AttachmentContent>\n            <AttachmentTitle>{file.name}</AttachmentTitle>\n            <AttachmentDescription>{file.meta}</AttachmentDescription>\n          </AttachmentContent>\n        </Attachment>\n      ))}\n      <Attachment orientation=\"horizontal\" state=\"done\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-blue-600\">MD</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>README.md</AttachmentTitle>\n          <AttachmentDescription>4 KB</AttachmentDescription>\n        </AttachmentContent>\n      </Attachment>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -749,74 +125,7 @@ A full-width list of separate attachment cards.
 
 <Example kind="ui" name="attachment" story="FileList">
 
-```tsx
-import { XIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-const imageUrl =
-"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
-export function AttachmentFileListExample() {
-  return (
-    <div className="flex w-96 flex-col gap-3">
-      <Attachment orientation="horizontal" state="done" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>
-          <AttachmentDescription>128 KB</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction aria-label="Remove">
-            <XIcon />
-          </AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="done" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
-          <AttachmentDescription>2.4 MB</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction aria-label="Remove">
-            <XIcon />
-          </AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="done" className="w-full">
-        <AttachmentMedia variant="image">
-          <img src={imageUrl} alt="Mountain lake" />
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Table_12.jpg</AttachmentTitle>
-          <AttachmentDescription>1.8 MB</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction aria-label="Remove">
-            <XIcon />
-          </AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="error" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-red-600">pdf</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>
-          <AttachmentDescription>Upload failed</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentAction variant="link">Try Again</AttachmentAction>
-        </AttachmentActions>
-      </Attachment>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { XIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentAction, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentFileListExample() {\n  return (\n    <div className=\"flex w-96 flex-col gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Invoice_1042.pdf</AttachmentTitle>\n          <AttachmentDescription>128 KB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-green-700\">xlsx</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n          <AttachmentDescription>2.4 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"image\">\n          <img src={imageUrl} alt=\"Mountain lake\" />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n          <AttachmentDescription>1.8 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction aria-label=\"Remove\">\n            <XIcon />\n          </AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"error\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-red-600\">pdf</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Z-Report_30-09.pdf</AttachmentTitle>\n          <AttachmentDescription>Upload failed</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <AttachmentAction variant=\"link\">Try Again</AttachmentAction>\n        </AttachmentActions>\n      </Attachment>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -826,52 +135,7 @@ Marks completed uploads with a check icon in the actions slot.
 
 <Example kind="ui" name="attachment" story="Uploaded">
 
-```tsx
-import { CheckCircleIcon } from "@phosphor-icons/react"
-import { Attachment, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from "@/components/ui/attachment"
-
-const imageUrl =
-"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80"
-
-export function AttachmentUploadedExample() {
-  return (
-    <div className="flex w-96 flex-col gap-3">
-      <Attachment orientation="horizontal" state="done" className="w-full">
-        <AttachmentMedia variant="document">
-          <AttachmentLabel className="bg-green-700">xlsx</AttachmentLabel>
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>
-          <AttachmentDescription>2.4 MB</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <CheckCircleIcon
-            weight="fill"
-            aria-label="Uploaded"
-            className="size-6 text-success"
-          />
-        </AttachmentActions>
-      </Attachment>
-      <Attachment orientation="horizontal" state="done" className="w-full">
-        <AttachmentMedia variant="image">
-          <img src={imageUrl} alt="Mountain lake" />
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Table_12.jpg</AttachmentTitle>
-          <AttachmentDescription>1.8 MB</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <CheckCircleIcon
-            weight="fill"
-            aria-label="Uploaded"
-            className="size-6 text-success"
-          />
-        </AttachmentActions>
-      </Attachment>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CheckCircleIcon } from \"@phosphor-icons/react\"\nimport { Attachment, AttachmentActions, AttachmentContent, AttachmentDescription, AttachmentLabel, AttachmentMedia, AttachmentTitle } from \"@/components/ui/attachment\"\n\nconst imageUrl =\n\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80\"\n\nexport function AttachmentUploadedExample() {\n  return (\n    <div className=\"flex w-96 flex-col gap-3\">\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"document\">\n          <AttachmentLabel className=\"bg-green-700\">xlsx</AttachmentLabel>\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Menu_October.xlsx</AttachmentTitle>\n          <AttachmentDescription>2.4 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <CheckCircleIcon\n            weight=\"fill\"\n            aria-label=\"Uploaded\"\n            className=\"size-6 text-success\"\n          />\n        </AttachmentActions>\n      </Attachment>\n      <Attachment orientation=\"horizontal\" state=\"done\" className=\"w-full\">\n        <AttachmentMedia variant=\"image\">\n          <img src={imageUrl} alt=\"Mountain lake\" />\n        </AttachmentMedia>\n        <AttachmentContent>\n          <AttachmentTitle>Table_12.jpg</AttachmentTitle>\n          <AttachmentDescription>1.8 MB</AttachmentDescription>\n        </AttachmentContent>\n        <AttachmentActions>\n          <CheckCircleIcon\n            weight=\"fill\"\n            aria-label=\"Uploaded\"\n            className=\"size-6 text-success\"\n          />\n        </AttachmentActions>\n      </Attachment>\n    </div>\n  )\n}"} />
 
 </Example>
 

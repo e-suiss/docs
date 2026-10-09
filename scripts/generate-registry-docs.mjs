@@ -111,7 +111,8 @@ function mdx(text = "") {
     .join("");
 }
 
-const fence = (code, lang = "tsx", title) => `\`\`\`${lang}${title ? ` title="${title}"` : ""}\n${code.trimEnd()}\n\`\`\``;
+const fence = (code, lang = "tsx", title) =>
+  `<Code lang="${lang}"${title ? ` title="${title}"` : ""} code={${JSON.stringify(code.trimEnd())}} />`;
 
 function readSource(file) {
   const local = path.join(root, file);
@@ -224,7 +225,7 @@ function page(item) {
   const main = visual ? pascal(item.name) : undefined;
 
   if (visual) {
-    lines.push(`<Example kind="${item.type}" name="${item.name}">`, "", fence(readSource(item.files[0]), "tsx", item.files[0]), "", "</Example>", "");
+    lines.push(`<Example kind="${item.type}" name="${item.name}">`, "", `<SourceFile path="${item.files[0]}" fold={false} />`, "", "</Example>", "");
   } else if (examples[0]) {
     lines.push(`<Example kind="${item.type}" name="${item.name}" story="${examples[0].key}">`, "", fence(examples[0].code), "", "</Example>", "");
   }
@@ -241,7 +242,7 @@ function page(item) {
     lines.push(`${step++}. Add the pieces it builds on: ${requiresLinks(item)}.`, "");
   }
   lines.push(`${step++}. Copy the source into ${files}:`, "");
-  for (const file of item.files) lines.push("<SourceCode>", "", fence(readSource(file), "tsx", file), "", "</SourceCode>", "");
+  for (const file of item.files) lines.push(`<SourceFile path="${file}" />`, "");
   lines.push(`${step}. Update the import paths to match your project.`, "");
 
   lines.push("## Usage", "");

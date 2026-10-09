@@ -7,79 +7,7 @@ generated: true
 
 <Example kind="chart" name="radar-chart-multiple">
 
-```tsx title="components/charts/radar-chart-multiple.tsx"
-"use client"
-
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-const chartData = [
-  { skill: "Cardio", thisMonth: 86, lastMonth: 72 },
-  { skill: "Strength", thisMonth: 62, lastMonth: 58 },
-  { skill: "Flexibility", thisMonth: 48, lastMonth: 55 },
-  { skill: "Balance", thisMonth: 70, lastMonth: 60 },
-  { skill: "Endurance", thisMonth: 80, lastMonth: 66 },
-  { skill: "Speed", thisMonth: 74, lastMonth: 70 },
-]
-
-const chartConfig = {
-  thisMonth: { label: "This month", color: "var(--green)" },
-  lastMonth: { label: "Last month", color: "var(--gray)" },
-} satisfies ChartConfig
-
-export function RadarChartMultiple() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Comparison</CardTitle>
-        <CardDescription>This month and last month</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-56 w-full"
-        >
-          <RadarChart accessibilityLayer data={chartData} outerRadius="70%">
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <PolarGrid stroke="var(--separator)" />
-            <PolarAngleAxis dataKey="skill" />
-            <Radar
-              dataKey="lastMonth"
-              stroke="var(--color-lastMonth)"
-              fill="var(--color-lastMonth)"
-              fillOpacity={0.18}
-              strokeWidth={2}
-            />
-            <Radar
-              dataKey="thisMonth"
-              stroke="var(--color-thisMonth)"
-              fill="var(--color-thisMonth)"
-              fillOpacity={0.18}
-              strokeWidth={2}
-            />
-          </RadarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
-}
-```
+<SourceFile path="components/charts/radar-chart-multiple.tsx" fold={false} />
 
 </Example>
 
@@ -89,111 +17,27 @@ Uses `RadarChart` with `outerRadius="70%"`, a `PolarAngleAxis` on `skill`, a `Po
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add charts radar-chart-multiple
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radar-chart-multiple"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install recharts
-```
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
 
 2. Add the pieces it builds on: [Card](/docs/ui/components/card), [Chart](/docs/ui/components/chart).
 
 3. Copy the source into `components/charts/radar-chart-multiple.tsx`:
 
-<SourceCode>
-
-```tsx title="components/charts/radar-chart-multiple.tsx"
-"use client"
-
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-const chartData = [
-  { skill: "Cardio", thisMonth: 86, lastMonth: 72 },
-  { skill: "Strength", thisMonth: 62, lastMonth: 58 },
-  { skill: "Flexibility", thisMonth: 48, lastMonth: 55 },
-  { skill: "Balance", thisMonth: 70, lastMonth: 60 },
-  { skill: "Endurance", thisMonth: 80, lastMonth: 66 },
-  { skill: "Speed", thisMonth: 74, lastMonth: 70 },
-]
-
-const chartConfig = {
-  thisMonth: { label: "This month", color: "var(--green)" },
-  lastMonth: { label: "Last month", color: "var(--gray)" },
-} satisfies ChartConfig
-
-export function RadarChartMultiple() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Comparison</CardTitle>
-        <CardDescription>This month and last month</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-56 w-full"
-        >
-          <RadarChart accessibilityLayer data={chartData} outerRadius="70%">
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <PolarGrid stroke="var(--separator)" />
-            <PolarAngleAxis dataKey="skill" />
-            <Radar
-              dataKey="lastMonth"
-              stroke="var(--color-lastMonth)"
-              fill="var(--color-lastMonth)"
-              fillOpacity={0.18}
-              strokeWidth={2}
-            />
-            <Radar
-              dataKey="thisMonth"
-              stroke="var(--color-thisMonth)"
-              fill="var(--color-thisMonth)"
-              fillOpacity={0.18}
-              strokeWidth={2}
-            />
-          </RadarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
-}
-```
-
-</SourceCode>
+<SourceFile path="components/charts/radar-chart-multiple.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { RadarChartMultiple } from "@/components/charts/radar-chart-multiple"
-```
+<Code lang="tsx" code={"import { RadarChartMultiple } from \"@/components/charts/radar-chart-multiple\""} />
 
-```tsx
-<RadarChartMultiple />
-```
+<Code lang="tsx" code={"<RadarChartMultiple />"} />
 
 Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. To add a series, add a `chartConfig` entry with `label` and `color` and another `Radar`; keep the fill opacity low so overlapping shapes stay readable.
 

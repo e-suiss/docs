@@ -7,15 +7,7 @@ generated: true
 
 <Example kind="ui" name="spinner" story="Default">
 
-```tsx
-import { Spinner } from "@/components/ui/spinner"
-
-export function SpinnerExample() {
-  return (
-    <Spinner />
-  )
-}
-```
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerExample() {\n  return (\n    <Spinner />\n  )\n}"} />
 
 </Example>
 
@@ -27,76 +19,25 @@ Use it for short waits whose length is unknown, such as saving or loading more. 
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add spinner
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add spinner"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Copy the source into `components/ui/spinner.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/spinner.tsx"
-import { cn } from "cn"
-
-const spokes = Array.from({ length: 8 }, (_, index) => ({
-  angle: index * 45,
-  opacity: Number((0.2 + (0.8 * index) / 7).toFixed(2)),
-}))
-
-function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
-  return (
-    <svg
-      data-slot="spinner"
-      role="status"
-      aria-label="Loading"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={cn(
-        "size-4 shrink-0 animate-[spin_0.8s_steps(8)_infinite]",
-        className
-      )}
-      {...props}
-    >
-      {spokes.map(({ angle, opacity }) => (
-        <rect
-          key={angle}
-          x="10.44"
-          y="0.5"
-          width="3.12"
-          height="7.2"
-          rx="1.56"
-          opacity={opacity}
-          transform={`rotate(${angle} 12 12)`}
-        />
-      ))}
-    </svg>
-  )
-}
-
-export { Spinner }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/spinner.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Spinner } from "@/components/ui/spinner"
-```
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\""} />
 
-```tsx
-<Spinner />
-```
+<Code lang="tsx" code={"<Spinner />"} />
 
 Change the size with a `size-*` class and the color with a `text-*` class. Inside a `Button`, pair it with `disabled` and give it `data-icon="inline-start"` to place it before the label.
 
@@ -108,20 +49,7 @@ Shows spinners from `size-3` to `size-8`.
 
 <Example kind="ui" name="spinner" story="Sizes">
 
-```tsx
-import { Spinner } from "@/components/ui/spinner"
-
-export function SpinnerSizesExample() {
-  return (
-    <div className="flex items-center gap-4">
-      <Spinner className="size-3" />
-      <Spinner className="size-4" />
-      <Spinner className="size-6" />
-      <Spinner className="size-8" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerSizesExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Spinner className=\"size-3\" />\n      <Spinner className=\"size-4\" />\n      <Spinner className=\"size-6\" />\n      <Spinner className=\"size-8\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -131,19 +59,7 @@ Tints spinners with `text-*` color classes.
 
 <Example kind="ui" name="spinner" story="Colors">
 
-```tsx
-import { Spinner } from "@/components/ui/spinner"
-
-export function SpinnerColorsExample() {
-  return (
-    <div className="flex items-center gap-4">
-      <Spinner className="text-accent size-6" />
-      <Spinner className="text-label-secondary size-6" />
-      <Spinner className="text-danger size-6" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerColorsExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      <Spinner className=\"text-accent size-6\" />\n      <Spinner className=\"text-label-secondary size-6\" />\n      <Spinner className=\"text-danger size-6\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -153,25 +69,7 @@ Places a spinner in disabled buttons that are busy.
 
 <Example kind="ui" name="spinner" story="InButton">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
-
-export function SpinnerInButtonExample() {
-  return (
-    <div className="flex items-center gap-3">
-      <Button disabled>
-        <Spinner data-icon="inline-start" />
-        Saving
-      </Button>
-      <Button variant="outline" disabled>
-        <Spinner data-icon="inline-start" />
-        Loading more
-      </Button>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function SpinnerInButtonExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Button disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Saving\n      </Button>\n      <Button variant=\"outline\" disabled>\n        <Spinner data-icon=\"inline-start\" />\n        Loading more\n      </Button>\n    </div>\n  )\n}"} />
 
 </Example>
 

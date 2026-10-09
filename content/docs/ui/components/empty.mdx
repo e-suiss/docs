@@ -7,40 +7,7 @@ generated: true
 
 <Example kind="ui" name="empty" story="Default">
 
-```tsx
-import { ArrowUpRightIcon, FolderSimpleIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
-
-export function EmptyExample() {
-  return (
-    <div className="w-[32rem]">
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <FolderSimpleIcon />
-          </EmptyMedia>
-          <EmptyTitle>No projects yet</EmptyTitle>
-          <EmptyDescription>
-            You haven&apos;t created any projects yet. Get started by creating
-            your first project.
-          </EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <div className="flex gap-2">
-            <Button>Create project</Button>
-            <Button variant="outline">Import project</Button>
-          </div>
-          <Button variant="link" size="sm" className="text-label-secondary">
-            Learn more
-            <ArrowUpRightIcon data-icon="inline-end" />
-          </Button>
-        </EmptyContent>
-      </Empty>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { ArrowUpRightIcon, FolderSimpleIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyMedia variant=\"icon\">\n            <FolderSimpleIcon />\n          </EmptyMedia>\n          <EmptyTitle>No projects yet</EmptyTitle>\n          <EmptyDescription>\n            You haven&apos;t created any projects yet. Get started by creating\n            your first project.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <div className=\"flex gap-2\">\n            <Button>Create project</Button>\n            <Button variant=\"outline\">Import project</Button>\n          </div>\n          <Button variant=\"link\" size=\"sm\" className=\"text-label-secondary\">\n            Learn more\n            <ArrowUpRightIcon data-icon=\"inline-end\" />\n          </Button>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -52,161 +19,25 @@ Use it when a list, folder, search or page has nothing to show. Keep the title s
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add empty
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add empty"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/empty.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/empty.tsx"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-
-function Empty({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="empty"
-      className={cn(
-        "flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-2xl border-dashed p-12 text-center text-balance",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function EmptyHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="empty-header"
-      className={cn("flex max-w-sm flex-col items-center gap-2", className)}
-      {...props}
-    />
-  )
-}
-
-const emptyMediaVariants = cva(
-  "mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default: "bg-transparent",
-        icon: "flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-secondary text-label [&_svg:not([class*='size-'])]:size-5",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-function EmptyMedia({
-  className,
-  variant = "default",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof emptyMediaVariants>) {
-  return (
-    <div
-      data-slot="empty-icon"
-      data-variant={variant}
-      className={cn(emptyMediaVariants({ variant, className }))}
-      {...props}
-    />
-  )
-}
-
-function EmptyTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="empty-title"
-      className={cn("text-lg font-semibold", className)}
-      {...props}
-    />
-  )
-}
-
-function EmptyDescription({ className, ...props }: React.ComponentProps<"p">) {
-  return (
-    <div
-      data-slot="empty-description"
-      className={cn(
-        "text-sm/relaxed text-label-secondary [&>a]:underline [&>a:hover]:text-link",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function EmptyContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="empty-content"
-      className={cn(
-        "flex w-full max-w-sm min-w-0 flex-col items-center gap-4 text-base text-balance",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/empty.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "@/components/ui/empty"
-```
+<Code lang="tsx" code={"import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from \"@/components/ui/empty\""} />
 
-```tsx
-<div className="w-[32rem]">
-  <Empty>
-    <EmptyHeader>
-      <EmptyMedia variant="icon">
-        <FolderSimpleIcon />
-      </EmptyMedia>
-      <EmptyTitle>No projects yet</EmptyTitle>
-      <EmptyDescription>
-        You haven&apos;t created any projects yet. Get started by creating
-        your first project.
-      </EmptyDescription>
-    </EmptyHeader>
-    <EmptyContent>
-      <div className="flex gap-2">
-        <Button>Create project</Button>
-        <Button variant="outline">Import project</Button>
-      </div>
-      <Button variant="link" size="sm" className="text-label-secondary">
-        Learn more
-        <ArrowUpRightIcon data-icon="inline-end" />
-      </Button>
-    </EmptyContent>
-  </Empty>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-[32rem]\">\n  <Empty>\n    <EmptyHeader>\n      <EmptyMedia variant=\"icon\">\n        <FolderSimpleIcon />\n      </EmptyMedia>\n      <EmptyTitle>No projects yet</EmptyTitle>\n      <EmptyDescription>\n        You haven&apos;t created any projects yet. Get started by creating\n        your first project.\n      </EmptyDescription>\n    </EmptyHeader>\n    <EmptyContent>\n      <div className=\"flex gap-2\">\n        <Button>Create project</Button>\n        <Button variant=\"outline\">Import project</Button>\n      </div>\n      <Button variant=\"link\" size=\"sm\" className=\"text-label-secondary\">\n        Learn more\n        <ArrowUpRightIcon data-icon=\"inline-end\" />\n      </Button>\n    </EmptyContent>\n  </Empty>\n</div>"} />
 
 `Empty` has a dashed border style but no border width by default; add `border` through `className` to show an outline. Set `EmptyMedia` to `variant="icon"` for a small icon in a tinted tile, or keep the default to render media such as a large icon or illustration as is. Links placed directly inside `EmptyDescription` are underlined.
 
@@ -218,34 +49,7 @@ An empty state with a visible dashed outline, added through `className="border"`
 
 <Example kind="ui" name="empty" story="Outline">
 
-```tsx
-import { CloudIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
-
-export function EmptyOutlineExample() {
-  return (
-    <div className="w-[32rem]">
-      <Empty className="border">
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <CloudIcon />
-          </EmptyMedia>
-          <EmptyTitle>Cloud storage is empty</EmptyTitle>
-          <EmptyDescription>
-            Upload files to your cloud storage to access them anywhere.
-          </EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <Button variant="outline" size="sm">
-            Upload files
-          </Button>
-        </EmptyContent>
-      </Empty>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CloudIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyOutlineExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty className=\"border\">\n        <EmptyHeader>\n          <EmptyMedia variant=\"icon\">\n            <CloudIcon />\n          </EmptyMedia>\n          <EmptyTitle>Cloud storage is empty</EmptyTitle>\n          <EmptyDescription>\n            Upload files to your cloud storage to access them anywhere.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <Button variant=\"outline\" size=\"sm\">\n            Upload files\n          </Button>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -255,26 +59,7 @@ An empty state with a large icon in `EmptyMedia` using the default variant.
 
 <Example kind="ui" name="empty" story="DefaultMedia">
 
-```tsx
-import { FolderSimpleIcon } from "@phosphor-icons/react"
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
-
-export function EmptyDefaultMediaExample() {
-  return (
-    <div className="w-[32rem]">
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia>
-            <FolderSimpleIcon className="text-label-secondary size-12" />
-          </EmptyMedia>
-          <EmptyTitle>This folder is empty</EmptyTitle>
-          <EmptyDescription>Drag files here to add them.</EmptyDescription>
-        </EmptyHeader>
-      </Empty>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { FolderSimpleIcon } from \"@phosphor-icons/react\"\nimport { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function EmptyDefaultMediaExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyMedia>\n            <FolderSimpleIcon className=\"text-label-secondary size-12\" />\n          </EmptyMedia>\n          <EmptyTitle>This folder is empty</EmptyTitle>\n          <EmptyDescription>Drag files here to add them.</EmptyDescription>\n        </EmptyHeader>\n      </Empty>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -284,38 +69,7 @@ A not-found state with an `InputGroup` search field and a support link in `Empty
 
 <Example kind="ui" name="empty" story="WithSearch">
 
-```tsx
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
-
-export function EmptyWithSearchExample() {
-  return (
-    <div className="w-[32rem]">
-      <Empty>
-        <EmptyHeader>
-          <EmptyTitle>404 - Not found</EmptyTitle>
-          <EmptyDescription>
-            The page you&apos;re looking for doesn&apos;t exist. Try searching for
-            what you need below.
-          </EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <InputGroup className="sm:w-3/4">
-            <InputGroupInput placeholder="Search pages..." />
-            <InputGroupAddon>
-              <MagnifyingGlassIcon />
-            </InputGroupAddon>
-          </InputGroup>
-          <EmptyDescription>
-            Need help? <a href="#support">Contact support</a>
-          </EmptyDescription>
-        </EmptyContent>
-      </Empty>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from \"@/components/ui/empty\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\n\nexport function EmptyWithSearchExample() {\n  return (\n    <div className=\"w-[32rem]\">\n      <Empty>\n        <EmptyHeader>\n          <EmptyTitle>404 - Not found</EmptyTitle>\n          <EmptyDescription>\n            The page you&apos;re looking for doesn&apos;t exist. Try searching for\n            what you need below.\n          </EmptyDescription>\n        </EmptyHeader>\n        <EmptyContent>\n          <InputGroup className=\"sm:w-3/4\">\n            <InputGroupInput placeholder=\"Search pages...\" />\n            <InputGroupAddon>\n              <MagnifyingGlassIcon />\n            </InputGroupAddon>\n          </InputGroup>\n          <EmptyDescription>\n            Need help? <a href=\"#support\">Contact support</a>\n          </EmptyDescription>\n        </EmptyContent>\n      </Empty>\n    </div>\n  )\n}"} />
 
 </Example>
 

@@ -7,45 +7,7 @@ generated: true
 
 <Example kind="pattern" name="preview" story="Default">
 
-```tsx
-import { CalendarBlankIcon } from "@phosphor-icons/react"
-import { Preview, PreviewContent, PreviewTrigger } from "@/components/patterns/preview"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-function ProfileCard() {
-  return (
-    <div className="flex gap-4">
-      <Avatar size="lg">
-        <AvatarImage src="https://github.com/vercel.png" alt="@nextjs" />
-        <AvatarFallback>NJ</AvatarFallback>
-      </Avatar>
-      <div className="flex flex-col gap-1">
-        <h4 className="text-sm font-semibold">@nextjs</h4>
-        <p className="text-sm">
-          The React framework, created and maintained by @vercel.
-        </p>
-        <div className="mt-1 flex items-center gap-1.5 text-xs text-label-secondary">
-          <CalendarBlankIcon />
-          Joined December 2021
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function PreviewExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center p-4">
-      <Preview>
-        <PreviewTrigger href="#">@nextjs</PreviewTrigger>
-        <PreviewContent>
-          <ProfileCard />
-        </PreviewContent>
-      </Preview>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nfunction ProfileCard() {\n  return (\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"mt-1 flex items-center gap-1.5 text-xs text-label-secondary\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function PreviewExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <Preview>\n        <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n        <PreviewContent>\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -57,206 +19,27 @@ Use it for supplementary content that people can skip. Keep essential informatio
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns preview
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns preview"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Add the pieces it builds on: [Drawer](/docs/ui/components/drawer), [Hover Card](/docs/ui/components/hover-card), `use-mobile`.
 
 3. Copy the source into `components/patterns/preview.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/preview.tsx"
-"use client"
-
-import { cn } from "cn"
-import * as React from "react"
-
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type PreviewContextProps = {
-  isMobile: boolean
-}
-
-const PreviewContext = React.createContext<PreviewContextProps | null>(null)
-
-function usePreview() {
-  const context = React.useContext(PreviewContext)
-
-  if (!context) {
-    throw new Error("usePreview must be used within a <Preview />")
-  }
-
-  return context
-}
-
-function Preview({
-  open,
-  defaultOpen,
-  onOpenChange,
-  floating = true,
-  children,
-}: Pick<
-  React.ComponentProps<typeof HoverCard>,
-  "open" | "defaultOpen" | "children"
-> & {
-  onOpenChange?: (open: boolean) => void
-  floating?: boolean
-}) {
-  const isMobile = useIsMobile()
-  const rootProps = {
-    open,
-    defaultOpen,
-    onOpenChange: (next: boolean) => onOpenChange?.(next),
-    children,
-  }
-
-  return (
-    <PreviewContext.Provider value={{ isMobile }}>
-      {isMobile ? (
-        <Drawer
-          data-slot="preview"
-          floating={floating}
-          showSwipeHandle
-          {...rootProps}
-        />
-      ) : (
-        <HoverCard data-slot="preview" {...rootProps} />
-      )}
-    </PreviewContext.Provider>
-  )
-}
-
-function PreviewTrigger({
-  href,
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement> & {
-  href?: string
-}) {
-  const { isMobile } = usePreview()
-
-  if (isMobile) {
-    return (
-      <DrawerTrigger
-        data-slot="preview-trigger"
-        className={cn(
-          "cursor-pointer text-link underline-offset-4 outline-none focus-visible:focus-ring",
-          className
-        )}
-        {...props}
-      />
-    )
-  }
-
-  return (
-    <HoverCardTrigger
-      data-slot="preview-trigger"
-      href={href}
-      className={cn(
-        "text-link underline-offset-4 outline-none hover:underline focus-visible:focus-ring",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function PreviewContent({
-  align,
-  alignOffset,
-  side,
-  sideOffset,
-  showCloseButton,
-  closeLabel,
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLElement> &
-  Pick<
-    React.ComponentProps<typeof HoverCardContent>,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  > & {
-    showCloseButton?: boolean
-    closeLabel?: string
-  }) {
-  const { isMobile } = usePreview()
-
-  if (isMobile) {
-    return (
-      <DrawerContent
-        data-slot="preview-content"
-        showCloseButton={showCloseButton}
-        closeLabel={closeLabel}
-        {...props}
-      >
-        <div
-          className={cn(
-            "p-4",
-            showCloseButton && "pe-14",
-            showCloseButton && closeLabel && "pe-24",
-            className
-          )}
-        >
-          {children}
-        </div>
-      </DrawerContent>
-    )
-  }
-
-  return (
-    <HoverCardContent
-      data-slot="preview-content"
-      align={align}
-      alignOffset={alignOffset}
-      side={side}
-      sideOffset={sideOffset}
-      className={className}
-      {...props}
-    >
-      {children}
-    </HoverCardContent>
-  )
-}
-
-export { Preview, PreviewContent, PreviewTrigger }
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/preview.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Preview, PreviewTrigger, PreviewContent } from "@/components/patterns/preview"
-```
+<Code lang="tsx" code={"import { Preview, PreviewTrigger, PreviewContent } from \"@/components/patterns/preview\""} />
 
-```tsx
-<div className="flex min-h-svh items-center justify-center p-4">
-  <Preview>
-    <PreviewTrigger href="#">@nextjs</PreviewTrigger>
-    <PreviewContent>
-      <ProfileCard />
-    </PreviewContent>
-  </Preview>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center p-4\">\n  <Preview>\n    <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n    <PreviewContent>\n      <ProfileCard />\n    </PreviewContent>\n  </Preview>\n</div>"} />
 
 - Place `PreviewTrigger` and `PreviewContent` inside `Preview`. The parts throw when used outside it.
 - Open state is uncontrolled by default; use `defaultOpen`, or `open` with `onOpenChange` to control it.
@@ -271,45 +54,7 @@ Adds a close button to the mobile drawer with `showCloseButton`.
 
 <Example kind="pattern" name="preview" story="WithCloseButton">
 
-```tsx
-import { CalendarBlankIcon } from "@phosphor-icons/react"
-import { Preview, PreviewContent, PreviewTrigger } from "@/components/patterns/preview"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-function ProfileCard() {
-  return (
-    <div className="flex gap-4">
-      <Avatar size="lg">
-        <AvatarImage src="https://github.com/vercel.png" alt="@nextjs" />
-        <AvatarFallback>NJ</AvatarFallback>
-      </Avatar>
-      <div className="flex flex-col gap-1">
-        <h4 className="text-sm font-semibold">@nextjs</h4>
-        <p className="text-sm">
-          The React framework, created and maintained by @vercel.
-        </p>
-        <div className="mt-1 flex items-center gap-1.5 text-xs text-label-secondary">
-          <CalendarBlankIcon />
-          Joined December 2021
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function PreviewWithCloseButtonExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center p-4">
-      <Preview>
-        <PreviewTrigger href="#">@nextjs</PreviewTrigger>
-        <PreviewContent showCloseButton>
-          <ProfileCard />
-        </PreviewContent>
-      </Preview>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nfunction ProfileCard() {\n  return (\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"mt-1 flex items-center gap-1.5 text-xs text-label-secondary\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function PreviewWithCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <Preview>\n        <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n        <PreviewContent showCloseButton>\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -319,45 +64,7 @@ Uses a Done text button for the mobile close button through `closeLabel`.
 
 <Example kind="pattern" name="preview" story="WithCloseLabel">
 
-```tsx
-import { CalendarBlankIcon } from "@phosphor-icons/react"
-import { Preview, PreviewContent, PreviewTrigger } from "@/components/patterns/preview"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-function ProfileCard() {
-  return (
-    <div className="flex gap-4">
-      <Avatar size="lg">
-        <AvatarImage src="https://github.com/vercel.png" alt="@nextjs" />
-        <AvatarFallback>NJ</AvatarFallback>
-      </Avatar>
-      <div className="flex flex-col gap-1">
-        <h4 className="text-sm font-semibold">@nextjs</h4>
-        <p className="text-sm">
-          The React framework, created and maintained by @vercel.
-        </p>
-        <div className="mt-1 flex items-center gap-1.5 text-xs text-label-secondary">
-          <CalendarBlankIcon />
-          Joined December 2021
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function PreviewWithCloseLabelExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center p-4">
-      <Preview>
-        <PreviewTrigger href="#">@nextjs</PreviewTrigger>
-        <PreviewContent showCloseButton closeLabel="Done">
-          <ProfileCard />
-        </PreviewContent>
-      </Preview>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalendarBlankIcon } from \"@phosphor-icons/react\"\nimport { Preview, PreviewContent, PreviewTrigger } from \"@/components/patterns/preview\"\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nfunction ProfileCard() {\n  return (\n    <div className=\"flex gap-4\">\n      <Avatar size=\"lg\">\n        <AvatarImage src=\"https://github.com/vercel.png\" alt=\"@nextjs\" />\n        <AvatarFallback>NJ</AvatarFallback>\n      </Avatar>\n      <div className=\"flex flex-col gap-1\">\n        <h4 className=\"text-sm font-semibold\">@nextjs</h4>\n        <p className=\"text-sm\">\n          The React framework, created and maintained by @vercel.\n        </p>\n        <div className=\"mt-1 flex items-center gap-1.5 text-xs text-label-secondary\">\n          <CalendarBlankIcon />\n          Joined December 2021\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport function PreviewWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center p-4\">\n      <Preview>\n        <PreviewTrigger href=\"#\">@nextjs</PreviewTrigger>\n        <PreviewContent showCloseButton closeLabel=\"Done\">\n          <ProfileCard />\n        </PreviewContent>\n      </Preview>\n    </div>\n  )\n}"} />
 
 </Example>
 

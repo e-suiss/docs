@@ -7,48 +7,7 @@ generated: true
 
 <Example kind="pattern" name="modal" story="Default">
 
-```tsx
-import { Modal, ModalBody, ModalClose, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from "@/components/patterns/modal"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-export function ModalExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Modal>
-        <ModalTrigger render={<Button variant="outline" />}>
-          Edit profile
-        </ModalTrigger>
-        <ModalContent>
-          <ModalHeader>
-            <ModalTitle>Edit profile</ModalTitle>
-            <ModalDescription>
-              Update your name and username. Click save when you are done.
-            </ModalDescription>
-          </ModalHeader>
-          <ModalBody className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="modal-name">Name</Label>
-              <Input id="modal-name" defaultValue="Ada Lovelace" />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="modal-username">Username</Label>
-              <Input id="modal-username" defaultValue="@ada" />
-            </div>
-          </ModalBody>
-          <ModalFooter>
-            <ModalClose render={<Button variant="secondary" />}>
-              Cancel
-            </ModalClose>
-            <Button>Save changes</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Modal, ModalBody, ModalClose, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from \"@/components/patterns/modal\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function ModalExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal>\n        <ModalTrigger render={<Button variant=\"outline\" />}>\n          Edit profile\n        </ModalTrigger>\n        <ModalContent>\n          <ModalHeader>\n            <ModalTitle>Edit profile</ModalTitle>\n            <ModalDescription>\n              Update your name and username. Click save when you are done.\n            </ModalDescription>\n          </ModalHeader>\n          <ModalBody className=\"grid gap-4\">\n            <div className=\"grid gap-2\">\n              <Label htmlFor=\"modal-name\">Name</Label>\n              <Input id=\"modal-name\" defaultValue=\"Ada Lovelace\" />\n            </div>\n            <div className=\"grid gap-2\">\n              <Label htmlFor=\"modal-username\">Username</Label>\n              <Input id=\"modal-username\" defaultValue=\"@ada\" />\n            </div>\n          </ModalBody>\n          <ModalFooter>\n            <ModalClose render={<Button variant=\"secondary\" />}>\n              Cancel\n            </ModalClose>\n            <Button>Save changes</Button>\n          </ModalFooter>\n        </ModalContent>\n      </Modal>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -60,266 +19,27 @@ Use it for tasks that need the user's full attention before returning to the pag
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns modal
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns modal"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Add the pieces it builds on: [Dialog](/docs/ui/components/dialog), [Drawer](/docs/ui/components/drawer), `use-mobile`.
 
 3. Copy the source into `components/patterns/modal.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/modal.tsx"
-"use client"
-
-import { cn } from "cn"
-import * as React from "react"
-
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type ModalContextProps = {
-  isMobile: boolean
-}
-
-const ModalContext = React.createContext<ModalContextProps | null>(null)
-
-function useModal() {
-  const context = React.useContext(ModalContext)
-
-  if (!context) {
-    throw new Error("useModal must be used within a <Modal />")
-  }
-
-  return context
-}
-
-function Modal({
-  open,
-  defaultOpen,
-  onOpenChange,
-  floating,
-  children,
-}: Pick<
-  React.ComponentProps<typeof Dialog>,
-  "open" | "defaultOpen" | "children"
-> & {
-  onOpenChange?: (open: boolean) => void
-  floating?: boolean
-}) {
-  const isMobile = useIsMobile()
-  const rootProps = {
-    open,
-    defaultOpen,
-    onOpenChange: (next: boolean) => onOpenChange?.(next),
-    children,
-  }
-
-  return (
-    <ModalContext.Provider value={{ isMobile }}>
-      {isMobile ? (
-        <Drawer
-          data-slot="modal"
-          floating={floating}
-          showSwipeHandle
-          {...rootProps}
-        />
-      ) : (
-        <Dialog data-slot="modal" {...rootProps} />
-      )}
-    </ModalContext.Provider>
-  )
-}
-
-function ModalTrigger(
-  props: Omit<
-    React.ComponentProps<typeof DialogTrigger>,
-    "handle" | "className"
-  > & {
-    className?: string
-  }
-) {
-  const { isMobile } = useModal()
-  const Trigger = isMobile ? DrawerTrigger : DialogTrigger
-
-  return <Trigger data-slot="modal-trigger" {...props} />
-}
-
-function ModalContent({
-  showCloseButton = true,
-  ...props
-}: Omit<
-  React.ComponentProps<typeof DialogContent>,
-  "className" | "style" | "render"
-> & {
-  className?: string
-  style?: React.CSSProperties
-}) {
-  const { isMobile } = useModal()
-
-  if (isMobile) {
-    return (
-      <DrawerContent
-        data-slot="modal-content"
-        showCloseButton={showCloseButton}
-        {...props}
-      />
-    )
-  }
-
-  return (
-    <DialogContent
-      data-slot="modal-content"
-      showCloseButton={showCloseButton}
-      {...props}
-    />
-  )
-}
-
-function ModalHeader(props: React.ComponentProps<"div">) {
-  const { isMobile } = useModal()
-  const Header = isMobile ? DrawerHeader : DialogHeader
-
-  return <Header data-slot="modal-header" {...props} />
-}
-
-function ModalBody({ className, ...props }: React.ComponentProps<"div">) {
-  const { isMobile } = useModal()
-
-  return (
-    <div
-      data-slot="modal-body"
-      className={cn(isMobile && "p-4", className)}
-      {...props}
-    />
-  )
-}
-
-function ModalFooter({ className, ...props }: React.ComponentProps<"div">) {
-  const { isMobile } = useModal()
-
-  if (isMobile) {
-    return (
-      <DrawerFooter
-        data-slot="modal-footer"
-        className={cn("flex-col-reverse", className)}
-        {...props}
-      />
-    )
-  }
-
-  return (
-    <DialogFooter data-slot="modal-footer" className={className} {...props} />
-  )
-}
-
-function ModalTitle(props: React.ComponentProps<typeof DialogTitle>) {
-  const { isMobile } = useModal()
-  const Title = isMobile ? DrawerTitle : DialogTitle
-
-  return <Title data-slot="modal-title" {...props} />
-}
-
-function ModalDescription(
-  props: React.ComponentProps<typeof DialogDescription>
-) {
-  const { isMobile } = useModal()
-  const Description = isMobile ? DrawerDescription : DialogDescription
-
-  return <Description data-slot="modal-description" {...props} />
-}
-
-function ModalClose(props: React.ComponentProps<typeof DialogClose>) {
-  const { isMobile } = useModal()
-  const Close = isMobile ? DrawerClose : DialogClose
-
-  return <Close data-slot="modal-close" {...props} />
-}
-
-export {
-  Modal,
-  ModalBody,
-  ModalClose,
-  ModalContent,
-  ModalDescription,
-  ModalFooter,
-  ModalHeader,
-  ModalTitle,
-  ModalTrigger,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/modal.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from "@/components/patterns/modal"
-```
+<Code lang="tsx" code={"import { Modal, ModalTrigger, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalTitle, ModalDescription, ModalClose } from \"@/components/patterns/modal\""} />
 
-```tsx
-<div className="flex min-h-svh items-center justify-center">
-  <Modal>
-    <ModalTrigger render={<Button variant="outline" />}>
-      Edit profile
-    </ModalTrigger>
-    <ModalContent>
-      <ModalHeader>
-        <ModalTitle>Edit profile</ModalTitle>
-        <ModalDescription>
-          Update your name and username. Click save when you are done.
-        </ModalDescription>
-      </ModalHeader>
-      <ModalBody className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="modal-name">Name</Label>
-          <Input id="modal-name" defaultValue="Ada Lovelace" />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="modal-username">Username</Label>
-          <Input id="modal-username" defaultValue="@ada" />
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <ModalClose render={<Button variant="secondary" />}>
-          Cancel
-        </ModalClose>
-        <Button>Save changes</Button>
-      </ModalFooter>
-    </ModalContent>
-  </Modal>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <Modal>\n    <ModalTrigger render={<Button variant=\"outline\" />}>\n      Edit profile\n    </ModalTrigger>\n    <ModalContent>\n      <ModalHeader>\n        <ModalTitle>Edit profile</ModalTitle>\n        <ModalDescription>\n          Update your name and username. Click save when you are done.\n        </ModalDescription>\n      </ModalHeader>\n      <ModalBody className=\"grid gap-4\">\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"modal-name\">Name</Label>\n          <Input id=\"modal-name\" defaultValue=\"Ada Lovelace\" />\n        </div>\n        <div className=\"grid gap-2\">\n          <Label htmlFor=\"modal-username\">Username</Label>\n          <Input id=\"modal-username\" defaultValue=\"@ada\" />\n        </div>\n      </ModalBody>\n      <ModalFooter>\n        <ModalClose render={<Button variant=\"secondary\" />}>\n          Cancel\n        </ModalClose>\n        <Button>Save changes</Button>\n      </ModalFooter>\n    </ModalContent>\n  </Modal>\n</div>"} />
 
 The modal can be controlled with `open` and `onOpenChange` or uncontrolled with `defaultOpen`. Pass `render` to `ModalTrigger` or `ModalClose` to use your own `Button`. `ModalContent` shows a close button by default; set `showCloseButton` to `false` to hide it, or pass `closeLabel` to show text instead of the icon.
 
@@ -331,41 +51,7 @@ Relies on the default corner close button as the only way to dismiss besides `Es
 
 <Example kind="pattern" name="modal" story="WithCloseButton">
 
-```tsx
-import { Modal, ModalBody, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from "@/components/patterns/modal"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
-export function ModalWithCloseButtonExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Modal>
-        <ModalTrigger render={<Button variant="outline" />}>
-          Share project
-        </ModalTrigger>
-        <ModalContent>
-          <ModalHeader>
-            <ModalTitle>Share project</ModalTitle>
-            <ModalDescription>
-              Anyone with the link can view this project.
-            </ModalDescription>
-          </ModalHeader>
-          <ModalBody>
-            <Input
-              readOnly
-              aria-label="Project link"
-              defaultValue="https://esuiss.dev/p/1042"
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button>Copy link</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Modal, ModalBody, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from \"@/components/patterns/modal\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ModalWithCloseButtonExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal>\n        <ModalTrigger render={<Button variant=\"outline\" />}>\n          Share project\n        </ModalTrigger>\n        <ModalContent>\n          <ModalHeader>\n            <ModalTitle>Share project</ModalTitle>\n            <ModalDescription>\n              Anyone with the link can view this project.\n            </ModalDescription>\n          </ModalHeader>\n          <ModalBody>\n            <Input\n              readOnly\n              aria-label=\"Project link\"\n              defaultValue=\"https://esuiss.dev/p/1042\"\n            />\n          </ModalBody>\n          <ModalFooter>\n            <Button>Copy link</Button>\n          </ModalFooter>\n        </ModalContent>\n      </Modal>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -375,41 +61,7 @@ Replaces the close icon with a text button using `closeLabel`.
 
 <Example kind="pattern" name="modal" story="WithCloseLabel">
 
-```tsx
-import { Modal, ModalBody, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from "@/components/patterns/modal"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
-export function ModalWithCloseLabelExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Modal>
-        <ModalTrigger render={<Button variant="outline" />}>
-          Share project
-        </ModalTrigger>
-        <ModalContent closeLabel="Close">
-          <ModalHeader>
-            <ModalTitle>Share project</ModalTitle>
-            <ModalDescription>
-              Anyone with the link can view this project.
-            </ModalDescription>
-          </ModalHeader>
-          <ModalBody>
-            <Input
-              readOnly
-              aria-label="Project link"
-              defaultValue="https://esuiss.dev/p/1042"
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button>Copy link</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Modal, ModalBody, ModalContent, ModalDescription, ModalFooter, ModalHeader, ModalTitle, ModalTrigger } from \"@/components/patterns/modal\"\nimport { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function ModalWithCloseLabelExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal>\n        <ModalTrigger render={<Button variant=\"outline\" />}>\n          Share project\n        </ModalTrigger>\n        <ModalContent closeLabel=\"Close\">\n          <ModalHeader>\n            <ModalTitle>Share project</ModalTitle>\n            <ModalDescription>\n              Anyone with the link can view this project.\n            </ModalDescription>\n          </ModalHeader>\n          <ModalBody>\n            <Input\n              readOnly\n              aria-label=\"Project link\"\n              defaultValue=\"https://esuiss.dev/p/1042\"\n            />\n          </ModalBody>\n          <ModalFooter>\n            <Button>Copy link</Button>\n          </ModalFooter>\n        </ModalContent>\n      </Modal>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -419,17 +71,7 @@ Insets the mobile drawer from the screen edges with `floating`.
 
 <Example kind="pattern" name="modal" story="Floating">
 
-```tsx
-import { Modal } from "@/components/patterns/modal"
-
-export function ModalFloatingExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <Modal floating />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Modal } from \"@/components/patterns/modal\"\n\nexport function ModalFloatingExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <Modal floating />\n    </div>\n  )\n}"} />
 
 </Example>
 

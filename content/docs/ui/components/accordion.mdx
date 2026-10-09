@@ -7,45 +7,7 @@ generated: true
 
 <Example kind="ui" name="accordion" story="Default">
 
-```tsx
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-
-const items = [
-  {
-    value: "shipping",
-    title: "How long does shipping take?",
-    content:
-      "Orders ship within two business days and arrive in three to five days.",
-  },
-  {
-    value: "returns",
-    title: "Can I return an item?",
-    content:
-      "Items can be returned within 14 days of delivery for a full refund.",
-  },
-  {
-    value: "support",
-    title: "How do I contact support?",
-    content:
-      "Reach the support team from the help center, available around the clock.",
-  },
-]
-
-export function AccordionExample() {
-  return (
-    <div className="w-96">
-      <Accordion>
-        {items.map((item) => (
-          <AccordionItem key={item.value} value={item.value}>
-            <AccordionTrigger>{item.title}</AccordionTrigger>
-            <AccordionContent>{item.content}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -57,143 +19,25 @@ Use an accordion to shorten long pages of related content, such as FAQs or setti
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add accordion
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add accordion"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react @phosphor-icons/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/accordion.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/accordion.tsx"
-"use client"
-
-import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
-import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-
-const accordionVariants = cva("flex w-full flex-col", {
-  variants: {
-    variant: {
-      default: "",
-      filled: "overflow-hidden rounded-2xl bg-surface-secondary",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-})
-
-function Accordion({
-  className,
-  variant,
-  ...props
-}: AccordionPrimitive.Root.Props & VariantProps<typeof accordionVariants>) {
-  return (
-    <AccordionPrimitive.Root
-      data-slot="accordion"
-      className={cn(accordionVariants({ variant }), className)}
-      {...props}
-    />
-  )
-}
-
-function AccordionItem({ className, ...props }: AccordionPrimitive.Item.Props) {
-  return (
-    <AccordionPrimitive.Item
-      data-slot="accordion-item"
-      className={cn("ms-4 not-first:border-t", className)}
-      {...props}
-    />
-  )
-}
-
-function AccordionTrigger({
-  className,
-  children,
-  ...props
-}: AccordionPrimitive.Trigger.Props) {
-  return (
-    <AccordionPrimitive.Header className="flex">
-      <AccordionPrimitive.Trigger
-        data-slot="accordion-trigger"
-        className={cn(
-          "group/accordion-trigger relative flex min-h-11 cursor-pointer flex-1 items-center justify-between gap-6 py-2.75 ps-0 pe-4 text-start text-base outline-none after:absolute after:-inset-s-2 after:inset-e-2 after:top-2 after:h-[calc(100%-1rem)] after:rounded-md hover:underline focus-visible:after:focus-ring aria-disabled:pointer-events-none aria-disabled:text-label-quaternary **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-label-secondary",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        <CaretDownIcon
-          data-slot="accordion-trigger-icon"
-          className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
-        />
-        <CaretUpIcon
-          data-slot="accordion-trigger-icon"
-          className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"
-        />
-      </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
-  )
-}
-
-function AccordionContent({
-  className,
-  children,
-  ...props
-}: AccordionPrimitive.Panel.Props) {
-  return (
-    <AccordionPrimitive.Panel
-      data-slot="accordion-content"
-      className="overflow-hidden text-sm text-label-secondary data-open:animate-accordion-down data-closed:animate-accordion-up"
-      {...props}
-    >
-      <div
-        className={cn(
-          "pe-10 pb-3 [&_a]:underline [&_a]:hover:text-label [&_p:not(:last-child)]:mb-4",
-          className
-        )}
-      >
-        {children}
-      </div>
-    </AccordionPrimitive.Panel>
-  )
-}
-
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/accordion.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
-```
+<Code lang="tsx" code={"import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from \"@/components/ui/accordion\""} />
 
-```tsx
-<div className="w-96">
-  <Accordion>
-    {items.map((item) => (
-      <AccordionItem key={item.value} value={item.value}>
-        <AccordionTrigger>{item.title}</AccordionTrigger>
-        <AccordionContent>{item.content}</AccordionContent>
-      </AccordionItem>
-    ))}
-  </Accordion>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Accordion>\n    {items.map((item) => (\n      <AccordionItem key={item.value} value={item.value}>\n        <AccordionTrigger>{item.title}</AccordionTrigger>\n        <AccordionContent>{item.content}</AccordionContent>\n      </AccordionItem>\n    ))}\n  </Accordion>\n</div>"} />
 
 Give each `AccordionItem` a unique `value`. By default only one panel is open at a time; opening another closes the previous one. Set `multiple` on `Accordion` to let several panels stay open.
 
@@ -207,45 +51,7 @@ The `filled` variant places the items on a rounded, secondary surface.
 
 <Example kind="ui" name="accordion" story="Filled">
 
-```tsx
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-
-const items = [
-  {
-    value: "shipping",
-    title: "How long does shipping take?",
-    content:
-      "Orders ship within two business days and arrive in three to five days.",
-  },
-  {
-    value: "returns",
-    title: "Can I return an item?",
-    content:
-      "Items can be returned within 14 days of delivery for a full refund.",
-  },
-  {
-    value: "support",
-    title: "How do I contact support?",
-    content:
-      "Reach the support team from the help center, available around the clock.",
-  },
-]
-
-export function AccordionFilledExample() {
-  return (
-    <div className="w-96">
-      <Accordion variant="filled">
-        {items.map((item) => (
-          <AccordionItem key={item.value} value={item.value}>
-            <AccordionTrigger>{item.title}</AccordionTrigger>
-            <AccordionContent>{item.content}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionFilledExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion variant=\"filled\">\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -255,45 +61,7 @@ Opens an item on first render with `defaultValue`.
 
 <Example kind="ui" name="accordion" story="OpenByDefault">
 
-```tsx
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-
-const items = [
-  {
-    value: "shipping",
-    title: "How long does shipping take?",
-    content:
-      "Orders ship within two business days and arrive in three to five days.",
-  },
-  {
-    value: "returns",
-    title: "Can I return an item?",
-    content:
-      "Items can be returned within 14 days of delivery for a full refund.",
-  },
-  {
-    value: "support",
-    title: "How do I contact support?",
-    content:
-      "Reach the support team from the help center, available around the clock.",
-  },
-]
-
-export function AccordionOpenByDefaultExample() {
-  return (
-    <div className="w-96">
-      <Accordion defaultValue={["shipping"]}>
-        {items.map((item) => (
-          <AccordionItem key={item.value} value={item.value}>
-            <AccordionTrigger>{item.title}</AccordionTrigger>
-            <AccordionContent>{item.content}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionOpenByDefaultExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion defaultValue={[\"shipping\"]}>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -303,45 +71,7 @@ Keeps several panels open at once with `multiple`.
 
 <Example kind="ui" name="accordion" story="Multiple">
 
-```tsx
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-
-const items = [
-  {
-    value: "shipping",
-    title: "How long does shipping take?",
-    content:
-      "Orders ship within two business days and arrive in three to five days.",
-  },
-  {
-    value: "returns",
-    title: "Can I return an item?",
-    content:
-      "Items can be returned within 14 days of delivery for a full refund.",
-  },
-  {
-    value: "support",
-    title: "How do I contact support?",
-    content:
-      "Reach the support team from the help center, available around the clock.",
-  },
-]
-
-export function AccordionMultipleExample() {
-  return (
-    <div className="w-96">
-      <Accordion multiple defaultValue={["shipping", "returns"]}>
-        {items.map((item) => (
-          <AccordionItem key={item.value} value={item.value}>
-            <AccordionTrigger>{item.title}</AccordionTrigger>
-            <AccordionContent>{item.content}</AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\n\nconst items = [\n  {\n    value: \"shipping\",\n    title: \"How long does shipping take?\",\n    content:\n      \"Orders ship within two business days and arrive in three to five days.\",\n  },\n  {\n    value: \"returns\",\n    title: \"Can I return an item?\",\n    content:\n      \"Items can be returned within 14 days of delivery for a full refund.\",\n  },\n  {\n    value: \"support\",\n    title: \"How do I contact support?\",\n    content:\n      \"Reach the support team from the help center, available around the clock.\",\n  },\n]\n\nexport function AccordionMultipleExample() {\n  return (\n    <div className=\"w-96\">\n      <Accordion multiple defaultValue={[\"shipping\", \"returns\"]}>\n        {items.map((item) => (\n          <AccordionItem key={item.value} value={item.value}>\n            <AccordionTrigger>{item.title}</AccordionTrigger>\n            <AccordionContent>{item.content}</AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </div>\n  )\n}"} />
 
 </Example>
 

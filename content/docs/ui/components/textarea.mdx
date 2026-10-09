@@ -7,17 +7,7 @@ generated: true
 
 <Example kind="ui" name="textarea" story="Default">
 
-```tsx
-import { Textarea } from "@/components/ui/textarea"
-
-export function TextareaExample() {
-  return (
-    <div className="w-80">
-      <Textarea placeholder="Type your message here." />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -29,139 +19,25 @@ Set `resizable` to give it a fixed height and a custom handle that people drag t
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add textarea
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add textarea"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Copy the source into `components/ui/textarea.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/textarea.tsx"
-"use client"
-
-import { cn } from "cn"
-import type * as React from "react"
-
-function TextareaHandle({ placement }: { placement: "inside" | "outside" }) {
-  function startResize(event: React.PointerEvent<HTMLSpanElement>) {
-    const handle = event.currentTarget
-    const textarea = handle.parentElement?.querySelector<HTMLTextAreaElement>(
-      "[data-slot=textarea]"
-    )
-    if (!textarea || event.button !== 0) return
-    event.preventDefault()
-    handle.setPointerCapture(event.pointerId)
-    handle.dataset.dragging = ""
-    const startY = event.clientY
-    const startHeight = textarea.offsetHeight
-    const minHeight =
-      Number.parseFloat(getComputedStyle(textarea).minHeight) || 0
-    const move = (moveEvent: PointerEvent) => {
-      const height = startHeight + moveEvent.clientY - startY
-      textarea.style.height = `${Math.max(minHeight, height)}px`
-    }
-    const end = () => {
-      delete handle.dataset.dragging
-      handle.removeEventListener("pointermove", move)
-      handle.removeEventListener("pointerup", end)
-      handle.removeEventListener("pointercancel", end)
-    }
-    handle.addEventListener("pointermove", move)
-    handle.addEventListener("pointerup", end)
-    handle.addEventListener("pointercancel", end)
-  }
-
-  function resetSize(event: React.MouseEvent<HTMLSpanElement>) {
-    event.currentTarget.parentElement
-      ?.querySelector<HTMLTextAreaElement>("[data-slot=textarea]")
-      ?.style.removeProperty("height")
-  }
-
-  return (
-    <span
-      aria-hidden="true"
-      data-slot="textarea-handle"
-      data-placement={placement}
-      onPointerDown={startResize}
-      onDoubleClick={resetSize}
-      className="group/textarea-handle absolute cursor-nwse-resize touch-none peer-disabled:hidden after:absolute after:-inset-2 after:content-[''] data-[placement=inside]:inset-e-1 data-[placement=inside]:bottom-1 data-[placement=inside]:size-3 data-[placement=outside]:-inset-e-1.5 data-[placement=outside]:-bottom-1.5 data-[placement=outside]:size-4.5 rtl:-scale-x-100 rtl:cursor-nesw-resize"
-    >
-      <svg
-        aria-hidden
-        viewBox={placement === "inside" ? "0 0 12 12" : "0 0 18 18"}
-        fill="none"
-        strokeWidth="3"
-        strokeLinecap="round"
-        className="pointer-events-none size-full overflow-visible stroke-label-quaternary transition-[stroke] duration-200 group-hover/textarea-handle:stroke-accent group-data-dragging/textarea-handle:stroke-accent"
-      >
-        <path
-          d={
-            placement === "inside"
-              ? "M11.28 4.11A12 12 0 0 1 4.11 11.28"
-              : "M15.97 5.82A17 17 0 0 1 5.82 15.97"
-          }
-        />
-      </svg>
-    </span>
-  )
-}
-
-function Textarea({
-  className,
-  resizable,
-  ...props
-}: React.ComponentProps<"textarea"> & {
-  resizable?: "inside" | "outside"
-}) {
-  const textarea = (
-    <textarea
-      data-slot="textarea"
-      data-resizable={resizable}
-      className={cn(
-        "peer flex field-sizing-content min-h-16 w-full resize-none rounded-xl border border-transparent bg-control px-3 py-3 text-base transition-[color,box-shadow,background-color] caret-accent outline-none placeholder:text-label-secondary focus-visible:focus-ring disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary disabled:placeholder:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 data-resizable:field-sizing-fixed data-resizable:min-h-24 dark:aria-invalid:bg-danger/10",
-        className
-      )}
-      {...props}
-    />
-  )
-
-  if (!resizable) return textarea
-
-  return (
-    <div data-slot="textarea-container" className="relative w-full">
-      {textarea}
-      <TextareaHandle placement={resizable} />
-    </div>
-  )
-}
-
-export { Textarea }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/textarea.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Textarea } from "@/components/ui/textarea"
-```
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\""} />
 
-```tsx
-<div className="w-80">
-  <Textarea placeholder="Type your message here." />
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-80\">\n  <Textarea placeholder=\"Type your message here.\" />\n</div>"} />
 
 `Textarea` passes its props to the native element, so use `value` with `onChange` to control it, or `defaultValue` for an uncontrolled field. Pair it with a `Label` through `htmlFor` and `id`, and link hint text with `aria-describedby`.
 
@@ -175,17 +51,7 @@ Starts with a default value.
 
 <Example kind="ui" name="textarea" story="WithValue">
 
-```tsx
-import { Textarea } from "@/components/ui/textarea"
-
-export function TextareaWithValueExample() {
-  return (
-    <div className="w-80">
-      <Textarea placeholder="Type your message here." defaultValue="Thanks for the quick turnaround. The new layout looks great on mobile." />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithValueExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" defaultValue=\"Thanks for the quick turnaround. The new layout looks great on mobile.\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -195,21 +61,7 @@ Names the textarea with a `Label`.
 
 <Example kind="ui" name="textarea" story="WithLabel">
 
-```tsx
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-
-export function TextareaWithLabelExample() {
-  return (
-    <div className="w-80">
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="feedback">Feedback</Label>
-        <Textarea id="feedback" placeholder="Tell us what you think." />
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Label } from \"@/components/ui/label\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaWithLabelExample() {\n  return (\n    <div className=\"w-80\">\n      <div className=\"flex flex-col gap-2\">\n        <Label htmlFor=\"feedback\">Feedback</Label>\n        <Textarea id=\"feedback\" placeholder=\"Tell us what you think.\" />\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -219,75 +71,7 @@ Adds a resize handle inside the bottom corner of the field.
 
 <Example kind="ui" name="textarea" story="Resizable">
 
-```tsx
-import * as React from "react"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-
-function ResizableExample({
-  resizable,
-  ...props
-}: React.ComponentProps<typeof Textarea>) {
-  const ref = React.useRef<HTMLTextAreaElement>(null)
-  const [rows, setRows] = React.useState(0)
-
-  React.useEffect(() => {
-    const area = ref.current
-    if (!area) return
-    const measure = () => {
-      const style = getComputedStyle(area)
-      const padding =
-        Number.parseFloat(style.paddingTop) +
-        Number.parseFloat(style.paddingBottom)
-      const line = Number.parseFloat(style.lineHeight)
-      setRows(Math.floor((area.clientHeight - padding) / line))
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(area)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-baseline justify-between">
-        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>
-        <span className="text-xs text-label-secondary tabular-nums">
-          {rows} rows
-        </span>
-      </div>
-      <Textarea
-        {...props}
-        ref={ref}
-        id={`campaign-${resizable}`}
-        resizable={resizable}
-        aria-describedby={`campaign-${resizable}-hint`}
-      />
-      <p
-        id={`campaign-${resizable}-hint`}
-        className="text-xs text-label-secondary"
-      >
-        Drag the bottom corner to resize. Double-click it to reset.
-      </p>
-    </div>
-  )
-}
-
-const campaign =
-"Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders."
-
-export function TextareaResizableExample() {
-  return (
-    <div className="w-80">
-      <ResizableExample placeholder="Type your message here."
-        resizable="inside"
-        rows={5}
-        defaultValue={campaign}
-      />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Label } from \"@/components/ui/label\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nfunction ResizableExample({\n  resizable,\n  ...props\n}: React.ComponentProps<typeof Textarea>) {\n  const ref = React.useRef<HTMLTextAreaElement>(null)\n  const [rows, setRows] = React.useState(0)\n\n  React.useEffect(() => {\n    const area = ref.current\n    if (!area) return\n    const measure = () => {\n      const style = getComputedStyle(area)\n      const padding =\n        Number.parseFloat(style.paddingTop) +\n        Number.parseFloat(style.paddingBottom)\n      const line = Number.parseFloat(style.lineHeight)\n      setRows(Math.floor((area.clientHeight - padding) / line))\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(area)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div className=\"flex flex-col gap-2\">\n      <div className=\"flex items-baseline justify-between\">\n        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>\n        <span className=\"text-xs text-label-secondary tabular-nums\">\n          {rows} rows\n        </span>\n      </div>\n      <Textarea\n        {...props}\n        ref={ref}\n        id={`campaign-${resizable}`}\n        resizable={resizable}\n        aria-describedby={`campaign-${resizable}-hint`}\n      />\n      <p\n        id={`campaign-${resizable}-hint`}\n        className=\"text-xs text-label-secondary\"\n      >\n        Drag the bottom corner to resize. Double-click it to reset.\n      </p>\n    </div>\n  )\n}\n\nconst campaign =\n\"Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders.\"\n\nexport function TextareaResizableExample() {\n  return (\n    <div className=\"w-80\">\n      <ResizableExample placeholder=\"Type your message here.\"\n        resizable=\"inside\"\n        rows={5}\n        defaultValue={campaign}\n      />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -297,75 +81,7 @@ Places the resize handle just outside the bottom corner of the field.
 
 <Example kind="ui" name="textarea" story="ResizableOutside">
 
-```tsx
-import * as React from "react"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-
-function ResizableExample({
-  resizable,
-  ...props
-}: React.ComponentProps<typeof Textarea>) {
-  const ref = React.useRef<HTMLTextAreaElement>(null)
-  const [rows, setRows] = React.useState(0)
-
-  React.useEffect(() => {
-    const area = ref.current
-    if (!area) return
-    const measure = () => {
-      const style = getComputedStyle(area)
-      const padding =
-        Number.parseFloat(style.paddingTop) +
-        Number.parseFloat(style.paddingBottom)
-      const line = Number.parseFloat(style.lineHeight)
-      setRows(Math.floor((area.clientHeight - padding) / line))
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(area)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-baseline justify-between">
-        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>
-        <span className="text-xs text-label-secondary tabular-nums">
-          {rows} rows
-        </span>
-      </div>
-      <Textarea
-        {...props}
-        ref={ref}
-        id={`campaign-${resizable}`}
-        resizable={resizable}
-        aria-describedby={`campaign-${resizable}-hint`}
-      />
-      <p
-        id={`campaign-${resizable}-hint`}
-        className="text-xs text-label-secondary"
-      >
-        Drag the bottom corner to resize. Double-click it to reset.
-      </p>
-    </div>
-  )
-}
-
-const campaign =
-"Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders."
-
-export function TextareaResizableOutsideExample() {
-  return (
-    <div className="w-80">
-      <ResizableExample placeholder="Type your message here."
-        resizable="outside"
-        rows={5}
-        defaultValue={campaign}
-      />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Label } from \"@/components/ui/label\"\nimport { Textarea } from \"@/components/ui/textarea\"\n\nfunction ResizableExample({\n  resizable,\n  ...props\n}: React.ComponentProps<typeof Textarea>) {\n  const ref = React.useRef<HTMLTextAreaElement>(null)\n  const [rows, setRows] = React.useState(0)\n\n  React.useEffect(() => {\n    const area = ref.current\n    if (!area) return\n    const measure = () => {\n      const style = getComputedStyle(area)\n      const padding =\n        Number.parseFloat(style.paddingTop) +\n        Number.parseFloat(style.paddingBottom)\n      const line = Number.parseFloat(style.lineHeight)\n      setRows(Math.floor((area.clientHeight - padding) / line))\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(area)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div className=\"flex flex-col gap-2\">\n      <div className=\"flex items-baseline justify-between\">\n        <Label htmlFor={`campaign-${resizable}`}>Campaign copy</Label>\n        <span className=\"text-xs text-label-secondary tabular-nums\">\n          {rows} rows\n        </span>\n      </div>\n      <Textarea\n        {...props}\n        ref={ref}\n        id={`campaign-${resizable}`}\n        resizable={resizable}\n        aria-describedby={`campaign-${resizable}-hint`}\n      />\n      <p\n        id={`campaign-${resizable}-hint`}\n        className=\"text-xs text-label-secondary\"\n      >\n        Drag the bottom corner to resize. Double-click it to reset.\n      </p>\n    </div>\n  )\n}\n\nconst campaign =\n\"Weekend sale on every grill. 15% off Saturday and Sunday from 12:00 to 16:00, including delivery orders.\"\n\nexport function TextareaResizableOutsideExample() {\n  return (\n    <div className=\"w-80\">\n      <ResizableExample placeholder=\"Type your message here.\"\n        resizable=\"outside\"\n        rows={5}\n        defaultValue={campaign}\n      />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -375,17 +91,7 @@ Disables the textarea so it can't be edited.
 
 <Example kind="ui" name="textarea" story="Disabled">
 
-```tsx
-import { Textarea } from "@/components/ui/textarea"
-
-export function TextareaDisabledExample() {
-  return (
-    <div className="w-80">
-      <Textarea placeholder="Type your message here." disabled />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaDisabledExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" disabled />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -395,17 +101,7 @@ Marks the textarea with `aria-invalid` to show an error state.
 
 <Example kind="ui" name="textarea" story="Invalid">
 
-```tsx
-import { Textarea } from "@/components/ui/textarea"
-
-export function TextareaInvalidExample() {
-  return (
-    <div className="w-80">
-      <Textarea placeholder="Type your message here." aria-invalid defaultValue="Too short" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Textarea } from \"@/components/ui/textarea\"\n\nexport function TextareaInvalidExample() {\n  return (\n    <div className=\"w-80\">\n      <Textarea placeholder=\"Type your message here.\" aria-invalid defaultValue=\"Too short\" />\n    </div>\n  )\n}"} />
 
 </Example>
 

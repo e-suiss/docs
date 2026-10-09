@@ -7,17 +7,7 @@ generated: true
 
 <Example kind="ui" name="input" story="Default">
 
-```tsx
-import { Input } from "@/components/ui/input"
-
-export function InputExample() {
-  return (
-    <div className="w-80">
-      <Input type="text" placeholder="Enter your name" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputExample() {\n  return (\n    <div className=\"w-80\">\n      <Input type=\"text\" placeholder=\"Enter your name\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -29,67 +19,25 @@ Use it for short, free-form values. For multi-line text use a textarea, for icon
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add input
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Copy the source into `components/ui/input.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/input.tsx"
-import { Input as InputPrimitive } from "@base-ui/react/input"
-import { cn } from "cn"
-import type * as React from "react"
-
-function Input({
-  className,
-  type,
-  size = "default",
-  ...props
-}: Omit<React.ComponentProps<"input">, "size"> & {
-  size?: "sm" | "md" | "default"
-}) {
-  return (
-    <InputPrimitive
-      type={type}
-      data-slot="input"
-      data-size={size}
-      className={cn(
-        "h-11 w-full min-w-0 rounded-lg border border-transparent bg-control px-3 py-1 text-base transition-[color,box-shadow,background-color] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:text-label caret-accent placeholder:text-label-secondary focus-visible:focus-ring data-[size=md]:h-9 data-[size=md]:text-sm data-[size=sm]:h-8 data-[size=sm]:rounded-md data-[size=sm]:px-2.5 data-[size=sm]:text-sm disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary disabled:placeholder:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Input }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/input.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Input } from "@/components/ui/input"
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\""} />
 
-```tsx
-<div className="w-80">
-  <Input type="text" placeholder="Enter your name" />
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-80\">\n  <Input type=\"text\" placeholder=\"Enter your name\" />\n</div>"} />
 
 Use `defaultValue` for an uncontrolled field, or `value` with `onChange` to control it. Give every input a visible label, for example with `FieldLabel` inside a `Field`, or set `aria-label` when a visible label is not possible. Choose a `size` that matches neighboring controls such as a `Button`.
 
@@ -101,31 +49,7 @@ The `sm`, `md` and `default` sizes, each next to a button of matching height.
 
 <Example kind="ui" name="input" story="Sizes">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
-export function InputSizesExample() {
-  return (
-    <div className="w-80">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
-          <Input type="text" size="sm" placeholder="Small" />
-          <Button size="sm">Save</Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <Input type="text" size="md" placeholder="Medium" />
-          <Button>Save</Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <Input type="text" size="default" placeholder="Default" />
-          <Button size="lg">Save</Button>
-        </div>
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function InputSizesExample() {\n  return (\n    <div className=\"w-80\">\n      <div className=\"flex flex-col gap-3\">\n        <div className=\"flex items-center gap-2\">\n          <Input type=\"text\" size=\"sm\" placeholder=\"Small\" />\n          <Button size=\"sm\">Save</Button>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <Input type=\"text\" size=\"md\" placeholder=\"Medium\" />\n          <Button>Save</Button>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <Input type=\"text\" size=\"default\" placeholder=\"Default\" />\n          <Button size=\"lg\">Save</Button>\n        </div>\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -135,22 +59,7 @@ Inputs with `email`, `password`, `number` and `search` types.
 
 <Example kind="ui" name="input" story="Types">
 
-```tsx
-import { Input } from "@/components/ui/input"
-
-export function InputTypesExample() {
-  return (
-    <div className="w-80">
-      <div className="flex flex-col gap-3">
-        <Input type="email" placeholder="jane@example.com" />
-        <Input type="password" placeholder="Password" />
-        <Input type="number" placeholder="Quantity" />
-        <Input type="search" placeholder="Search..." />
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputTypesExample() {\n  return (\n    <div className=\"w-80\">\n      <div className=\"flex flex-col gap-3\">\n        <Input type=\"email\" placeholder=\"jane@example.com\" />\n        <Input type=\"password\" placeholder=\"Password\" />\n        <Input type=\"number\" placeholder=\"Quantity\" />\n        <Input type=\"search\" placeholder=\"Search...\" />\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -160,17 +69,7 @@ An input that starts with a `defaultValue`.
 
 <Example kind="ui" name="input" story="WithValue">
 
-```tsx
-import { Input } from "@/components/ui/input"
-
-export function InputWithValueExample() {
-  return (
-    <div className="w-80">
-      <Input type="text" placeholder="Enter your name" defaultValue="Jane Doe" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputWithValueExample() {\n  return (\n    <div className=\"w-80\">\n      <Input type=\"text\" placeholder=\"Enter your name\" defaultValue=\"Jane Doe\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -180,17 +79,7 @@ A file input with an accessible name that accepts a chosen file.
 
 <Example kind="ui" name="input" story="File">
 
-```tsx
-import { Input } from "@/components/ui/input"
-
-export function InputFileExample() {
-  return (
-    <div className="w-80">
-      <Input type="file" placeholder={undefined} aria-label="Menu" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputFileExample() {\n  return (\n    <div className=\"w-80\">\n      <Input type=\"file\" placeholder={undefined} aria-label=\"Menu\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -200,17 +89,7 @@ An input marked with `aria-invalid`, showing the error style.
 
 <Example kind="ui" name="input" story="Invalid">
 
-```tsx
-import { Input } from "@/components/ui/input"
-
-export function InputInvalidExample() {
-  return (
-    <div className="w-80">
-      <Input type="email" placeholder="Enter your name" defaultValue="jane@" aria-invalid />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputInvalidExample() {\n  return (\n    <div className=\"w-80\">\n      <Input type=\"email\" placeholder=\"Enter your name\" defaultValue=\"jane@\" aria-invalid />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -220,17 +99,7 @@ A disabled input that ignores typing.
 
 <Example kind="ui" name="input" story="Disabled">
 
-```tsx
-import { Input } from "@/components/ui/input"
-
-export function InputDisabledExample() {
-  return (
-    <div className="w-80">
-      <Input type="text" placeholder="Enter your name" disabled />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Input } from \"@/components/ui/input\"\n\nexport function InputDisabledExample() {\n  return (\n    <div className=\"w-80\">\n      <Input type=\"text\" placeholder=\"Enter your name\" disabled />\n    </div>\n  )\n}"} />
 
 </Example>
 

@@ -7,47 +7,7 @@ generated: true
 
 <Example kind="ui" name="collapsible" story="Default">
 
-```tsx
-import { CaretUpDownIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-
-const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
-
-export function CollapsibleExample() {
-  return (
-    <div className="w-80">
-      <Collapsible className="flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-4 px-3">
-          <span className="text-sm font-medium">
-            @ademceper starred 3 repositories
-          </span>
-          <CollapsibleTrigger
-            render={
-              <Button variant="ghost" size="icon-sm" aria-label="Toggle list" />
-            }
-          >
-            <CaretUpDownIcon />
-          </CollapsibleTrigger>
-        </div>
-        <div className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm">
-          {repositories[0]}
-        </div>
-        <CollapsibleContent className="flex flex-col gap-2">
-          {repositories.slice(1).map((repository) => (
-            <div
-              key={repository}
-              className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm"
-            >
-              {repository}
-            </div>
-          ))}
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nexport function CollapsibleExample() {\n  return (\n    <div className=\"w-80\">\n      <Collapsible className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center justify-between gap-4 px-3\">\n          <span className=\"text-sm font-medium\">\n            @ademceper starred 3 repositories\n          </span>\n          <CollapsibleTrigger\n            render={\n              <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n            }\n          >\n            <CaretUpDownIcon />\n          </CollapsibleTrigger>\n        </div>\n        <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n          {repositories[0]}\n        </div>\n        <CollapsibleContent className=\"flex flex-col gap-2\">\n          {repositories.slice(1).map((repository) => (\n            <div\n              key={repository}\n              className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n            >\n              {repository}\n            </div>\n          ))}\n        </CollapsibleContent>\n      </Collapsible>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -59,87 +19,25 @@ Use a collapsible for a single disclosure region. For a set of related, stacked 
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add collapsible
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add collapsible"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react"} />
 
 2. Copy the source into `components/ui/collapsible.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/collapsible.tsx"
-"use client"
-
-import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible"
-
-function Collapsible({ ...props }: CollapsiblePrimitive.Root.Props) {
-  return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />
-}
-
-function CollapsibleTrigger({ ...props }: CollapsiblePrimitive.Trigger.Props) {
-  return (
-    <CollapsiblePrimitive.Trigger data-slot="collapsible-trigger" {...props} />
-  )
-}
-
-function CollapsibleContent({ ...props }: CollapsiblePrimitive.Panel.Props) {
-  return (
-    <CollapsiblePrimitive.Panel data-slot="collapsible-content" {...props} />
-  )
-}
-
-export { Collapsible, CollapsibleContent, CollapsibleTrigger }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/collapsible.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
-```
+<Code lang="tsx" code={"import { Collapsible, CollapsibleTrigger, CollapsibleContent } from \"@/components/ui/collapsible\""} />
 
-```tsx
-<div className="w-80">
-  <Collapsible className="flex flex-col gap-2">
-    <div className="flex items-center justify-between gap-4 px-3">
-      <span className="text-sm font-medium">
-        @ademceper starred 3 repositories
-      </span>
-      <CollapsibleTrigger
-        render={
-          <Button variant="ghost" size="icon-sm" aria-label="Toggle list" />
-        }
-      >
-        <CaretUpDownIcon />
-      </CollapsibleTrigger>
-    </div>
-    <div className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm">
-      {repositories[0]}
-    </div>
-    <CollapsibleContent className="flex flex-col gap-2">
-      {repositories.slice(1).map((repository) => (
-        <div
-          key={repository}
-          className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm"
-        >
-          {repository}
-        </div>
-      ))}
-    </CollapsibleContent>
-  </Collapsible>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-80\">\n  <Collapsible className=\"flex flex-col gap-2\">\n    <div className=\"flex items-center justify-between gap-4 px-3\">\n      <span className=\"text-sm font-medium\">\n        @ademceper starred 3 repositories\n      </span>\n      <CollapsibleTrigger\n        render={\n          <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n        }\n      >\n        <CaretUpDownIcon />\n      </CollapsibleTrigger>\n    </div>\n    <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n      {repositories[0]}\n    </div>\n    <CollapsibleContent className=\"flex flex-col gap-2\">\n      {repositories.slice(1).map((repository) => (\n        <div\n          key={repository}\n          className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n        >\n          {repository}\n        </div>\n      ))}\n    </CollapsibleContent>\n  </Collapsible>\n</div>"} />
 
 The root is uncontrolled by default; set `defaultOpen` to start expanded. To control it, pass `open` and `onOpenChange`. Set `disabled` on the root to prevent toggling. While collapsed, the content is removed from the page.
 
@@ -151,47 +49,7 @@ A collapsible that starts expanded using `defaultOpen`.
 
 <Example kind="ui" name="collapsible" story="OpenByDefault">
 
-```tsx
-import { CaretUpDownIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-
-const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
-
-export function CollapsibleOpenByDefaultExample() {
-  return (
-    <div className="w-80">
-      <Collapsible defaultOpen className="flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-4 px-3">
-          <span className="text-sm font-medium">
-            @ademceper starred 3 repositories
-          </span>
-          <CollapsibleTrigger
-            render={
-              <Button variant="ghost" size="icon-sm" aria-label="Toggle list" />
-            }
-          >
-            <CaretUpDownIcon />
-          </CollapsibleTrigger>
-        </div>
-        <div className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm">
-          {repositories[0]}
-        </div>
-        <CollapsibleContent className="flex flex-col gap-2">
-          {repositories.slice(1).map((repository) => (
-            <div
-              key={repository}
-              className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm"
-            >
-              {repository}
-            </div>
-          ))}
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nexport function CollapsibleOpenByDefaultExample() {\n  return (\n    <div className=\"w-80\">\n      <Collapsible defaultOpen className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center justify-between gap-4 px-3\">\n          <span className=\"text-sm font-medium\">\n            @ademceper starred 3 repositories\n          </span>\n          <CollapsibleTrigger\n            render={\n              <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n            }\n          >\n            <CaretUpDownIcon />\n          </CollapsibleTrigger>\n        </div>\n        <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n          {repositories[0]}\n        </div>\n        <CollapsibleContent className=\"flex flex-col gap-2\">\n          {repositories.slice(1).map((repository) => (\n            <div\n              key={repository}\n              className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n            >\n              {repository}\n            </div>\n          ))}\n        </CollapsibleContent>\n      </Collapsible>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -201,47 +59,7 @@ A disabled collapsible whose trigger does not toggle the content.
 
 <Example kind="ui" name="collapsible" story="Disabled">
 
-```tsx
-import { CaretUpDownIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-
-const repositories = ["esuiss/ui", "esuiss/docs", "esuiss/cli"]
-
-export function CollapsibleDisabledExample() {
-  return (
-    <div className="w-80">
-      <Collapsible disabled className="flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-4 px-3">
-          <span className="text-sm font-medium">
-            @ademceper starred 3 repositories
-          </span>
-          <CollapsibleTrigger
-            render={
-              <Button variant="ghost" size="icon-sm" aria-label="Toggle list" />
-            }
-          >
-            <CaretUpDownIcon />
-          </CollapsibleTrigger>
-        </div>
-        <div className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm">
-          {repositories[0]}
-        </div>
-        <CollapsibleContent className="flex flex-col gap-2">
-          {repositories.slice(1).map((repository) => (
-            <div
-              key={repository}
-              className="bg-surface-secondary rounded-2xl px-4 py-2 text-sm"
-            >
-              {repository}
-            </div>
-          ))}
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CaretUpDownIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\n\nconst repositories = [\"esuiss/ui\", \"esuiss/docs\", \"esuiss/cli\"]\n\nexport function CollapsibleDisabledExample() {\n  return (\n    <div className=\"w-80\">\n      <Collapsible disabled className=\"flex flex-col gap-2\">\n        <div className=\"flex items-center justify-between gap-4 px-3\">\n          <span className=\"text-sm font-medium\">\n            @ademceper starred 3 repositories\n          </span>\n          <CollapsibleTrigger\n            render={\n              <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Toggle list\" />\n            }\n          >\n            <CaretUpDownIcon />\n          </CollapsibleTrigger>\n        </div>\n        <div className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\">\n          {repositories[0]}\n        </div>\n        <CollapsibleContent className=\"flex flex-col gap-2\">\n          {repositories.slice(1).map((repository) => (\n            <div\n              key={repository}\n              className=\"bg-surface-secondary rounded-2xl px-4 py-2 text-sm\"\n            >\n              {repository}\n            </div>\n          ))}\n        </CollapsibleContent>\n      </Collapsible>\n    </div>\n  )\n}"} />
 
 </Example>
 

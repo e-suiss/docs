@@ -7,30 +7,7 @@ generated: true
 
 <Example kind="pattern" name="action-menu" story="Default">
 
-```tsx
-import { ActionMenu, ActionMenuContent, ActionMenuItem, ActionMenuLabel, ActionMenuSeparator, ActionMenuTrigger } from "@/components/patterns/action-menu"
-import { Button } from "@/components/ui/button"
-
-export function ActionMenuExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <ActionMenu>
-        <ActionMenuTrigger render={<Button variant="outline" />}>
-          Order actions
-        </ActionMenuTrigger>
-        <ActionMenuContent>
-          <ActionMenuLabel>Order #1042</ActionMenuLabel>
-          <ActionMenuItem>Edit</ActionMenuItem>
-          <ActionMenuItem>Duplicate</ActionMenuItem>
-          <ActionMenuItem>Share</ActionMenuItem>
-          <ActionMenuSeparator />
-          <ActionMenuItem variant="destructive">Delete</ActionMenuItem>
-        </ActionMenuContent>
-      </ActionMenu>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { ActionMenu, ActionMenuContent, ActionMenuItem, ActionMenuLabel, ActionMenuSeparator, ActionMenuTrigger } from \"@/components/patterns/action-menu\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ActionMenuExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <ActionMenu>\n        <ActionMenuTrigger render={<Button variant=\"outline\" />}>\n          Order actions\n        </ActionMenuTrigger>\n        <ActionMenuContent>\n          <ActionMenuLabel>Order #1042</ActionMenuLabel>\n          <ActionMenuItem>Edit</ActionMenuItem>\n          <ActionMenuItem>Duplicate</ActionMenuItem>\n          <ActionMenuItem>Share</ActionMenuItem>\n          <ActionMenuSeparator />\n          <ActionMenuItem variant=\"destructive\">Delete</ActionMenuItem>\n        </ActionMenuContent>\n      </ActionMenu>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -42,9 +19,7 @@ Use it for a short set of actions on a single object, such as editing, sharing o
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns action-menu
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns action-menu"} />
 
 ### Manual
 
@@ -52,241 +27,15 @@ npx @esuiss/ui@latest add patterns action-menu
 
 2. Copy the source into `components/patterns/action-menu.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/action-menu.tsx"
-"use client"
-
-import * as React from "react"
-
-import {
-  AlertSheet,
-  AlertSheetAction,
-  AlertSheetCancel,
-  AlertSheetContent,
-  AlertSheetGroup,
-  AlertSheetHeader,
-  AlertSheetTitle,
-  AlertSheetTrigger,
-} from "@/components/ui/alert-sheet"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type ActionMenuContextProps = {
-  isMobile: boolean
-}
-
-const ActionMenuContext = React.createContext<ActionMenuContextProps | null>(
-  null
-)
-
-function useActionMenu() {
-  const context = React.useContext(ActionMenuContext)
-
-  if (!context) {
-    throw new Error("useActionMenu must be used within an <ActionMenu />")
-  }
-
-  return context
-}
-
-function ActionMenu({
-  open,
-  defaultOpen,
-  onOpenChange,
-  dismissible = true,
-  children,
-}: Pick<
-  React.ComponentProps<typeof DropdownMenu>,
-  "open" | "defaultOpen" | "children"
-> & {
-  onOpenChange?: (open: boolean) => void
-  dismissible?: boolean
-}) {
-  const isMobile = useIsMobile()
-  const rootProps = {
-    open,
-    defaultOpen,
-    onOpenChange: (next: boolean) => onOpenChange?.(next),
-    children,
-  }
-
-  return (
-    <ActionMenuContext.Provider value={{ isMobile }}>
-      {isMobile ? (
-        <AlertSheet
-          data-slot="action-menu"
-          dismissible={dismissible}
-          {...rootProps}
-        />
-      ) : (
-        <DropdownMenu data-slot="action-menu" {...rootProps} />
-      )}
-    </ActionMenuContext.Provider>
-  )
-}
-
-function ActionMenuTrigger(
-  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    render?: React.ReactElement
-  }
-) {
-  const { isMobile } = useActionMenu()
-  const Trigger = isMobile ? AlertSheetTrigger : DropdownMenuTrigger
-
-  return <Trigger data-slot="action-menu-trigger" {...props} />
-}
-
-function ActionMenuContent({
-  cancelLabel = "Cancel",
-  align,
-  alignOffset,
-  side,
-  sideOffset,
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLElement> &
-  Pick<
-    React.ComponentProps<typeof DropdownMenuContent>,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  > & {
-    cancelLabel?: string
-  }) {
-  const { isMobile } = useActionMenu()
-
-  if (isMobile) {
-    return (
-      <AlertSheetContent
-        data-slot="action-menu-content"
-        className={className}
-        {...props}
-      >
-        <AlertSheetGroup>{children}</AlertSheetGroup>
-        <AlertSheetCancel>{cancelLabel}</AlertSheetCancel>
-      </AlertSheetContent>
-    )
-  }
-
-  return (
-    <DropdownMenuContent
-      data-slot="action-menu-content"
-      align={align}
-      alignOffset={alignOffset}
-      side={side}
-      sideOffset={sideOffset}
-      className={className}
-      {...props}
-    >
-      {children}
-    </DropdownMenuContent>
-  )
-}
-
-function ActionMenuLabel({
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) {
-  const { isMobile } = useActionMenu()
-
-  if (isMobile) {
-    return (
-      <AlertSheetHeader data-slot="action-menu-label">
-        <AlertSheetTitle className={className} {...props}>
-          {children}
-        </AlertSheetTitle>
-      </AlertSheetHeader>
-    )
-  }
-
-  return (
-    <DropdownMenuGroup>
-      <DropdownMenuLabel
-        data-slot="action-menu-label"
-        className={className}
-        {...props}
-      >
-        {children}
-      </DropdownMenuLabel>
-    </DropdownMenuGroup>
-  )
-}
-
-function ActionMenuItem({
-  variant,
-  disabled,
-  ...props
-}: React.HTMLAttributes<HTMLElement> & {
-  variant?: "default" | "destructive"
-  disabled?: boolean
-}) {
-  const { isMobile } = useActionMenu()
-  const Item = isMobile ? AlertSheetAction : DropdownMenuItem
-
-  return (
-    <Item
-      data-slot="action-menu-item"
-      variant={variant}
-      disabled={disabled}
-      {...props}
-    />
-  )
-}
-
-function ActionMenuSeparator(props: React.HTMLAttributes<HTMLElement>) {
-  const { isMobile } = useActionMenu()
-
-  if (isMobile) return null
-
-  return <DropdownMenuSeparator data-slot="action-menu-separator" {...props} />
-}
-
-export {
-  ActionMenu,
-  ActionMenuContent,
-  ActionMenuItem,
-  ActionMenuLabel,
-  ActionMenuSeparator,
-  ActionMenuTrigger,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/action-menu.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from "@/components/patterns/action-menu"
-```
+<Code lang="tsx" code={"import { ActionMenu, ActionMenuTrigger, ActionMenuContent, ActionMenuLabel, ActionMenuItem, ActionMenuSeparator } from \"@/components/patterns/action-menu\""} />
 
-```tsx
-<div className="flex min-h-svh items-center justify-center">
-  <ActionMenu>
-    <ActionMenuTrigger render={<Button variant="outline" />}>
-      Order actions
-    </ActionMenuTrigger>
-    <ActionMenuContent>
-      <ActionMenuLabel>Order #1042</ActionMenuLabel>
-      <ActionMenuItem>Edit</ActionMenuItem>
-      <ActionMenuItem>Duplicate</ActionMenuItem>
-      <ActionMenuItem>Share</ActionMenuItem>
-      <ActionMenuSeparator />
-      <ActionMenuItem variant="destructive">Delete</ActionMenuItem>
-    </ActionMenuContent>
-  </ActionMenu>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"flex min-h-svh items-center justify-center\">\n  <ActionMenu>\n    <ActionMenuTrigger render={<Button variant=\"outline\" />}>\n      Order actions\n    </ActionMenuTrigger>\n    <ActionMenuContent>\n      <ActionMenuLabel>Order #1042</ActionMenuLabel>\n      <ActionMenuItem>Edit</ActionMenuItem>\n      <ActionMenuItem>Duplicate</ActionMenuItem>\n      <ActionMenuItem>Share</ActionMenuItem>\n      <ActionMenuSeparator />\n      <ActionMenuItem variant=\"destructive\">Delete</ActionMenuItem>\n    </ActionMenuContent>\n  </ActionMenu>\n</div>"} />
 
 Pass `render` to `ActionMenuTrigger` to use your own button, for example a `Button` with `variant="outline"`. `open`, `defaultOpen` and `onOpenChange` work on both layouts, so the menu can be controlled or uncontrolled. `align`, `alignOffset`, `side` and `sideOffset` on `ActionMenuContent` position the desktop popup and are ignored on mobile.
 
@@ -298,42 +47,7 @@ Places an icon before every action, including a destructive Delete item.
 
 <Example kind="pattern" name="action-menu" story="WithIcons">
 
-```tsx
-import { CopyIcon, PencilSimpleIcon, ShareIcon, TrashIcon } from "@phosphor-icons/react"
-import { ActionMenu, ActionMenuContent, ActionMenuItem, ActionMenuSeparator, ActionMenuTrigger } from "@/components/patterns/action-menu"
-import { Button } from "@/components/ui/button"
-
-export function ActionMenuWithIconsExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <ActionMenu>
-        <ActionMenuTrigger render={<Button variant="outline" />}>
-          Order actions
-        </ActionMenuTrigger>
-        <ActionMenuContent>
-          <ActionMenuItem>
-            <PencilSimpleIcon />
-            Edit
-          </ActionMenuItem>
-          <ActionMenuItem>
-            <CopyIcon />
-            Duplicate
-          </ActionMenuItem>
-          <ActionMenuItem>
-            <ShareIcon />
-            Share
-          </ActionMenuItem>
-          <ActionMenuSeparator />
-          <ActionMenuItem variant="destructive">
-            <TrashIcon />
-            Delete
-          </ActionMenuItem>
-        </ActionMenuContent>
-      </ActionMenu>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CopyIcon, PencilSimpleIcon, ShareIcon, TrashIcon } from \"@phosphor-icons/react\"\nimport { ActionMenu, ActionMenuContent, ActionMenuItem, ActionMenuSeparator, ActionMenuTrigger } from \"@/components/patterns/action-menu\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function ActionMenuWithIconsExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <ActionMenu>\n        <ActionMenuTrigger render={<Button variant=\"outline\" />}>\n          Order actions\n        </ActionMenuTrigger>\n        <ActionMenuContent>\n          <ActionMenuItem>\n            <PencilSimpleIcon />\n            Edit\n          </ActionMenuItem>\n          <ActionMenuItem>\n            <CopyIcon />\n            Duplicate\n          </ActionMenuItem>\n          <ActionMenuItem>\n            <ShareIcon />\n            Share\n          </ActionMenuItem>\n          <ActionMenuSeparator />\n          <ActionMenuItem variant=\"destructive\">\n            <TrashIcon />\n            Delete\n          </ActionMenuItem>\n        </ActionMenuContent>\n      </ActionMenu>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -343,17 +57,7 @@ Sets `dismissible` to `false` so the mobile sheet closes only through an action 
 
 <Example kind="pattern" name="action-menu" story="NotDismissible">
 
-```tsx
-import { ActionMenu } from "@/components/patterns/action-menu"
-
-export function ActionMenuNotDismissibleExample() {
-  return (
-    <div className="flex min-h-svh items-center justify-center">
-      <ActionMenu />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { ActionMenu } from \"@/components/patterns/action-menu\"\n\nexport function ActionMenuNotDismissibleExample() {\n  return (\n    <div className=\"flex min-h-svh items-center justify-center\">\n      <ActionMenu />\n    </div>\n  )\n}"} />
 
 </Example>
 

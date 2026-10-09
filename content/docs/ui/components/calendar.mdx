@@ -7,32 +7,7 @@ generated: true
 
 <Example kind="ui" name="calendar" story="Default">
 
-```tsx
-import * as React from "react"
-import { Calendar } from "@/components/ui/calendar"
-
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const today = new Date()
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
-  )
-  return (
-    <Calendar
-      {...props}
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-2xl border"
-    />
-  )
-}
-
-export function CalendarExample() {
-  return (
-    <SingleCalendar buttonVariant="plain" />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" />\n  )\n}"} />
 
 </Example>
 
@@ -44,275 +19,27 @@ Use a calendar when people need to see dates in context, such as availability or
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add calendar
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add calendar"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @phosphor-icons/react cn react-day-picker
-```
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn react-day-picker"} />
 
 2. Add the pieces it builds on: [Button](/docs/ui/components/button).
 
 3. Copy the source into `components/ui/calendar.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/calendar.tsx"
-"use client"
-
-import {
-  CaretDownIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-} from "@phosphor-icons/react"
-import { cn } from "cn"
-import * as React from "react"
-import {
-  type ChevronProps,
-  type DayButtonProps,
-  DayPicker,
-  getDefaultClassNames,
-  type RootProps,
-  useDayPicker,
-  type WeekNumberProps,
-} from "react-day-picker"
-import { enUS } from "react-day-picker/locale"
-import { Button, buttonVariants } from "@/components/ui/button"
-
-function Calendar({
-  className,
-  classNames,
-  showOutsideDays = false,
-  captionLayout = "label",
-  buttonVariant = "plain",
-  size = "default",
-  locale = enUS,
-  formatters,
-  components,
-  ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-  size?: "sm" | "default" | "lg"
-}) {
-  const defaultClassNames = getDefaultClassNames()
-
-  return (
-    <DayPicker
-      data-size={size}
-      showOutsideDays={showOutsideDays}
-      className={cn(
-        "group/calendar bg-surface p-3 [--cell-radius:calc(infinity*1px)] [--cell-size:--spacing(8)] data-[size=lg]:p-4 data-[size=lg]:[--cell-size:--spacing(10)] data-[size=sm]:p-2 data-[size=sm]:[--cell-size:--spacing(6)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
-        String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
-        String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
-        className
-      )}
-      captionLayout={captionLayout}
-      locale={locale}
-      formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString(locale.code, { month: "short" }),
-        ...formatters,
-      }}
-      classNames={{
-        root: cn("w-fit", defaultClassNames.root),
-        months: cn(
-          "relative flex flex-col gap-4 md:flex-row",
-          defaultClassNames.months
-        ),
-        month: cn("flex w-full flex-col gap-4", defaultClassNames.month),
-        nav: cn(
-          "absolute end-0 top-0 flex items-center gap-0.5",
-          defaultClassNames.nav
-        ),
-        button_previous: cn(
-          buttonVariants({ variant: buttonVariant }),
-          "size-(--cell-size) p-0 select-none aria-disabled:text-label-quaternary",
-          defaultClassNames.button_previous
-        ),
-        button_next: cn(
-          buttonVariants({ variant: buttonVariant }),
-          "size-(--cell-size) p-0 select-none aria-disabled:text-label-quaternary",
-          defaultClassNames.button_next
-        ),
-        month_caption: cn(
-          "flex h-(--cell-size) w-full items-center justify-start ps-1.5 pe-[calc(var(--cell-size)*2)]",
-          defaultClassNames.month_caption
-        ),
-        dropdowns: cn(
-          "flex h-(--cell-size) w-full items-center justify-start gap-1.5 text-sm font-semibold group-data-[size=lg]/calendar:text-base group-data-[size=sm]/calendar:text-xs",
-          defaultClassNames.dropdowns
-        ),
-        dropdown_root: cn(
-          "relative rounded-(--cell-radius)",
-          defaultClassNames.dropdown_root
-        ),
-        dropdown: cn(
-          "absolute inset-0 bg-surface-raised opacity-0",
-          defaultClassNames.dropdown
-        ),
-        caption_label: cn(
-          "font-semibold select-none",
-          "text-sm group-data-[size=lg]/calendar:text-base group-data-[size=sm]/calendar:text-xs",
-          captionLayout !== "label" &&
-            "flex items-center gap-1 rounded-(--cell-radius) [&>svg]:size-3.5 [&>svg]:text-label-secondary",
-          defaultClassNames.caption_label
-        ),
-        month_grid: cn("w-full border-collapse", defaultClassNames.month_grid),
-        weekdays: cn("flex", defaultClassNames.weekdays),
-        weekday: cn(
-          "flex-1 rounded-(--cell-radius) text-3xs font-semibold text-label-secondary uppercase select-none group-data-[size=lg]/calendar:text-xs group-data-[size=sm]/calendar:normal-case",
-          defaultClassNames.weekday
-        ),
-        week: cn("mt-2 flex w-full", defaultClassNames.week),
-        week_number_header: cn(
-          "w-(--cell-size) select-none",
-          defaultClassNames.week_number_header
-        ),
-        week_number: cn(
-          "text-xs text-label-secondary select-none",
-          defaultClassNames.week_number
-        ),
-        day: cn(
-          "relative aspect-square h-full w-full rounded-(--cell-radius) p-0 text-center select-none [&:last-child[data-selected=true]_button]:rounded-e-(--cell-radius)",
-          props.showWeekNumber
-            ? "[&:nth-child(2)[data-selected=true]_button]:rounded-s-(--cell-radius)"
-            : "[&:first-child[data-selected=true]_button]:rounded-s-(--cell-radius)",
-          defaultClassNames.day
-        ),
-        range_start: cn(
-          "relative isolate z-0 rounded-s-(--cell-radius) bg-surface-secondary after:absolute after:inset-y-0 after:end-0 after:w-4 after:bg-surface-secondary last:after:hidden",
-          defaultClassNames.range_start
-        ),
-        range_middle: cn("rounded-none", defaultClassNames.range_middle),
-        range_end: cn(
-          "relative isolate z-0 rounded-e-(--cell-radius) bg-surface-secondary after:absolute after:inset-y-0 after:start-0 after:w-4 after:bg-surface-secondary first:after:hidden",
-          defaultClassNames.range_end
-        ),
-        today: cn("rounded-(--cell-radius)", defaultClassNames.today),
-        outside: cn(
-          "text-label-secondary aria-selected:text-label-secondary",
-          defaultClassNames.outside
-        ),
-        disabled: cn("text-label-quaternary", defaultClassNames.disabled),
-        hidden: cn("invisible", defaultClassNames.hidden),
-        ...classNames,
-      }}
-      components={{
-        Root: CalendarRoot,
-        Chevron: CalendarChevron,
-        DayButton: CalendarDayButton,
-        WeekNumber: CalendarWeekNumber,
-        ...components,
-      }}
-      {...props}
-    />
-  )
-}
-
-function CalendarRoot({ className, rootRef, ...props }: RootProps) {
-  return (
-    <div
-      data-slot="calendar"
-      ref={rootRef}
-      className={cn(className)}
-      {...props}
-    />
-  )
-}
-
-function CalendarChevron({ className, orientation, ...props }: ChevronProps) {
-  if (orientation === "left") {
-    return (
-      <CaretLeftIcon
-        className={cn("rtl:rotate-180 size-4", className)}
-        {...props}
-      />
-    )
-  }
-
-  if (orientation === "right") {
-    return (
-      <CaretRightIcon
-        className={cn("rtl:rotate-180 size-4", className)}
-        {...props}
-      />
-    )
-  }
-
-  return <CaretDownIcon className={cn("size-4", className)} {...props} />
-}
-
-function CalendarWeekNumber({ children, week, ...props }: WeekNumberProps) {
-  return (
-    <td {...props}>
-      <div className="flex size-(--cell-size) items-center justify-center text-center">
-        {children}
-      </div>
-    </td>
-  )
-}
-
-function CalendarDayButton({
-  className,
-  day,
-  modifiers,
-  ...props
-}: DayButtonProps) {
-  const defaultClassNames = getDefaultClassNames()
-  const { locale } = useDayPicker().dayPickerProps
-
-  const ref = React.useRef<HTMLButtonElement>(null)
-  React.useEffect(() => {
-    if (modifiers.focused) ref.current?.focus()
-  }, [modifiers.focused])
-
-  return (
-    <Button
-      ref={ref}
-      variant="ghost"
-      size="icon"
-      data-day={day.date.toLocaleDateString(locale?.code)}
-      data-selected-single={
-        modifiers.selected &&
-        !modifiers.range_start &&
-        !modifiers.range_end &&
-        !modifiers.range_middle
-      }
-      data-today={modifiers.today}
-      data-range-start={modifiers.range_start}
-      data-range-end={modifiers.range_end}
-      data-range-middle={modifiers.range_middle}
-      className={cn(
-        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal [--focus-ring-offset:0px] group-data-[size=lg]/calendar:text-lg group-data-[size=sm]/calendar:text-3xs data-[today=true]:font-semibold data-[today=true]:text-link data-[selected-single=true]:bg-accent-surface data-[selected-single=true]:font-semibold data-[selected-single=true]:text-link hover:data-[selected-single=true]:bg-accent-surface-hover active:data-[selected-single=true]:bg-accent-surface-pressed data-[today=true]:data-[selected-single=true]:bg-accent data-[today=true]:data-[selected-single=true]:text-on-accent hover:data-[today=true]:data-[selected-single=true]:bg-accent-hover data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-e-(--cell-radius) data-[range-end=true]:bg-accent data-[range-end=true]:text-on-accent data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-surface-secondary data-[range-middle=true]:text-label data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-s-(--cell-radius) data-[range-start=true]:bg-accent data-[range-start=true]:text-on-accent data-[today=true]:data-[range-start=true]:text-on-accent data-[today=true]:data-[range-end=true]:text-on-accent [&>span]:text-xs [&>span]:text-label-secondary",
-        defaultClassNames.day,
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Calendar, CalendarDayButton }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/calendar.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Calendar, CalendarDayButton } from "@/components/ui/calendar"
-```
+<Code lang="tsx" code={"import { Calendar, CalendarDayButton } from \"@/components/ui/calendar\""} />
 
-```tsx
-<SingleCalendar buttonVariant="plain" />
-```
+<Code lang="tsx" code={"<SingleCalendar buttonVariant=\"plain\" />"} />
 
 Set `mode` to `single`, `multiple` or `range`, and control the selection with `selected` and `onSelect`. For ranges, `numberOfMonths={2}` shows two months side by side on wider screens.
 
@@ -330,36 +57,7 @@ Compares the `sm`, `default` and `lg` sizes.
 
 <Example kind="ui" name="calendar" story="Sizes">
 
-```tsx
-import * as React from "react"
-import { Calendar } from "@/components/ui/calendar"
-
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const today = new Date()
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
-  )
-  return (
-    <Calendar
-      {...props}
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-2xl border"
-    />
-  )
-}
-
-export function CalendarSizesExample() {
-  return (
-    <div className="flex flex-wrap items-start gap-6">
-      <SingleCalendar buttonVariant="plain" size="sm" />
-      <SingleCalendar buttonVariant="plain" size="default" />
-      <SingleCalendar buttonVariant="plain" size="lg" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarSizesExample() {\n  return (\n    <div className=\"flex flex-wrap items-start gap-6\">\n      <SingleCalendar buttonVariant=\"plain\" size=\"sm\" />\n      <SingleCalendar buttonVariant=\"plain\" size=\"default\" />\n      <SingleCalendar buttonVariant=\"plain\" size=\"lg\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -369,35 +67,7 @@ Selects a seven-day range across two months with `mode="range"`.
 
 <Example kind="ui" name="calendar" story="Range">
 
-```tsx
-import * as React from "react"
-import { DateRange } from "react-day-picker"
-import { Calendar } from "@/components/ui/calendar"
-
-function RangeCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const today = new Date()
-  const [range, setRange] = React.useState<DateRange | undefined>({
-    from: today,
-    to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6),
-  })
-  return (
-    <Calendar
-      {...props}
-      mode="range"
-      selected={range}
-      onSelect={setRange}
-      numberOfMonths={2}
-      className="rounded-2xl border"
-    />
-  )
-}
-
-export function CalendarRangeExample() {
-  return (
-    <RangeCalendar buttonVariant="plain" />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { DateRange } from \"react-day-picker\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction RangeCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [range, setRange] = React.useState<DateRange | undefined>({\n    from: today,\n    to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 6),\n  })\n  return (\n    <Calendar\n      {...props}\n      mode=\"range\"\n      selected={range}\n      onSelect={setRange}\n      numberOfMonths={2}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarRangeExample() {\n  return (\n    <RangeCalendar buttonVariant=\"plain\" />\n  )\n}"} />
 
 </Example>
 
@@ -407,32 +77,7 @@ Replaces the month label with month and year dropdowns.
 
 <Example kind="ui" name="calendar" story="DropdownCaption">
 
-```tsx
-import * as React from "react"
-import { Calendar } from "@/components/ui/calendar"
-
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const today = new Date()
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
-  )
-  return (
-    <Calendar
-      {...props}
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-2xl border"
-    />
-  )
-}
-
-export function CalendarDropdownCaptionExample() {
-  return (
-    <SingleCalendar buttonVariant="plain" captionLayout="dropdown" />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarDropdownCaptionExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" captionLayout=\"dropdown\" />\n  )\n}"} />
 
 </Example>
 
@@ -442,32 +87,7 @@ Shows the week number at the start of each row.
 
 <Example kind="ui" name="calendar" story="WeekNumbers">
 
-```tsx
-import * as React from "react"
-import { Calendar } from "@/components/ui/calendar"
-
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const today = new Date()
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
-  )
-  return (
-    <Calendar
-      {...props}
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-2xl border"
-    />
-  )
-}
-
-export function CalendarWeekNumbersExample() {
-  return (
-    <SingleCalendar buttonVariant="plain" showWeekNumber />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarWeekNumbersExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" showWeekNumber />\n  )\n}"} />
 
 </Example>
 
@@ -477,32 +97,7 @@ Disables weekends with a `dayOfWeek` matcher.
 
 <Example kind="ui" name="calendar" story="DisabledDays">
 
-```tsx
-import * as React from "react"
-import { Calendar } from "@/components/ui/calendar"
-
-function SingleCalendar(props: React.ComponentProps<typeof Calendar>) {
-  const today = new Date()
-  const [date, setDate] = React.useState<Date | undefined>(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)
-  )
-  return (
-    <Calendar
-      {...props}
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-      className="rounded-2xl border"
-    />
-  )
-}
-
-export function CalendarDisabledDaysExample() {
-  return (
-    <SingleCalendar buttonVariant="plain" disabled={{ dayOfWeek: [0, 6] }} />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { Calendar } from \"@/components/ui/calendar\"\n\nfunction SingleCalendar(props: React.ComponentProps<typeof Calendar>) {\n  const today = new Date()\n  const [date, setDate] = React.useState<Date | undefined>(\n    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3)\n  )\n  return (\n    <Calendar\n      {...props}\n      mode=\"single\"\n      selected={date}\n      onSelect={setDate}\n      className=\"rounded-2xl border\"\n    />\n  )\n}\n\nexport function CalendarDisabledDaysExample() {\n  return (\n    <SingleCalendar buttonVariant=\"plain\" disabled={{ dayOfWeek: [0, 6] }} />\n  )\n}"} />
 
 </Example>
 

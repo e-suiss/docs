@@ -7,60 +7,7 @@ generated: true
 
 <Example kind="ui" name="table" story="Default">
 
-```tsx
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-
-const invoices = [
-  { id: "INV-001", status: "Paid", method: "Credit card", amount: 250 },
-  { id: "INV-002", status: "Pending", method: "PayPal", amount: 150 },
-  { id: "INV-003", status: "Unpaid", method: "Bank transfer", amount: 350 },
-  { id: "INV-004", status: "Paid", method: "Credit card", amount: 450 },
-  { id: "INV-005", status: "Paid", method: "PayPal", amount: 550 },
-]
-
-const currency = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-})
-
-const total = invoices.reduce((sum, invoice) => sum + invoice.amount, 0)
-
-export function TableExample() {
-  return (
-    <div className="w-[36rem]">
-      <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-end">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.id}>
-              <TableCell className="font-medium">{invoice.id}</TableCell>
-              <TableCell>{invoice.status}</TableCell>
-              <TableCell>{invoice.method}</TableCell>
-              <TableCell className="text-end">
-                {currency.format(invoice.amount)}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-end">{currency.format(total)}</TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst invoices = [\n  { id: \"INV-001\", status: \"Paid\", method: \"Credit card\", amount: 250 },\n  { id: \"INV-002\", status: \"Pending\", method: \"PayPal\", amount: 150 },\n  { id: \"INV-003\", status: \"Unpaid\", method: \"Bank transfer\", amount: 350 },\n  { id: \"INV-004\", status: \"Paid\", method: \"Credit card\", amount: 450 },\n  { id: \"INV-005\", status: \"Paid\", method: \"PayPal\", amount: 550 },\n]\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nconst total = invoices.reduce((sum, invoice) => sum + invoice.amount, 0)\n\nexport function TableExample() {\n  return (\n    <div className=\"w-[36rem]\">\n      <Table>\n        <TableCaption>A list of your recent invoices.</TableCaption>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Invoice</TableHead>\n            <TableHead>Status</TableHead>\n            <TableHead>Method</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {invoices.map((invoice) => (\n            <TableRow key={invoice.id}>\n              <TableCell className=\"font-medium\">{invoice.id}</TableCell>\n              <TableCell>{invoice.status}</TableCell>\n              <TableCell>{invoice.method}</TableCell>\n              <TableCell className=\"text-end\">\n                {currency.format(invoice.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n        <TableFooter>\n          <TableRow>\n            <TableCell colSpan={3}>Total</TableCell>\n            <TableCell className=\"text-end\">{currency.format(total)}</TableCell>\n          </TableRow>\n        </TableFooter>\n      </Table>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -72,183 +19,25 @@ The parts add spacing, hairline row dividers, hover and selection backgrounds, a
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add table
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add table"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Copy the source into `components/ui/table.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/table.tsx"
-"use client"
-
-import { cn } from "cn"
-import type * as React from "react"
-
-function Table({ className, ...props }: React.ComponentProps<"table">) {
-  return (
-    <div
-      data-slot="table-container"
-      className="relative w-full overflow-x-auto"
-    >
-      <table
-        data-slot="table"
-        className={cn("w-full caption-bottom text-sm", className)}
-        {...props}
-      />
-    </div>
-  )
-}
-
-function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return (
-    <thead
-      data-slot="table-header"
-      className={cn("[&_tr]:border-b", className)}
-      {...props}
-    />
-  )
-}
-
-function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
-  return (
-    <tbody
-      data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0", className)}
-      {...props}
-    />
-  )
-}
-
-function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
-  return (
-    <tfoot
-      data-slot="table-footer"
-      className={cn(
-        "border-t bg-surface-secondary/50 font-semibold [&>tr]:last:border-b-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
-  return (
-    <tr
-      data-slot="table-row"
-      className={cn(
-        "border-b transition-colors hover:bg-item-hover has-aria-expanded:bg-item-selected data-selected:bg-item-selected",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function TableHead({ className, ...props }: React.ComponentProps<"th">) {
-  return (
-    <th
-      data-slot="table-head"
-      className={cn(
-        "h-12 px-3 text-start align-middle text-xs font-semibold whitespace-nowrap text-label-secondary has-[[role=checkbox]]:pe-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function TableCell({ className, ...props }: React.ComponentProps<"td">) {
-  return (
-    <td
-      data-slot="table-cell"
-      className={cn(
-        "p-3 align-middle whitespace-nowrap tabular-nums has-[[role=checkbox]]:pe-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function TableCaption({
-  className,
-  ...props
-}: React.ComponentProps<"caption">) {
-  return (
-    <caption
-      data-slot="table-caption"
-      className={cn("mt-4 text-sm text-label-secondary", className)}
-      {...props}
-    />
-  )
-}
-
-export {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/table.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from "@/components/ui/table"
-```
+<Code lang="tsx" code={"import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from \"@/components/ui/table\""} />
 
-```tsx
-<div className="w-[36rem]">
-  <Table>
-    <TableCaption>A list of your recent invoices.</TableCaption>
-    <TableHeader>
-      <TableRow>
-        <TableHead>Invoice</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead>Method</TableHead>
-        <TableHead className="text-end">Amount</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {invoices.map((invoice) => (
-        <TableRow key={invoice.id}>
-          <TableCell className="font-medium">{invoice.id}</TableCell>
-          <TableCell>{invoice.status}</TableCell>
-          <TableCell>{invoice.method}</TableCell>
-          <TableCell className="text-end">
-            {currency.format(invoice.amount)}
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-    <TableFooter>
-      <TableRow>
-        <TableCell colSpan={3}>Total</TableCell>
-        <TableCell className="text-end">{currency.format(total)}</TableCell>
-      </TableRow>
-    </TableFooter>
-  </Table>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-[36rem]\">\n  <Table>\n    <TableCaption>A list of your recent invoices.</TableCaption>\n    <TableHeader>\n      <TableRow>\n        <TableHead>Invoice</TableHead>\n        <TableHead>Status</TableHead>\n        <TableHead>Method</TableHead>\n        <TableHead className=\"text-end\">Amount</TableHead>\n      </TableRow>\n    </TableHeader>\n    <TableBody>\n      {invoices.map((invoice) => (\n        <TableRow key={invoice.id}>\n          <TableCell className=\"font-medium\">{invoice.id}</TableCell>\n          <TableCell>{invoice.status}</TableCell>\n          <TableCell>{invoice.method}</TableCell>\n          <TableCell className=\"text-end\">\n            {currency.format(invoice.amount)}\n          </TableCell>\n        </TableRow>\n      ))}\n    </TableBody>\n    <TableFooter>\n      <TableRow>\n        <TableCell colSpan={3}>Total</TableCell>\n        <TableCell className=\"text-end\">{currency.format(total)}</TableCell>\n      </TableRow>\n    </TableFooter>\n  </Table>\n</div>"} />
 
 Every part passes its props to the native element, so use standard attributes such as `colSpan`. Align numeric columns with `text-end` on both the `TableHead` and its cells. To highlight a row, set `data-selected` on `TableRow`.
 
@@ -260,49 +49,7 @@ Highlights one row with the `data-selected` attribute.
 
 <Example kind="ui" name="table" story="SelectedRow">
 
-```tsx
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-
-const invoices = [
-  { id: "INV-001", status: "Paid", method: "Credit card", amount: 250 },
-  { id: "INV-002", status: "Pending", method: "PayPal", amount: 150 },
-  { id: "INV-003", status: "Unpaid", method: "Bank transfer", amount: 350 },
-  { id: "INV-004", status: "Paid", method: "Credit card", amount: 450 },
-  { id: "INV-005", status: "Paid", method: "PayPal", amount: 550 },
-]
-
-const currency = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-})
-
-export function TableSelectedRowExample() {
-  return (
-    <div className="w-[36rem]">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-end">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {invoices.slice(0, 3).map((invoice, index) => (
-            <TableRow key={invoice.id} data-selected={index === 1}>
-              <TableCell className="font-medium">{invoice.id}</TableCell>
-              <TableCell>{invoice.status}</TableCell>
-              <TableCell className="text-end">
-                {currency.format(invoice.amount)}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nconst invoices = [\n  { id: \"INV-001\", status: \"Paid\", method: \"Credit card\", amount: 250 },\n  { id: \"INV-002\", status: \"Pending\", method: \"PayPal\", amount: 150 },\n  { id: \"INV-003\", status: \"Unpaid\", method: \"Bank transfer\", amount: 350 },\n  { id: \"INV-004\", status: \"Paid\", method: \"Credit card\", amount: 450 },\n  { id: \"INV-005\", status: \"Paid\", method: \"PayPal\", amount: 550 },\n]\n\nconst currency = new Intl.NumberFormat(\"en-US\", {\n  style: \"currency\",\n  currency: \"USD\",\n})\n\nexport function TableSelectedRowExample() {\n  return (\n    <div className=\"w-[36rem]\">\n      <Table>\n        <TableHeader>\n          <TableRow>\n            <TableHead>Invoice</TableHead>\n            <TableHead>Status</TableHead>\n            <TableHead className=\"text-end\">Amount</TableHead>\n          </TableRow>\n        </TableHeader>\n        <TableBody>\n          {invoices.slice(0, 3).map((invoice, index) => (\n            <TableRow key={invoice.id} data-selected={index === 1}>\n              <TableCell className=\"font-medium\">{invoice.id}</TableCell>\n              <TableCell>{invoice.status}</TableCell>\n              <TableCell className=\"text-end\">\n                {currency.format(invoice.amount)}\n              </TableCell>\n            </TableRow>\n          ))}\n        </TableBody>\n      </Table>\n    </div>\n  )\n}"} />
 
 </Example>
 

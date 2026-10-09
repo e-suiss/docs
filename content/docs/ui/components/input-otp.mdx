@@ -7,27 +7,7 @@ generated: true
 
 <Example kind="ui" name="input-otp" story="Default">
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpExample() {
-  return (
-    <InputOTP maxLength={6} aria-label="Verification code">
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-      </InputOTPGroup>
-      <InputOTPSeparator />
-      <InputOTPGroup>
-        <InputOTPSlot index={3} />
-        <InputOTPSlot index={4} />
-        <InputOTPSlot index={5} />
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 
@@ -39,144 +19,25 @@ Use it for verification and two-factor codes. For other short values, use `Input
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add input-otp
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add input-otp"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @phosphor-icons/react cn input-otp
-```
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn input-otp"} />
 
 2. Copy the source into `components/ui/input-otp.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/input-otp.tsx"
-"use client"
-
-import { MinusIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-import { OTPInput, OTPInputContext } from "input-otp"
-import * as React from "react"
-
-function InputOTP({
-  className,
-  containerClassName,
-  value,
-  defaultValue,
-  onChange,
-  ...props
-}: React.ComponentProps<typeof OTPInput> & {
-  containerClassName?: string
-}) {
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(
-    defaultValue === undefined ? "" : String(defaultValue)
-  )
-
-  return (
-    <OTPInput
-      data-slot="input-otp"
-      value={value ?? uncontrolledValue}
-      onChange={(next: string) => {
-        if (value === undefined) setUncontrolledValue(next)
-        onChange?.(next)
-      }}
-      containerClassName={cn(
-        "cn-input-otp flex items-center",
-        containerClassName
-      )}
-      spellCheck={false}
-      className={cn("disabled:cursor-not-allowed", className)}
-      {...props}
-    />
-  )
-}
-
-function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="input-otp-group"
-      className={cn("flex items-center gap-2", className)}
-      {...props}
-    />
-  )
-}
-
-function InputOTPSlot({
-  index,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  index: number
-}) {
-  const inputOTPContext = React.useContext(OTPInputContext)
-  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {}
-
-  return (
-    <div
-      data-slot="input-otp-slot"
-      data-active={isActive}
-      className={cn(
-        "relative flex h-13 w-11 items-center justify-center rounded-lg border-[1.5px] border-transparent bg-control text-xl font-semibold tabular-nums transition-colors outline-none aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 in-[.cn-input-otp:has(input[aria-invalid=true])]:border-danger in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-danger/5 dark:in-[.cn-input-otp:has(input[aria-invalid=true])]:bg-danger/10 in-[.cn-input-otp:has(input:disabled)]:bg-control-disabled in-[.cn-input-otp:has(input:disabled)]:text-label-quaternary data-[active=true]:z-10 data-[active=true]:border-accent",
-        className
-      )}
-      {...props}
-    >
-      {char}
-      {hasFakeCaret && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-6 w-0.5 animate-caret-blink rounded-full bg-accent duration-1000" />
-        </div>
-      )}
-    </div>
-  )
-}
-
-function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="input-otp-separator"
-      className="flex items-center in-[.cn-input-otp:has(input:disabled)]:text-label-quaternary [&_svg:not([class*='size-'])]:size-4"
-      role="separator"
-      {...props}
-    >
-      <MinusIcon />
-    </div>
-  )
-}
-
-export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/input-otp.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/ui/input-otp"
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from \"@/components/ui/input-otp\""} />
 
-```tsx
-<InputOTP maxLength={6} aria-label="Verification code">
-  <InputOTPGroup>
-    <InputOTPSlot index={0} />
-    <InputOTPSlot index={1} />
-    <InputOTPSlot index={2} />
-  </InputOTPGroup>
-  <InputOTPSeparator />
-  <InputOTPGroup>
-    <InputOTPSlot index={3} />
-    <InputOTPSlot index={4} />
-    <InputOTPSlot index={5} />
-  </InputOTPGroup>
-</InputOTP>
-```
+<Code lang="tsx" code={"<InputOTP maxLength={6} aria-label=\"Verification code\">\n  <InputOTPGroup>\n    <InputOTPSlot index={0} />\n    <InputOTPSlot index={1} />\n    <InputOTPSlot index={2} />\n  </InputOTPGroup>\n  <InputOTPSeparator />\n  <InputOTPGroup>\n    <InputOTPSlot index={3} />\n    <InputOTPSlot index={4} />\n    <InputOTPSlot index={5} />\n  </InputOTPGroup>\n</InputOTP>"} />
 
 Set `maxLength` to the length of the code and render one `InputOTPSlot` for each position, with `index` values from `0`. The value is uncontrolled with `defaultValue`, or controlled with `value` and `onChange`, which receives the code as a string. Restrict accepted characters with `pattern`, for example with `REGEXP_ONLY_DIGITS_AND_CHARS` from `input-otp`.
 
@@ -190,27 +51,7 @@ A code that starts filled from `defaultValue`.
 
 <Example kind="ui" name="input-otp" story="Filled">
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpFilledExample() {
-  return (
-    <InputOTP maxLength={6} aria-label="Verification code" defaultValue="482913">
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-      </InputOTPGroup>
-      <InputOTPSeparator />
-      <InputOTPGroup>
-        <InputOTPSlot index={3} />
-        <InputOTPSlot index={4} />
-        <InputOTPSlot index={5} />
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpFilledExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" defaultValue=\"482913\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 
@@ -220,21 +61,7 @@ Six slots in a single group with no separator.
 
 <Example kind="ui" name="input-otp" story="SingleGroup">
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpSingleGroupExample() {
-  return (
-    <InputOTP maxLength={6} aria-label="Verification code">
-      <InputOTPGroup>
-        {Array.from({ length: 6 }, (_, index) => (
-          <InputOTPSlot key={index} index={index} />
-        ))}
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpSingleGroupExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        {Array.from({ length: 6 }, (_, index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 
@@ -244,22 +71,7 @@ A four-digit code with `maxLength` set to `4`.
 
 <Example kind="ui" name="input-otp" story="FourDigits">
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpFourDigitsExample() {
-  return (
-    <InputOTP maxLength={4} aria-label="Verification code">
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-        <InputOTPSlot index={3} />
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpFourDigitsExample() {\n  return (\n    <InputOTP maxLength={4} aria-label=\"Verification code\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n        <InputOTPSlot index={3} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 
@@ -269,28 +81,7 @@ A code that accepts letters and digits using the `REGEXP_ONLY_DIGITS_AND_CHARS` 
 
 <Example kind="ui" name="input-otp" story="Alphanumeric">
 
-```tsx
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpAlphanumericExample() {
-  return (
-    <InputOTP maxLength={6} aria-label="Verification code" pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-      </InputOTPGroup>
-      <InputOTPSeparator />
-      <InputOTPGroup>
-        <InputOTPSlot index={3} />
-        <InputOTPSlot index={4} />
-        <InputOTPSlot index={5} />
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { REGEXP_ONLY_DIGITS_AND_CHARS } from \"input-otp\"\nimport { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpAlphanumericExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 
@@ -300,21 +91,7 @@ An invalid code with every slot outlined in the error color.
 
 <Example kind="ui" name="input-otp" story="Invalid">
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpInvalidExample() {
-  return (
-    <InputOTP maxLength={6} aria-label="Verification code" defaultValue="123456" aria-invalid>
-      <InputOTPGroup>
-        {Array.from({ length: 6 }, (_, index) => (
-          <InputOTPSlot key={index} index={index} />
-        ))}
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpInvalidExample() {\n  return (\n    <InputOTP maxLength={6} aria-label=\"Verification code\" defaultValue=\"123456\" aria-invalid>\n      <InputOTPGroup>\n        {Array.from({ length: 6 }, (_, index) => (\n          <InputOTPSlot key={index} index={index} />\n        ))}\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 
@@ -324,27 +101,7 @@ A disabled code that keeps its value and dims its slots and separator.
 
 <Example kind="ui" name="input-otp" story="Disabled">
 
-```tsx
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-
-export function InputOtpDisabledExample() {
-  return (
-    <InputOTP maxLength={6} disabled aria-label="Verification code" defaultValue="123456">
-      <InputOTPGroup>
-        <InputOTPSlot index={0} />
-        <InputOTPSlot index={1} />
-        <InputOTPSlot index={2} />
-      </InputOTPGroup>
-      <InputOTPSeparator />
-      <InputOTPGroup>
-        <InputOTPSlot index={3} />
-        <InputOTPSlot index={4} />
-        <InputOTPSlot index={5} />
-      </InputOTPGroup>
-    </InputOTP>
-  )
-}
-```
+<Code lang="tsx" code={"import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from \"@/components/ui/input-otp\"\n\nexport function InputOtpDisabledExample() {\n  return (\n    <InputOTP maxLength={6} disabled aria-label=\"Verification code\" defaultValue=\"123456\">\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n      </InputOTPGroup>\n      <InputOTPSeparator />\n      <InputOTPGroup>\n        <InputOTPSlot index={3} />\n        <InputOTPSlot index={4} />\n        <InputOTPSlot index={5} />\n      </InputOTPGroup>\n    </InputOTP>\n  )\n}"} />
 
 </Example>
 

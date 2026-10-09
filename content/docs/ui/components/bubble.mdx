@@ -7,19 +7,7 @@ generated: true
 
 <Example kind="ui" name="bubble" story="Default">
 
-```tsx
-import { Bubble, BubbleContent } from "@/components/ui/bubble"
-
-export function BubbleExample() {
-  return (
-    <div className="flex w-96 flex-col">
-      <Bubble align="start">
-        <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>
-      </Bubble>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <Bubble align=\"start\">\n        <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n      </Bubble>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -31,169 +19,25 @@ Align bubbles to the `start` or `end` of the conversation. The tail appears only
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add bubble
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add bubble"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/bubble.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/bubble.tsx"
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import type * as React from "react"
-
-function BubbleGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="bubble-group"
-      className={cn("flex min-w-0 flex-col gap-2", className)}
-      {...props}
-    />
-  )
-}
-
-const bubbleVariants = cva(
-  "group/bubble relative flex w-fit has-[>[data-slot=bubble-reactions][data-side=bottom]]:mb-5 has-[>[data-slot=bubble-reactions][data-side=top]]:mt-5 max-w-[80%] min-w-0 flex-col gap-1 group-data-[align=end]/message:self-end data-[align=end]:self-end data-[variant=ghost]:max-w-full",
-  {
-    variants: {
-      variant: {
-        default:
-          "[--bubble-bg:var(--accent)] *:data-[slot=bubble-content]:text-on-accent [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--accent-hover)]",
-        secondary:
-          "[--bubble-bg:var(--control)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--control-hover)]",
-        muted:
-          "[--bubble-bg:var(--surface-secondary)] [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--surface-secondary),var(--label)_5%)]",
-        tinted:
-          "[--bubble-bg:color-mix(in_oklab,var(--accent)_12%,transparent)] *:data-[slot=bubble-content]:text-label [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:color-mix(in_oklab,var(--accent)_20%,transparent)]",
-        outline:
-          "[--bubble-bg:var(--surface)] *:data-[slot=bubble-content]:border-separator [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--control)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-label",
-        ghost:
-          "*:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-item-hover [&>[data-slot=bubble-content]:is(button,a):hover]:text-label",
-        destructive:
-          "[--bubble-bg:var(--danger-surface)] *:data-[slot=bubble-content]:text-danger [&>[data-slot=bubble-content]:is(button,a):hover]:[--bubble-bg:var(--danger-surface-hover)] [&>[data-slot=bubble-content]:is(button,a):hover]:text-[color-mix(in_oklab,var(--danger),var(--label)_15%)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:text-danger",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-function Bubble({
-  variant = "default",
-  align = "start",
-  className,
-  ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof bubbleVariants> & {
-    align?: "start" | "end"
-  }) {
-  return (
-    <div
-      data-slot="bubble"
-      data-variant={variant}
-      data-align={align}
-      className={cn(bubbleVariants({ variant }), className)}
-      {...props}
-    />
-  )
-}
-
-function BubbleContent({
-  className,
-  render,
-  ...props
-}: useRender.ComponentProps<"div">) {
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        className: cn(
-          "w-fit max-w-full min-w-0 relative rounded-2xl border [background:linear-gradient(var(--bubble-bg),var(--bubble-bg)),var(--bubble-surface,var(--surface))] border-transparent px-3.5 py-1.5 text-base wrap-break-word group-data-[align=end]/bubble:self-end group-data-[align=end]/message:self-end before:absolute before:-start-[7.9px] before:-bottom-px before:hidden before:size-5 before:[background:inherit] before:[clip-path:path('M7_0H20V4A16_16_0_0_1_4_20H0V19.54A10_10_0_0_0_7_10Z')] rtl:before:-scale-x-100 group-data-[align=end]/bubble:before:-scale-x-100 group-data-[align=end]/message:before:-scale-x-100 rtl:group-data-[align=end]/bubble:before:scale-x-100 rtl:group-data-[align=end]/message:before:scale-x-100 group-data-[align=end]/bubble:before:start-auto group-data-[align=end]/message:before:start-auto group-data-[align=end]/bubble:before:-end-[7.9px] group-data-[align=end]/message:before:-end-[7.9px] [[data-slot=bubble][data-align=start]:not([data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble][data-align=start]))>&]:before:block [[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*):not([data-variant=ghost]):not([data-variant=outline]):not(:has(+[data-slot=bubble]:is([data-align=end],[data-slot=message][data-align=end]_*)))>&]:before:block [button]:text-start [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:focus-ring",
-          className
-        ),
-      },
-      props
-    ),
-    render,
-    state: {
-      slot: "bubble-content",
-    },
-  })
-}
-
-const bubbleReactionsVariants = cva(
-  "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-surface-secondary px-1.5 py-0.5 text-sm ring-3 ring-[var(--bubble-surface,var(--surface))] has-[button]:p-0",
-  {
-    variants: {
-      side: {
-        top: "top-0 -translate-y-3/4",
-        bottom: "bottom-0 translate-y-3/4",
-      },
-      align: {
-        start: "start-3",
-        end: "end-3",
-      },
-    },
-    defaultVariants: {
-      side: "bottom",
-      align: "end",
-    },
-  }
-)
-
-function BubbleReactions({
-  side = "bottom",
-  align = "end",
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  align?: "start" | "end"
-  side?: "top" | "bottom"
-}) {
-  return (
-    <div
-      data-slot="bubble-reactions"
-      data-align={align}
-      data-side={side}
-      className={cn(bubbleReactionsVariants({ side, align }), className)}
-      {...props}
-    />
-  )
-}
-
-export { Bubble, BubbleContent, BubbleGroup, BubbleReactions }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/bubble.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
-```
+<Code lang="tsx" code={"import { BubbleGroup, Bubble, BubbleContent, BubbleReactions } from \"@/components/ui/bubble\""} />
 
-```tsx
-<div className="flex w-96 flex-col">
-  <Bubble align="start">
-    <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>
-  </Bubble>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"flex w-96 flex-col\">\n  <Bubble align=\"start\">\n    <BubbleContent>Are we still on for lunch tomorrow?</BubbleContent>\n  </Bubble>\n</div>"} />
 
 Set `align="end"` for messages sent by the current user and leave the default `start` for incoming messages.
 
@@ -209,33 +53,7 @@ Shows every variant, from `default` to `destructive`.
 
 <Example kind="ui" name="bubble" story="Variants">
 
-```tsx
-import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble"
-
-export function BubbleVariantsExample() {
-  return (
-    <div className="flex w-96 flex-col">
-      <BubbleGroup>
-        {(
-          [
-            "default",
-            "secondary",
-            "muted",
-            "tinted",
-            "outline",
-            "ghost",
-            "destructive",
-          ] as const
-        ).map((variant) => (
-          <Bubble key={variant} align="start" variant={variant}>
-            <BubbleContent>This is a {variant} bubble.</BubbleContent>
-          </Bubble>
-        ))}
-      </BubbleGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nexport function BubbleVariantsExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <BubbleGroup>\n        {(\n          [\n            \"default\",\n            \"secondary\",\n            \"muted\",\n            \"tinted\",\n            \"outline\",\n            \"ghost\",\n            \"destructive\",\n          ] as const\n        ).map((variant) => (\n          <Bubble key={variant} align=\"start\" variant={variant}>\n            <BubbleContent>This is a {variant} bubble.</BubbleContent>\n          </Bubble>\n        ))}\n      </BubbleGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -245,32 +63,7 @@ An exchange of incoming `muted` and outgoing `end`-aligned bubbles.
 
 <Example kind="ui" name="bubble" story="Conversation">
 
-```tsx
-import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble"
-
-export function BubbleConversationExample() {
-  return (
-    <div className="flex w-96 flex-col">
-      <BubbleGroup>
-        <Bubble variant="muted">
-          <BubbleContent>
-            Hey, did you get a chance to review the draft?
-          </BubbleContent>
-        </Bubble>
-        <Bubble align="end">
-          <BubbleContent>Yes, I left a few comments on the intro.</BubbleContent>
-        </Bubble>
-        <Bubble align="end">
-          <BubbleContent>Everything else looks great.</BubbleContent>
-        </Bubble>
-        <Bubble variant="muted">
-          <BubbleContent>Thanks! I will update it this afternoon.</BubbleContent>
-        </Bubble>
-      </BubbleGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup } from \"@/components/ui/bubble\"\n\nexport function BubbleConversationExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <BubbleGroup>\n        <Bubble variant=\"muted\">\n          <BubbleContent>\n            Hey, did you get a chance to review the draft?\n          </BubbleContent>\n        </Bubble>\n        <Bubble align=\"end\">\n          <BubbleContent>Yes, I left a few comments on the intro.</BubbleContent>\n        </Bubble>\n        <Bubble align=\"end\">\n          <BubbleContent>Everything else looks great.</BubbleContent>\n        </Bubble>\n        <Bubble variant=\"muted\">\n          <BubbleContent>Thanks! I will update it this afternoon.</BubbleContent>\n        </Bubble>\n      </BubbleGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -280,30 +73,7 @@ Pins reactions to different corners with `side` and `align`.
 
 <Example kind="ui" name="bubble" story="WithReactions">
 
-```tsx
-import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from "@/components/ui/bubble"
-
-export function BubbleWithReactionsExample() {
-  return (
-    <div className="flex w-96 flex-col">
-      <BubbleGroup>
-        <Bubble align="start" variant="muted">
-          <BubbleContent>We just hit 10,000 users!</BubbleContent>
-          <BubbleReactions>🎉 3</BubbleReactions>
-        </Bubble>
-        <Bubble align="end">
-          <BubbleContent>That is amazing news.</BubbleContent>
-          <BubbleReactions align="start">❤️</BubbleReactions>
-        </Bubble>
-        <Bubble align="start" variant="secondary">
-          <BubbleContent>Reactions can sit on top as well.</BubbleContent>
-          <BubbleReactions side="top">👍 2</BubbleReactions>
-        </Bubble>
-      </BubbleGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from \"@/components/ui/bubble\"\n\nexport function BubbleWithReactionsExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <BubbleGroup>\n        <Bubble align=\"start\" variant=\"muted\">\n          <BubbleContent>We just hit 10,000 users!</BubbleContent>\n          <BubbleReactions>🎉 3</BubbleReactions>\n        </Bubble>\n        <Bubble align=\"end\">\n          <BubbleContent>That is amazing news.</BubbleContent>\n          <BubbleReactions align=\"start\">❤️</BubbleReactions>\n        </Bubble>\n        <Bubble align=\"start\" variant=\"secondary\">\n          <BubbleContent>Reactions can sit on top as well.</BubbleContent>\n          <BubbleReactions side=\"top\">👍 2</BubbleReactions>\n        </Bubble>\n      </BubbleGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -313,21 +83,7 @@ Renders the content as a `button` with the `render` prop.
 
 <Example kind="ui" name="bubble" story="Interactive">
 
-```tsx
-import { Bubble, BubbleContent } from "@/components/ui/bubble"
-
-export function BubbleInteractiveExample() {
-  return (
-    <div className="flex w-96 flex-col">
-      <Bubble variant="outline" align="start">
-        <BubbleContent render={<button type="button" />}>
-          Show me the latest release notes
-        </BubbleContent>
-      </Bubble>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\n\nexport function BubbleInteractiveExample() {\n  return (\n    <div className=\"flex w-96 flex-col\">\n      <Bubble variant=\"outline\" align=\"start\">\n        <BubbleContent render={<button type=\"button\" />}>\n          Show me the latest release notes\n        </BubbleContent>\n      </Bubble>\n    </div>\n  )\n}"} />
 
 </Example>
 

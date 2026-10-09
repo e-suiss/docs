@@ -7,56 +7,7 @@ generated: true
 
 <Example kind="pattern" name="navbar" story="Default">
 
-```tsx
-import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from "@phosphor-icons/react"
-import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
-
-const items: NavbarItem[] = [
-  {
-    label: "Products",
-    items: [
-      {
-        label: "Analytics",
-        href: "#analytics",
-        description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
-      },
-      {
-        label: "Automations",
-        href: "#automations",
-        description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
-      },
-      {
-        label: "Security",
-        href: "#security",
-        description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
-    ],
-  },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#blog" },
-]
-
-const brand = <span className="text-base font-semibold">Acme</span>
-
-export function NavbarExample() {
-  return (
-    <div className="min-h-96">
-      <Navbar items={items} brand={brand} />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={items} brand={brand} />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -68,333 +19,27 @@ The navbar switches to a compact layout below the `48rem` breakpoint, and also o
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns navbar
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns navbar"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Add the pieces it builds on: [Fullscreen Menu](/docs/ui/components/fullscreen-menu), [Navigation Menu](/docs/ui/components/navigation-menu), `use-mobile`.
 
 3. Copy the source into `components/patterns/navbar.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/navbar.tsx"
-"use client"
-
-import { cn } from "cn"
-import * as React from "react"
-
-import {
-  FullscreenMenu,
-  FullscreenMenuContent,
-  FullscreenMenuGroup,
-  FullscreenMenuLabel,
-  FullscreenMenuLink,
-  FullscreenMenuTitle,
-  FullscreenMenuTrigger,
-} from "@/components/ui/fullscreen-menu"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type NavbarLink = {
-  label: string
-  href: string
-  description?: string
-  icon?: React.ReactNode
-  active?: boolean
-}
-
-type NavbarColumn = {
-  label: string
-  links: NavbarLink[]
-  featured?: boolean
-}
-
-type NavbarGroup = { label: string; items: NavbarLink[] }
-
-type NavbarMega = { label: string; columns: NavbarColumn[] }
-
-type NavbarItem = NavbarLink | NavbarGroup | NavbarMega
-
-function isGroup(item: NavbarItem): item is NavbarGroup {
-  return "items" in item
-}
-
-function isMega(item: NavbarItem): item is NavbarMega {
-  return "columns" in item
-}
-
-function NavbarAnchor(props: React.ComponentProps<"a">) {
-  return <a {...props} />
-}
-
-function NavbarMenuItem({
-  item,
-  render,
-}: {
-  item: NavbarItem
-  render: React.ReactElement
-}) {
-  if (isMega(item)) {
-    return (
-      <NavigationMenuItem value={item.label}>
-        <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
-        <NavigationMenuContent className="w-full p-0">
-          <div
-            data-slot="navbar-columns"
-            className="mx-auto flex max-w-5xl gap-16 px-6 pt-7 pb-14"
-          >
-            {item.columns.map((column, index) => (
-              <div
-                key={column.label}
-                data-slot="navbar-column"
-                data-featured={column.featured ? "" : undefined}
-                style={{ transitionDelay: `${60 + index * 40}ms` }}
-                className="group/navbar-column flex flex-col gap-2 transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] starting:-translate-y-1.5 starting:opacity-0 motion-reduce:transition-none data-featured:gap-2.5"
-              >
-                <span className="text-xs text-label-secondary">
-                  {column.label}
-                </span>
-                {column.links.map((link) => (
-                  <NavigationMenuLink
-                    key={link.label}
-                    href={link.href}
-                    active={link.active}
-                    render={render}
-                    className="w-fit rounded-sm p-0 text-xs leading-tight font-semibold hover:bg-transparent hover:underline focus:bg-transparent group-data-featured/navbar-column:text-2xl group-data-featured/navbar-column:tracking-tight"
-                  >
-                    {link.label}
-                  </NavigationMenuLink>
-                ))}
-              </div>
-            ))}
-          </div>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    )
-  }
-
-  if (isGroup(item)) {
-    return (
-      <NavigationMenuItem value={item.label}>
-        <NavigationMenuTrigger>{item.label}</NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-80 gap-1">
-            {item.items.map((link) => (
-              <li key={link.label}>
-                <NavigationMenuLink
-                  href={link.href}
-                  active={link.active}
-                  render={render}
-                  className={cn(link.description && "items-start gap-3")}
-                >
-                  {link.icon}
-                  {link.description ? (
-                    <div className="flex flex-col gap-1">
-                      <span className="font-medium">{link.label}</span>
-                      <span className="text-label-secondary">
-                        {link.description}
-                      </span>
-                    </div>
-                  ) : (
-                    link.label
-                  )}
-                </NavigationMenuLink>
-              </li>
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    )
-  }
-
-  return (
-    <NavigationMenuItem>
-      <NavigationMenuLink
-        href={item.href}
-        active={item.active}
-        render={render}
-        className={navigationMenuTriggerStyle()}
-      >
-        {item.label}
-      </NavigationMenuLink>
-    </NavigationMenuItem>
-  )
-}
-
-function Navbar({
-  items,
-  brand,
-  actions,
-  menuLabel = "Menu",
-  closeLabel,
-  layout = "popover",
-  render = <NavbarAnchor />,
-  className,
-  ...props
-}: React.ComponentProps<"header"> & {
-  items: NavbarItem[]
-  brand?: React.ReactNode
-  actions?: React.ReactNode
-  menuLabel?: string
-  closeLabel?: string
-  layout?: "popover" | "panel"
-  render?: React.ReactElement
-}) {
-  const isMobile = useIsMobile()
-  const headerRef = React.useRef<HTMLElement>(null)
-  const [crowdedBelow, setCrowdedBelow] = React.useState<number | null>(null)
-  const compact = isMobile || crowdedBelow !== null
-
-  React.useLayoutEffect(() => {
-    const header = headerRef.current
-    if (!header || isMobile) return
-    const measure = () => {
-      if (crowdedBelow === null) {
-        if (header.scrollWidth > header.clientWidth + 1) {
-          setCrowdedBelow(header.scrollWidth)
-        }
-      } else if (header.clientWidth >= crowdedBelow) {
-        setCrowdedBelow(null)
-      }
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(header)
-    for (const child of header.children) observer.observe(child)
-    return () => observer.disconnect()
-  }, [crowdedBelow, isMobile])
-  const links = items.filter(
-    (item): item is NavbarLink => !isGroup(item) && !isMega(item)
-  )
-  const groups = items.flatMap((item) => {
-    if (isGroup(item)) return [item]
-    if (isMega(item)) {
-      return item.columns.map((column) => ({
-        label: column.label,
-        items: column.links,
-      }))
-    }
-    return []
-  })
-
-  return (
-    <header
-      ref={headerRef}
-      data-slot="navbar"
-      data-layout={layout}
-      data-compact={compact ? "" : undefined}
-      className={cn(
-        "flex h-14 w-full items-center gap-4 px-4 data-[layout=panel]:relative data-[layout=panel]:z-50 md:px-6",
-        className
-      )}
-      {...props}
-    >
-      {brand && (
-        <div data-slot="navbar-brand" className="flex shrink-0 items-center">
-          {brand}
-        </div>
-      )}
-      {compact ? (
-        <div className="ms-auto flex items-center gap-2">
-          {actions}
-          <FullscreenMenu>
-            <FullscreenMenuTrigger aria-label={menuLabel} />
-            <FullscreenMenuContent closeLabel={closeLabel}>
-              <FullscreenMenuTitle>{menuLabel}</FullscreenMenuTitle>
-              {links.length > 0 && (
-                <FullscreenMenuGroup>
-                  {links.map((link) => (
-                    <FullscreenMenuLink
-                      key={link.label}
-                      href={link.href}
-                      isActive={link.active}
-                      render={render}
-                    >
-                      {link.label}
-                    </FullscreenMenuLink>
-                  ))}
-                </FullscreenMenuGroup>
-              )}
-              {groups.map((group) => (
-                <FullscreenMenuGroup key={group.label}>
-                  <FullscreenMenuLabel>{group.label}</FullscreenMenuLabel>
-                  {group.items.map((link) => (
-                    <FullscreenMenuLink
-                      key={link.label}
-                      href={link.href}
-                      isActive={link.active}
-                      render={render}
-                    >
-                      {link.label}
-                    </FullscreenMenuLink>
-                  ))}
-                </FullscreenMenuGroup>
-              ))}
-            </FullscreenMenuContent>
-          </FullscreenMenu>
-        </div>
-      ) : (
-        <>
-          <NavigationMenu
-            className="mx-auto"
-            layout={layout}
-            anchor={layout === "panel" ? headerRef : undefined}
-          >
-            <NavigationMenuList>
-              {items.map((item) => (
-                <NavbarMenuItem key={item.label} item={item} render={render} />
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-          {actions && (
-            <div
-              data-slot="navbar-actions"
-              className="flex shrink-0 items-center gap-2"
-            >
-              {actions}
-            </div>
-          )}
-        </>
-      )}
-    </header>
-  )
-}
-
-export { Navbar, type NavbarColumn, type NavbarItem, type NavbarLink }
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/navbar.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Navbar } from "@/components/patterns/navbar"
-```
+<Code lang="tsx" code={"import { Navbar } from \"@/components/patterns/navbar\""} />
 
-```tsx
-<div className="min-h-96">
-  <Navbar items={items} brand={brand} />
-</div>
-```
+<Code lang="tsx" code={"<div className=\"min-h-96\">\n  <Navbar items={items} brand={brand} />\n</div>"} />
 
 Each `NavbarItem` is one of three shapes: a link with `label` and `href` (plus optional `description`, `icon` and `active`), a group with `label` and `items`, or a mega item with `label` and `columns`. Each column has a `label`, `links` and an optional `featured` flag that sets its links in a large type size. Pass `render` to route links through your framework's link component; it receives `href` and the link content.
 
@@ -406,61 +51,7 @@ Adds a Sign in button at the end of the header with `actions`.
 
 <Example kind="pattern" name="navbar" story="WithActions">
 
-```tsx
-import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from "@phosphor-icons/react"
-import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
-import { Button } from "@/components/ui/button"
-
-const items: NavbarItem[] = [
-  {
-    label: "Products",
-    items: [
-      {
-        label: "Analytics",
-        href: "#analytics",
-        description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
-      },
-      {
-        label: "Automations",
-        href: "#automations",
-        description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
-      },
-      {
-        label: "Security",
-        href: "#security",
-        description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
-    ],
-  },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#blog" },
-]
-
-const brand = <span className="text-base font-semibold">Acme</span>
-
-export function NavbarWithActionsExample() {
-  return (
-    <div className="min-h-96">
-      <Navbar items={items} brand={brand} actions={(
-            <Button size="sm" variant="secondary">
-              Sign in
-            </Button>
-          )} />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\nimport { Button } from \"@/components/ui/button\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarWithActionsExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={items} brand={brand} actions={(\n            <Button size=\"sm\" variant=\"secondary\">\n              Sign in\n            </Button>\n          )} />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -470,61 +61,7 @@ Uses only plain links and marks the current page with `active`.
 
 <Example kind="pattern" name="navbar" story="LinksOnly">
 
-```tsx
-import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from "@phosphor-icons/react"
-import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
-
-const items: NavbarItem[] = [
-  {
-    label: "Products",
-    items: [
-      {
-        label: "Analytics",
-        href: "#analytics",
-        description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
-      },
-      {
-        label: "Automations",
-        href: "#automations",
-        description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
-      },
-      {
-        label: "Security",
-        href: "#security",
-        description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
-    ],
-  },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#blog" },
-]
-
-const brand = <span className="text-base font-semibold">Acme</span>
-
-export function NavbarLinksOnlyExample() {
-  return (
-    <div className="min-h-96">
-      <Navbar items={[
-            { label: "Overview", href: "#overview", active: true },
-            { label: "Customers", href: "#customers" },
-            { label: "Changelog", href: "#changelog" },
-            { label: "Blog", href: "#blog" },
-          ]} brand={brand} />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarLinksOnlyExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={[\n            { label: \"Overview\", href: \"#overview\", active: true },\n            { label: \"Customers\", href: \"#customers\" },\n            { label: \"Changelog\", href: \"#changelog\" },\n            { label: \"Blog\", href: \"#blog\" },\n          ]} brand={brand} />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -534,73 +71,7 @@ Shows nine links in a narrow frame, folding them into the menu until the frame i
 
 <Example kind="pattern" name="navbar" story="Crowded">
 
-```tsx
-import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from "@phosphor-icons/react"
-import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
-import { Button } from "@/components/ui/button"
-
-const items: NavbarItem[] = [
-  {
-    label: "Products",
-    items: [
-      {
-        label: "Analytics",
-        href: "#analytics",
-        description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
-      },
-      {
-        label: "Automations",
-        href: "#automations",
-        description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
-      },
-      {
-        label: "Security",
-        href: "#security",
-        description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
-    ],
-  },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#blog" },
-]
-
-const brand = <span className="text-base font-semibold">Acme</span>
-
-export function NavbarCrowdedExample() {
-  return (
-    <div className="min-h-96">
-      <div data-testid="frame" className="w-160 max-w-full">
-        <Navbar items={[
-          "Store",
-          "Laptop",
-          "Tablet",
-          "Phone",
-          "Watch",
-          "Headphones",
-          "Speakers",
-          "Accessories",
-          "Support",
-        ].map((label) => ({ label, href: `#${label.toLowerCase()}` }))} brand={brand} actions={(
-          <Button size="sm" variant="secondary">
-            Sign in
-          </Button>
-        )} />
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\nimport { Button } from \"@/components/ui/button\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarCrowdedExample() {\n  return (\n    <div className=\"min-h-96\">\n      <div data-testid=\"frame\" className=\"w-160 max-w-full\">\n        <Navbar items={[\n          \"Store\",\n          \"Laptop\",\n          \"Tablet\",\n          \"Phone\",\n          \"Watch\",\n          \"Headphones\",\n          \"Speakers\",\n          \"Accessories\",\n          \"Support\",\n        ].map((label) => ({ label, href: `#${label.toLowerCase()}` }))} brand={brand} actions={(\n          <Button size=\"sm\" variant=\"secondary\">\n            Sign in\n          </Button>\n        )} />\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -610,56 +81,7 @@ Labels the fullscreen menu's close button Done with `closeLabel`.
 
 <Example kind="pattern" name="navbar" story="WithCloseLabel">
 
-```tsx
-import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from "@phosphor-icons/react"
-import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
-
-const items: NavbarItem[] = [
-  {
-    label: "Products",
-    items: [
-      {
-        label: "Analytics",
-        href: "#analytics",
-        description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
-      },
-      {
-        label: "Automations",
-        href: "#automations",
-        description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
-      },
-      {
-        label: "Security",
-        href: "#security",
-        description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
-    ],
-  },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#blog" },
-]
-
-const brand = <span className="text-base font-semibold">Acme</span>
-
-export function NavbarWithCloseLabelExample() {
-  return (
-    <div className="min-h-96">
-      <Navbar items={items} brand={brand} closeLabel="Done" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarWithCloseLabelExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={items} brand={brand} closeLabel=\"Done\" />\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -669,87 +91,7 @@ Uses `layout="panel"` with a mega item whose columns open in a full-width panel.
 
 <Example kind="pattern" name="navbar" story="MegaPanel">
 
-```tsx
-import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from "@phosphor-icons/react"
-import { Navbar, type NavbarItem } from "@/components/patterns/navbar"
-
-const items: NavbarItem[] = [
-  {
-    label: "Products",
-    items: [
-      {
-        label: "Analytics",
-        href: "#analytics",
-        description: "Track traffic and conversions in real time.",
-        icon: <ChartLineIcon className="mt-0.5" />,
-      },
-      {
-        label: "Automations",
-        href: "#automations",
-        description: "Run workflows when events happen.",
-        icon: <LightningIcon className="mt-0.5" />,
-      },
-      {
-        label: "Security",
-        href: "#security",
-        description: "Single sign-on, audit logs, and roles.",
-        icon: <ShieldCheckIcon className="mt-0.5" />,
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Documentation", href: "#docs", icon: <BookOpenIcon /> },
-      { label: "API reference", href: "#api", icon: <CodeIcon /> },
-      { label: "Help center", href: "#help", icon: <LifebuoyIcon /> },
-    ],
-  },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Blog", href: "#blog" },
-]
-
-const brand = <span className="text-base font-semibold">Acme</span>
-
-export function NavbarMegaPanelExample() {
-  return (
-    <div className="min-h-96">
-      <Navbar items={[
-            {
-              label: "Products",
-              columns: [
-                {
-                  label: "Explore",
-                  featured: true,
-                  links: [
-                    { label: "Analytics", href: "#analytics" },
-                    { label: "Automations", href: "#automations" },
-                    { label: "Security", href: "#security" },
-                  ],
-                },
-                {
-                  label: "Get started",
-                  links: [
-                    { label: "Pricing", href: "#pricing" },
-                    { label: "Customers", href: "#customers" },
-                  ],
-                },
-                {
-                  label: "Learn",
-                  links: [
-                    { label: "Documentation", href: "#docs" },
-                    { label: "Help center", href: "#help" },
-                  ],
-                },
-              ],
-            },
-            { label: "Pricing", href: "#pricing" },
-            { label: "Blog", href: "#blog" },
-          ]} brand={brand} layout="panel" />
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BookOpenIcon, ChartLineIcon, CodeIcon, LifebuoyIcon, LightningIcon, ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Navbar, type NavbarItem } from \"@/components/patterns/navbar\"\n\nconst items: NavbarItem[] = [\n  {\n    label: \"Products\",\n    items: [\n      {\n        label: \"Analytics\",\n        href: \"#analytics\",\n        description: \"Track traffic and conversions in real time.\",\n        icon: <ChartLineIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Automations\",\n        href: \"#automations\",\n        description: \"Run workflows when events happen.\",\n        icon: <LightningIcon className=\"mt-0.5\" />,\n      },\n      {\n        label: \"Security\",\n        href: \"#security\",\n        description: \"Single sign-on, audit logs, and roles.\",\n        icon: <ShieldCheckIcon className=\"mt-0.5\" />,\n      },\n    ],\n  },\n  {\n    label: \"Resources\",\n    items: [\n      { label: \"Documentation\", href: \"#docs\", icon: <BookOpenIcon /> },\n      { label: \"API reference\", href: \"#api\", icon: <CodeIcon /> },\n      { label: \"Help center\", href: \"#help\", icon: <LifebuoyIcon /> },\n    ],\n  },\n  { label: \"Pricing\", href: \"#pricing\" },\n  { label: \"Blog\", href: \"#blog\" },\n]\n\nconst brand = <span className=\"text-base font-semibold\">Acme</span>\n\nexport function NavbarMegaPanelExample() {\n  return (\n    <div className=\"min-h-96\">\n      <Navbar items={[\n            {\n              label: \"Products\",\n              columns: [\n                {\n                  label: \"Explore\",\n                  featured: true,\n                  links: [\n                    { label: \"Analytics\", href: \"#analytics\" },\n                    { label: \"Automations\", href: \"#automations\" },\n                    { label: \"Security\", href: \"#security\" },\n                  ],\n                },\n                {\n                  label: \"Get started\",\n                  links: [\n                    { label: \"Pricing\", href: \"#pricing\" },\n                    { label: \"Customers\", href: \"#customers\" },\n                  ],\n                },\n                {\n                  label: \"Learn\",\n                  links: [\n                    { label: \"Documentation\", href: \"#docs\" },\n                    { label: \"Help center\", href: \"#help\" },\n                  ],\n                },\n              ],\n            },\n            { label: \"Pricing\", href: \"#pricing\" },\n            { label: \"Blog\", href: \"#blog\" },\n          ]} brand={brand} layout=\"panel\" />\n    </div>\n  )\n}"} />
 
 </Example>
 

@@ -7,25 +7,7 @@ generated: true
 
 <Example kind="ui" name="tooltip" story="Default">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-
-export function TooltipExample() {
-  return (
-    <TooltipProvider>
-      <div className="p-12">
-        <Tooltip>
-          <TooltipTrigger render={<Button variant="outline" />}>
-            Hover me
-          </TooltipTrigger>
-          <TooltipContent side="top">Add to library</TooltipContent>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function TooltipExample() {\n  return (\n    <TooltipProvider>\n      <div className=\"p-12\">\n        <Tooltip>\n          <TooltipTrigger render={<Button variant=\"outline\" />}>\n            Hover me\n          </TooltipTrigger>\n          <TooltipContent side=\"top\">Add to library</TooltipContent>\n        </Tooltip>\n      </div>\n    </TooltipProvider>\n  )\n}"} />
 
 </Example>
 
@@ -37,112 +19,25 @@ Use tooltips to name icon-only buttons or show a keyboard shortcut. Keep the tex
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add tooltip
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add tooltip"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Copy the source into `components/ui/tooltip.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/tooltip.tsx"
-"use client"
-
-import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip"
-import { cn } from "cn"
-
-function TooltipProvider({
-  delay = 0,
-  ...props
-}: TooltipPrimitive.Provider.Props) {
-  return (
-    <TooltipPrimitive.Provider
-      data-slot="tooltip-provider"
-      delay={delay}
-      {...props}
-    />
-  )
-}
-
-function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
-  return <TooltipPrimitive.Root data-slot="tooltip" {...props} />
-}
-
-function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
-}
-
-function TooltipContent({
-  className,
-  side = "top",
-  sideOffset = 4,
-  align = "center",
-  alignOffset = 0,
-  children,
-  ...props
-}: TooltipPrimitive.Popup.Props &
-  Pick<
-    TooltipPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
-  return (
-    <TooltipPrimitive.Portal>
-      <TooltipPrimitive.Positioner
-        align={align}
-        alignOffset={alignOffset}
-        side={side}
-        sideOffset={sideOffset}
-        className="isolate z-50"
-      >
-        <TooltipPrimitive.Popup
-          data-slot="tooltip-content"
-          className={cn(
-            "z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-xl bg-label px-3 py-1.5 text-xs text-surface has-data-[slot=kbd]:pe-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-start-2 data-[side=inline-start]:slide-in-from-end-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-            className
-          )}
-          {...props}
-        >
-          {children}
-          <TooltipPrimitive.Arrow className="z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-xs bg-label fill-label data-[side=bottom]:top-1 data-[side=inline-end]:top-1/2! data-[side=inline-end]:-inset-s-1 data-[side=inline-end]:translate-x-[1.5px] rtl:data-[side=inline-end]:translate-x-[-1.5px] data-[side=inline-end]:-translate-y-1/2 data-[side=inline-start]:top-1/2! data-[side=inline-start]:-inset-e-1 data-[side=inline-start]:translate-x-[-1.5px] rtl:data-[side=inline-start]:translate-x-[1.5px] data-[side=inline-start]:-translate-y-1/2 data-[side=left]:top-1/2! data-[side=left]:-right-1 data-[side=left]:translate-x-[-1.5px] rtl:data-[side=left]:translate-x-[1.5px] data-[side=left]:-translate-y-1/2 data-[side=right]:top-1/2! data-[side=right]:-left-1 data-[side=right]:translate-x-[1.5px] rtl:data-[side=right]:translate-x-[-1.5px] data-[side=right]:-translate-y-1/2 data-[side=top]:-bottom-2.5" />
-        </TooltipPrimitive.Popup>
-      </TooltipPrimitive.Positioner>
-    </TooltipPrimitive.Portal>
-  )
-}
-
-export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/tooltip.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-```
+<Code lang="tsx" code={"import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from \"@/components/ui/tooltip\""} />
 
-```tsx
-<TooltipProvider>
-  <div className="p-12">
-    <Tooltip>
-      <TooltipTrigger render={<Button variant="outline" />}>
-        Hover me
-      </TooltipTrigger>
-      <TooltipContent side="top">Add to library</TooltipContent>
-    </Tooltip>
-  </div>
-</TooltipProvider>
-```
+<Code lang="tsx" code={"<TooltipProvider>\n  <div className=\"p-12\">\n    <Tooltip>\n      <TooltipTrigger render={<Button variant=\"outline\" />}>\n        Hover me\n      </TooltipTrigger>\n      <TooltipContent side=\"top\">Add to library</TooltipContent>\n    </Tooltip>\n  </div>\n</TooltipProvider>"} />
 
 Use the `render` prop on `TooltipTrigger` to render it as a `Button`. Set `side` on `TooltipContent` to place the tooltip on another side; it opens above the trigger by default, `4px` away. Place a `Kbd` inside `TooltipContent` to show a shortcut.
 
@@ -156,31 +51,7 @@ Places tooltips on each of the four sides of their triggers.
 
 <Example kind="ui" name="tooltip" story="Sides">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-
-export function TooltipSidesExample() {
-  return (
-    <TooltipProvider>
-      <div className="p-12">
-        <div className="grid grid-cols-2 place-items-center gap-x-24 gap-y-16">
-          {(["top", "right", "left", "bottom"] as const).map((side) => (
-            <TooltipProvider key={side}>
-              <Tooltip>
-                <TooltipTrigger render={<Button variant="outline" />}>
-                  {side}
-                </TooltipTrigger>
-                <TooltipContent side={side}>Shown on the {side}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ))}
-        </div>
-      </div>
-    </TooltipProvider>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function TooltipSidesExample() {\n  return (\n    <TooltipProvider>\n      <div className=\"p-12\">\n        <div className=\"grid grid-cols-2 place-items-center gap-x-24 gap-y-16\">\n          {([\"top\", \"right\", \"left\", \"bottom\"] as const).map((side) => (\n            <TooltipProvider key={side}>\n              <Tooltip>\n                <TooltipTrigger render={<Button variant=\"outline\" />}>\n                  {side}\n                </TooltipTrigger>\n                <TooltipContent side={side}>Shown on the {side}</TooltipContent>\n              </Tooltip>\n            </TooltipProvider>\n          ))}\n        </div>\n      </div>\n    </TooltipProvider>\n  )\n}"} />
 
 </Example>
 
@@ -190,32 +61,7 @@ Names an icon button and shows its keyboard shortcut with `Kbd`.
 
 <Example kind="ui" name="tooltip" story="WithShortcut">
 
-```tsx
-import { PlusIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-
-export function TooltipWithShortcutExample() {
-  return (
-    <TooltipProvider>
-      <div className="p-12">
-        <Tooltip>
-          <TooltipTrigger
-            render={<Button variant="outline" size="icon" aria-label="New file" />}
-          >
-            <PlusIcon />
-          </TooltipTrigger>
-          <TooltipContent side="top">
-            New file
-            <Kbd mod>N</Kbd>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
-  )
-}
-```
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function TooltipWithShortcutExample() {\n  return (\n    <TooltipProvider>\n      <div className=\"p-12\">\n        <Tooltip>\n          <TooltipTrigger\n            render={<Button variant=\"outline\" size=\"icon\" aria-label=\"New file\" />}\n          >\n            <PlusIcon />\n          </TooltipTrigger>\n          <TooltipContent side=\"top\">\n            New file\n            <Kbd mod>N</Kbd>\n          </TooltipContent>\n        </Tooltip>\n      </div>\n    </TooltipProvider>\n  )\n}"} />
 
 </Example>
 

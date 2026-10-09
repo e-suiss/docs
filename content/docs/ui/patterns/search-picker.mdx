@@ -7,24 +7,7 @@ generated: true
 
 <Example kind="pattern" name="search-picker" story="Default">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" />\n  )\n}"} />
 
 </Example>
 
@@ -36,287 +19,27 @@ Items are passed as data. When any item has a `group`, items are listed under gr
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns search-picker
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns search-picker"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @phosphor-icons/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @phosphor-icons/react cn"} />
 
 2. Add the pieces it builds on: [Combobox](/docs/ui/components/combobox), [Command](/docs/ui/components/command), [Drawer](/docs/ui/components/drawer), `use-mobile`.
 
 3. Copy the source into `components/patterns/search-picker.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/search-picker.tsx"
-"use client"
-
-import { CaretUpDownIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-import * as React from "react"
-
-import {
-  Combobox,
-  ComboboxCollection,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxGroup,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxLabel,
-  ComboboxList,
-  ComboboxSeparator,
-} from "@/components/ui/combobox"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-type SearchPickerItem = {
-  value: string
-  label: string
-  group?: string
-  disabled?: boolean
-}
-
-type SearchPickerGroup = {
-  value: string
-  items: SearchPickerItem[]
-}
-
-function groupItems(items: SearchPickerItem[]): SearchPickerGroup[] {
-  const groups = new Map<string, SearchPickerItem[]>()
-  for (const item of items) {
-    const key = item.group ?? ""
-    groups.set(key, [...(groups.get(key) ?? []), item])
-  }
-  return [...groups].map(([value, groupItems]) => ({
-    value,
-    items: groupItems,
-  }))
-}
-
-function SearchPicker({
-  items,
-  value: valueProp,
-  defaultValue,
-  onValueChange,
-  placeholder,
-  searchPlaceholder = "Search...",
-  emptyText = "No results found.",
-  title,
-  disabled,
-  floating,
-  showCloseButton = false,
-  closeLabel,
-  id,
-  className,
-  "aria-invalid": ariaInvalid,
-  "aria-label": ariaLabel,
-  "aria-describedby": ariaDescribedBy,
-}: {
-  items: SearchPickerItem[]
-  value?: string | null
-  defaultValue?: string | null
-  onValueChange?: (value: string | null) => void
-  placeholder?: string
-  searchPlaceholder?: string
-  emptyText?: string
-  title?: string
-  disabled?: boolean
-  floating?: boolean
-  showCloseButton?: boolean
-  closeLabel?: string
-  id?: string
-  className?: string
-  "aria-invalid"?: boolean
-  "aria-label"?: string
-  "aria-describedby"?: string
-}) {
-  const isMobile = useIsMobile()
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(
-    defaultValue ?? null
-  )
-  const value = valueProp === undefined ? uncontrolledValue : valueProp
-  const [open, setOpen] = React.useState(false)
-  const searchRef = React.useRef<HTMLInputElement>(null)
-
-  const groups = React.useMemo(() => groupItems(items), [items])
-  const grouped = groups.some((group) => group.value !== "")
-  const selected = items.find((item) => item.value === value) ?? null
-
-  const select = (next: string | null) => {
-    if (valueProp === undefined) setUncontrolledValue(next)
-    onValueChange?.(next)
-  }
-
-  if (isMobile) {
-    return (
-      <Drawer
-        data-slot="search-picker"
-        open={open}
-        onOpenChange={setOpen}
-        floating={floating}
-        showSwipeHandle
-      >
-        <DrawerTrigger
-          data-slot="search-picker-trigger"
-          disabled={disabled}
-          id={id}
-          aria-invalid={ariaInvalid}
-          aria-label={ariaLabel}
-          aria-describedby={ariaDescribedBy}
-          data-placeholder={selected ? undefined : ""}
-          className={cn(
-            "flex h-11 w-full items-center justify-between gap-1.5 rounded-lg border border-transparent bg-control px-3 text-start text-base outline-none focus-visible:focus-ring disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 data-placeholder:text-label-secondary dark:aria-invalid:bg-danger/10",
-            className
-          )}
-        >
-          <span className="truncate">{selected?.label ?? placeholder}</span>
-          <CaretUpDownIcon className="size-4 shrink-0 text-label-secondary" />
-        </DrawerTrigger>
-        <DrawerContent
-          data-slot="search-picker-content"
-          initialFocus={searchRef}
-          showCloseButton={showCloseButton}
-          closeLabel={closeLabel}
-        >
-          <DrawerHeader className={cn(!title && "sr-only")}>
-            <DrawerTitle>{title ?? placeholder ?? ariaLabel}</DrawerTitle>
-          </DrawerHeader>
-          <Command
-            className={cn(
-              "rounded-none bg-transparent px-3 pt-1.25 pb-[max(--spacing(3),env(safe-area-inset-bottom))] **:data-[slot=command-list]:max-h-[60dvh] **:data-[slot=command-list]:min-h-[40dvh]",
-              showCloseButton && "**:data-[slot=command-input-wrapper]:pe-11",
-              showCloseButton &&
-                closeLabel &&
-                "**:data-[slot=command-input-wrapper]:pe-21"
-            )}
-          >
-            <CommandInput ref={searchRef} placeholder={searchPlaceholder} />
-            <CommandList>
-              <CommandEmpty>{emptyText}</CommandEmpty>
-              {groups.map((group) => (
-                <CommandGroup
-                  key={group.value}
-                  heading={group.value || undefined}
-                >
-                  {group.items.map((item) => (
-                    <CommandItem
-                      key={item.value}
-                      value={item.label}
-                      disabled={item.disabled}
-                      data-checked={item.value === value}
-                      onSelect={() => {
-                        select(item.value)
-                        setOpen(false)
-                      }}
-                    >
-                      {item.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              ))}
-            </CommandList>
-          </Command>
-        </DrawerContent>
-      </Drawer>
-    )
-  }
-
-  return (
-    <Combobox
-      data-slot="search-picker"
-      items={grouped ? groups : items}
-      value={selected}
-      onValueChange={(next: SearchPickerItem | null) =>
-        select(next?.value ?? null)
-      }
-      itemToStringLabel={(item: SearchPickerItem) => item.label}
-      isItemEqualToValue={(a: SearchPickerItem, b: SearchPickerItem) =>
-        a.value === b.value
-      }
-      disabled={disabled}
-    >
-      <ComboboxInput
-        placeholder={placeholder}
-        disabled={disabled}
-        aria-invalid={ariaInvalid}
-        id={id}
-        aria-label={ariaLabel}
-        aria-describedby={ariaDescribedBy}
-        className={className}
-      />
-      <ComboboxContent data-slot="search-picker-content">
-        <ComboboxEmpty>{emptyText}</ComboboxEmpty>
-        <ComboboxList>
-          {grouped
-            ? (group: SearchPickerGroup, index: number) => (
-                <ComboboxGroup key={group.value} items={group.items}>
-                  {index > 0 && <ComboboxSeparator />}
-                  {group.value && <ComboboxLabel>{group.value}</ComboboxLabel>}
-                  <ComboboxCollection>
-                    {(item: SearchPickerItem) => (
-                      <ComboboxItem
-                        key={item.value}
-                        value={item}
-                        disabled={item.disabled}
-                      >
-                        {item.label}
-                      </ComboboxItem>
-                    )}
-                  </ComboboxCollection>
-                </ComboboxGroup>
-              )
-            : (item: SearchPickerItem) => (
-                <ComboboxItem
-                  key={item.value}
-                  value={item}
-                  disabled={item.disabled}
-                >
-                  {item.label}
-                </ComboboxItem>
-              )}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
-  )
-}
-
-export { SearchPicker, type SearchPickerItem }
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/search-picker.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { SearchPicker } from "@/components/patterns/search-picker"
-```
+<Code lang="tsx" code={"import { SearchPicker } from \"@/components/patterns/search-picker\""} />
 
-```tsx
-<SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" />
-```
+<Code lang="tsx" code={"<SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" />"} />
 
 - Each item in `items` has a `value`, a `label`, and an optional `group` and `disabled` flag. The `SearchPickerItem` type is exported.
 - The value is uncontrolled by default; use `defaultValue`, or `value` with `onValueChange` to control it. The value is `null` when nothing is selected.
@@ -331,24 +54,7 @@ Starts with a selected item through `defaultValue`.
 
 <Example kind="pattern" name="search-picker" story="WithValue">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerWithValueExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" defaultValue="astro" />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithValueExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" defaultValue=\"astro\" />\n  )\n}"} />
 
 </Example>
 
@@ -358,26 +64,7 @@ Lists cities under group headings and filters across groups.
 
 <Example kind="pattern" name="search-picker" story="Grouped">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const cities: SearchPickerItem[] = [
-  { value: "nyc", label: "New York", group: "Americas" },
-  { value: "chi", label: "Chicago", group: "Americas" },
-  { value: "sao", label: "São Paulo", group: "Americas" },
-  { value: "lon", label: "London", group: "Europe" },
-  { value: "ber", label: "Berlin", group: "Europe" },
-  { value: "ist", label: "Istanbul", group: "Europe" },
-  { value: "tyo", label: "Tokyo", group: "Asia" },
-  { value: "sin", label: "Singapore", group: "Asia" },
-]
-
-export function SearchPickerGroupedExample() {
-  return (
-    <SearchPicker items={cities} placeholder="Select a city" searchPlaceholder="Search cities..." emptyText="No city found." aria-label="City" className="w-56" />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst cities: SearchPickerItem[] = [\n  { value: \"nyc\", label: \"New York\", group: \"Americas\" },\n  { value: \"chi\", label: \"Chicago\", group: \"Americas\" },\n  { value: \"sao\", label: \"São Paulo\", group: \"Americas\" },\n  { value: \"lon\", label: \"London\", group: \"Europe\" },\n  { value: \"ber\", label: \"Berlin\", group: \"Europe\" },\n  { value: \"ist\", label: \"Istanbul\", group: \"Europe\" },\n  { value: \"tyo\", label: \"Tokyo\", group: \"Asia\" },\n  { value: \"sin\", label: \"Singapore\", group: \"Asia\" },\n]\n\nexport function SearchPickerGroupedExample() {\n  return (\n    <SearchPicker items={cities} placeholder=\"Select a city\" searchPlaceholder=\"Search cities...\" emptyText=\"No city found.\" aria-label=\"City\" className=\"w-56\" />\n  )\n}"} />
 
 </Example>
 
@@ -387,24 +74,7 @@ Shows a visible title at the top of the mobile drawer.
 
 <Example kind="pattern" name="search-picker" story="WithTitle">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerWithTitleExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" title="Framework" />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithTitleExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" title=\"Framework\" />\n  )\n}"} />
 
 </Example>
 
@@ -414,24 +84,7 @@ Adds a close button to the mobile drawer.
 
 <Example kind="pattern" name="search-picker" story="WithCloseButton">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerWithCloseButtonExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" showCloseButton />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithCloseButtonExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" showCloseButton />\n  )\n}"} />
 
 </Example>
 
@@ -441,24 +94,7 @@ Uses a Cancel text button for the mobile close button.
 
 <Example kind="pattern" name="search-picker" story="WithCloseLabel">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerWithCloseLabelExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" showCloseButton closeLabel="Cancel" />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerWithCloseLabelExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" showCloseButton closeLabel=\"Cancel\" />\n  )\n}"} />
 
 </Example>
 
@@ -468,24 +104,7 @@ Disables the field.
 
 <Example kind="pattern" name="search-picker" story="Disabled">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerDisabledExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" disabled />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerDisabledExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" disabled />\n  )\n}"} />
 
 </Example>
 
@@ -495,24 +114,7 @@ Shows the invalid style through `aria-invalid`.
 
 <Example kind="pattern" name="search-picker" story="Invalid">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerInvalidExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" aria-invalid />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerInvalidExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" aria-invalid />\n  )\n}"} />
 
 </Example>
 
@@ -522,38 +124,7 @@ Owns the value in state with `value` and `onValueChange`.
 
 <Example kind="pattern" name="search-picker" story="Controlled">
 
-```tsx
-import * as React from "react"
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-function ControlledExample(args: React.ComponentProps<typeof SearchPicker>) {
-  const [value, setValue] = React.useState<string | null>("next")
-
-  return (
-    <div className="flex flex-col items-start gap-2">
-      <SearchPicker {...args} value={value} onValueChange={setValue} />
-      <p className="text-sm text-label-secondary">
-        Selected: {value ?? "none"}
-      </p>
-    </div>
-  )
-}
-
-export function SearchPickerControlledExample() {
-  return (
-    <ControlledExample items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" />
-  )
-}
-```
+<Code lang="tsx" code={"import * as React from \"react\"\nimport { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nfunction ControlledExample(args: React.ComponentProps<typeof SearchPicker>) {\n  const [value, setValue] = React.useState<string | null>(\"next\")\n\n  return (\n    <div className=\"flex flex-col items-start gap-2\">\n      <SearchPicker {...args} value={value} onValueChange={setValue} />\n      <p className=\"text-sm text-label-secondary\">\n        Selected: {value ?? \"none\"}\n      </p>\n    </div>\n  )\n}\n\nexport function SearchPickerControlledExample() {\n  return (\n    <ControlledExample items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" />\n  )\n}"} />
 
 </Example>
 
@@ -563,24 +134,7 @@ Insets the mobile drawer from the screen edges.
 
 <Example kind="pattern" name="search-picker" story="Floating">
 
-```tsx
-import { SearchPicker, type SearchPickerItem } from "@/components/patterns/search-picker"
-
-const frameworks: SearchPickerItem[] = [
-  { value: "next", label: "Next.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt", label: "Nuxt" },
-  { value: "gatsby", label: "Gatsby", disabled: true },
-]
-
-export function SearchPickerFloatingExample() {
-  return (
-    <SearchPicker items={frameworks} placeholder="Select a framework" searchPlaceholder="Search frameworks..." emptyText="No framework found." aria-label="Framework" className="w-56" floating />
-  )
-}
-```
+<Code lang="tsx" code={"import { SearchPicker, type SearchPickerItem } from \"@/components/patterns/search-picker\"\n\nconst frameworks: SearchPickerItem[] = [\n  { value: \"next\", label: \"Next.js\" },\n  { value: \"remix\", label: \"Remix\" },\n  { value: \"astro\", label: \"Astro\" },\n  { value: \"sveltekit\", label: \"SvelteKit\" },\n  { value: \"nuxt\", label: \"Nuxt\" },\n  { value: \"gatsby\", label: \"Gatsby\", disabled: true },\n]\n\nexport function SearchPickerFloatingExample() {\n  return (\n    <SearchPicker items={frameworks} placeholder=\"Select a framework\" searchPlaceholder=\"Search frameworks...\" emptyText=\"No framework found.\" aria-label=\"Framework\" className=\"w-56\" floating />\n  )\n}"} />
 
 </Example>
 

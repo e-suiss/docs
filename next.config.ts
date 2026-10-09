@@ -3,6 +3,7 @@ import { createMDX } from "fumadocs-mdx/next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  agentRules: false,
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

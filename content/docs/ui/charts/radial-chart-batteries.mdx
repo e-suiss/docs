@@ -7,95 +7,7 @@ generated: true
 
 <Example kind="chart" name="radial-chart-batteries">
 
-```tsx title="components/charts/radial-chart-batteries.tsx"
-"use client"
-
-import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
-
-const devices = [
-  { name: "Phone", level: 82 },
-  { name: "Earbuds", level: 46 },
-  { name: "Watch", level: 18 },
-  { name: "Case", level: 100 },
-]
-
-const LOW = 20
-
-function Battery({ name, level }: { name: string; level: number }) {
-  const chartConfig = {
-    level: { label: name, color: level <= LOW ? "var(--red)" : "var(--green)" },
-  } satisfies ChartConfig
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative size-16">
-        <ChartContainer
-          config={chartConfig}
-          aria-hidden
-          className="aspect-square size-full"
-        >
-          <RadialBarChart
-            accessibilityLayer={false}
-            data={[{ level, fill: "var(--color-level)" }]}
-            innerRadius="78%"
-            outerRadius="100%"
-            startAngle={90}
-            endAngle={-270}
-            barSize={6}
-          >
-            <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-            <RadialBar
-              dataKey="level"
-              cornerRadius={6}
-              isAnimationActive={false}
-              background={{
-                fill: "color-mix(in oklab, var(--color-level) 22%, transparent)",
-              }}
-            />
-          </RadialBarChart>
-        </ChartContainer>
-        <span
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-label-secondary"
-        >
-          {name[0]}
-        </span>
-      </div>
-      <span className="text-base font-semibold tabular-nums">{level}%</span>
-      <span className="text-xs text-label-secondary">{name}</span>
-    </div>
-  )
-}
-
-export function RadialChartBatteries() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Batteries</CardTitle>
-        <CardDescription>Charge left on each device</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ul className="grid grid-cols-4 gap-2 py-4">
-          {devices.map((device) => (
-            <li key={device.name}>
-              <Battery {...device} />
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
-  )
-}
-```
+<SourceFile path="components/charts/radial-chart-batteries.tsx" fold={false} />
 
 </Example>
 
@@ -105,127 +17,27 @@ Each `Battery` renders a compact `RadialBarChart` (`innerRadius="78%"`, `startAn
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add charts radial-chart-batteries
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-batteries"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install recharts
-```
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
 
 2. Add the pieces it builds on: [Card](/docs/ui/components/card), [Chart](/docs/ui/components/chart).
 
 3. Copy the source into `components/charts/radial-chart-batteries.tsx`:
 
-<SourceCode>
-
-```tsx title="components/charts/radial-chart-batteries.tsx"
-"use client"
-
-import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
-
-const devices = [
-  { name: "Phone", level: 82 },
-  { name: "Earbuds", level: 46 },
-  { name: "Watch", level: 18 },
-  { name: "Case", level: 100 },
-]
-
-const LOW = 20
-
-function Battery({ name, level }: { name: string; level: number }) {
-  const chartConfig = {
-    level: { label: name, color: level <= LOW ? "var(--red)" : "var(--green)" },
-  } satisfies ChartConfig
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative size-16">
-        <ChartContainer
-          config={chartConfig}
-          aria-hidden
-          className="aspect-square size-full"
-        >
-          <RadialBarChart
-            accessibilityLayer={false}
-            data={[{ level, fill: "var(--color-level)" }]}
-            innerRadius="78%"
-            outerRadius="100%"
-            startAngle={90}
-            endAngle={-270}
-            barSize={6}
-          >
-            <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-            <RadialBar
-              dataKey="level"
-              cornerRadius={6}
-              isAnimationActive={false}
-              background={{
-                fill: "color-mix(in oklab, var(--color-level) 22%, transparent)",
-              }}
-            />
-          </RadialBarChart>
-        </ChartContainer>
-        <span
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-label-secondary"
-        >
-          {name[0]}
-        </span>
-      </div>
-      <span className="text-base font-semibold tabular-nums">{level}%</span>
-      <span className="text-xs text-label-secondary">{name}</span>
-    </div>
-  )
-}
-
-export function RadialChartBatteries() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Batteries</CardTitle>
-        <CardDescription>Charge left on each device</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ul className="grid grid-cols-4 gap-2 py-4">
-          {devices.map((device) => (
-            <li key={device.name}>
-              <Battery {...device} />
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
-  )
-}
-```
-
-</SourceCode>
+<SourceFile path="components/charts/radial-chart-batteries.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { RadialChartBatteries } from "@/components/charts/radial-chart-batteries"
-```
+<Code lang="tsx" code={"import { RadialChartBatteries } from \"@/components/charts/radial-chart-batteries\""} />
 
-```tsx
-<RadialChartBatteries />
-```
+<Code lang="tsx" code={"<RadialChartBatteries />"} />
 
 Replace `devices` with your own names and levels from 0 to 100, and change `LOW` to move the warning threshold. The ring's center shows the first letter of `name`; swap that span for an icon if you prefer.
 

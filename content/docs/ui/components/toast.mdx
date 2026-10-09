@@ -7,34 +7,7 @@ generated: true
 
 <Example kind="ui" name="toast" story="Default">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function DefaultExample() {
-  const toast = useToastManager()
-
-  return (
-    <Button
-      variant="outline"
-      onClick={() =>
-        toast.add({
-          title: "Event created",
-          description: "Friday, October 3 at 9:00 AM",
-        })
-      }
-    >
-      Show toast
-    </Button>
-  )
-}
-
-export function ToastExample() {
-  return (
-    <DefaultExample />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction DefaultExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast.add({\n          title: \"Event created\",\n          description: \"Friday, October 3 at 9:00 AM\",\n        })\n      }\n    >\n      Show toast\n    </Button>\n  )\n}\n\nexport function ToastExample() {\n  return (\n    <DefaultExample />\n  )\n}"} />
 
 </Example>
 
@@ -46,328 +19,27 @@ New toasts stack at the bottom of the screen, with older ones scaled down behind
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add toast
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add toast"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react @phosphor-icons/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
 
 2. Add the pieces it builds on: [Button](/docs/ui/components/button).
 
 3. Copy the source into `components/ui/toast.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/toast.tsx"
-"use client"
-
-import { Toast as ToastPrimitive } from "@base-ui/react/toast"
-import { CheckIcon, ExclamationMarkIcon, XIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-
-const toast = ToastPrimitive.createToastManager()
-
-function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-  return <ToastPrimitive.Provider {...props} />
-}
-
-function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
-  return <ToastPrimitive.Portal data-slot="toast-portal" {...props} />
-}
-
-function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
-  return (
-    <ToastPrimitive.Viewport
-      data-slot="toast-viewport"
-      className={cn(
-        "pointer-events-none fixed inset-x-4 bottom-4 z-50 mx-auto w-auto max-w-sm outline-none sm:inset-e-4 sm:inset-s-auto sm:mx-0 sm:w-full",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
-  return (
-    <ToastPrimitive.Root
-      data-slot="toast"
-      className={cn(
-        "pointer-events-auto absolute inset-e-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-xl bg-surface-raised text-label shadow-[0_8px_32px_rgb(0_0_0/0.14)] ring-1 ring-label/5 dark:shadow-lg dark:ring-0 will-change-transform outline-none select-none focus-visible:focus-ring",
-        "[--gap:0.75rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))] [--peek:0.75rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
-        "h-(--height) transform-[translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--peek))-(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms,filter_500ms] dark:not-data-expanded:brightness-[calc(1-var(--toast-index)*0.18)]",
-        "after:absolute after:top-full after:inset-s-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
-        "data-expanded:h-(--toast-height) data-expanded:transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))]",
-        "data-limited:opacity-0 data-starting-style:transform-[translateY(150%)]",
-        "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:transform-[translateY(150%)]",
-        "data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+150%))]",
-        "data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-150%))_translateY(var(--offset-y))]",
-        "data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))]",
-        "data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-150%))]",
-        "data-expanded:data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+150%))]",
-        "data-expanded:data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-150%))_translateY(var(--offset-y))]",
-        "data-expanded:data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))]",
-        "data-expanded:data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-150%))]",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
-  return (
-    <ToastPrimitive.Content
-      data-slot="toast-content"
-      className={cn(
-        "flex h-full items-center gap-3 overflow-hidden p-4 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
-  return (
-    <ToastPrimitive.Title
-      data-slot="toast-title"
-      className={cn("text-sm font-semibold", className)}
-      {...props}
-    />
-  )
-}
-
-function ToastDescription({
-  className,
-  ...props
-}: ToastPrimitive.Description.Props) {
-  return (
-    <ToastPrimitive.Description
-      data-slot="toast-description"
-      className={cn("text-sm text-label-secondary", className)}
-      {...props}
-    />
-  )
-}
-
-function ToastAction({
-  className,
-  render = <Button variant="outline" size="sm" />,
-  ...props
-}: ToastPrimitive.Action.Props) {
-  return (
-    <ToastPrimitive.Action
-      data-slot="toast-action"
-      render={render}
-      className={cn("shrink-0", className)}
-      {...props}
-    />
-  )
-}
-
-function ToastClose({
-  className,
-  children,
-  render = <Button variant="ghost" size="icon-sm" />,
-  ...props
-}: ToastPrimitive.Close.Props) {
-  return (
-    <ToastPrimitive.Close
-      data-slot="toast-close"
-      aria-label="Close toast"
-      render={render}
-      className={cn(
-        "relative shrink-0 text-label-secondary after:absolute after:-inset-2 after:content-[''] hover:text-label",
-        className
-      )}
-      {...props}
-    >
-      {children ?? <XIcon aria-hidden="true" />}
-    </ToastPrimitive.Close>
-  )
-}
-
-function ToastIcon({ type }: { type: string | undefined }) {
-  const ring = React.useRef<SVGCircleElement>(null)
-  const [tracked, setTracked] = React.useState(type === "loading")
-  if (type === "loading" && !tracked) setTracked(true)
-
-  React.useLayoutEffect(() => {
-    const circle = ring.current
-    if (!circle) return
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (type !== "loading") {
-      circle.animate([{ strokeDasharray: "100 100" }], {
-        duration: still ? 0 : 280,
-        easing: "cubic-bezier(0.3, 0, 0.2, 1)",
-        fill: "forwards",
-      })
-      return
-    }
-    if (still) {
-      circle.style.strokeDasharray = "30 100"
-      return
-    }
-    const progress = circle.animate(
-      [{ strokeDasharray: "0 100" }, { strokeDasharray: "94 100" }],
-      {
-        duration: 12000,
-        easing: "cubic-bezier(0.1, 0.75, 0.25, 1)",
-        fill: "forwards",
-      }
-    )
-    return () => {
-      circle.style.strokeDasharray = getComputedStyle(circle).strokeDasharray
-      progress.cancel()
-    }
-  }, [type])
-
-  let icon: React.ReactNode = null
-  let tint = ""
-
-  if (type === "success") {
-    icon = <CheckIcon weight="bold" />
-    tint = "bg-green"
-  }
-
-  if (type === "info") {
-    icon = <ExclamationMarkIcon weight="bold" className="rotate-180" />
-    tint = "bg-accent"
-  }
-
-  if (type === "warning") {
-    icon = <ExclamationMarkIcon weight="bold" />
-    tint = "bg-orange"
-  }
-
-  if (type === "error") {
-    icon = <XIcon weight="bold" />
-    tint = "bg-danger"
-  }
-
-  const badge = icon && (
-    <span
-      data-slot={tracked ? undefined : "toast-icon"}
-      aria-hidden="true"
-      className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-full text-surface [&_svg]:pointer-events-none [&_svg]:size-4",
-        tracked &&
-          "absolute inset-0 animate-in duration-300 delay-250 ease-[cubic-bezier(0.3,1.25,0.5,1)] fill-mode-both fade-in zoom-in-50",
-        tint
-      )}
-    >
-      {icon}
-    </span>
-  )
-
-  if (!tracked) return badge ?? null
-
-  return (
-    <span
-      data-slot="toast-icon"
-      className="relative flex size-8 shrink-0 items-center justify-center"
-    >
-      <svg
-        aria-hidden
-        viewBox="0 0 32 32"
-        fill="none"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        className="size-8 -rotate-90"
-      >
-        <circle cx="16" cy="16" r="14.5" className="stroke-label/15" />
-        <circle
-          ref={ring}
-          cx="16"
-          cy="16"
-          r="14.5"
-          pathLength="100"
-          strokeDasharray="0 100"
-          className="stroke-accent"
-        />
-      </svg>
-      {type !== "loading" && badge}
-    </span>
-  )
-}
-
-function ToastList() {
-  const { toasts } = ToastPrimitive.useToastManager()
-
-  return toasts.map((toastItem) => (
-    <Toast key={toastItem.id} toast={toastItem}>
-      <ToastContent>
-        <ToastIcon type={toastItem.type} />
-        <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <ToastTitle />
-          <ToastDescription />
-        </div>
-        <ToastAction />
-        <ToastClose />
-      </ToastContent>
-    </Toast>
-  ))
-}
-
-function Toaster({
-  children,
-  toastManager = toast,
-  ...props
-}: ToastPrimitive.Provider.Props) {
-  return (
-    <ToastProvider toastManager={toastManager} {...props}>
-      {children}
-      <ToastPortal>
-        <ToastViewport>
-          <ToastList />
-        </ToastViewport>
-      </ToastPortal>
-    </ToastProvider>
-  )
-}
-
-const createToastManager = ToastPrimitive.createToastManager
-const useToastManager = ToastPrimitive.useToastManager
-
-export {
-  createToastManager,
-  Toast,
-  ToastAction,
-  ToastClose,
-  ToastContent,
-  ToastDescription,
-  Toaster,
-  ToastPortal,
-  ToastProvider,
-  ToastTitle,
-  ToastViewport,
-  toast,
-  useToastManager,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/toast.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from "@/components/ui/toast"
-```
+<Code lang="tsx" code={"import { ToastProvider, ToastPortal, ToastViewport, Toast, ToastContent, ToastTitle, ToastDescription, ToastAction, ToastClose, Toaster } from \"@/components/ui/toast\""} />
 
-```tsx
-<DefaultExample />
-```
+<Code lang="tsx" code={"<DefaultExample />"} />
 
 Render `Toaster` once near the root of your app, wrapping the content that shows toasts. Call `toast.add({ title, description, type })` from anywhere, or read the manager inside the tree with `useToastManager()`. `add` returns an id that you can pass to `close`; `close()` with no id closes every toast.
 
@@ -383,85 +55,7 @@ Shows each toast `type` with its icon and color.
 
 <Example kind="ui" name="toast" story="Types">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function TypesExample() {
-  const toast = useToastManager()
-
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button
-        variant="outline"
-        onClick={() =>
-          toast.add({
-            type: "success",
-            title: "Changes saved",
-            description: "Your profile has been updated.",
-          })
-        }
-      >
-        Success
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() =>
-          toast.add({
-            type: "info",
-            title: "New version available",
-            description: "Refresh the page to get the latest features.",
-          })
-        }
-      >
-        Info
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() =>
-          toast.add({
-            type: "warning",
-            title: "Storage almost full",
-            description: "You have used 90% of your storage.",
-          })
-        }
-      >
-        Warning
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() =>
-          toast.add({
-            type: "error",
-            title: "Upload failed",
-            description: "The file is larger than 10 MB.",
-          })
-        }
-      >
-        Error
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() =>
-          toast.add({
-            type: "loading",
-            title: "Uploading file",
-            description: "This may take a few seconds.",
-          })
-        }
-      >
-        Loading
-      </Button>
-    </div>
-  )
-}
-
-export function ToastTypesExample() {
-  return (
-    <TypesExample />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TypesExample() {\n  const toast = useToastManager()\n\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"success\",\n            title: \"Changes saved\",\n            description: \"Your profile has been updated.\",\n          })\n        }\n      >\n        Success\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"info\",\n            title: \"New version available\",\n            description: \"Refresh the page to get the latest features.\",\n          })\n        }\n      >\n        Info\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"warning\",\n            title: \"Storage almost full\",\n            description: \"You have used 90% of your storage.\",\n          })\n        }\n      >\n        Warning\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"error\",\n            title: \"Upload failed\",\n            description: \"The file is larger than 10 MB.\",\n          })\n        }\n      >\n        Error\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"loading\",\n            title: \"Uploading file\",\n            description: \"This may take a few seconds.\",\n          })\n        }\n      >\n        Loading\n      </Button>\n    </div>\n  )\n}\n\nexport function ToastTypesExample() {\n  return (\n    <TypesExample />\n  )\n}"} />
 
 </Example>
 
@@ -471,29 +65,7 @@ Shows a toast with a title and no description.
 
 <Example kind="ui" name="toast" story="TitleOnly">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function TitleOnlyExample() {
-  const toast = useToastManager()
-
-  return (
-    <Button
-      variant="outline"
-      onClick={() => toast.add({ type: "success", title: "8 photos uploaded" })}
-    >
-      Upload photos
-    </Button>
-  )
-}
-
-export function ToastTitleOnlyExample() {
-  return (
-    <TitleOnlyExample />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TitleOnlyExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() => toast.add({ type: \"success\", title: \"8 photos uploaded\" })}\n    >\n      Upload photos\n    </Button>\n  )\n}\n\nexport function ToastTitleOnlyExample() {\n  return (\n    <TitleOnlyExample />\n  )\n}"} />
 
 </Example>
 
@@ -503,38 +75,7 @@ Adds an `Undo` action button that closes the toast.
 
 <Example kind="ui" name="toast" story="WithAction">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function WithActionExample() {
-  const toast = useToastManager()
-
-  return (
-    <Button
-      variant="outline"
-      onClick={() => {
-        const id = toast.add({
-          title: "Message archived",
-          description: "The conversation was moved to your archive.",
-          actionProps: {
-            children: "Undo",
-            onClick: () => toast.close(id),
-          },
-        })
-      }}
-    >
-      Archive message
-    </Button>
-  )
-}
-
-export function ToastWithActionExample() {
-  return (
-    <WithActionExample />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction WithActionExample() {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() => {\n        const id = toast.add({\n          title: \"Message archived\",\n          description: \"The conversation was moved to your archive.\",\n          actionProps: {\n            children: \"Undo\",\n            onClick: () => toast.close(id),\n          },\n        })\n      }}\n    >\n      Archive message\n    </Button>\n  )\n}\n\nexport function ToastWithActionExample() {\n  return (\n    <WithActionExample />\n  )\n}"} />
 
 </Example>
 
@@ -544,47 +85,7 @@ Compares a short `timeout` with a persistent toast that stays until closed.
 
 <Example kind="ui" name="toast" story="Timeout">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function TimeoutExample() {
-  const toast = useToastManager()
-
-  return (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button
-        variant="outline"
-        onClick={() => toast.add({ title: "Link copied", timeout: 1500 })}
-      >
-        Short
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() =>
-          toast.add({
-            type: "warning",
-            title: "Connection lost",
-            description: "Stays until you close it.",
-            timeout: 0,
-          })
-        }
-      >
-        Persistent
-      </Button>
-      <Button variant="outline" onClick={() => toast.close()}>
-        Close all
-      </Button>
-    </div>
-  )
-}
-
-export function ToastTimeoutExample() {
-  return (
-    <TimeoutExample />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction TimeoutExample() {\n  const toast = useToastManager()\n\n  return (\n    <div className=\"flex flex-wrap items-center gap-3\">\n      <Button\n        variant=\"outline\"\n        onClick={() => toast.add({ title: \"Link copied\", timeout: 1500 })}\n      >\n        Short\n      </Button>\n      <Button\n        variant=\"outline\"\n        onClick={() =>\n          toast.add({\n            type: \"warning\",\n            title: \"Connection lost\",\n            description: \"Stays until you close it.\",\n            timeout: 0,\n          })\n        }\n      >\n        Persistent\n      </Button>\n      <Button variant=\"outline\" onClick={() => toast.close()}>\n        Close all\n      </Button>\n    </div>\n  )\n}\n\nexport function ToastTimeoutExample() {\n  return (\n    <TimeoutExample />\n  )\n}"} />
 
 </Example>
 
@@ -594,58 +95,7 @@ Uses `toast.promise` to move from loading to success.
 
 <Example kind="ui" name="toast" story="PromiseToast">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-function PromiseExample({ fail = false }: { fail?: boolean }) {
-  const toast = useToastManager()
-
-  return (
-    <Button
-      variant="outline"
-      onClick={() =>
-        toast
-          .promise(
-            fail
-              ? wait(2000).then(() =>
-                  Promise.reject(new Error("Network error"))
-                )
-              : wait(2000),
-            {
-              loading: {
-                title: "Publishing post",
-                description: "Hang tight, this only takes a moment.",
-              },
-              success: {
-                title: "Post published",
-                description: "Your post is now live.",
-              },
-              error: (error) => ({
-                title: "Publishing failed",
-                description:
-                  error instanceof Error ? error.message : "Please try again.",
-              }),
-            }
-          )
-          .catch(() => undefined)
-      }
-    >
-      Publish post
-    </Button>
-  )
-}
-
-export function ToastPromiseToastExample() {
-  return (
-    <PromiseExample />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction PromiseExample({ fail = false }: { fail?: boolean }) {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast\n          .promise(\n            fail\n              ? wait(2000).then(() =>\n                  Promise.reject(new Error(\"Network error\"))\n                )\n              : wait(2000),\n            {\n              loading: {\n                title: \"Publishing post\",\n                description: \"Hang tight, this only takes a moment.\",\n              },\n              success: {\n                title: \"Post published\",\n                description: \"Your post is now live.\",\n              },\n              error: (error) => ({\n                title: \"Publishing failed\",\n                description:\n                  error instanceof Error ? error.message : \"Please try again.\",\n              }),\n            }\n          )\n          .catch(() => undefined)\n      }\n    >\n      Publish post\n    </Button>\n  )\n}\n\nexport function ToastPromiseToastExample() {\n  return (\n    <PromiseExample />\n  )\n}"} />
 
 </Example>
 
@@ -655,58 +105,7 @@ Uses `toast.promise` to move from loading to an error when the promise rejects.
 
 <Example kind="ui" name="toast" story="PromiseRejected">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { useToastManager } from "@/components/ui/toast"
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-function PromiseExample({ fail = false }: { fail?: boolean }) {
-  const toast = useToastManager()
-
-  return (
-    <Button
-      variant="outline"
-      onClick={() =>
-        toast
-          .promise(
-            fail
-              ? wait(2000).then(() =>
-                  Promise.reject(new Error("Network error"))
-                )
-              : wait(2000),
-            {
-              loading: {
-                title: "Publishing post",
-                description: "Hang tight, this only takes a moment.",
-              },
-              success: {
-                title: "Post published",
-                description: "Your post is now live.",
-              },
-              error: (error) => ({
-                title: "Publishing failed",
-                description:
-                  error instanceof Error ? error.message : "Please try again.",
-              }),
-            }
-          )
-          .catch(() => undefined)
-      }
-    >
-      Publish post
-    </Button>
-  )
-}
-
-export function ToastPromiseRejectedExample() {
-  return (
-    <PromiseExample fail />
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { useToastManager } from \"@/components/ui/toast\"\n\nfunction wait(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms))\n}\n\nfunction PromiseExample({ fail = false }: { fail?: boolean }) {\n  const toast = useToastManager()\n\n  return (\n    <Button\n      variant=\"outline\"\n      onClick={() =>\n        toast\n          .promise(\n            fail\n              ? wait(2000).then(() =>\n                  Promise.reject(new Error(\"Network error\"))\n                )\n              : wait(2000),\n            {\n              loading: {\n                title: \"Publishing post\",\n                description: \"Hang tight, this only takes a moment.\",\n              },\n              success: {\n                title: \"Post published\",\n                description: \"Your post is now live.\",\n              },\n              error: (error) => ({\n                title: \"Publishing failed\",\n                description:\n                  error instanceof Error ? error.message : \"Please try again.\",\n              }),\n            }\n          )\n          .catch(() => undefined)\n      }\n    >\n      Publish post\n    </Button>\n  )\n}\n\nexport function ToastPromiseRejectedExample() {\n  return (\n    <PromiseExample fail />\n  )\n}"} />
 
 </Example>
 

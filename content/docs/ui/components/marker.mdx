@@ -7,19 +7,7 @@ generated: true
 
 <Example kind="ui" name="marker" story="Default">
 
-```tsx
-import { Marker, MarkerContent } from "@/components/ui/marker"
-
-export function MarkerExample() {
-  return (
-    <div className="w-96">
-      <Marker>
-        <MarkerContent>Conversation started</MarkerContent>
-      </Marker>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerExample() {\n  return (\n    <div className=\"w-96\">\n      <Marker>\n        <MarkerContent>Conversation started</MarkerContent>\n      </Marker>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -31,112 +19,25 @@ The `variant` prop changes the treatment: plain text, text centered between two 
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add marker
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add marker"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/marker.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/marker.tsx"
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import type * as React from "react"
-
-const markerVariants = cva(
-  "group/marker relative flex min-h-4 w-full items-center gap-2 text-start text-sm text-label-secondary [&_svg:not([class*='size-'])]:size-4 [a]:underline [a]:hover:text-label",
-  {
-    variants: {
-      variant: {
-        default: "",
-        separator:
-          "before:me-1 before:h-px before:min-w-0 before:flex-1 before:bg-separator after:ms-1 after:h-px after:min-w-0 after:flex-1 after:bg-separator",
-        border: "border-b border-separator pb-2",
-      },
-    },
-  }
-)
-
-function Marker({
-  className,
-  variant = "default",
-  render,
-  ...props
-}: useRender.ComponentProps<"div"> & VariantProps<typeof markerVariants>) {
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        className: cn(markerVariants({ variant, className })),
-      },
-      props
-    ),
-    render,
-    state: {
-      slot: "marker",
-      variant,
-    },
-  })
-}
-
-function MarkerIcon({ className, ...props }: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="marker-icon"
-      aria-hidden="true"
-      className={cn(
-        "size-4 shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function MarkerContent({ className, ...props }: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="marker-content"
-      className={cn(
-        "min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center *:[a]:underline *:[a]:hover:text-label",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Marker, MarkerContent, MarkerIcon }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/marker.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Marker, MarkerIcon, MarkerContent } from "@/components/ui/marker"
-```
+<Code lang="tsx" code={"import { Marker, MarkerIcon, MarkerContent } from \"@/components/ui/marker\""} />
 
-```tsx
-<div className="w-96">
-  <Marker>
-    <MarkerContent>Conversation started</MarkerContent>
-  </Marker>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Marker>\n    <MarkerContent>Conversation started</MarkerContent>\n  </Marker>\n</div>"} />
 
 `Marker` is built on Base UI's `useRender`, so it accepts a `render` prop to change the underlying element. Links inside the marker or its content are underlined automatically.
 
@@ -148,27 +49,7 @@ The `default`, `separator` and `border` variants stacked for comparison.
 
 <Example kind="ui" name="marker" story="Variants">
 
-```tsx
-import { Marker, MarkerContent } from "@/components/ui/marker"
-
-export function MarkerVariantsExample() {
-  return (
-    <div className="w-96">
-      <div className="flex flex-col gap-6">
-        <Marker variant="default">
-          <MarkerContent>Default</MarkerContent>
-        </Marker>
-        <Marker variant="separator">
-          <MarkerContent>Today</MarkerContent>
-        </Marker>
-        <Marker variant="border">
-          <MarkerContent>Earlier messages</MarkerContent>
-        </Marker>
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerVariantsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-6\">\n        <Marker variant=\"default\">\n          <MarkerContent>Default</MarkerContent>\n        </Marker>\n        <Marker variant=\"separator\">\n          <MarkerContent>Today</MarkerContent>\n        </Marker>\n        <Marker variant=\"border\">\n          <MarkerContent>Earlier messages</MarkerContent>\n        </Marker>\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -178,19 +59,7 @@ Text centered between two horizontal rules, as used for a date divider.
 
 <Example kind="ui" name="marker" story="Separator">
 
-```tsx
-import { Marker, MarkerContent } from "@/components/ui/marker"
-
-export function MarkerSeparatorExample() {
-  return (
-    <div className="w-96">
-      <Marker variant="separator">
-        <MarkerContent>Yesterday</MarkerContent>
-      </Marker>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerSeparatorExample() {\n  return (\n    <div className=\"w-96\">\n      <Marker variant=\"separator\">\n        <MarkerContent>Yesterday</MarkerContent>\n      </Marker>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -200,31 +69,7 @@ Markers with a leading decorative icon in the default and separator variants.
 
 <Example kind="ui" name="marker" story="WithIcon">
 
-```tsx
-import { CalendarBlankIcon, InfoIcon } from "@phosphor-icons/react"
-import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
-
-export function MarkerWithIconExample() {
-  return (
-    <div className="w-96">
-      <div className="flex flex-col gap-6">
-        <Marker>
-          <MarkerIcon>
-            <InfoIcon />
-          </MarkerIcon>
-          <MarkerContent>Maya joined the conversation</MarkerContent>
-        </Marker>
-        <Marker variant="separator">
-          <MarkerIcon>
-            <CalendarBlankIcon />
-          </MarkerIcon>
-          <MarkerContent>March 12</MarkerContent>
-        </Marker>
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CalendarBlankIcon, InfoIcon } from \"@phosphor-icons/react\"\nimport { Marker, MarkerContent, MarkerIcon } from \"@/components/ui/marker\"\n\nexport function MarkerWithIconExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-6\">\n        <Marker>\n          <MarkerIcon>\n            <InfoIcon />\n          </MarkerIcon>\n          <MarkerContent>Maya joined the conversation</MarkerContent>\n        </Marker>\n        <Marker variant=\"separator\">\n          <MarkerIcon>\n            <CalendarBlankIcon />\n          </MarkerIcon>\n          <MarkerContent>March 12</MarkerContent>\n        </Marker>\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -234,21 +79,7 @@ A marker whose content includes an inline link.
 
 <Example kind="ui" name="marker" story="WithLink">
 
-```tsx
-import { Marker, MarkerContent } from "@/components/ui/marker"
-
-export function MarkerWithLinkExample() {
-  return (
-    <div className="w-96">
-      <Marker>
-        <MarkerContent>
-          This chat was archived. <a href="#restore">Restore it</a>
-        </MarkerContent>
-      </Marker>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Marker, MarkerContent } from \"@/components/ui/marker\"\n\nexport function MarkerWithLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Marker>\n        <MarkerContent>\n          This chat was archived. <a href=\"#restore\">Restore it</a>\n        </MarkerContent>\n      </Marker>\n    </div>\n  )\n}"} />
 
 </Example>
 

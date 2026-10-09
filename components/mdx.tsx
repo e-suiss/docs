@@ -9,6 +9,7 @@ import { Example } from "@/components/site/example";
 import { Anatomy, ApiPart } from "@/components/site/api-reference";
 import { PropsTable } from "@/components/site/props-table";
 import { SourceCode } from "@/components/site/source-code";
+import { Code, SourceFile } from "@/components/site/source-file";
 import { RegistryIndex } from "@/components/site/registry-index";
 import { Button } from "@/components/ui/button";
 
@@ -44,6 +45,8 @@ export function getMDXComponents(components?: MDXComponents) {
     ApiPart,
     PropsTable,
     SourceCode,
+    SourceFile,
+    Code,
     RegistryIndex,
     Preview,
     Button,

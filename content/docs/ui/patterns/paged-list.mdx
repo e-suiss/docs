@@ -7,50 +7,7 @@ generated: true
 
 <Example kind="pattern" name="paged-list" story="Default">
 
-```tsx
-import { ChatCircleIcon } from "@phosphor-icons/react"
-import { PagedList } from "@/components/patterns/paged-list"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-type Topic = { id: number; title: string; replies: number }
-
-const subjects = [
-  "Getting started",
-  "Dark mode tokens",
-  "Form validation",
-  "Release notes",
-  "Accessibility",
-  "Theming",
-  "Server components",
-  "Animations",
-]
-
-const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
-  id: index + 1,
-  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
-  replies: (index * 7) % 23,
-}))
-
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <ChatCircleIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
-export function PagedListExample() {
-  return (
-    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" />
-  )
-}
-```
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />\n  )\n}"} />
 
 </Example>
 
@@ -62,211 +19,27 @@ On mobile (below `48rem`, via `useIsMobile`), the list grows instead of paging: 
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add patterns paged-list
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns paged-list"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Add the pieces it builds on: [Button](/docs/ui/components/button), [Pagination](/docs/ui/components/pagination), `use-mobile`.
 
 3. Copy the source into `components/patterns/paged-list.tsx`:
 
-<SourceCode>
-
-```tsx title="components/patterns/paged-list.tsx"
-"use client"
-
-import { cn } from "cn"
-import * as React from "react"
-
-import { Button } from "@/components/ui/button"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-import { useIsMobile } from "@/hooks/use-mobile"
-
-function pageRange(page: number, pageCount: number) {
-  const pages: (number | "ellipsis")[] = []
-  for (let current = 1; current <= pageCount; current++) {
-    const edge = current === 1 || current === pageCount
-    const near = Math.abs(current - page) <= 1
-    if (edge || near) {
-      pages.push(current)
-    } else if (pages.at(-1) !== "ellipsis") {
-      pages.push("ellipsis")
-    }
-  }
-  return pages
-}
-
-function PagedList<T>({
-  items,
-  pageSize = 10,
-  page: pageProp,
-  defaultPage = 1,
-  onPageChange,
-  getPageHref,
-  getKey = (_, index) => index,
-  renderItem,
-  loadMoreLabel = "Load more",
-  previousLabel,
-  nextLabel,
-  className,
-  listClassName,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  items: T[]
-  pageSize?: number
-  page?: number
-  defaultPage?: number
-  onPageChange?: (page: number) => void
-  getPageHref?: (page: number) => string
-  getKey?: (item: T, index: number) => React.Key
-  renderItem: (item: T, index: number) => React.ReactNode
-  loadMoreLabel?: string
-  previousLabel?: string
-  nextLabel?: string
-  listClassName?: string
-}) {
-  const isMobile = useIsMobile()
-  const pageCount = Math.max(1, Math.ceil(items.length / pageSize))
-  const [uncontrolledPage, setUncontrolledPage] = React.useState(defaultPage)
-  const page = Math.min(Math.max(pageProp ?? uncontrolledPage, 1), pageCount)
-  const [loaded, setLoaded] = React.useState(1)
-  const listRef = React.useRef<HTMLUListElement>(null)
-  const focusIndexRef = React.useRef<number | null>(null)
-
-  const setPage = (next: number) => {
-    if (next < 1 || next > pageCount || next === page) return
-    if (pageProp === undefined) setUncontrolledPage(next)
-    onPageChange?.(next)
-    listRef.current?.scrollIntoView({ block: "nearest" })
-  }
-
-  const loadMore = () => {
-    focusIndexRef.current = loaded * pageSize
-    setLoaded((current) => Math.min(current + 1, pageCount))
-  }
-
-  React.useEffect(() => {
-    const index = focusIndexRef.current
-    if (index === null) return
-    focusIndexRef.current = null
-    listRef.current?.children[index]
-      ?.querySelector<HTMLElement>("a, button, [tabindex]")
-      ?.focus()
-  })
-
-  const start = isMobile ? 0 : (page - 1) * pageSize
-  const end = isMobile ? loaded * pageSize : page * pageSize
-  const visible = items.slice(start, end)
-
-  const link = (target: number) => ({
-    href: getPageHref?.(target) ?? "#",
-    onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!getPageHref) event.preventDefault()
-      setPage(target)
-    },
-  })
-
-  return (
-    <div
-      data-slot="paged-list"
-      className={cn("flex flex-col gap-4", className)}
-      {...props}
-    >
-      <ul
-        ref={listRef}
-        data-slot="paged-list-items"
-        className={cn("flex flex-col", listClassName)}
-      >
-        {visible.map((item, offset) => (
-          <li key={getKey(item, start + offset)} data-slot="paged-list-item">
-            {renderItem(item, start + offset)}
-          </li>
-        ))}
-      </ul>
-      {isMobile
-        ? end < items.length && (
-            <Button
-              data-slot="paged-list-load-more"
-              variant="secondary"
-              size="lg"
-              block
-              onClick={loadMore}
-            >
-              {loadMoreLabel}
-            </Button>
-          )
-        : pageCount > 1 && (
-            <Pagination data-slot="paged-list-pagination">
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    text={previousLabel}
-                    aria-disabled={page === 1 || undefined}
-                    {...link(page - 1)}
-                  />
-                </PaginationItem>
-                {pageRange(page, pageCount).map((entry, index, pages) =>
-                  entry === "ellipsis" ? (
-                    <PaginationItem key={`after-${pages[index - 1]}`}>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                  ) : (
-                    <PaginationItem key={entry}>
-                      <PaginationLink
-                        isActive={entry === page}
-                        {...link(entry)}
-                      >
-                        {entry}
-                      </PaginationLink>
-                    </PaginationItem>
-                  )
-                )}
-                <PaginationItem>
-                  <PaginationNext
-                    text={nextLabel}
-                    aria-disabled={page === pageCount || undefined}
-                    {...link(page + 1)}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          )}
-    </div>
-  )
-}
-
-export { PagedList }
-```
-
-</SourceCode>
+<SourceFile path="components/patterns/paged-list.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { PagedList } from "@/components/patterns/paged-list"
-```
+<Code lang="tsx" code={"import { PagedList } from \"@/components/patterns/paged-list\""} />
 
-```tsx
-<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" />
-```
+<Code lang="tsx" code={"<PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />"} />
 
 - The current page is uncontrolled by default and starts at `defaultPage`. Pass `page` and `onPageChange` to control it.
 - Out-of-range page values are clamped between `1` and the page count.
@@ -282,50 +55,7 @@ Opens on page 4 by setting `defaultPage`.
 
 <Example kind="pattern" name="paged-list" story="StartOnLaterPage">
 
-```tsx
-import { ChatCircleIcon } from "@phosphor-icons/react"
-import { PagedList } from "@/components/patterns/paged-list"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-type Topic = { id: number; title: string; replies: number }
-
-const subjects = [
-  "Getting started",
-  "Dark mode tokens",
-  "Form validation",
-  "Release notes",
-  "Accessibility",
-  "Theming",
-  "Server components",
-  "Animations",
-]
-
-const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
-  id: index + 1,
-  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
-  replies: (index * 7) % 23,
-}))
-
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <ChatCircleIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
-export function PagedListStartOnLaterPageExample() {
-  return (
-    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" defaultPage={4} />
-  )
-}
-```
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListStartOnLaterPageExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" defaultPage={4} />\n  )\n}"} />
 
 </Example>
 
@@ -335,50 +65,7 @@ Renders every item without pagination when the items fit on one page.
 
 <Example kind="pattern" name="paged-list" story="SinglePage">
 
-```tsx
-import { ChatCircleIcon } from "@phosphor-icons/react"
-import { PagedList } from "@/components/patterns/paged-list"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-type Topic = { id: number; title: string; replies: number }
-
-const subjects = [
-  "Getting started",
-  "Dark mode tokens",
-  "Form validation",
-  "Release notes",
-  "Accessibility",
-  "Theming",
-  "Server components",
-  "Animations",
-]
-
-const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
-  id: index + 1,
-  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
-  replies: (index * 7) % 23,
-}))
-
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <ChatCircleIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
-export function PagedListSinglePageExample() {
-  return (
-    <PagedList<Topic> items={topics.slice(0, 6)} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" />
-  )
-}
-```
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListSinglePageExample() {\n  return (\n    <PagedList<Topic> items={topics.slice(0, 6)} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />\n  )\n}"} />
 
 </Example>
 
@@ -388,50 +75,7 @@ Gives each page link a real `href` through `getPageHref`.
 
 <Example kind="pattern" name="paged-list" story="PageLinks">
 
-```tsx
-import { ChatCircleIcon } from "@phosphor-icons/react"
-import { PagedList } from "@/components/patterns/paged-list"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-type Topic = { id: number; title: string; replies: number }
-
-const subjects = [
-  "Getting started",
-  "Dark mode tokens",
-  "Form validation",
-  "Release notes",
-  "Accessibility",
-  "Theming",
-  "Server components",
-  "Animations",
-]
-
-const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
-  id: index + 1,
-  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
-  replies: (index * 7) % 23,
-}))
-
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <ChatCircleIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
-export function PagedListPageLinksExample() {
-  return (
-    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" getPageHref={(page: number) => `#page-${page}`} />
-  )
-}
-```
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListPageLinksExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" getPageHref={(page: number) => `#page-${page}`} />\n  )\n}"} />
 
 </Example>
 
@@ -441,50 +85,7 @@ Replaces the previous, next and Load more labels.
 
 <Example kind="pattern" name="paged-list" story="CustomLabels">
 
-```tsx
-import { ChatCircleIcon } from "@phosphor-icons/react"
-import { PagedList } from "@/components/patterns/paged-list"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-type Topic = { id: number; title: string; replies: number }
-
-const subjects = [
-  "Getting started",
-  "Dark mode tokens",
-  "Form validation",
-  "Release notes",
-  "Accessibility",
-  "Theming",
-  "Server components",
-  "Animations",
-]
-
-const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
-  id: index + 1,
-  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
-  replies: (index * 7) % 23,
-}))
-
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <ChatCircleIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
-export function PagedListCustomLabelsExample() {
-  return (
-    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" loadMoreLabel="Show more topics" previousLabel="Newer" nextLabel="Older" />
-  )
-}
-```
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nexport function PagedListCustomLabelsExample() {\n  return (\n    <PagedList<Topic> items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" loadMoreLabel=\"Show more topics\" previousLabel=\"Newer\" nextLabel=\"Older\" />\n  )\n}"} />
 
 </Example>
 
@@ -494,64 +95,7 @@ Owns the current page in state with `page` and `onPageChange`.
 
 <Example kind="pattern" name="paged-list" story="Controlled">
 
-```tsx
-import { ChatCircleIcon } from "@phosphor-icons/react"
-import * as React from "react"
-import { PagedList } from "@/components/patterns/paged-list"
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-type Topic = { id: number; title: string; replies: number }
-
-const subjects = [
-  "Getting started",
-  "Dark mode tokens",
-  "Form validation",
-  "Release notes",
-  "Accessibility",
-  "Theming",
-  "Server components",
-  "Animations",
-]
-
-const topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({
-  id: index + 1,
-  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,
-  replies: (index * 7) % 23,
-}))
-
-function TopicRow({ topic }: { topic: Topic }) {
-  return (
-    <Item render={<a href={`#topic-${topic.id}`} />}>
-      <ItemMedia variant="icon">
-        <ChatCircleIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>{topic.title}</ItemTitle>
-        <ItemDescription>{topic.replies} replies</ItemDescription>
-      </ItemContent>
-    </Item>
-  )
-}
-
-function ControlledExample(
-  args: React.ComponentProps<typeof PagedList<Topic>>
-) {
-  const [page, setPage] = React.useState(2)
-
-  return (
-    <div className="flex flex-col gap-2">
-      <PagedList {...args} page={page} onPageChange={setPage} />
-      <p className="text-center text-sm text-label-secondary">Page {page}</p>
-    </div>
-  )
-}
-
-export function PagedListControlledExample() {
-  return (
-    <ControlledExample items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className="mx-auto w-full max-w-2xl" />
-  )
-}
-```
+<Code lang="tsx" code={"import { ChatCircleIcon } from \"@phosphor-icons/react\"\nimport * as React from \"react\"\nimport { PagedList } from \"@/components/patterns/paged-list\"\nimport { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\ntype Topic = { id: number; title: string; replies: number }\n\nconst subjects = [\n  \"Getting started\",\n  \"Dark mode tokens\",\n  \"Form validation\",\n  \"Release notes\",\n  \"Accessibility\",\n  \"Theming\",\n  \"Server components\",\n  \"Animations\",\n]\n\nconst topics: Topic[] = Array.from({ length: 57 }, (_, index) => ({\n  id: index + 1,\n  title: `${subjects[index % subjects.length]} · thread ${index + 1}`,\n  replies: (index * 7) % 23,\n}))\n\nfunction TopicRow({ topic }: { topic: Topic }) {\n  return (\n    <Item render={<a href={`#topic-${topic.id}`} />}>\n      <ItemMedia variant=\"icon\">\n        <ChatCircleIcon />\n      </ItemMedia>\n      <ItemContent>\n        <ItemTitle>{topic.title}</ItemTitle>\n        <ItemDescription>{topic.replies} replies</ItemDescription>\n      </ItemContent>\n    </Item>\n  )\n}\n\nfunction ControlledExample(\n  args: React.ComponentProps<typeof PagedList<Topic>>\n) {\n  const [page, setPage] = React.useState(2)\n\n  return (\n    <div className=\"flex flex-col gap-2\">\n      <PagedList {...args} page={page} onPageChange={setPage} />\n      <p className=\"text-center text-sm text-label-secondary\">Page {page}</p>\n    </div>\n  )\n}\n\nexport function PagedListControlledExample() {\n  return (\n    <ControlledExample items={topics} pageSize={10} getKey={(topic: Topic) => topic.id} renderItem={(topic: Topic) => <TopicRow topic={topic} />} className=\"mx-auto w-full max-w-2xl\" />\n  )\n}"} />
 
 </Example>
 

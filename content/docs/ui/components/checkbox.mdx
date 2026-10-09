@@ -7,15 +7,7 @@ generated: true
 
 <Example kind="ui" name="checkbox" story="Default">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-
-export function CheckboxExample() {
-  return (
-    <Checkbox aria-label="Accept terms" />
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\n\nexport function CheckboxExample() {\n  return (\n    <Checkbox aria-label=\"Accept terms\" />\n  )\n}"} />
 
 </Example>
 
@@ -27,65 +19,25 @@ Use a checkbox for independent options that people can select in any combination
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add checkbox
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add checkbox"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react @phosphor-icons/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
 
 2. Copy the source into `components/ui/checkbox.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/checkbox.tsx"
-"use client"
-
-import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
-import { CheckIcon } from "@phosphor-icons/react"
-import { cn } from "cn"
-
-function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
-  return (
-    <CheckboxPrimitive.Root
-      data-slot="checkbox"
-      className={cn(
-        "peer relative flex size-4 shrink-0 items-center justify-center rounded-[calc(var(--radius)*0.4)] border border-label/25 bg-surface shadow-[0_0.5px_1px_color-mix(in_oklab,var(--label)_12%,transparent)] outline-none [--focus-ring-offset:0px] after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:focus-ring active:not-data-checked:bg-control dark:not-data-checked:border-transparent dark:not-data-checked:not-data-disabled:bg-label-quaternary dark:shadow-none dark:active:not-data-checked:bg-[color-mix(in_oklab,var(--label-quaternary),var(--label)_12%)] data-checked:border-accent data-checked:bg-accent data-checked:text-on-accent data-checked:shadow-none data-checked:active:border-accent-pressed data-checked:active:bg-accent-pressed data-disabled:cursor-not-allowed data-disabled:border-label/10 data-disabled:bg-control-disabled data-disabled:shadow-none data-disabled:data-checked:border-transparent data-disabled:data-checked:bg-accent-disabled aria-invalid:border-danger aria-invalid:aria-checked:border-accent group-has-disabled/field:bg-control-disabled data-checked:group-has-disabled/field:bg-accent-disabled group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:data-checked:border-accent",
-        className
-      )}
-      {...props}
-    >
-      <CheckboxPrimitive.Indicator
-        data-slot="checkbox-indicator"
-        className="grid place-content-center text-current transition-none [&>svg]:size-3.5"
-      >
-        <CheckIcon />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
-  )
-}
-
-export { Checkbox }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/checkbox.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\""} />
 
-```tsx
-<Checkbox aria-label="Accept terms" />
-```
+<Code lang="tsx" code={"<Checkbox aria-label=\"Accept terms\" />"} />
 
 Leave the checkbox uncontrolled with `defaultChecked`, or control it with `checked` and `onCheckedChange`. Pair it with a visible `Label`: wrapping the checkbox in `Label` makes the whole label text clickable. To add supporting text, give the checkbox an `id` and an `aria-describedby` that points to the description element.
 
@@ -97,15 +49,7 @@ A checkbox that starts checked using `defaultChecked`.
 
 <Example kind="ui" name="checkbox" story="Checked">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-
-export function CheckboxCheckedExample() {
-  return (
-    <Checkbox defaultChecked aria-label="Accept terms" />
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\n\nexport function CheckboxCheckedExample() {\n  return (\n    <Checkbox defaultChecked aria-label=\"Accept terms\" />\n  )\n}"} />
 
 </Example>
 
@@ -115,19 +59,7 @@ A checkbox wrapped in a `Label`, so clicking the text toggles it.
 
 <Example kind="ui" name="checkbox" story="WithLabel">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-
-export function CheckboxWithLabelExample() {
-  return (
-    <Label>
-      <Checkbox />
-      Accept terms and conditions
-    </Label>
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxWithLabelExample() {\n  return (\n    <Label>\n      <Checkbox />\n      Accept terms and conditions\n    </Label>\n  )\n}"} />
 
 </Example>
 
@@ -137,29 +69,7 @@ A checkbox labelled with `htmlFor` and described by supporting text through `ari
 
 <Example kind="ui" name="checkbox" story="WithDescription">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-
-export function CheckboxWithDescriptionExample() {
-  return (
-    <div className="flex w-80 items-start gap-3">
-      <Checkbox
-        id="marketing"
-        aria-describedby="marketing-description"
-        defaultChecked
-        className="mt-0.75"
-      />
-      <div className="grid gap-1.5">
-        <Label htmlFor="marketing">Product updates</Label>
-        <p id="marketing-description" className="text-label-secondary text-sm">
-          Get an email when we release new features.
-        </p>
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxWithDescriptionExample() {\n  return (\n    <div className=\"flex w-80 items-start gap-3\">\n      <Checkbox\n        id=\"marketing\"\n        aria-describedby=\"marketing-description\"\n        defaultChecked\n        className=\"mt-0.75\"\n      />\n      <div className=\"grid gap-1.5\">\n        <Label htmlFor=\"marketing\">Product updates</Label>\n        <p id=\"marketing-description\" className=\"text-label-secondary text-sm\">\n          Get an email when we release new features.\n        </p>\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -169,25 +79,7 @@ Disabled checkboxes, both unchecked and checked, that ignore clicks and are skip
 
 <Example kind="ui" name="checkbox" story="Disabled">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-
-export function CheckboxDisabledExample() {
-  return (
-    <div className="flex flex-col gap-3">
-      <Label>
-        <Checkbox disabled />
-        Unavailable option
-      </Label>
-      <Label>
-        <Checkbox disabled defaultChecked />
-        Always included
-      </Label>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxDisabledExample() {\n  return (\n    <div className=\"flex flex-col gap-3\">\n      <Label>\n        <Checkbox disabled />\n        Unavailable option\n      </Label>\n      <Label>\n        <Checkbox disabled defaultChecked />\n        Always included\n      </Label>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -197,19 +89,7 @@ A checkbox marked with `aria-invalid` to show a validation error.
 
 <Example kind="ui" name="checkbox" story="Invalid">
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-
-export function CheckboxInvalidExample() {
-  return (
-    <Label>
-      <Checkbox aria-invalid />
-      You must accept the terms
-    </Label>
-  )
-}
-```
+<Code lang="tsx" code={"import { Checkbox } from \"@/components/ui/checkbox\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function CheckboxInvalidExample() {\n  return (\n    <Label>\n      <Checkbox aria-invalid />\n      You must accept the terms\n    </Label>\n  )\n}"} />
 
 </Example>
 

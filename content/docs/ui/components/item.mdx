@@ -7,34 +7,7 @@ generated: true
 
 <Example kind="ui" name="item" story="Default">
 
-```tsx
-import { ShieldCheckIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-export function ItemExample() {
-  return (
-    <div className="w-96">
-      <Item variant="outline">
-        <ItemMedia variant="icon">
-          <ShieldCheckIcon />
-        </ItemMedia>
-        <ItemContent>
-          <ItemTitle>Two-factor authentication</ItemTitle>
-          <ItemDescription>
-            Add an extra layer of security to your account.
-          </ItemDescription>
-        </ItemContent>
-        <ItemActions>
-          <Button variant="outline" size="sm">
-            Enable
-          </Button>
-        </ItemActions>
-      </Item>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { ShieldCheckIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemMedia variant=\"icon\">\n          <ShieldCheckIcon />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Two-factor authentication</ItemTitle>\n          <ItemDescription>\n            Add an extra layer of security to your account.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button variant=\"outline\" size=\"sm\">\n            Enable\n          </Button>\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -46,257 +19,25 @@ export function ItemExample() {
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add item
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add item"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/item.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/item.tsx"
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import type * as React from "react"
-
-function ItemGroup({
-  className,
-  variant = "default",
-  ...props
-}: React.ComponentProps<"div"> & { variant?: "default" | "inset" }) {
-  return (
-    <div
-      role="list"
-      data-slot="item-group"
-      data-variant={variant}
-      className={cn(
-        "flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
-        "data-[variant=inset]:gap-0 data-[variant=inset]:overflow-hidden data-[variant=inset]:rounded-2xl data-[variant=inset]:bg-surface-secondary data-[variant=inset]:**:data-[slot=item]:rounded-none data-[variant=inset]:**:data-[slot=item]:focus-visible:outline-offset-[-2px] data-[variant=inset]:**:data-[slot=item]:focus-visible:rounded-2xl data-[variant=inset]:**:data-[slot=item-separator]:my-0 data-[variant=inset]:**:data-[slot=item-separator]:ms-4 data-[variant=inset]:**:data-[slot=item-separator]:w-auto",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ItemSeparator({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="item-separator"
-      role="none"
-      className={cn("my-2 h-px shrink-0 bg-separator", className)}
-      {...props}
-    />
-  )
-}
-
-const itemVariants = cva(
-  "group/item flex w-full flex-wrap items-center rounded-xl border text-base transition-colors duration-100 outline-none focus-visible:focus-ring [a]:transition-colors [a]:hover:bg-item-hover",
-  {
-    variants: {
-      variant: {
-        default: "border-transparent",
-        outline: "border-separator",
-        muted: "border-transparent bg-surface-secondary/50",
-      },
-      size: {
-        default: "gap-3.5 px-4 py-3.5",
-        sm: "gap-3.5 px-3.5 py-3",
-        xs: "gap-2.5 px-3 py-2.5 in-data-[slot=dropdown-menu-content]:p-0",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-function Item({
-  className,
-  variant = "default",
-  size = "default",
-  render,
-  ...props
-}: useRender.ComponentProps<"div"> & VariantProps<typeof itemVariants>) {
-  return useRender({
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        className: cn(itemVariants({ variant, size, className })),
-      },
-      props
-    ),
-    render,
-    state: {
-      slot: "item",
-      variant,
-      size,
-    },
-  })
-}
-
-const itemMediaVariants = cva(
-  "flex shrink-0 items-center justify-center gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start [&_svg]:pointer-events-none",
-  {
-    variants: {
-      variant: {
-        default: "bg-transparent",
-        icon: "[&_svg:not([class*='size-'])]:size-4",
-        image:
-          "size-10 overflow-hidden rounded-md group-data-[size=sm]/item:size-8 group-data-[size=xs]/item:size-6 group-data-[size=xs]/item:rounded-sm [&_img]:size-full [&_img]:object-cover",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-function ItemMedia({
-  className,
-  variant = "default",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof itemMediaVariants>) {
-  return (
-    <div
-      data-slot="item-media"
-      data-variant={variant}
-      className={cn(itemMediaVariants({ variant, className }))}
-      {...props}
-    />
-  )
-}
-
-function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="item-content"
-      className={cn(
-        "flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0.5 [&+[data-slot=item-content]]:flex-none",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="item-title"
-      className={cn(
-        "line-clamp-1 flex w-fit items-center gap-2 text-base font-semibold",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
-  return (
-    <p
-      data-slot="item-description"
-      className={cn(
-        "line-clamp-2 text-start text-sm font-normal text-label-secondary [&>a]:underline [&>a:hover]:text-link",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="item-actions"
-      className={cn("flex items-center gap-2", className)}
-      {...props}
-    />
-  )
-}
-
-function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="item-header"
-      className={cn(
-        "flex basis-full items-center justify-between gap-2",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="item-footer"
-      className={cn(
-        "flex basis-full items-center justify-between gap-2",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemFooter,
-  ItemGroup,
-  ItemHeader,
-  ItemMedia,
-  ItemSeparator,
-  ItemTitle,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/item.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from "@/components/ui/item"
-```
+<Code lang="tsx" code={"import { ItemGroup, ItemSeparator, Item, ItemMedia, ItemContent, ItemTitle, ItemDescription, ItemActions, ItemHeader, ItemFooter } from \"@/components/ui/item\""} />
 
-```tsx
-<div className="w-96">
-  <Item variant="outline">
-    <ItemMedia variant="icon">
-      <ShieldCheckIcon />
-    </ItemMedia>
-    <ItemContent>
-      <ItemTitle>Two-factor authentication</ItemTitle>
-      <ItemDescription>
-        Add an extra layer of security to your account.
-      </ItemDescription>
-    </ItemContent>
-    <ItemActions>
-      <Button variant="outline" size="sm">
-        Enable
-      </Button>
-    </ItemActions>
-  </Item>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <Item variant=\"outline\">\n    <ItemMedia variant=\"icon\">\n      <ShieldCheckIcon />\n    </ItemMedia>\n    <ItemContent>\n      <ItemTitle>Two-factor authentication</ItemTitle>\n      <ItemDescription>\n        Add an extra layer of security to your account.\n      </ItemDescription>\n    </ItemContent>\n    <ItemActions>\n      <Button variant=\"outline\" size=\"sm\">\n        Enable\n      </Button>\n    </ItemActions>\n  </Item>\n</div>"} />
 
 `ItemGroup` has the `list` role, so set `role="listitem"` on each `Item` inside it. Choose a `variant` for the item's border and background, and a `size` for its padding. Items inside a group with `sm` or `xs` items are spaced more tightly.
 
@@ -310,36 +51,7 @@ The `default`, `outline` and `muted` item variants.
 
 <Example kind="ui" name="item" story="Variants">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/item"
-
-export function ItemVariantsExample() {
-  return (
-    <div className="w-96">
-      <div className="flex flex-col gap-4">
-        {(["default", "outline", "muted"] as const).map((variant) => (
-          <Item key={variant} variant={variant}>
-            <ItemContent>
-              <ItemTitle>
-                {variant.charAt(0).toUpperCase() + variant.slice(1)} item
-              </ItemTitle>
-              <ItemDescription>
-                A short description of this list entry.
-              </ItemDescription>
-            </ItemContent>
-            <ItemActions>
-              <Button variant="outline" size="sm">
-                Open
-              </Button>
-            </ItemActions>
-          </Item>
-        ))}
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemVariantsExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        {([\"default\", \"outline\", \"muted\"] as const).map((variant) => (\n          <Item key={variant} variant={variant}>\n            <ItemContent>\n              <ItemTitle>\n                {variant.charAt(0).toUpperCase() + variant.slice(1)} item\n              </ItemTitle>\n              <ItemDescription>\n                A short description of this list entry.\n              </ItemDescription>\n            </ItemContent>\n            <ItemActions>\n              <Button variant=\"outline\" size=\"sm\">\n                Open\n              </Button>\n            </ItemActions>\n          </Item>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -349,32 +61,7 @@ The `default`, `sm` and `xs` item sizes.
 
 <Example kind="ui" name="item" story="Sizes">
 
-```tsx
-import { CaretRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
-import { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-export function ItemSizesExample() {
-  return (
-    <div className="w-96">
-      <div className="flex flex-col gap-4">
-        {(["default", "sm", "xs"] as const).map((size) => (
-          <Item key={size} variant="outline" size={size}>
-            <ItemMedia variant="icon">
-              <CheckCircleIcon />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>Your profile has been verified</ItemTitle>
-            </ItemContent>
-            <ItemActions>
-              <CaretRightIcon className="size-4" />
-            </ItemActions>
-          </Item>
-        ))}
-      </div>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CaretRightIcon, CheckCircleIcon } from \"@phosphor-icons/react\"\nimport { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemSizesExample() {\n  return (\n    <div className=\"w-96\">\n      <div className=\"flex flex-col gap-4\">\n        {([\"default\", \"sm\", \"xs\"] as const).map((size) => (\n          <Item key={size} variant=\"outline\" size={size}>\n            <ItemMedia variant=\"icon\">\n              <CheckCircleIcon />\n            </ItemMedia>\n            <ItemContent>\n              <ItemTitle>Your profile has been verified</ItemTitle>\n            </ItemContent>\n            <ItemActions>\n              <CaretRightIcon className=\"size-4\" />\n            </ItemActions>\n          </Item>\n        ))}\n      </div>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -384,31 +71,7 @@ An item rendered as a link, so the whole row is one focusable target.
 
 <Example kind="ui" name="item" story="AsLink">
 
-```tsx
-import { BellIcon, CaretRightIcon } from "@phosphor-icons/react"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-export function ItemAsLinkExample() {
-  return (
-    <div className="w-96">
-      <Item variant="outline" render={<a href="#notifications" />}>
-        <ItemMedia variant="icon">
-          <BellIcon />
-        </ItemMedia>
-        <ItemContent>
-          <ItemTitle>Notification settings</ItemTitle>
-          <ItemDescription>
-            Choose what you want to be notified about.
-          </ItemDescription>
-        </ItemContent>
-        <ItemActions>
-          <CaretRightIcon className="size-4" />
-        </ItemActions>
-      </Item>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { BellIcon, CaretRightIcon } from \"@phosphor-icons/react\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemAsLinkExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\" render={<a href=\"#notifications\" />}>\n        <ItemMedia variant=\"icon\">\n          <BellIcon />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Notification settings</ItemTitle>\n          <ItemDescription>\n            Choose what you want to be notified about.\n          </ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <CaretRightIcon className=\"size-4\" />\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -418,57 +81,7 @@ A list of people with image media, separators and an invite button on each row.
 
 <Example kind="ui" name="item" story="WithImage">
 
-```tsx
-import { PlusIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from "@/components/ui/item"
-
-const people = [
-  {
-    name: "Olivia Martin",
-    email: "olivia@example.com",
-    avatar: "https://i.pravatar.cc/96?img=12",
-  },
-  {
-    name: "Liam Chen",
-    email: "liam@example.com",
-    avatar: "https://github.com/vercel.png",
-  },
-  {
-    name: "Sofia Rossi",
-    email: "sofia@example.com",
-    avatar: "https://github.com/github.png",
-  },
-]
-
-export function ItemWithImageExample() {
-  return (
-    <div className="w-96">
-      <ItemGroup>
-        {people.map((person, index) => (
-          <div key={person.email} className="contents">
-            {index > 0 && <ItemSeparator />}
-            <Item variant="default" size="sm" role="listitem">
-              <ItemMedia variant="image">
-                <img src={person.avatar} alt={person.name} />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>{person.name}</ItemTitle>
-                <ItemDescription>{person.email}</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Button variant="ghost" size="icon-sm" aria-label="Invite">
-                  <PlusIcon />
-                </Button>
-              </ItemActions>
-            </Item>
-          </div>
-        ))}
-      </ItemGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\n\nconst people = [\n  {\n    name: \"Olivia Martin\",\n    email: \"olivia@example.com\",\n    avatar: \"https://i.pravatar.cc/96?img=12\",\n  },\n  {\n    name: \"Liam Chen\",\n    email: \"liam@example.com\",\n    avatar: \"https://github.com/vercel.png\",\n  },\n  {\n    name: \"Sofia Rossi\",\n    email: \"sofia@example.com\",\n    avatar: \"https://github.com/github.png\",\n  },\n]\n\nexport function ItemWithImageExample() {\n  return (\n    <div className=\"w-96\">\n      <ItemGroup>\n        {people.map((person, index) => (\n          <div key={person.email} className=\"contents\">\n            {index > 0 && <ItemSeparator />}\n            <Item variant=\"default\" size=\"sm\" role=\"listitem\">\n              <ItemMedia variant=\"image\">\n                <img src={person.avatar} alt={person.name} />\n              </ItemMedia>\n              <ItemContent>\n                <ItemTitle>{person.name}</ItemTitle>\n                <ItemDescription>{person.email}</ItemDescription>\n              </ItemContent>\n              <ItemActions>\n                <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Invite\">\n                  <PlusIcon />\n                </Button>\n              </ItemActions>\n            </Item>\n          </div>\n        ))}\n      </ItemGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -478,57 +91,7 @@ The same list in an `inset` item group, forming a rounded list with inset separa
 
 <Example kind="ui" name="item" story="Inset">
 
-```tsx
-import { PlusIcon } from "@phosphor-icons/react"
-import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from "@/components/ui/item"
-
-const people = [
-  {
-    name: "Olivia Martin",
-    email: "olivia@example.com",
-    avatar: "https://i.pravatar.cc/96?img=12",
-  },
-  {
-    name: "Liam Chen",
-    email: "liam@example.com",
-    avatar: "https://github.com/vercel.png",
-  },
-  {
-    name: "Sofia Rossi",
-    email: "sofia@example.com",
-    avatar: "https://github.com/github.png",
-  },
-]
-
-export function ItemInsetExample() {
-  return (
-    <div className="w-96">
-      <ItemGroup variant="inset">
-        {people.map((person, index) => (
-          <div key={person.email} className="contents">
-            {index > 0 && <ItemSeparator />}
-            <Item variant="default" size="sm" role="listitem">
-              <ItemMedia variant="image">
-                <img src={person.avatar} alt={person.name} />
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>{person.name}</ItemTitle>
-                <ItemDescription>{person.email}</ItemDescription>
-              </ItemContent>
-              <ItemActions>
-                <Button variant="ghost" size="icon-sm" aria-label="Invite">
-                  <PlusIcon />
-                </Button>
-              </ItemActions>
-            </Item>
-          </div>
-        ))}
-      </ItemGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from \"@/components/ui/item\"\n\nconst people = [\n  {\n    name: \"Olivia Martin\",\n    email: \"olivia@example.com\",\n    avatar: \"https://i.pravatar.cc/96?img=12\",\n  },\n  {\n    name: \"Liam Chen\",\n    email: \"liam@example.com\",\n    avatar: \"https://github.com/vercel.png\",\n  },\n  {\n    name: \"Sofia Rossi\",\n    email: \"sofia@example.com\",\n    avatar: \"https://github.com/github.png\",\n  },\n]\n\nexport function ItemInsetExample() {\n  return (\n    <div className=\"w-96\">\n      <ItemGroup variant=\"inset\">\n        {people.map((person, index) => (\n          <div key={person.email} className=\"contents\">\n            {index > 0 && <ItemSeparator />}\n            <Item variant=\"default\" size=\"sm\" role=\"listitem\">\n              <ItemMedia variant=\"image\">\n                <img src={person.avatar} alt={person.name} />\n              </ItemMedia>\n              <ItemContent>\n                <ItemTitle>{person.name}</ItemTitle>\n                <ItemDescription>{person.email}</ItemDescription>\n              </ItemContent>\n              <ItemActions>\n                <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"Invite\">\n                  <PlusIcon />\n                </Button>\n              </ItemActions>\n            </Item>\n          </div>\n        ))}\n      </ItemGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -538,36 +101,7 @@ An item with an `Avatar` as media and a Message button.
 
 <Example kind="ui" name="item" story="WithAvatar">
 
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-
-export function ItemWithAvatarExample() {
-  return (
-    <div className="w-96">
-      <Item variant="outline">
-        <ItemMedia>
-          <Avatar size="lg">
-            <AvatarImage
-              src="https://i.pravatar.cc/96?img=12"
-              alt="Olivia Martin"
-            />
-            <AvatarFallback>OM</AvatarFallback>
-          </Avatar>
-        </ItemMedia>
-        <ItemContent>
-          <ItemTitle>Olivia Martin</ItemTitle>
-          <ItemDescription>Last seen 5 minutes ago</ItemDescription>
-        </ItemContent>
-        <ItemActions>
-          <Button size="sm">Message</Button>
-        </ItemActions>
-      </Item>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Button } from \"@/components/ui/button\"\nimport { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemWithAvatarExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemMedia>\n          <Avatar size=\"lg\">\n            <AvatarImage\n              src=\"https://i.pravatar.cc/96?img=12\"\n              alt=\"Olivia Martin\"\n            />\n            <AvatarFallback>OM</AvatarFallback>\n          </Avatar>\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Olivia Martin</ItemTitle>\n          <ItemDescription>Last seen 5 minutes ago</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button size=\"sm\">Message</Button>\n        </ItemActions>\n      </Item>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -577,34 +111,7 @@ A plan summary with a price in the header and a renewal date and action in the f
 
 <Example kind="ui" name="item" story="WithHeaderAndFooter">
 
-```tsx
-import { Button } from "@/components/ui/button"
-import { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from "@/components/ui/item"
-
-export function ItemWithHeaderAndFooterExample() {
-  return (
-    <div className="w-96">
-      <Item variant="outline">
-        <ItemHeader>
-          <ItemTitle>Pro plan</ItemTitle>
-          <span className="text-sm font-medium">$24/mo</span>
-        </ItemHeader>
-        <ItemContent>
-          <ItemDescription>
-            Unlimited projects, priority support, and advanced analytics.
-          </ItemDescription>
-        </ItemContent>
-        <ItemFooter>
-          <span className="text-label-secondary text-xs">Renews on May 1</span>
-          <Button variant="outline" size="sm">
-            Manage
-          </Button>
-        </ItemFooter>
-      </Item>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Button } from \"@/components/ui/button\"\nimport { Item, ItemContent, ItemDescription, ItemFooter, ItemHeader, ItemTitle } from \"@/components/ui/item\"\n\nexport function ItemWithHeaderAndFooterExample() {\n  return (\n    <div className=\"w-96\">\n      <Item variant=\"outline\">\n        <ItemHeader>\n          <ItemTitle>Pro plan</ItemTitle>\n          <span className=\"text-sm font-medium\">$24/mo</span>\n        </ItemHeader>\n        <ItemContent>\n          <ItemDescription>\n            Unlimited projects, priority support, and advanced analytics.\n          </ItemDescription>\n        </ItemContent>\n        <ItemFooter>\n          <span className=\"text-label-secondary text-xs\">Renews on May 1</span>\n          <Button variant=\"outline\" size=\"sm\">\n            Manage\n          </Button>\n        </ItemFooter>\n      </Item>\n    </div>\n  )\n}"} />
 
 </Example>
 

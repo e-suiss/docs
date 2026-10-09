@@ -7,64 +7,7 @@ generated: true
 
 <Example kind="ui" name="tabs" story="Default">
 
-```tsx
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    icon: UserIcon,
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    icon: BellIcon,
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: GearIcon,
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsExample() {
-  return (
-    <Tabs defaultValue="account" orientation="horizontal">
-      <TabsList variant="default">
-        {tabs.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {tabs.map((tab) => (
-        <TabsContent
-          key={tab.value}
-          value={tab.value}
-          className="text-label-secondary"
-        >
-          {tab.content}
-        </TabsContent>
-      ))}
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"default\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
 
 </Example>
 
@@ -76,232 +19,25 @@ When there are more tabs than fit, the list scrolls horizontally and keeps the a
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add tabs
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add tabs"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react class-variance-authority cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react class-variance-authority cn"} />
 
 2. Copy the source into `components/ui/tabs.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/tabs.tsx"
-"use client"
-
-import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
-import * as React from "react"
-
-function Tabs({
-  className,
-  orientation = "horizontal",
-  ...props
-}: TabsPrimitive.Root.Props) {
-  return (
-    <TabsPrimitive.Root
-      data-slot="tabs"
-      orientation={orientation}
-      data-orientation={orientation}
-      className={cn(
-        "group/tabs flex gap-2 data-horizontal:flex-col",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-const tabsListVariants = cva(
-  "group/tabs-list inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-xl p-1 text-label-secondary group-data-horizontal/tabs:h-11 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none data-[variant=line]:p-0.5 group-data-horizontal/tabs:data-[variant=line]:h-10.25 group-data-horizontal/tabs:data-[variant=line]:pb-1.75",
-  {
-    variants: {
-      variant: {
-        default: "bg-control",
-        line: "gap-1 bg-transparent",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-function TabsList({
-  className,
-  variant = "default",
-  children,
-  ...props
-}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
-  const ref = React.useRef<HTMLDivElement>(null)
-
-  React.useEffect(() => {
-    const list = ref.current
-    if (!list) return
-    const reveal = () => {
-      const active = list.querySelector<HTMLElement>(
-        "[data-slot=tabs-trigger][data-active]"
-      )
-      const first = list.querySelector<HTMLElement>("[data-slot=tabs-trigger]")
-      if (!active || !first || list.clientWidth === 0) return
-      const style = getComputedStyle(list)
-      const padStart = Number.parseFloat(style.paddingInlineStart) || 0
-      const padEnd = Number.parseFloat(style.paddingInlineEnd) || 0
-      const inset = first.offsetLeft - padStart
-      const left = active.offsetLeft - first.offsetLeft
-      const right =
-        active.offsetLeft +
-        active.offsetWidth +
-        inset +
-        padEnd -
-        list.clientWidth
-      if (left < list.scrollLeft) {
-        list.scrollTo({ left, behavior })
-      } else if (right > list.scrollLeft) {
-        list.scrollTo({ left: right, behavior })
-      }
-    }
-    let behavior: ScrollBehavior = "instant"
-    reveal()
-    behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? "instant"
-      : "smooth"
-    const observer = new MutationObserver(reveal)
-    observer.observe(list, {
-      subtree: true,
-      attributeFilter: ["data-active"],
-    })
-    return () => observer.disconnect()
-  }, [])
-
-  React.useLayoutEffect(() => {
-    const list = ref.current
-    const parent = list?.parentElement
-    if (!list || !parent) return
-    const boundary = () => {
-      for (let node = parent.parentElement; node; node = node.parentElement) {
-        if (node === document.body || node === document.documentElement) break
-        if (getComputedStyle(node).overflowX === "visible") continue
-        const rect = node.getBoundingClientRect()
-        const start = rect.left + node.clientLeft
-        return { start, end: start + node.clientWidth }
-      }
-      return { start: 0, end: document.documentElement.clientWidth }
-    }
-    const measure = () => {
-      const rect = parent.getBoundingClientRect()
-      const edge = boundary()
-      const rtl = getComputedStyle(list).direction === "rtl"
-      const left = Math.max(0, rect.left - edge.start)
-      const right = Math.max(0, edge.end - rect.right)
-      list.style.setProperty(
-        "--tabs-list-bleed-start",
-        `${rtl ? right : left}px`
-      )
-      list.style.setProperty("--tabs-list-bleed-end", `${rtl ? left : right}px`)
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(parent)
-    window.addEventListener("resize", measure)
-    return () => {
-      observer.disconnect()
-      window.removeEventListener("resize", measure)
-    }
-  }, [])
-
-  return (
-    <TabsPrimitive.List
-      ref={ref}
-      data-slot="tabs-list"
-      data-variant={variant}
-      className="no-scrollbar relative flex max-w-full overflow-x-auto overscroll-x-contain group-data-vertical/tabs:w-fit group-data-horizontal/tabs:data-[variant=line]:-mb-1.25 max-md:group-data-horizontal/tabs:-ms-(--tabs-list-bleed-start) max-md:group-data-horizontal/tabs:-me-(--tabs-list-bleed-end) max-md:group-data-horizontal/tabs:max-w-[calc(100%+var(--tabs-list-bleed-start,0px)+var(--tabs-list-bleed-end,0px))] max-md:group-data-horizontal/tabs:ps-(--tabs-list-bleed-start) max-md:group-data-horizontal/tabs:pe-(--tabs-list-bleed-end)"
-      {...props}
-    >
-      <TabsPrimitive.Indicator
-        data-slot="tabs-indicator"
-        data-variant={variant}
-        renderBeforeHydration
-        className="pointer-events-none absolute top-(--active-tab-top) left-(--active-tab-left) h-(--active-tab-height) w-(--active-tab-width) rounded-md bg-surface-raised shadow-sm transition-[left,top,width,height] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-[variant=line]:rounded-none data-[variant=line]:bg-label data-[variant=line]:shadow-none group-data-horizontal/tabs:data-[variant=line]:top-[calc(var(--active-tab-top)+var(--active-tab-height)+(--spacing(0.75)))] group-data-horizontal/tabs:data-[variant=line]:h-0.5 group-data-vertical/tabs:data-[variant=line]:left-[calc(var(--active-tab-left)+var(--active-tab-width)+(--spacing(0.5)))] group-data-vertical/tabs:data-[variant=line]:w-0.5 motion-reduce:transition-none dark:bg-label-quaternary dark:data-[variant=line]:bg-label"
-      />
-      <div
-        data-slot="tabs-list-content"
-        data-variant={variant}
-        className={cn(tabsListVariants({ variant }), className)}
-      >
-        {children}
-      </div>
-    </TabsPrimitive.List>
-  )
-}
-
-function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
-  return (
-    <TabsPrimitive.Tab
-      data-slot="tabs-trigger"
-      className={cn(
-        "relative inline-flex flex-1 group-data-horizontal/tabs:h-full group-data-[variant=line]/tabs-list:h-[calc(100%-1px)] items-center justify-center gap-2 rounded-md border border-transparent! px-3 py-1 text-sm whitespace-nowrap text-label-secondary transition-colors group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start group-data-vertical/tabs:h-9 group-data-vertical/tabs:flex-none group-data-vertical/tabs:px-3 hover:text-label focus-visible:focus-ring disabled:pointer-events-none disabled:text-label-quaternary has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2 aria-disabled:pointer-events-none aria-disabled:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "data-active:text-label",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
-  return (
-    <TabsPrimitive.Panel
-      data-slot="tabs-content"
-      className={cn(
-        "flex-1 rounded-lg text-base outline-none focus-visible:focus-ring [--focus-ring-offset:3px]",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export { Tabs, TabsContent, TabsList, TabsTrigger }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/tabs.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-```
+<Code lang="tsx" code={"import { Tabs, TabsList, TabsTrigger, TabsContent } from \"@/components/ui/tabs\""} />
 
-```tsx
-<Tabs defaultValue="account" orientation="horizontal">
-  <TabsList variant="default">
-    {tabs.map((tab) => (
-      <TabsTrigger key={tab.value} value={tab.value}>
-        {tab.label}
-      </TabsTrigger>
-    ))}
-  </TabsList>
-  {tabs.map((tab) => (
-    <TabsContent
-      key={tab.value}
-      value={tab.value}
-      className="text-label-secondary"
-    >
-      {tab.content}
-    </TabsContent>
-  ))}
-</Tabs>
-```
+<Code lang="tsx" code={"<Tabs defaultValue=\"account\" orientation=\"horizontal\">\n  <TabsList variant=\"default\">\n    {tabs.map((tab) => (\n      <TabsTrigger key={tab.value} value={tab.value}>\n        {tab.label}\n      </TabsTrigger>\n    ))}\n  </TabsList>\n  {tabs.map((tab) => (\n    <TabsContent\n      key={tab.value}\n      value={tab.value}\n      className=\"text-label-secondary\"\n    >\n      {tab.content}\n    </TabsContent>\n  ))}\n</Tabs>"} />
 
 Use `defaultValue` on `Tabs` for an uncontrolled set, or `value` with `onValueChange` to control it. Give each `TabsTrigger` and its `TabsContent` the same `value`. Set `orientation="vertical"` on `Tabs` to stack the triggers beside the panel.
 
@@ -313,64 +49,7 @@ Uses the `line` variant, which underlines the active tab.
 
 <Example kind="ui" name="tabs" story="Line">
 
-```tsx
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    icon: UserIcon,
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    icon: BellIcon,
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: GearIcon,
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsLineExample() {
-  return (
-    <Tabs defaultValue="account" orientation="horizontal">
-      <TabsList variant="line">
-        {tabs.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {tabs.map((tab) => (
-        <TabsContent
-          key={tab.value}
-          value={tab.value}
-          className="text-label-secondary"
-        >
-          {tab.content}
-        </TabsContent>
-      ))}
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsLineExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"line\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
 
 </Example>
 
@@ -380,64 +59,7 @@ Stacks the tabs vertically beside the panel.
 
 <Example kind="ui" name="tabs" story="Vertical">
 
-```tsx
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    icon: UserIcon,
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    icon: BellIcon,
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: GearIcon,
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsVerticalExample() {
-  return (
-    <Tabs defaultValue="account" orientation="vertical">
-      <TabsList variant="default">
-        {tabs.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {tabs.map((tab) => (
-        <TabsContent
-          key={tab.value}
-          value={tab.value}
-          className="text-label-secondary"
-        >
-          {tab.content}
-        </TabsContent>
-      ))}
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsVerticalExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"vertical\">\n      <TabsList variant=\"default\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
 
 </Example>
 
@@ -447,65 +69,7 @@ Places an icon before each tab's label.
 
 <Example kind="ui" name="tabs" story="WithIcons">
 
-```tsx
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    icon: UserIcon,
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    icon: BellIcon,
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: GearIcon,
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsWithIconsExample() {
-  return (
-    <Tabs defaultValue="account" orientation="horizontal">
-      <TabsList variant="default">
-        {tabs.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
-            <tab.icon data-icon="inline-start" />
-            {tab.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {tabs.map((tab) => (
-        <TabsContent
-          key={tab.value}
-          value={tab.value}
-          className="text-label-secondary"
-        >
-          {tab.content}
-        </TabsContent>
-      ))}
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsWithIconsExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"default\">\n        {tabs.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            <tab.icon data-icon=\"inline-start\" />\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {tabs.map((tab) => (\n        <TabsContent\n          key={tab.value}\n          value={tab.value}\n          className=\"text-label-secondary\"\n        >\n          {tab.content}\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
 
 </Example>
 
@@ -515,61 +79,7 @@ Disables one tab so it can't be selected.
 
 <Example kind="ui" name="tabs" story="DisabledTab">
 
-```tsx
-import { BellIcon, GearIcon, UserIcon } from "@phosphor-icons/react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const tabs = [
-  {
-    value: "account",
-    label: "Account",
-    icon: UserIcon,
-    content: "Update your name, email address, and profile photo.",
-  },
-  {
-    value: "notifications",
-    label: "Notifications",
-    icon: BellIcon,
-    content: "Choose which updates you receive by email and push.",
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: GearIcon,
-    content: "Manage language, time zone, and privacy preferences.",
-  },
-] as const
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsDisabledTabExample() {
-  return (
-    <Tabs defaultValue="account" orientation="horizontal">
-      <TabsList variant="default">
-        <TabsTrigger value="account">Account</TabsTrigger>
-        <TabsTrigger value="notifications">Notifications</TabsTrigger>
-        <TabsTrigger value="billing" disabled>
-          Billing
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="account" className="text-label-secondary">
-        {tabs[0].content}
-      </TabsContent>
-      <TabsContent value="notifications" className="text-label-secondary">
-        {tabs[1].content}
-      </TabsContent>
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { BellIcon, GearIcon, UserIcon } from \"@phosphor-icons/react\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst tabs = [\n  {\n    value: \"account\",\n    label: \"Account\",\n    icon: UserIcon,\n    content: \"Update your name, email address, and profile photo.\",\n  },\n  {\n    value: \"notifications\",\n    label: \"Notifications\",\n    icon: BellIcon,\n    content: \"Choose which updates you receive by email and push.\",\n  },\n  {\n    value: \"settings\",\n    label: \"Settings\",\n    icon: GearIcon,\n    content: \"Manage language, time zone, and privacy preferences.\",\n  },\n] as const\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsDisabledTabExample() {\n  return (\n    <Tabs defaultValue=\"account\" orientation=\"horizontal\">\n      <TabsList variant=\"default\">\n        <TabsTrigger value=\"account\">Account</TabsTrigger>\n        <TabsTrigger value=\"notifications\">Notifications</TabsTrigger>\n        <TabsTrigger value=\"billing\" disabled>\n          Billing\n        </TabsTrigger>\n      </TabsList>\n      <TabsContent value=\"account\" className=\"text-label-secondary\">\n        {tabs[0].content}\n      </TabsContent>\n      <TabsContent value=\"notifications\" className=\"text-label-secondary\">\n        {tabs[1].content}\n      </TabsContent>\n    </Tabs>\n  )\n}"} />
 
 </Example>
 
@@ -579,38 +89,7 @@ Holds more tabs than fit, so the list scrolls.
 
 <Example kind="ui" name="tabs" story="ManyTabs">
 
-```tsx
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsManyTabsExample() {
-  return (
-    <Tabs orientation="horizontal" defaultValue="general" className="w-full max-w-3xl">
-      <TabsList variant="default">
-        {settings.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {settings.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value}>
-          <p className="text-label-secondary">{tab.label} settings</p>
-        </TabsContent>
-      ))}
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsManyTabsExample() {\n  return (\n    <Tabs orientation=\"horizontal\" defaultValue=\"general\" className=\"w-full max-w-3xl\">\n      <TabsList variant=\"default\">\n        {settings.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {settings.map((tab) => (\n        <TabsContent key={tab.value} value={tab.value}>\n          <p className=\"text-label-secondary\">{tab.label} settings</p>\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
 
 </Example>
 
@@ -620,38 +99,7 @@ Combines a scrolling list with the `line` variant.
 
 <Example kind="ui" name="tabs" story="ManyTabsLine">
 
-```tsx
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-const settings = [
-  { value: "general", label: "General" },
-  { value: "account", label: "Account" },
-  { value: "notifications", label: "Notifications" },
-  { value: "privacy", label: "Privacy" },
-  { value: "appearance", label: "Appearance" },
-  { value: "language", label: "Language" },
-  { value: "billing", label: "Billing" },
-]
-
-export function TabsManyTabsLineExample() {
-  return (
-    <Tabs orientation="horizontal" defaultValue="general" className="w-full max-w-3xl">
-      <TabsList variant="line">
-        {settings.map((tab) => (
-          <TabsTrigger key={tab.value} value={tab.value}>
-            {tab.label}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {settings.map((tab) => (
-        <TabsContent key={tab.value} value={tab.value}>
-          <p className="text-label-secondary">{tab.label} settings</p>
-        </TabsContent>
-      ))}
-    </Tabs>
-  )
-}
-```
+<Code lang="tsx" code={"import { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\nconst settings = [\n  { value: \"general\", label: \"General\" },\n  { value: \"account\", label: \"Account\" },\n  { value: \"notifications\", label: \"Notifications\" },\n  { value: \"privacy\", label: \"Privacy\" },\n  { value: \"appearance\", label: \"Appearance\" },\n  { value: \"language\", label: \"Language\" },\n  { value: \"billing\", label: \"Billing\" },\n]\n\nexport function TabsManyTabsLineExample() {\n  return (\n    <Tabs orientation=\"horizontal\" defaultValue=\"general\" className=\"w-full max-w-3xl\">\n      <TabsList variant=\"line\">\n        {settings.map((tab) => (\n          <TabsTrigger key={tab.value} value={tab.value}>\n            {tab.label}\n          </TabsTrigger>\n        ))}\n      </TabsList>\n      {settings.map((tab) => (\n        <TabsContent key={tab.value} value={tab.value}>\n          <p className=\"text-label-secondary\">{tab.label} settings</p>\n        </TabsContent>\n      ))}\n    </Tabs>\n  )\n}"} />
 
 </Example>
 

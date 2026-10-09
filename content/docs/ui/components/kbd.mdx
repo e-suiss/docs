@@ -7,15 +7,7 @@ generated: true
 
 <Example kind="ui" name="kbd" story="Default">
 
-```tsx
-import { Kbd } from "@/components/ui/kbd"
-
-export function KbdExample() {
-  return (
-    <Kbd mod>K</Kbd>
-  )
-}
-```
+<Code lang="tsx" code={"import { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdExample() {\n  return (\n    <Kbd mod>K</Kbd>\n  )\n}"} />
 
 </Example>
 
@@ -27,80 +19,27 @@ Wrap several keys in `KbdGroup` to present a key combination. Use `Kbd` inline i
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add kbd
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add kbd"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Add the pieces it builds on: `use-platform`.
 
 3. Copy the source into `components/ui/kbd.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/kbd.tsx"
-"use client"
-
-import { cn } from "cn"
-
-import { useModifierKey } from "@/hooks/use-platform"
-
-function Kbd({
-  className,
-  mod,
-  children,
-  ...props
-}: React.ComponentProps<"kbd"> & { mod?: boolean }) {
-  const modifier = useModifierKey(children != null)
-
-  return (
-    <kbd
-      data-slot="kbd"
-      className={cn(
-        "pointer-events-none inline-flex h-5.5 max-md:hidden w-fit min-w-5.5 items-center justify-center gap-1 rounded-sm bg-surface-secondary px-1.5 font-sans text-xs text-label-secondary select-none in-data-[slot=input-group]:bg-surface in-data-[slot=tooltip-content]:bg-surface/20 in-data-[slot=tooltip-content]:text-surface dark:in-data-[slot=tooltip-content]:bg-surface/10 [&_svg:not([class*='size-'])]:size-3",
-        className
-      )}
-      {...props}
-    >
-      {mod && modifier}
-      {children}
-    </kbd>
-  )
-}
-
-function KbdGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <kbd
-      data-slot="kbd-group"
-      className={cn("inline-flex items-center gap-1 max-md:hidden", className)}
-      {...props}
-    />
-  )
-}
-
-export { Kbd, KbdGroup }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/kbd.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Kbd, KbdGroup } from "@/components/ui/kbd"
-```
+<Code lang="tsx" code={"import { Kbd, KbdGroup } from \"@/components/ui/kbd\""} />
 
-```tsx
-<Kbd mod>K</Kbd>
-```
+<Code lang="tsx" code={"<Kbd mod>K</Kbd>"} />
 
 Pass the key label as children. Use `mod` instead of hard-coding `⌘` or `Ctrl` so the hint matches the user's platform. Icons placed inside `Kbd` are sized to `size-3` unless they set their own `size-*` class.
 
@@ -112,22 +51,7 @@ The platform modifier alongside common modifier and named keys such as Shift, Op
 
 <Example kind="ui" name="kbd" story="Modifiers">
 
-```tsx
-import { Kbd } from "@/components/ui/kbd"
-
-export function KbdModifiersExample() {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Kbd mod />
-      <Kbd>⇧</Kbd>
-      <Kbd>⌥</Kbd>
-      <Kbd>⌃</Kbd>
-      <Kbd>Esc</Kbd>
-      <Kbd>Tab</Kbd>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdModifiersExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2\">\n      <Kbd mod />\n      <Kbd>⇧</Kbd>\n      <Kbd>⌥</Kbd>\n      <Kbd>⌃</Kbd>\n      <Kbd>Esc</Kbd>\n      <Kbd>Tab</Kbd>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -137,30 +61,7 @@ Key combinations wrapped in `KbdGroup`, both inline in a sentence and on their o
 
 <Example kind="ui" name="kbd" story="Group">
 
-```tsx
-import { Kbd, KbdGroup } from "@/components/ui/kbd"
-
-export function KbdGroupExample() {
-  return (
-    <div className="text-label-secondary flex flex-col items-start gap-3 text-sm">
-      <p>
-        Use{" "}
-        <KbdGroup>
-          <Kbd mod />
-          <span>+</span>
-          <Kbd>B</Kbd>
-        </KbdGroup>{" "}
-        to toggle the sidebar.
-      </p>
-      <KbdGroup>
-        <Kbd mod />
-        <Kbd>⇧</Kbd>
-        <Kbd>P</Kbd>
-      </KbdGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nexport function KbdGroupExample() {\n  return (\n    <div className=\"text-label-secondary flex flex-col items-start gap-3 text-sm\">\n      <p>\n        Use{\" \"}\n        <KbdGroup>\n          <Kbd mod />\n          <span>+</span>\n          <Kbd>B</Kbd>\n        </KbdGroup>{\" \"}\n        to toggle the sidebar.\n      </p>\n      <KbdGroup>\n        <Kbd mod />\n        <Kbd>⇧</Kbd>\n        <Kbd>P</Kbd>\n      </KbdGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -170,23 +71,7 @@ Keys that use an icon instead of, or next to, a text label.
 
 <Example kind="ui" name="kbd" story="WithIcon">
 
-```tsx
-import { ArrowElbowDownLeftIcon, CommandIcon } from "@phosphor-icons/react"
-import { Kbd } from "@/components/ui/kbd"
-
-export function KbdWithIconExample() {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Kbd>
-        <CommandIcon />K
-      </Kbd>
-      <Kbd>
-        <ArrowElbowDownLeftIcon />
-      </Kbd>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { ArrowElbowDownLeftIcon, CommandIcon } from \"@phosphor-icons/react\"\nimport { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdWithIconExample() {\n  return (\n    <div className=\"flex flex-wrap items-center gap-2\">\n      <Kbd>\n        <CommandIcon />K\n      </Kbd>\n      <Kbd>\n        <ArrowElbowDownLeftIcon />\n      </Kbd>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -196,29 +81,7 @@ A shortcut hint placed in the trailing addon of a search input group.
 
 <Example kind="ui" name="kbd" story="InInputGroup">
 
-```tsx
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
-import { Kbd } from "@/components/ui/kbd"
-
-export function KbdInInputGroupExample() {
-  return (
-    <div className="w-80">
-      <InputGroup>
-        <InputGroupInput placeholder="Search..." />
-        <InputGroupAddon>
-          <MagnifyingGlassIcon />
-        </InputGroupAddon>
-        <InputGroupAddon align="inline-end">
-          <Kbd mod>
-            K
-          </Kbd>
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { MagnifyingGlassIcon } from \"@phosphor-icons/react\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Kbd } from \"@/components/ui/kbd\"\n\nexport function KbdInInputGroupExample() {\n  return (\n    <div className=\"w-80\">\n      <InputGroup>\n        <InputGroupInput placeholder=\"Search...\" />\n        <InputGroupAddon>\n          <MagnifyingGlassIcon />\n        </InputGroupAddon>\n        <InputGroupAddon align=\"inline-end\">\n          <Kbd mod>\n            K\n          </Kbd>\n        </InputGroupAddon>\n      </InputGroup>\n    </div>\n  )\n}"} />
 
 </Example>
 

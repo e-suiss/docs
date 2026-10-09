@@ -7,36 +7,7 @@ generated: true
 
 <Example kind="ui" name="avatar" story="Default">
 
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-const people = [
-  {
-    name: "Emma Wilson",
-    initials: "EW",
-    src: "https://i.pravatar.cc/128?img=47",
-  },
-  {
-    name: "Liam Carter",
-    initials: "LC",
-    src: "https://i.pravatar.cc/128?img=12",
-  },
-  {
-    name: "Sofia Martinez",
-    initials: "SM",
-    src: "https://i.pravatar.cc/128?img=32",
-  },
-] as const
-
-export function AvatarExample() {
-  return (
-    <Avatar>
-      <AvatarImage src={people[0].src} alt={people[0].name} />
-      <AvatarFallback>{people[0].initials}</AvatarFallback>
-    </Avatar>
-  )
-}
-```
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarExample() {\n  return (\n    <Avatar>\n      <AvatarImage src={people[0].src} alt={people[0].name} />\n      <AvatarFallback>{people[0].initials}</AvatarFallback>\n    </Avatar>\n  )\n}"} />
 
 </Example>
 
@@ -48,150 +19,25 @@ To show several people together, place avatars in an `AvatarGroup`, which overla
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add avatar
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add avatar"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react cn"} />
 
 2. Copy the source into `components/ui/avatar.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/avatar.tsx"
-"use client"
-
-import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar"
-import { cn } from "cn"
-import type * as React from "react"
-
-function Avatar({
-  className,
-  size = "default",
-  ...props
-}: AvatarPrimitive.Root.Props & {
-  size?: "default" | "sm" | "lg" | "xl"
-}) {
-  return (
-    <AvatarPrimitive.Root
-      data-slot="avatar"
-      data-size={size}
-      className={cn(
-        "group/avatar relative flex size-8 shrink-0 rounded-full select-none data-[size=lg]:size-10 data-[size=sm]:size-6 data-[size=xl]:size-16",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
-  return (
-    <AvatarPrimitive.Image
-      data-slot="avatar-image"
-      className={cn(
-        "aspect-square size-full rounded-full object-cover",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AvatarFallback({
-  className,
-  ...props
-}: AvatarPrimitive.Fallback.Props) {
-  return (
-    <AvatarPrimitive.Fallback
-      data-slot="avatar-fallback"
-      className={cn(
-        "flex size-full items-center justify-center rounded-full bg-linear-to-b from-label-secondary/90 to-label-secondary text-xs font-semibold text-on-accent uppercase group-data-[size=lg]/avatar:text-md group-data-[size=sm]/avatar:text-3xs group-data-[size=xl]/avatar:text-2xl dark:from-label-secondary/70 dark:to-label-secondary/50 *:[svg]:size-3/5",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AvatarBadge({ className, ...props }: React.ComponentProps<"span">) {
-  return (
-    <span
-      data-slot="avatar-badge"
-      className={cn(
-        "absolute inset-e-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-accent text-on-accent ring-2 ring-surface select-none",
-        "group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
-        "group-data-[size=default]/avatar:size-3 group-data-[size=default]/avatar:[&>svg]:size-2",
-        "group-data-[size=lg]/avatar:size-3.5 group-data-[size=lg]/avatar:[&>svg]:size-2.5",
-        "group-data-[size=xl]/avatar:size-4.5 group-data-[size=xl]/avatar:[&>svg]:size-3",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="avatar-group"
-      className={cn(
-        "group/avatar-group flex -space-x-2 has-data-[size=xl]:-space-x-4 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-surface",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function AvatarGroupCount({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="avatar-group-count"
-      className={cn(
-        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-secondary text-xs font-semibold text-label ring-2 ring-surface group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=lg]/avatar-group:text-md group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-3xs group-has-data-[size=xl]/avatar-group:size-16 group-has-data-[size=xl]/avatar-group:text-2xl [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3 group-has-data-[size=xl]/avatar-group:[&>svg]:size-7",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-export {
-  Avatar,
-  AvatarBadge,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarGroupCount,
-  AvatarImage,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/avatar.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar"
-```
+<Code lang="tsx" code={"import { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount } from \"@/components/ui/avatar\""} />
 
-```tsx
-<Avatar>
-  <AvatarImage src={people[0].src} alt={people[0].name} />
-  <AvatarFallback>{people[0].initials}</AvatarFallback>
-</Avatar>
-```
+<Code lang="tsx" code={"<Avatar>\n  <AvatarImage src={people[0].src} alt={people[0].name} />\n  <AvatarFallback>{people[0].initials}</AvatarFallback>\n</Avatar>"} />
 
 Always provide an `AvatarFallback` alongside `AvatarImage`, usually the person's initials. The fallback can also hold an icon, which scales to 60% of the avatar.
 
@@ -205,17 +51,7 @@ Shows initials when no image is provided.
 
 <Example kind="ui" name="avatar" story="Fallback">
 
-```tsx
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-
-export function AvatarFallbackExample() {
-  return (
-    <Avatar>
-      <AvatarFallback>LC</AvatarFallback>
-    </Avatar>
-  )
-}
-```
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\nexport function AvatarFallbackExample() {\n  return (\n    <Avatar>\n      <AvatarFallback>LC</AvatarFallback>\n    </Avatar>\n  )\n}"} />
 
 </Example>
 
@@ -225,39 +61,7 @@ Initials fallbacks at every size.
 
 <Example kind="ui" name="avatar" story="FallbackSizes">
 
-```tsx
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-
-const people = [
-  {
-    name: "Emma Wilson",
-    initials: "EW",
-    src: "https://i.pravatar.cc/128?img=47",
-  },
-  {
-    name: "Liam Carter",
-    initials: "LC",
-    src: "https://i.pravatar.cc/128?img=12",
-  },
-  {
-    name: "Sofia Martinez",
-    initials: "SM",
-    src: "https://i.pravatar.cc/128?img=32",
-  },
-] as const
-
-export function AvatarFallbackSizesExample() {
-  return (
-    <div className="flex items-center gap-3">
-      {(["sm", "default", "lg", "xl"] as const).map((size) => (
-        <Avatar key={size} size={size}>
-          <AvatarFallback>{people[0].initials}</AvatarFallback>
-        </Avatar>
-      ))}
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarFallbackSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarFallback>{people[0].initials}</AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -267,24 +71,7 @@ Uses a person icon as the fallback at every size.
 
 <Example kind="ui" name="avatar" story="Placeholder">
 
-```tsx
-import { UserIcon } from "@phosphor-icons/react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-
-export function AvatarPlaceholderExample() {
-  return (
-    <div className="flex items-center gap-3">
-      {(["sm", "default", "lg", "xl"] as const).map((size) => (
-        <Avatar key={size} size={size}>
-          <AvatarFallback>
-            <UserIcon weight="fill" />
-          </AvatarFallback>
-        </Avatar>
-      ))}
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { UserIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\nexport function AvatarPlaceholderExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarFallback>\n            <UserIcon weight=\"fill\" />\n          </AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -294,40 +81,7 @@ Image avatars in the `sm`, `default`, `lg` and `xl` sizes.
 
 <Example kind="ui" name="avatar" story="Sizes">
 
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-const people = [
-  {
-    name: "Emma Wilson",
-    initials: "EW",
-    src: "https://i.pravatar.cc/128?img=47",
-  },
-  {
-    name: "Liam Carter",
-    initials: "LC",
-    src: "https://i.pravatar.cc/128?img=12",
-  },
-  {
-    name: "Sofia Martinez",
-    initials: "SM",
-    src: "https://i.pravatar.cc/128?img=32",
-  },
-] as const
-
-export function AvatarSizesExample() {
-  return (
-    <div className="flex items-center gap-3">
-      {(["sm", "default", "lg", "xl"] as const).map((size) => (
-        <Avatar key={size} size={size}>
-          <AvatarImage src={people[1].src} alt={people[1].name} />
-          <AvatarFallback>{people[1].initials}</AvatarFallback>
-        </Avatar>
-      ))}
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarSizesExample() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarImage src={people[1].src} alt={people[1].name} />\n          <AvatarFallback>{people[1].initials}</AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -337,44 +91,7 @@ Adds a check-mark status badge to each size.
 
 <Example kind="ui" name="avatar" story="WithBadge">
 
-```tsx
-import { CheckIcon } from "@phosphor-icons/react"
-import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
-const people = [
-  {
-    name: "Emma Wilson",
-    initials: "EW",
-    src: "https://i.pravatar.cc/128?img=47",
-  },
-  {
-    name: "Liam Carter",
-    initials: "LC",
-    src: "https://i.pravatar.cc/128?img=12",
-  },
-  {
-    name: "Sofia Martinez",
-    initials: "SM",
-    src: "https://i.pravatar.cc/128?img=32",
-  },
-] as const
-
-export function AvatarWithBadgeExample() {
-  return (
-    <div className="flex items-center gap-4">
-      {(["sm", "default", "lg", "xl"] as const).map((size) => (
-        <Avatar key={size} size={size}>
-          <AvatarImage src={people[2].src} alt={people[2].name} />
-          <AvatarFallback>{people[2].initials}</AvatarFallback>
-          <AvatarBadge className="bg-success">
-            <CheckIcon weight="bold" />
-          </AvatarBadge>
-        </Avatar>
-      ))}
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { CheckIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarWithBadgeExample() {\n  return (\n    <div className=\"flex items-center gap-4\">\n      {([\"sm\", \"default\", \"lg\", \"xl\"] as const).map((size) => (\n        <Avatar key={size} size={size}>\n          <AvatarImage src={people[2].src} alt={people[2].name} />\n          <AvatarFallback>{people[2].initials}</AvatarFallback>\n          <AvatarBadge className=\"bg-success\">\n            <CheckIcon weight=\"bold\" />\n          </AvatarBadge>\n        </Avatar>\n      ))}\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -384,41 +101,7 @@ Overlaps several avatars and ends with a `+4` count.
 
 <Example kind="ui" name="avatar" story="Group">
 
-```tsx
-import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/components/ui/avatar"
-
-const people = [
-  {
-    name: "Emma Wilson",
-    initials: "EW",
-    src: "https://i.pravatar.cc/128?img=47",
-  },
-  {
-    name: "Liam Carter",
-    initials: "LC",
-    src: "https://i.pravatar.cc/128?img=12",
-  },
-  {
-    name: "Sofia Martinez",
-    initials: "SM",
-    src: "https://i.pravatar.cc/128?img=32",
-  },
-] as const
-
-export function AvatarGroupExample() {
-  return (
-    <AvatarGroup>
-      {people.map((person) => (
-        <Avatar key={person.name}>
-          <AvatarImage src={person.src} alt={person.name} />
-          <AvatarFallback>{person.initials}</AvatarFallback>
-        </Avatar>
-      ))}
-      <AvatarGroupCount>+4</AvatarGroupCount>
-    </AvatarGroup>
-  )
-}
-```
+<Code lang="tsx" code={"import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarGroupExample() {\n  return (\n    <AvatarGroup>\n      {people.map((person) => (\n        <Avatar key={person.name}>\n          <AvatarImage src={person.src} alt={person.name} />\n          <AvatarFallback>{person.initials}</AvatarFallback>\n        </Avatar>\n      ))}\n      <AvatarGroupCount>+4</AvatarGroupCount>\n    </AvatarGroup>\n  )\n}"} />
 
 </Example>
 
@@ -428,44 +111,7 @@ A large group whose count shows a plus icon instead of a number.
 
 <Example kind="ui" name="avatar" story="GroupWithIconCount">
 
-```tsx
-import { PlusIcon } from "@phosphor-icons/react"
-import { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/components/ui/avatar"
-
-const people = [
-  {
-    name: "Emma Wilson",
-    initials: "EW",
-    src: "https://i.pravatar.cc/128?img=47",
-  },
-  {
-    name: "Liam Carter",
-    initials: "LC",
-    src: "https://i.pravatar.cc/128?img=12",
-  },
-  {
-    name: "Sofia Martinez",
-    initials: "SM",
-    src: "https://i.pravatar.cc/128?img=32",
-  },
-] as const
-
-export function AvatarGroupWithIconCountExample() {
-  return (
-    <AvatarGroup>
-      {people.map((person) => (
-        <Avatar key={person.name} size="lg">
-          <AvatarImage src={person.src} alt={person.name} />
-          <AvatarFallback>{person.initials}</AvatarFallback>
-        </Avatar>
-      ))}
-      <AvatarGroupCount>
-        <PlusIcon />
-      </AvatarGroupCount>
-    </AvatarGroup>
-  )
-}
-```
+<Code lang="tsx" code={"import { PlusIcon } from \"@phosphor-icons/react\"\nimport { Avatar, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\n\nconst people = [\n  {\n    name: \"Emma Wilson\",\n    initials: \"EW\",\n    src: \"https://i.pravatar.cc/128?img=47\",\n  },\n  {\n    name: \"Liam Carter\",\n    initials: \"LC\",\n    src: \"https://i.pravatar.cc/128?img=12\",\n  },\n  {\n    name: \"Sofia Martinez\",\n    initials: \"SM\",\n    src: \"https://i.pravatar.cc/128?img=32\",\n  },\n] as const\n\nexport function AvatarGroupWithIconCountExample() {\n  return (\n    <AvatarGroup>\n      {people.map((person) => (\n        <Avatar key={person.name} size=\"lg\">\n          <AvatarImage src={person.src} alt={person.name} />\n          <AvatarFallback>{person.initials}</AvatarFallback>\n        </Avatar>\n      ))}\n      <AvatarGroupCount>\n        <PlusIcon />\n      </AvatarGroupCount>\n    </AvatarGroup>\n  )\n}"} />
 
 </Example>
 

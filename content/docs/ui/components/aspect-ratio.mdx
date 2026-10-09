@@ -7,23 +7,7 @@ generated: true
 
 <Example kind="ui" name="aspect-ratio" story="Default">
 
-```tsx
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-
-export function AspectRatioExample() {
-  return (
-    <div className="w-96">
-      <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-2xl bg-surface-secondary">
-        <img
-          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
-          alt="Mountain lake at sunrise"
-          className="size-full object-cover"
-        />
-      </AspectRatio>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={16 / 9} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"size-full object-cover\"\n        />\n      </AspectRatio>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -35,68 +19,25 @@ Use it to reserve space for images, video or embeds so the layout does not shift
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add aspect-ratio
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add aspect-ratio"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install cn
-```
+<Code lang="bash" title="Terminal" code={"npm install cn"} />
 
 2. Copy the source into `components/ui/aspect-ratio.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/aspect-ratio.tsx"
-import { cn } from "cn"
-
-function AspectRatio({
-  ratio,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & { ratio: number }) {
-  return (
-    <div
-      data-slot="aspect-ratio"
-      style={
-        {
-          "--ratio": ratio,
-        } as React.CSSProperties
-      }
-      className={cn("relative aspect-(--ratio)", className)}
-      {...props}
-    />
-  )
-}
-
-export { AspectRatio }
-```
-
-</SourceCode>
+<SourceFile path="components/ui/aspect-ratio.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-```
+<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\""} />
 
-```tsx
-<div className="w-96">
-  <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-2xl bg-surface-secondary">
-    <img
-      src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
-      alt="Mountain lake at sunrise"
-      className="size-full object-cover"
-    />
-  </AspectRatio>
-</div>
-```
+<Code lang="tsx" code={"<div className=\"w-96\">\n  <AspectRatio ratio={16 / 9} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n    <img\n      src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n      alt=\"Mountain lake at sunrise\"\n      className=\"size-full object-cover\"\n    />\n  </AspectRatio>\n</div>"} />
 
 Pass `ratio` as a number, typically written as a division such as `16 / 9`, `4 / 3` or `1`. Give media inside it `className="size-full object-cover"` to fill the frame. Add `overflow-hidden` and a radius class to clip the content to rounded corners.
 
@@ -108,23 +49,7 @@ A `1:1` frame using `ratio={1}`.
 
 <Example kind="ui" name="aspect-ratio" story="Square">
 
-```tsx
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-
-export function AspectRatioSquareExample() {
-  return (
-    <div className="w-96">
-      <AspectRatio ratio={1} className="overflow-hidden rounded-2xl bg-surface-secondary">
-        <img
-          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
-          alt="Mountain lake at sunrise"
-          className="size-full object-cover"
-        />
-      </AspectRatio>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioSquareExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={1} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"size-full object-cover\"\n        />\n      </AspectRatio>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -134,23 +59,7 @@ A taller-than-wide frame using `ratio={3 / 4}`.
 
 <Example kind="ui" name="aspect-ratio" story="Portrait">
 
-```tsx
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-
-export function AspectRatioPortraitExample() {
-  return (
-    <div className="w-96">
-      <AspectRatio ratio={3 / 4} className="overflow-hidden rounded-2xl bg-surface-secondary">
-        <img
-          src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80"
-          alt="Mountain lake at sunrise"
-          className="size-full object-cover"
-        />
-      </AspectRatio>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioPortraitExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={3 / 4} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <img\n          src=\"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80\"\n          alt=\"Mountain lake at sunrise\"\n          className=\"size-full object-cover\"\n        />\n      </AspectRatio>\n    </div>\n  )\n}"} />
 
 </Example>
 
@@ -160,21 +69,7 @@ A `4:3` frame holding centered placeholder text instead of an image.
 
 <Example kind="ui" name="aspect-ratio" story="Placeholder">
 
-```tsx
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-
-export function AspectRatioPlaceholderExample() {
-  return (
-    <div className="w-96">
-      <AspectRatio ratio={4 / 3} className="overflow-hidden rounded-2xl bg-surface-secondary">
-        <div className="text-label-secondary flex size-full items-center justify-center text-sm">
-          4:3
-        </div>
-      </AspectRatio>
-    </div>
-  )
-}
-```
+<Code lang="tsx" code={"import { AspectRatio } from \"@/components/ui/aspect-ratio\"\n\nexport function AspectRatioPlaceholderExample() {\n  return (\n    <div className=\"w-96\">\n      <AspectRatio ratio={4 / 3} className=\"overflow-hidden rounded-2xl bg-surface-secondary\">\n        <div className=\"text-label-secondary flex size-full items-center justify-center text-sm\">\n          4:3\n        </div>\n      </AspectRatio>\n    </div>\n  )\n}"} />
 
 </Example>
 

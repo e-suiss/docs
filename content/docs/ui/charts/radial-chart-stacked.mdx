@@ -7,98 +7,7 @@ generated: true
 
 <Example kind="chart" name="radial-chart-stacked">
 
-```tsx title="components/charts/radial-chart-stacked.tsx"
-"use client"
-
-import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-const visitors = { desktop: 1260, mobile: 570 }
-
-const chartData = [visitors]
-
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
-  mobile: { label: "Mobile", color: "var(--teal)" },
-} satisfies ChartConfig
-
-const total = visitors.desktop + visitors.mobile
-
-export function RadialChartStacked() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Half, stacked</CardTitle>
-        <CardDescription>Two series on one arc</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="relative">
-          <ChartContainer
-            config={chartConfig}
-            className="aspect-auto h-44 w-full"
-          >
-            <RadialBarChart
-              accessibilityLayer
-              data={chartData}
-              startAngle={180}
-              endAngle={0}
-              innerRadius="120%"
-              outerRadius="170%"
-              cy="86%"
-            >
-              <PolarAngleAxis
-                type="number"
-                domain={[0, total]}
-                tick={false}
-                axisLine={false}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <RadialBar
-                dataKey="desktop"
-                stackId="a"
-                cornerRadius={6}
-                fill="var(--color-desktop)"
-                stroke="var(--surface-secondary)"
-                strokeWidth={3}
-              />
-              <RadialBar
-                dataKey="mobile"
-                stackId="a"
-                cornerRadius={6}
-                fill="var(--color-mobile)"
-                stroke="var(--surface-secondary)"
-                strokeWidth={3}
-              />
-            </RadialBarChart>
-          </ChartContainer>
-          <div className="pointer-events-none absolute inset-x-0 bottom-[14%] flex flex-col items-center text-center">
-            <span className="text-2xl font-semibold tracking-tight tabular-nums">
-              {total.toLocaleString("en-US")}
-            </span>
-            <span className="text-xs text-label-secondary">visitors</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-```
+<SourceFile path="components/charts/radial-chart-stacked.tsx" fold={false} />
 
 </Example>
 
@@ -108,130 +17,27 @@ Uses `RadialBarChart` with `startAngle={180}`, `endAngle={0}`, `innerRadius="120
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add charts radial-chart-stacked
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add charts radial-chart-stacked"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install recharts
-```
+<Code lang="bash" title="Terminal" code={"npm install recharts"} />
 
 2. Add the pieces it builds on: [Card](/docs/ui/components/card), [Chart](/docs/ui/components/chart).
 
 3. Copy the source into `components/charts/radial-chart-stacked.tsx`:
 
-<SourceCode>
-
-```tsx title="components/charts/radial-chart-stacked.tsx"
-"use client"
-
-import { PolarAngleAxis, RadialBar, RadialBarChart } from "recharts"
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-
-const visitors = { desktop: 1260, mobile: 570 }
-
-const chartData = [visitors]
-
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--blue)" },
-  mobile: { label: "Mobile", color: "var(--teal)" },
-} satisfies ChartConfig
-
-const total = visitors.desktop + visitors.mobile
-
-export function RadialChartStacked() {
-  return (
-    <Card variant="filled" size="sm">
-      <CardHeader>
-        <CardTitle>Half, stacked</CardTitle>
-        <CardDescription>Two series on one arc</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="relative">
-          <ChartContainer
-            config={chartConfig}
-            className="aspect-auto h-44 w-full"
-          >
-            <RadialBarChart
-              accessibilityLayer
-              data={chartData}
-              startAngle={180}
-              endAngle={0}
-              innerRadius="120%"
-              outerRadius="170%"
-              cy="86%"
-            >
-              <PolarAngleAxis
-                type="number"
-                domain={[0, total]}
-                tick={false}
-                axisLine={false}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <RadialBar
-                dataKey="desktop"
-                stackId="a"
-                cornerRadius={6}
-                fill="var(--color-desktop)"
-                stroke="var(--surface-secondary)"
-                strokeWidth={3}
-              />
-              <RadialBar
-                dataKey="mobile"
-                stackId="a"
-                cornerRadius={6}
-                fill="var(--color-mobile)"
-                stroke="var(--surface-secondary)"
-                strokeWidth={3}
-              />
-            </RadialBarChart>
-          </ChartContainer>
-          <div className="pointer-events-none absolute inset-x-0 bottom-[14%] flex flex-col items-center text-center">
-            <span className="text-2xl font-semibold tracking-tight tabular-nums">
-              {total.toLocaleString("en-US")}
-            </span>
-            <span className="text-xs text-label-secondary">visitors</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-```
-
-</SourceCode>
+<SourceFile path="components/charts/radial-chart-stacked.tsx" />
 
 4. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { RadialChartStacked } from "@/components/charts/radial-chart-stacked"
-```
+<Code lang="tsx" code={"import { RadialChartStacked } from \"@/components/charts/radial-chart-stacked\""} />
 
-```tsx
-<RadialChartStacked />
-```
+<Code lang="tsx" code={"<RadialChartStacked />"} />
 
 Replace `visitors` with your own fields and add a `RadialBar` with the same `stackId` and a `chartConfig` entry for each one; include every field in `total` so the arc stays full. Adjust `cy` and the radii together if you change the container height.
 

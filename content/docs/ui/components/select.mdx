@@ -7,36 +7,7 @@ generated: true
 
 <Example kind="ui" name="select" story="Default">
 
-```tsx
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-export function SelectExample() {
-  return (
-    <Select items={fruits}>
-      <SelectTrigger aria-label="Fruit" className="w-48">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {fruits.map((fruit) => (
-            <SelectItem key={fruit.value} value={fruit.value}>
-              {fruit.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -48,304 +19,25 @@ A highlight pill slides between options as the highlighted item changes, and the
 
 ### CLI
 
-```bash title="Terminal"
-npx @esuiss/ui@latest add select
-```
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add select"} />
 
 ### Manual
 
 1. Install the dependencies:
 
-```bash title="Terminal"
-npm install @base-ui/react @phosphor-icons/react cn
-```
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
 
 2. Copy the source into `components/ui/select.tsx`:
 
-<SourceCode>
-
-```tsx title="components/ui/select.tsx"
-"use client"
-
-import { Select as SelectPrimitive } from "@base-ui/react/select"
-import {
-  CaretDownIcon,
-  CaretUpDownIcon,
-  CaretUpIcon,
-  CheckIcon,
-} from "@phosphor-icons/react"
-import { cn } from "cn"
-import type * as React from "react"
-
-const Select = SelectPrimitive.Root
-
-function trackHighlight(list: HTMLDivElement | null) {
-  const indicator = list?.querySelector<HTMLElement>(
-    "[data-slot=select-highlight]"
-  )
-  if (!list || !indicator) return
-  const update = () => {
-    const item = list.querySelector<HTMLElement>(
-      "[data-slot=select-item][data-highlighted]"
-    )
-    if (!item) {
-      delete indicator.dataset.visible
-      return
-    }
-    const instant = !("visible" in indicator.dataset)
-    if (instant) indicator.dataset.instant = ""
-    indicator.style.top = `${item.offsetTop}px`
-    indicator.style.left = `${item.offsetLeft}px`
-    indicator.style.width = `${item.offsetWidth}px`
-    indicator.style.height = `${item.offsetHeight}px`
-    indicator.dataset.visible = ""
-    if (instant) {
-      void indicator.offsetHeight
-      delete indicator.dataset.instant
-    }
-  }
-  update()
-  const observer = new MutationObserver(update)
-  observer.observe(list, {
-    subtree: true,
-    attributeFilter: ["data-highlighted"],
-  })
-  return () => observer.disconnect()
-}
-
-function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
-  return (
-    <SelectPrimitive.Group
-      data-slot="select-group"
-      className={cn("scroll-my-1.5 p-1.5", className)}
-      {...props}
-    />
-  )
-}
-
-function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
-  return (
-    <SelectPrimitive.Value
-      data-slot="select-value"
-      className={cn("flex flex-1 text-start", className)}
-      {...props}
-    />
-  )
-}
-
-function SelectTrigger({
-  className,
-  size = "default",
-  children,
-  ...props
-}: SelectPrimitive.Trigger.Props & {
-  size?: "sm" | "default"
-}) {
-  return (
-    <SelectPrimitive.Trigger
-      data-slot="select-trigger"
-      data-size={size}
-      className={cn(
-        "flex w-fit items-center justify-between gap-1.5 rounded-lg border border-transparent bg-control px-3 py-2 text-base whitespace-nowrap transition-[color,box-shadow,background-color] outline-none focus-visible:focus-ring disabled:cursor-not-allowed disabled:bg-control-disabled disabled:text-label-quaternary aria-invalid:border-danger aria-invalid:bg-danger/5 dark:aria-invalid:bg-danger/10 data-placeholder:text-label-secondary data-[size=default]:h-11 data-[size=sm]:h-9 data-[size=sm]:rounded-md *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <SelectPrimitive.Icon
-        render={
-          <CaretUpDownIcon className="pointer-events-none size-4 text-label-secondary" />
-        }
-      />
-    </SelectPrimitive.Trigger>
-  )
-}
-
-function SelectContent({
-  className,
-  children,
-  side = "bottom",
-  sideOffset = 4,
-  align = "center",
-  alignOffset = 0,
-  alignItemWithTrigger = false,
-  ...props
-}: SelectPrimitive.Popup.Props &
-  Pick<
-    SelectPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset" | "alignItemWithTrigger"
-  >) {
-  return (
-    <SelectPrimitive.Portal>
-      <SelectPrimitive.Positioner
-        side={side}
-        sideOffset={sideOffset}
-        align={align}
-        alignOffset={alignOffset}
-        alignItemWithTrigger={alignItemWithTrigger}
-        className="isolate z-50"
-      >
-        <SelectPrimitive.Popup
-          data-slot="select-content"
-          data-align-trigger={alignItemWithTrigger}
-          className={cn(
-            "relative isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-surface-raised text-label shadow-lg ring-1 ring-label/5 duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-start-2 data-[side=inline-start]:slide-in-from-end-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:ring-label/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-            className
-          )}
-          {...props}
-        >
-          <SelectScrollUpButton />
-          <SelectPrimitive.List ref={trackHighlight} className="relative">
-            <span
-              aria-hidden="true"
-              data-slot="select-highlight"
-              className="pointer-events-none absolute rounded-md bg-item-hover opacity-0 transition-[top,left,width,height,opacity] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] data-instant:transition-none data-visible:opacity-100 motion-reduce:transition-none"
-            />
-            {children}
-          </SelectPrimitive.List>
-          <SelectScrollDownButton />
-        </SelectPrimitive.Popup>
-      </SelectPrimitive.Positioner>
-    </SelectPrimitive.Portal>
-  )
-}
-
-function SelectLabel({
-  className,
-  ...props
-}: SelectPrimitive.GroupLabel.Props) {
-  return (
-    <SelectPrimitive.GroupLabel
-      data-slot="select-label"
-      className={cn(
-        "px-3 py-2.5 text-xs font-semibold text-label-secondary",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function SelectItem({
-  className,
-  children,
-  ...props
-}: SelectPrimitive.Item.Props) {
-  return (
-    <SelectPrimitive.Item
-      data-slot="select-item"
-      className={cn(
-        "relative flex w-full cursor-default items-center gap-2.5 rounded-md py-2 pe-8 ps-3 text-base outline-hidden select-none focus:text-label not-data-[variant=destructive]:focus:**:text-label data-disabled:pointer-events-none data-disabled:text-label-quaternary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
-        className
-      )}
-      {...props}
-    >
-      <SelectPrimitive.ItemText className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
-        {children}
-      </SelectPrimitive.ItemText>
-      <SelectPrimitive.ItemIndicator
-        render={
-          <span className="pointer-events-none absolute inset-e-2 flex size-4 items-center justify-center" />
-        }
-      >
-        <CheckIcon className="pointer-events-none text-link! **:text-link!" />
-      </SelectPrimitive.ItemIndicator>
-    </SelectPrimitive.Item>
-  )
-}
-
-function SelectSeparator({
-  className,
-  ...props
-}: SelectPrimitive.Separator.Props) {
-  return (
-    <SelectPrimitive.Separator
-      data-slot="select-separator"
-      className={cn(
-        "pointer-events-none -mx-1.5 my-1.5 h-px bg-separator",
-        className
-      )}
-      {...props}
-    />
-  )
-}
-
-function SelectScrollUpButton({
-  className,
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>) {
-  return (
-    <SelectPrimitive.ScrollUpArrow
-      data-slot="select-scroll-up-button"
-      className={cn(
-        "top-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-raised py-1 [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
-      {...props}
-    >
-      <CaretUpIcon />
-    </SelectPrimitive.ScrollUpArrow>
-  )
-}
-
-function SelectScrollDownButton({
-  className,
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>) {
-  return (
-    <SelectPrimitive.ScrollDownArrow
-      data-slot="select-scroll-down-button"
-      className={cn(
-        "bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-raised py-1 [&_svg:not([class*='size-'])]:size-4",
-        className
-      )}
-      {...props}
-    >
-      <CaretDownIcon />
-    </SelectPrimitive.ScrollDownArrow>
-  )
-}
-
-export {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-}
-```
-
-</SourceCode>
+<SourceFile path="components/ui/select.tsx" />
 
 3. Update the import paths to match your project.
 
 ## Usage
 
-```tsx
-import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton } from "@/components/ui/select"
-```
+<Code lang="tsx" code={"import { SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton } from \"@/components/ui/select\""} />
 
-```tsx
-<Select items={fruits}>
-  <SelectTrigger aria-label="Fruit" className="w-48">
-    <SelectValue placeholder="Select a fruit" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectGroup>
-      {fruits.map((fruit) => (
-        <SelectItem key={fruit.value} value={fruit.value}>
-          {fruit.label}
-        </SelectItem>
-      ))}
-    </SelectGroup>
-  </SelectContent>
-</Select>
-```
+<Code lang="tsx" code={"<Select items={fruits}>\n  <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n    <SelectValue placeholder=\"Select a fruit\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectGroup>\n      {fruits.map((fruit) => (\n        <SelectItem key={fruit.value} value={fruit.value}>\n          {fruit.label}\n        </SelectItem>\n      ))}\n    </SelectGroup>\n  </SelectContent>\n</Select>"} />
 
 Pass `items` to `Select` as `{ value, label }` pairs so `SelectValue` can show the label for the chosen value, even before the popup opens. Use `defaultValue` for an uncontrolled select, or `value` with `onValueChange` to control it. `SelectValue` shows its `placeholder` until a value is chosen.
 
@@ -359,36 +51,7 @@ Renders the popup open on mount with a value already selected.
 
 <Example kind="ui" name="select" story="Open">
 
-```tsx
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-export function SelectOpenExample() {
-  return (
-    <Select items={fruits} defaultValue="banana">
-      <SelectTrigger aria-label="Fruit" className="w-48">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {fruits.map((fruit) => (
-            <SelectItem key={fruit.value} value={fruit.value}>
-              {fruit.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectOpenExample() {\n  return (\n    <Select items={fruits} defaultValue=\"banana\">\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -398,36 +61,7 @@ Starts with a default value, so the trigger shows its label.
 
 <Example kind="ui" name="select" story="WithValue">
 
-```tsx
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-export function SelectWithValueExample() {
-  return (
-    <Select items={fruits} defaultValue="blueberry">
-      <SelectTrigger aria-label="Fruit" className="w-48">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {fruits.map((fruit) => (
-            <SelectItem key={fruit.value} value={fruit.value}>
-              {fruit.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectWithValueExample() {\n  return (\n    <Select items={fruits} defaultValue=\"blueberry\">\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -437,34 +71,7 @@ Uses the compact `sm` trigger size.
 
 <Example kind="ui" name="select" story="Small">
 
-```tsx
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-export function SelectSmallExample() {
-  return (
-    <Select items={fruits}>
-      <SelectTrigger aria-label="Fruit" size="sm" className="w-40">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        {fruits.map((fruit) => (
-          <SelectItem key={fruit.value} value={fruit.value}>
-            {fruit.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectSmallExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" size=\"sm\" className=\"w-40\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        {fruits.map((fruit) => (\n          <SelectItem key={fruit.value} value={fruit.value}>\n            {fruit.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -474,54 +81,7 @@ Splits options into labelled groups with a separator between them.
 
 <Example kind="ui" name="select" story="Grouped">
 
-```tsx
-import { Fragment } from "react"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const timezones = [
-  {
-    label: "North America",
-    items: [
-      { value: "est", label: "Eastern Time" },
-      { value: "cst", label: "Central Time" },
-      { value: "pst", label: "Pacific Time" },
-    ],
-  },
-  {
-    label: "Europe",
-    items: [
-      { value: "gmt", label: "Greenwich Mean Time" },
-      { value: "cet", label: "Central European Time" },
-      { value: "eet", label: "Eastern European Time" },
-    ],
-  },
-]
-
-export function SelectGroupedExample() {
-  return (
-    <Select items={timezones.flatMap((group) => group.items)} defaultValue="cet">
-      <SelectTrigger aria-label="Timezone" className="w-60">
-        <SelectValue placeholder="Select a timezone" />
-      </SelectTrigger>
-      <SelectContent>
-        {timezones.map((group, index) => (
-          <Fragment key={group.label}>
-            {index > 0 && <SelectSeparator />}
-            <SelectGroup>
-              <SelectLabel>{group.label}</SelectLabel>
-              {group.items.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </Fragment>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Fragment } from \"react\"\nimport { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst timezones = [\n  {\n    label: \"North America\",\n    items: [\n      { value: \"est\", label: \"Eastern Time\" },\n      { value: \"cst\", label: \"Central Time\" },\n      { value: \"pst\", label: \"Pacific Time\" },\n    ],\n  },\n  {\n    label: \"Europe\",\n    items: [\n      { value: \"gmt\", label: \"Greenwich Mean Time\" },\n      { value: \"cet\", label: \"Central European Time\" },\n      { value: \"eet\", label: \"Eastern European Time\" },\n    ],\n  },\n]\n\nexport function SelectGroupedExample() {\n  return (\n    <Select items={timezones.flatMap((group) => group.items)} defaultValue=\"cet\">\n      <SelectTrigger aria-label=\"Timezone\" className=\"w-60\">\n        <SelectValue placeholder=\"Select a timezone\" />\n      </SelectTrigger>\n      <SelectContent>\n        {timezones.map((group, index) => (\n          <Fragment key={group.label}>\n            {index > 0 && <SelectSeparator />}\n            <SelectGroup>\n              <SelectLabel>{group.label}</SelectLabel>\n              {group.items.map((item) => (\n                <SelectItem key={item.value} value={item.value}>\n                  {item.label}\n                </SelectItem>\n              ))}\n            </SelectGroup>\n          </Fragment>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -531,34 +91,7 @@ Places an icon before each option's label.
 
 <Example kind="ui" name="select" story="WithIcons">
 
-```tsx
-import { GlobeIcon, MoonIcon, SunIcon } from "@phosphor-icons/react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const themes = [
-  { value: "light", label: "Light", icon: SunIcon },
-  { value: "dark", label: "Dark", icon: MoonIcon },
-  { value: "system", label: "System", icon: GlobeIcon },
-]
-
-export function SelectWithIconsExample() {
-  return (
-    <Select items={themes.map(({ value, label }) => ({ value, label }))} defaultValue="system">
-      <SelectTrigger aria-label="Theme" className="w-40">
-        <SelectValue placeholder="Theme" />
-      </SelectTrigger>
-      <SelectContent>
-        {themes.map(({ value, label, icon: Icon }) => (
-          <SelectItem key={value} value={value}>
-            <Icon />
-            {label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { GlobeIcon, MoonIcon, SunIcon } from \"@phosphor-icons/react\"\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst themes = [\n  { value: \"light\", label: \"Light\", icon: SunIcon },\n  { value: \"dark\", label: \"Dark\", icon: MoonIcon },\n  { value: \"system\", label: \"System\", icon: GlobeIcon },\n]\n\nexport function SelectWithIconsExample() {\n  return (\n    <Select items={themes.map(({ value, label }) => ({ value, label }))} defaultValue=\"system\">\n      <SelectTrigger aria-label=\"Theme\" className=\"w-40\">\n        <SelectValue placeholder=\"Theme\" />\n      </SelectTrigger>\n      <SelectContent>\n        {themes.map(({ value, label, icon: Icon }) => (\n          <SelectItem key={value} value={value}>\n            <Icon />\n            {label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -568,36 +101,7 @@ Disables the select so it can't be opened.
 
 <Example kind="ui" name="select" story="Disabled">
 
-```tsx
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-export function SelectDisabledExample() {
-  return (
-    <Select items={fruits} disabled>
-      <SelectTrigger aria-label="Fruit" className="w-48">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {fruits.map((fruit) => (
-            <SelectItem key={fruit.value} value={fruit.value}>
-              {fruit.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectDisabledExample() {\n  return (\n    <Select items={fruits} disabled>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\">\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        <SelectGroup>\n          {fruits.map((fruit) => (\n            <SelectItem key={fruit.value} value={fruit.value}>\n              {fruit.label}\n            </SelectItem>\n          ))}\n        </SelectGroup>\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
@@ -607,34 +111,7 @@ Marks the trigger with `aria-invalid` to show an error state.
 
 <Example kind="ui" name="select" story="Invalid">
 
-```tsx
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-const fruits = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "blueberry", label: "Blueberry" },
-  { value: "grapes", label: "Grapes" },
-  { value: "pineapple", label: "Pineapple" },
-]
-
-export function SelectInvalidExample() {
-  return (
-    <Select items={fruits}>
-      <SelectTrigger aria-label="Fruit" className="w-48" aria-invalid>
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        {fruits.map((fruit) => (
-          <SelectItem key={fruit.value} value={fruit.value}>
-            {fruit.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
-```
+<Code lang="tsx" code={"import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nconst fruits = [\n  { value: \"apple\", label: \"Apple\" },\n  { value: \"banana\", label: \"Banana\" },\n  { value: \"blueberry\", label: \"Blueberry\" },\n  { value: \"grapes\", label: \"Grapes\" },\n  { value: \"pineapple\", label: \"Pineapple\" },\n]\n\nexport function SelectInvalidExample() {\n  return (\n    <Select items={fruits}>\n      <SelectTrigger aria-label=\"Fruit\" className=\"w-48\" aria-invalid>\n        <SelectValue placeholder=\"Select a fruit\" />\n      </SelectTrigger>\n      <SelectContent>\n        {fruits.map((fruit) => (\n          <SelectItem key={fruit.value} value={fruit.value}>\n            {fruit.label}\n          </SelectItem>\n        ))}\n      </SelectContent>\n    </Select>\n  )\n}"} />
 
 </Example>
 
