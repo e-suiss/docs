@@ -596,120 +596,157 @@ export function DropdownMenuInsetExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"DropdownMenu","href":"#dropdownmenu","children":[{"name":"DropdownMenuTrigger","href":"#dropdownmenutrigger","children":[]},{"name":"DropdownMenuContent","href":"#dropdownmenucontent","children":[{"name":"DropdownMenuGroup","href":"#dropdownmenugroup","children":[{"name":"DropdownMenuLabel","href":"#dropdownmenulabel","children":[]},{"name":"DropdownMenuItem","href":"#dropdownmenuitem","children":[{"name":"DropdownMenuShortcut","href":"#dropdownmenushortcut","children":[]}]}]},{"name":"DropdownMenuSeparator","href":"#dropdownmenuseparator","children":[]},{"name":"DropdownMenuSub","href":"#dropdownmenusub","children":[{"name":"DropdownMenuSubTrigger","href":"#dropdownmenusubtrigger","children":[]},{"name":"DropdownMenuSubContent","href":"#dropdownmenusubcontent","children":[{"name":"DropdownMenuItem","href":"#dropdownmenuitem","children":[]}]}]},{"name":"DropdownMenuItem","href":"#dropdownmenuitem","children":[{"name":"DropdownMenuShortcut","href":"#dropdownmenushortcut","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### DropdownMenu
 
 The root that manages the menu's open state.
 
-Accepts every prop of `MenuPrimitive.Root.Props`.
+<PropsTable extends={["MenuPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### DropdownMenuPortal
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Accepts every prop of `MenuPrimitive.Portal.Props`.
+<PropsTable extends={["MenuPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### DropdownMenuTrigger
 
 The button that opens the menu.
 
-Accepts every prop of `MenuPrimitive.Trigger.Props`.
+<PropsTable extends={["MenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### DropdownMenuContent
 
 The menu panel, rendered in a portal and positioned relative to the trigger.
 
-Accepts every prop of `MenuPrimitive.Popup.Props` and `MenuPrimitive.Positioner.Props`.
+<PropsTable extends={["MenuPrimitive.Popup.Props","MenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### DropdownMenuGroup
 
 Groups related items.
 
-Accepts every prop of `MenuPrimitive.Group.Props`.
+<PropsTable extends={["MenuPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### DropdownMenuLabel
 
 A heading for a group of items.
 
-Accepts every prop of `MenuPrimitive.GroupLabel.Props`.
+<PropsTable extends={["MenuPrimitive.GroupLabel.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the label aligns with items that have an icon or indicator."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the label aligns with items that have an icon or indicator. |
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### DropdownMenuItem
 
 An action in the menu.
 
-Accepts every prop of `MenuPrimitive.Item.Props`.
+<PropsTable extends={["MenuPrimitive.Item.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with items that have an icon or indicator."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`destructive` colors the item and its icon with the `danger` color."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the item aligns with items that have an icon or indicator. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `danger` color. |
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### DropdownMenuSub
 
 The root of a nested submenu.
 
-Accepts every prop of `MenuPrimitive.SubmenuRoot.Props`.
+<PropsTable extends={["MenuPrimitive.SubmenuRoot.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### DropdownMenuSubTrigger
 
 The item that opens a submenu, shown with a trailing caret.
 
-Accepts every prop of `MenuPrimitive.SubmenuTrigger.Props`.
+<PropsTable extends={["MenuPrimitive.SubmenuTrigger.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the trigger aligns with items that have an icon or indicator."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### DropdownMenuSubContent
 
 The panel of a submenu, opened beside its trigger.
 
-Accepts every prop of `React.ComponentProps<typeof DropdownMenuContent>`.
+<PropsTable extends={["React.ComponentProps<typeof DropdownMenuContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### DropdownMenuCheckboxItem
 
 An item that toggles a setting on or off and shows a check mark when on.
 
-Accepts every prop of `MenuPrimitive.CheckboxItem.Props`.
+<PropsTable extends={["MenuPrimitive.CheckboxItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the item aligns with other inset items. |
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### DropdownMenuRadioGroup
 
 Groups radio items so that only one can be selected.
 
-Accepts every prop of `MenuPrimitive.RadioGroup.Props`.
+<PropsTable extends={["MenuPrimitive.RadioGroup.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
 
 ### DropdownMenuRadioItem
 
 An item in a radio group that shows a check mark when selected.
 
-Accepts every prop of `MenuPrimitive.RadioItem.Props`.
+<PropsTable extends={["MenuPrimitive.RadioItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the item aligns with other inset items. |
+</ApiPart>
+
+<ApiPart index={14}>
 
 ### DropdownMenuSeparator
 
 A divider between groups of items.
 
-Accepts every prop of `MenuPrimitive.Separator.Props`.
+<PropsTable extends={["MenuPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
 
 ### DropdownMenuShortcut
 
 Displays a keyboard shortcut at the end of an item.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"mod","type":"boolean","description":"Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | — | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
+</ApiPart>
 
 ## Accessibility
 

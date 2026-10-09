@@ -689,73 +689,107 @@ export function NavigationMenuPanelExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"NavigationMenu","href":"#navigationmenu","children":[{"name":"NavigationMenuList","href":"#navigationmenulist","children":[{"name":"NavigationMenuItem","href":"#navigationmenuitem","children":[{"name":"NavigationMenuTrigger","href":"#navigationmenutrigger","children":[]},{"name":"NavigationMenuContent","href":"#navigationmenucontent","children":[{"name":"NavigationMenuLink","href":"#navigationmenulink","children":[]}]},{"name":"NavigationMenuLink","href":"#navigationmenulink","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### NavigationMenu
 
 The root that manages open state and renders the popover or panel popup.
 
-Accepts every prop of `NavigationMenuPrimitive.Root.Props` and `NavigationMenuPrimitive.Positioner.Props`.
+<PropsTable extends={["NavigationMenuPrimitive.Root.Props","NavigationMenuPrimitive.Positioner.Props"]} props={[{"name":"layout","type":"\"popover\" | \"panel\"","default":"\"popover\"","description":"Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `layout` | `"popover" \| "panel"` | `"popover"` | Chooses the popup style: `popover` for a floating card, or `panel` for a full-width sheet with a backdrop. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### NavigationMenuList
 
 The horizontal list of top-level items.
 
-Accepts every prop of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>`.
+<PropsTable extends={["React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### NavigationMenuItem
 
 One top-level entry, holding a trigger with content or a single link.
 
-Accepts every prop of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>`.
+<PropsTable extends={["React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### NavigationMenuTrigger
 
 The button that opens its item's content, with a caret in the popover layout.
 
-Accepts every prop of `NavigationMenuPrimitive.Trigger.Props`.
+<PropsTable extends={["NavigationMenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### NavigationMenuContent
 
 The content shown in the popup when its item is open.
 
-Accepts every prop of `NavigationMenuPrimitive.Content.Props`.
+<PropsTable extends={["NavigationMenuPrimitive.Content.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### NavigationMenuPositioner
 
 The floating popover card used by the `popover` layout.
 
-Accepts every prop of `NavigationMenuPrimitive.Positioner.Props`.
+<PropsTable extends={["NavigationMenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### NavigationMenuPanel
 
 The full-width sheet and backdrop used by the `panel` layout.
 
-Accepts every prop of `NavigationMenuPrimitive.Positioner.Props`.
+<PropsTable extends={["NavigationMenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### NavigationMenuLink
 
 A navigation link, either in the bar or inside content.
 
-Accepts every prop of `NavigationMenuPrimitive.Link.Props`.
+<PropsTable extends={["NavigationMenuPrimitive.Link.Props"]} props={[{"name":"size","type":"\"default\" | \"lg\"","default":"\"default\"","description":"Sets the link size; `lg` uses large, semibold text for primary destinations."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "lg"` | `"default"` | Sets the link size; `lg` uses large, semibold text for primary destinations. |
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### NavigationMenuLabel
 
 A small secondary heading above a group of links.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### NavigationMenuIndicator
 
 A small arrow built on the Base UI `NavigationMenu.Icon` part that fades in while its menu is open.
 
-Accepts every prop of `React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>`.
+<PropsTable extends={["React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

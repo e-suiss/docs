@@ -611,78 +611,107 @@ export function ItemWithHeaderAndFooterExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Item","href":"#item","children":[{"name":"ItemMedia","href":"#itemmedia","children":[]},{"name":"ItemContent","href":"#itemcontent","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]},{"name":"ItemDescription","href":"#itemdescription","children":[]}]},{"name":"ItemActions","href":"#itemactions","children":[]},{"name":"ItemHeader","href":"#itemheader","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]}]},{"name":"ItemFooter","href":"#itemfooter","children":[]}]},{"name":"ItemGroup","href":"#itemgroup","children":[{"name":"ItemSeparator","href":"#itemseparator","children":[]},{"name":"Item","href":"#item","children":[{"name":"ItemMedia","href":"#itemmedia","children":[]},{"name":"ItemContent","href":"#itemcontent","children":[{"name":"ItemTitle","href":"#itemtitle","children":[]},{"name":"ItemDescription","href":"#itemdescription","children":[]}]},{"name":"ItemActions","href":"#itemactions","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### ItemGroup
 
 Stacks items as a list, or groups them into an inset list.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the items into a rounded list on a secondary surface, with square item corners and separators inset from the start. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ItemSeparator
 
 A divider between items.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### Item
 
 The row container for media, content and actions.
 
-Accepts every prop of `useRender.ComponentProps<"div">`.
+<PropsTable extends={["useRender.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"outline\" | \"muted\"","default":"\"default\"","description":"`default` has no border or background, `outline` adds a border, and `muted` adds a subtle background."},{"name":"size","type":"\"default\" | \"sm\" | \"xs\"","default":"\"default\"","description":"Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "outline" \| "muted"` | `"default"` | `default` has no border or background, `outline` adds a border, and `muted` adds a subtle background. |
-| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Sets the padding and gap: `default` is the roomiest, then `sm`, then `xs`. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ItemMedia
 
 Holds an icon, image or avatar at the start of the item.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"icon\" | \"image\"","default":"\"default\"","description":"`icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "icon" \| "image"` | `"default"` | `icon` sizes an icon, `image` crops an image into a rounded square that scales with the item size, and `default` renders the media as is. |
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ItemContent
 
 Stacks the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ItemTitle
 
 The item's title, limited to one line.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### ItemDescription
 
 Supporting text, limited to two lines.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### ItemActions
 
 Holds buttons or indicators at the end of the item.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### ItemHeader
 
 A full-width row above the item's content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### ItemFooter
 
 A full-width row below the item's content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

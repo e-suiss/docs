@@ -878,81 +878,117 @@ export function AttachmentUploadedExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Attachment","href":"#attachment","children":[{"name":"AttachmentMedia","href":"#attachmentmedia","children":[{"name":"AttachmentLabel","href":"#attachmentlabel","children":[]}]},{"name":"AttachmentContent","href":"#attachmentcontent","children":[{"name":"AttachmentTitle","href":"#attachmenttitle","children":[]},{"name":"AttachmentDescription","href":"#attachmentdescription","children":[]},{"name":"AttachmentProgress","href":"#attachmentprogress","children":[]}]},{"name":"AttachmentActions","href":"#attachmentactions","children":[{"name":"AttachmentAction","href":"#attachmentaction","children":[]}]},{"name":"AttachmentTrigger","href":"#attachmenttrigger","children":[]}]},{"name":"AttachmentGroup","href":"#attachmentgroup","children":[{"name":"Attachment","href":"#attachment","children":[{"name":"AttachmentMedia","href":"#attachmentmedia","children":[{"name":"AttachmentLabel","href":"#attachmentlabel","children":[]}]},{"name":"AttachmentContent","href":"#attachmentcontent","children":[{"name":"AttachmentTitle","href":"#attachmenttitle","children":[]},{"name":"AttachmentProgress","href":"#attachmentprogress","children":[]},{"name":"AttachmentDescription","href":"#attachmentdescription","children":[]}]},{"name":"AttachmentActions","href":"#attachmentactions","children":[{"name":"AttachmentAction","href":"#attachmentaction","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Attachment
 
 The card container that sets size, orientation and state.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"xs\"","default":"\"default\"","description":"Overall density: `default`, `sm` or `xs`."},{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"`horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media."},{"name":"state","type":"\"idle\" | \"uploading\" | \"processing\" | \"error\" | \"done\"","default":"\"done\"","description":"Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm" \| "xs"` | `"default"` | Overall density: `default`, `sm` or `xs`. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | `horizontal` places media beside the content; `vertical` stacks it above and overlays actions on the media. |
-| `state` | `"idle" \| "uploading" \| "processing" \| "error" \| "done"` | `"done"` | Upload lifecycle state. `idle` adds a dashed border and `error` colors the description red. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### AttachmentLabel
 
 A small uppercase tag, usually the file extension, shown inside the media.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### AttachmentMedia
 
 The thumbnail area for an icon, document tag or image.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"icon\" | \"document\" | \"image\"","default":"\"icon\"","description":"Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"icon" \| "document" \| "image"` | `"icon"` | Thumbnail style: `icon` for a bordered icon tile, `document` for a page shape with a bottom tag, `image` for a cropped image. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### AttachmentContent
 
 Wraps the title, description and progress bar.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### AttachmentTitle
 
 The file name, truncated to one line.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### AttachmentDescription
 
 Secondary details such as file size or an error message.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### AttachmentProgress
 
 A progress bar with a value readout for uploads.
 
-Accepts every prop of `ProgressPrimitive.Root.Props`.
+<PropsTable extends={["ProgressPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### AttachmentActions
 
 The slot for action buttons or status indicators.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### AttachmentAction
 
 A compact button for actions such as remove, cancel or download.
 
-Accepts every prop of `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### AttachmentTrigger
 
 An invisible button covering the card to make it clickable.
 
-Accepts every prop of `useRender.ComponentProps<"button">`.
+<PropsTable extends={["useRender.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### AttachmentGroup
 
 Stacks attachments into one rounded list with dividers.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

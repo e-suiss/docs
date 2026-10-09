@@ -2020,175 +2020,235 @@ export function SidebarLoadingExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### SidebarProvider
 
 Holds the open state, provides it through context and wraps the layout.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"defaultOpen","type":"boolean","default":"true","description":"Sets whether the sidebar starts expanded when uncontrolled."},{"name":"open","type":"boolean","description":"Controls whether the sidebar is expanded."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called with the new state when the sidebar expands or collapses."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultOpen` | `boolean` | `true` | Sets whether the sidebar starts expanded when uncontrolled. |
-| `open` | `boolean` | — | Controls whether the sidebar is expanded. |
-| `onOpenChange` | `(open: boolean) => void` | — | Called with the new state when the sidebar expands or collapses. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### Sidebar
 
 The sidebar panel; a sheet on mobile.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"side","type":"\"left\" | \"right\"","default":"\"left\"","description":"Places the sidebar on the left or right edge."},{"name":"variant","type":"\"sidebar\" | \"floating\" | \"inset\"","default":"\"sidebar\"","description":"Chooses a full-height `sidebar`, a rounded `floating` panel, or an `inset` layout."},{"name":"collapsible","type":"\"offcanvas\" | \"icon\" | \"none\"","default":"\"offcanvas\"","description":"Sets how the sidebar collapses: off canvas, to icons, or not at all."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"left" \| "right"` | `"left"` | Places the sidebar on the left or right edge. |
-| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | Chooses a full-height `sidebar`, a rounded `floating` panel, or an `inset` layout. |
-| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"offcanvas"` | Sets how the sidebar collapses: off canvas, to icons, or not at all. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SidebarTrigger
 
 An icon button that toggles the sidebar.
 
-Accepts every prop of `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SidebarRail
 
 A thin hit area along the sidebar's edge that toggles it on click.
 
-Accepts every prop of `React.ComponentProps<"button">`.
+<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### SidebarInset
 
 The `main` element for page content next to the sidebar.
 
-Accepts every prop of `React.ComponentProps<"main">`.
+<PropsTable extends={["React.ComponentProps<\"main\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### SidebarInput
 
 A compact `Input` styled for use in the sidebar.
 
-Accepts every prop of `React.ComponentProps<typeof Input>`.
+<PropsTable extends={["React.ComponentProps<typeof Input>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### SidebarHeader
 
 The top area, above the scrolling content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### SidebarFooter
 
 The bottom area, below the scrolling content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### SidebarSeparator
 
 A divider between sidebar sections.
 
-Accepts every prop of `React.ComponentProps<typeof Separator>`.
+<PropsTable extends={["React.ComponentProps<typeof Separator>"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### SidebarContent
 
 The scrolling region that holds the groups.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### SidebarGroup
 
 A section of related content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### SidebarGroupLabel
 
 The title of a group; it fades out when collapsed to icons.
 
-Accepts every prop of `useRender.ComponentProps<"div">` and `React.ComponentProps<"div">`.
+<PropsTable extends={["useRender.ComponentProps<\"div\">","React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
 
 ### SidebarGroupAction
 
 A small button in the corner of a group, such as an add button.
 
-Accepts every prop of `useRender.ComponentProps<"button">` and `React.ComponentProps<"button">`.
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
 
 ### SidebarGroupContent
 
 The body of a group.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
 
 ### SidebarMenu
 
 A list of menu items.
 
-Accepts every prop of `React.ComponentProps<"ul">`.
+<PropsTable extends={["React.ComponentProps<\"ul\">"]} />
+
+</ApiPart>
+
+<ApiPart index={16}>
 
 ### SidebarMenuItem
 
 A list item that holds a menu button and its extras.
 
-Accepts every prop of `React.ComponentProps<"li">`.
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={17}>
 
 ### SidebarMenuButton
 
 The clickable row for a destination or command.
 
-Accepts every prop of `useRender.ComponentProps<"button">` and `React.ComponentProps<"button">`.
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the button as the current item."},{"name":"tooltip","type":"string | React.ComponentProps<typeof TooltipContent>","description":"Text or `TooltipContent` props for a tooltip shown only while collapsed on desktop."},{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"Uses a plain style or an `outline` style with a background and border."},{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Sets the row height: `sm`, `default` or `lg`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the button as the current item. |
-| `tooltip` | `string \| React.ComponentProps<typeof TooltipContent>` | — | Text or `TooltipContent` props for a tooltip shown only while collapsed on desktop. |
-| `variant` | `"default" \| "outline"` | `"default"` | Uses a plain style or an `outline` style with a background and border. |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the row height: `sm`, `default` or `lg`. |
+</ApiPart>
+
+<ApiPart index={18}>
 
 ### SidebarMenuAction
 
 A small button at the end of a menu item, such as a more button.
 
-Accepts every prop of `useRender.ComponentProps<"button">` and `React.ComponentProps<"button">`.
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"showOnHover","type":"boolean","default":"false","description":"On desktop, hides the action until its item is hovered or focused."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showOnHover` | `boolean` | `false` | On desktop, hides the action until its item is hovered or focused. |
+</ApiPart>
+
+<ApiPart index={19}>
 
 ### SidebarMenuBadge
 
 A count or label shown at the end of a menu item.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={20}>
 
 ### SidebarMenuSkeleton
 
 A loading placeholder shaped like a menu item.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"showIcon","type":"boolean","default":"false","description":"Adds a square placeholder for an icon."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showIcon` | `boolean` | `false` | Adds a square placeholder for an icon. |
+</ApiPart>
+
+<ApiPart index={21}>
 
 ### SidebarMenuSub
 
 A nested list of sub-items, indented with a leading line.
 
-Accepts every prop of `React.ComponentProps<"ul">`.
+<PropsTable extends={["React.ComponentProps<\"ul\">"]} />
+
+</ApiPart>
+
+<ApiPart index={22}>
 
 ### SidebarMenuSubItem
 
 A list item inside a sub-menu.
 
-Accepts every prop of `React.ComponentProps<"li">`.
+<PropsTable extends={["React.ComponentProps<\"li\">"]} />
+
+</ApiPart>
+
+<ApiPart index={23}>
 
 ### SidebarMenuSubButton
 
 The clickable row of a sub-item, rendered as a link by default.
 
-Accepts every prop of `useRender.ComponentProps<"a">` and `React.ComponentProps<"a">`.
+<PropsTable extends={["useRender.ComponentProps<\"a\">","React.ComponentProps<\"a\">"]} props={[{"name":"size","type":"\"sm\" | \"md\"","default":"\"md\"","description":"Sets the text size: `sm` or `md`."},{"name":"isActive","type":"boolean","default":"false","description":"Marks the sub-item as the current page."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "md"` | `"md"` | Sets the text size: `sm` or `md`. |
-| `isActive` | `boolean` | `false` | Marks the sub-item as the current page. |
+</ApiPart>
 
 ## Accessibility
 

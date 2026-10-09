@@ -500,38 +500,27 @@ export function SegmentPickerControlledExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"SegmentPicker","href":"#segmentpicker","children":[{"name":"SegmentPickerItem","href":"#segmentpickeritem","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### SegmentPicker
 
 The root that renders the toggle group or native select and holds the value.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | The selected value when controlled. |
-| `defaultValue` | `string` | — | The initially selected value when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | — | Called with the new value when the user selects a different segment. |
-| `variant` | `"default" \| "outline"` | `"default"` | The visual style of the desktop segments. |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | The control size; `lg` maps to the default size on mobile. |
-| `spacing` | `number` | `0` | The gap between desktop segments; `0` joins them. |
-| `id` | `string` | — | The ID of the group on desktop or the select on mobile. |
-| `name` | `string` | — | The field name submitted with a form. |
-| `disabled` | `boolean` | — | Disables every segment. |
-| `className` | `string` | — | Classes applied to the group on desktop or the select on mobile. |
-| `children` | `React.ReactNode` | — | The `SegmentPickerItem` elements. |
-| `aria-label` | `string` | — | The accessible name of the control. |
-| `aria-describedby` | `string` | — | The ID of an element that describes the control. |
+<PropsTable props={[{"name":"value","type":"string","description":"The selected value when controlled."},{"name":"defaultValue","type":"string","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value when the user selects a different segment."},{"name":"variant","type":"\"default\" | \"outline\"","default":"\"default\"","description":"The visual style of the desktop segments."},{"name":"size","type":"\"sm\" | \"default\" | \"lg\"","default":"\"default\"","description":"The control size; `lg` maps to the default size on mobile."},{"name":"spacing","type":"number","default":"0","description":"The gap between desktop segments; `0` joins them."},{"name":"id","type":"string","description":"The ID of the group on desktop or the select on mobile."},{"name":"name","type":"string","description":"The field name submitted with a form."},{"name":"disabled","type":"boolean","description":"Disables every segment."},{"name":"className","type":"string","description":"Classes applied to the group on desktop or the select on mobile."},{"name":"children","type":"React.ReactNode","description":"The `SegmentPickerItem` elements."},{"name":"aria-label","type":"string","description":"The accessible name of the control."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the control."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SegmentPickerItem
 
 One option, rendered as a toggle on desktop and an `option` on mobile.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The value selected by this segment. |
-| `label` | `string` | — | Text for the mobile option, and the desktop content when there are no children. |
-| `disabled` | `boolean` | — | Prevents selecting this segment. |
-| `className` | `string` | — | Classes applied to the desktop toggle. |
-| `children` | `React.ReactNode` | — | The desktop segment content, such as text or an icon. |
-| `aria-label` | `string` | — | The accessible name of the segment, also used as mobile option text. |
+<PropsTable props={[{"name":"value","type":"string","required":true,"description":"The value selected by this segment."},{"name":"label","type":"string","description":"Text for the mobile option, and the desktop content when there are no children."},{"name":"disabled","type":"boolean","description":"Prevents selecting this segment."},{"name":"className","type":"string","description":"Classes applied to the desktop toggle."},{"name":"children","type":"React.ReactNode","description":"The desktop segment content, such as text or an icon."},{"name":"aria-label","type":"string","description":"The accessible name of the segment, also used as mobile option text."}]} />
+
+</ApiPart>
 
 ## Accessibility
 

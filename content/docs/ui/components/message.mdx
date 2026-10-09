@@ -296,45 +296,67 @@ export function MessageConversationExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Message","href":"#message","children":[{"name":"MessageAvatar","href":"#messageavatar","children":[]},{"name":"MessageContent","href":"#messagecontent","children":[{"name":"MessageHeader","href":"#messageheader","children":[]},{"name":"MessageFooter","href":"#messagefooter","children":[]}]}]},{"name":"MessageGroup","href":"#messagegroup","children":[{"name":"Message","href":"#message","children":[{"name":"MessageAvatar","href":"#messageavatar","children":[]},{"name":"MessageContent","href":"#messagecontent","children":[{"name":"MessageFooter","href":"#messagefooter","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### MessageGroup
 
 Stacks several messages vertically.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### Message
 
 The row for one message that sets its alignment.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"start\" | \"end\"","default":"\"start\"","description":"Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "end"` | `"start"` | Aligns the message to the `start` or `end` edge; `end` reverses the row for outgoing messages. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### MessageAvatar
 
 A round container for the sender's avatar, aligned to the bottom of the row.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### MessageContent
 
 The column that holds the header, bubbles and footer.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### MessageHeader
 
 Small secondary text above the bubbles, such as the sender name.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### MessageFooter
 
 Small secondary text below the bubbles, such as a timestamp.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Notes
 

@@ -680,28 +680,37 @@ export function WheelPickerDateTimeExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"WheelPicker","href":"#wheelpicker","children":[{"name":"WheelPickerColumn","href":"#wheelpickercolumn","children":[{"name":"WheelPickerItem","href":"#wheelpickeritem","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### WheelPicker
 
 The frame that holds the columns and draws the selection band.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### WheelPickerColumn
 
 A scrolling, snapping wheel that holds one selected value.
 
-Accepts every prop of `React.ComponentProps<"div">` and `WheelPickerColumnProps`.
+<PropsTable extends={["React.ComponentProps<\"div\">","WheelPickerColumnProps"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### WheelPickerItem
 
 A single option in a column.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"value","type":"string","required":true,"description":"The string value this item selects; it must be unique in its column."},{"name":"disabled","type":"boolean","default":"false","description":"Prevents the item from being selected."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The string value this item selects; it must be unique in its column. |
-| `disabled` | `boolean` | `false` | Prevents the item from being selected. |
+</ApiPart>
 
 ## Accessibility
 

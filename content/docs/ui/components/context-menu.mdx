@@ -487,120 +487,157 @@ export function ContextMenuInsetExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"ContextMenu","href":"#contextmenu","children":[{"name":"ContextMenuTrigger","href":"#contextmenutrigger","children":[]},{"name":"ContextMenuContent","href":"#contextmenucontent","children":[{"name":"ContextMenuGroup","href":"#contextmenugroup","children":[{"name":"ContextMenuItem","href":"#contextmenuitem","children":[{"name":"ContextMenuShortcut","href":"#contextmenushortcut","children":[]}]},{"name":"ContextMenuCheckboxItem","href":"#contextmenucheckboxitem","children":[]},{"name":"ContextMenuLabel","href":"#contextmenulabel","children":[]}]},{"name":"ContextMenuSeparator","href":"#contextmenuseparator","children":[]},{"name":"ContextMenuSub","href":"#contextmenusub","children":[{"name":"ContextMenuSubTrigger","href":"#contextmenusubtrigger","children":[]},{"name":"ContextMenuSubContent","href":"#contextmenusubcontent","children":[{"name":"ContextMenuItem","href":"#contextmenuitem","children":[]}]}]},{"name":"ContextMenuRadioGroup","href":"#contextmenuradiogroup","children":[{"name":"ContextMenuLabel","href":"#contextmenulabel","children":[]},{"name":"ContextMenuRadioItem","href":"#contextmenuradioitem","children":[]}]},{"name":"ContextMenuItem","href":"#contextmenuitem","children":[{"name":"ContextMenuShortcut","href":"#contextmenushortcut","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### ContextMenu
 
 The root that manages the menu's open state.
 
-Accepts every prop of `ContextMenuPrimitive.Root.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ContextMenuPortal
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Accepts every prop of `ContextMenuPrimitive.Portal.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ContextMenuTrigger
 
 The area that opens the menu on right-click.
 
-Accepts every prop of `ContextMenuPrimitive.Trigger.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ContextMenuContent
 
 The menu panel, rendered in a portal at the pointer position.
 
-Accepts every prop of `ContextMenuPrimitive.Popup.Props` and `ContextMenuPrimitive.Positioner.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Popup.Props","ContextMenuPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ContextMenuGroup
 
 Groups related items.
 
-Accepts every prop of `ContextMenuPrimitive.Group.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ContextMenuLabel
 
 A heading for a group of items.
 
-Accepts every prop of `ContextMenuPrimitive.GroupLabel.Props`.
+<PropsTable extends={["ContextMenuPrimitive.GroupLabel.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the label aligns with items that have an icon or indicator."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the label aligns with items that have an icon or indicator. |
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### ContextMenuItem
 
 An action in the menu.
 
-Accepts every prop of `ContextMenuPrimitive.Item.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Item.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with items that have an icon or indicator."},{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"`destructive` colors the item and its icon with the `danger` color."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the item aligns with items that have an icon or indicator. |
-| `variant` | `"default" \| "destructive"` | `"default"` | `destructive` colors the item and its icon with the `danger` color. |
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### ContextMenuSub
 
 The root of a nested submenu.
 
-Accepts every prop of `ContextMenuPrimitive.SubmenuRoot.Props`.
+<PropsTable extends={["ContextMenuPrimitive.SubmenuRoot.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### ContextMenuSubTrigger
 
 The item that opens a submenu, shown with a trailing caret.
 
-Accepts every prop of `ContextMenuPrimitive.SubmenuTrigger.Props`.
+<PropsTable extends={["ContextMenuPrimitive.SubmenuTrigger.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the trigger aligns with items that have an icon or indicator."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the trigger aligns with items that have an icon or indicator. |
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### ContextMenuSubContent
 
 The panel of a submenu, opened beside its trigger.
 
-Accepts every prop of `React.ComponentProps<typeof ContextMenuContent>`.
+<PropsTable extends={["React.ComponentProps<typeof ContextMenuContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### ContextMenuCheckboxItem
 
 An item that toggles a setting on or off and shows a check mark when on.
 
-Accepts every prop of `ContextMenuPrimitive.CheckboxItem.Props`.
+<PropsTable extends={["ContextMenuPrimitive.CheckboxItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the item aligns with other inset items. |
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### ContextMenuRadioGroup
 
 Groups radio items so that only one can be selected.
 
-Accepts every prop of `ContextMenuPrimitive.RadioGroup.Props`.
+<PropsTable extends={["ContextMenuPrimitive.RadioGroup.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
 
 ### ContextMenuRadioItem
 
 An item in a radio group that shows a check mark when selected.
 
-Accepts every prop of `ContextMenuPrimitive.RadioItem.Props`.
+<PropsTable extends={["ContextMenuPrimitive.RadioItem.Props"]} props={[{"name":"inset","type":"boolean","description":"Adds leading padding so the item aligns with other inset items."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `inset` | `boolean` | — | Adds leading padding so the item aligns with other inset items. |
+</ApiPart>
+
+<ApiPart index={14}>
 
 ### ContextMenuSeparator
 
 A divider between groups of items.
 
-Accepts every prop of `ContextMenuPrimitive.Separator.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
 
 ### ContextMenuShortcut
 
 Displays a keyboard shortcut at the end of an item.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"mod","type":"boolean","description":"Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | — | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
+</ApiPart>
 
 ## Accessibility
 

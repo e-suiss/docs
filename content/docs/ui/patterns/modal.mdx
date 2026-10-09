@@ -436,73 +436,97 @@ export function ModalFloatingExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Modal","href":"#modal","children":[{"name":"ModalTrigger","href":"#modaltrigger","children":[]},{"name":"ModalContent","href":"#modalcontent","children":[{"name":"ModalHeader","href":"#modalheader","children":[{"name":"ModalTitle","href":"#modaltitle","children":[]},{"name":"ModalDescription","href":"#modaldescription","children":[]}]},{"name":"ModalBody","href":"#modalbody","children":[]},{"name":"ModalFooter","href":"#modalfooter","children":[{"name":"ModalClose","href":"#modalclose","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Modal
 
 The root that renders a `Dialog` on desktop and a `Drawer` on mobile.
 
-Accepts every prop of `React.ComponentProps<typeof Dialog>`.
+<PropsTable extends={["React.ComponentProps<typeof Dialog>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the modal opens or closes."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the modal opens or closes. |
-| `floating` | `boolean` | — | Insets the mobile drawer from the screen edges with fully rounded corners. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ModalTrigger
 
 The button that opens the modal.
 
-Accepts every prop of `React.ComponentProps<typeof DialogTrigger>`.
+<PropsTable extends={["React.ComponentProps<typeof DialogTrigger>"]} props={[{"name":"className","type":"string","description":"Classes applied to the trigger."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | — | Classes applied to the trigger. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ModalContent
 
 The popup window, with a close button by default.
 
-Accepts every prop of `React.ComponentProps<typeof DialogContent>`.
+<PropsTable extends={["React.ComponentProps<typeof DialogContent>"]} props={[{"name":"className","type":"string","description":"Classes applied to the dialog or drawer popup."},{"name":"style","type":"React.CSSProperties","description":"Inline styles applied to the dialog or drawer popup."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | — | Classes applied to the dialog or drawer popup. |
-| `style` | `React.CSSProperties` | — | Inline styles applied to the dialog or drawer popup. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ModalHeader
 
 Groups the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ModalBody
 
 The main content area, padded on mobile.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ModalFooter
 
 Holds the modal's actions; stacked with the primary action on top on mobile.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### ModalTitle
 
 The modal's title, used as its accessible name.
 
-Accepts every prop of `React.ComponentProps<typeof DialogTitle>`.
+<PropsTable extends={["React.ComponentProps<typeof DialogTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### ModalDescription
 
 Supporting text, used as the modal's accessible description.
 
-Accepts every prop of `React.ComponentProps<typeof DialogDescription>`.
+<PropsTable extends={["React.ComponentProps<typeof DialogDescription>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### ModalClose
 
 A button that closes the modal.
 
-Accepts every prop of `React.ComponentProps<typeof DialogClose>`.
+<PropsTable extends={["React.ComponentProps<typeof DialogClose>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

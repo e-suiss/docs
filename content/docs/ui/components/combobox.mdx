@@ -655,98 +655,147 @@ export function ComboboxMultipleExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"ComboboxInput","href":"#comboboxinput","children":[]},{"name":"ComboboxContent","href":"#comboboxcontent","children":[{"name":"ComboboxEmpty","href":"#comboboxempty","children":[]},{"name":"ComboboxList","href":"#comboboxlist","children":[{"name":"ComboboxItem","href":"#comboboxitem","children":[]},{"name":"ComboboxGroup","href":"#comboboxgroup","children":[{"name":"ComboboxSeparator","href":"#comboboxseparator","children":[]},{"name":"ComboboxLabel","href":"#comboboxlabel","children":[]},{"name":"ComboboxCollection","href":"#comboboxcollection","children":[{"name":"ComboboxItem","href":"#comboboxitem","children":[]}]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### ComboboxValue
 
 Renders the current value, or passes it to a render function, for example to draw chips.
 
-Accepts every prop of `ComboboxPrimitive.Value.Props`.
+<PropsTable extends={["ComboboxPrimitive.Value.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ComboboxTrigger
 
 A button that opens the list, with a caret icon.
 
-Accepts every prop of `ComboboxPrimitive.Trigger.Props`.
+<PropsTable extends={["ComboboxPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ComboboxInput
 
 The text field, rendered inside an `InputGroup` with optional open and clear buttons.
 
-Accepts every prop of `ComboboxPrimitive.Input.Props`.
+<PropsTable extends={["ComboboxPrimitive.Input.Props"]} props={[{"name":"showTrigger","type":"boolean","default":"true","description":"Shows the button at the end of the field that opens the list."},{"name":"showClear","type":"boolean","default":"false","description":"Shows a clear button at the end of the field. When shown, it hides the open button."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showTrigger` | `boolean` | `true` | Shows the button at the end of the field that opens the list. |
-| `showClear` | `boolean` | `false` | Shows a clear button at the end of the field. When shown, it hides the open button. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ComboboxContent
 
 The popup, rendered in a portal and positioned below the input.
 
-Accepts every prop of `ComboboxPrimitive.Popup.Props` and `ComboboxPrimitive.Positioner.Props`.
+<PropsTable extends={["ComboboxPrimitive.Popup.Props","ComboboxPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ComboboxList
 
 The scrollable list that renders items through a render function.
 
-Accepts every prop of `ComboboxPrimitive.List.Props`.
+<PropsTable extends={["ComboboxPrimitive.List.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ComboboxItem
 
 A selectable option that shows a check mark when selected.
 
-Accepts every prop of `ComboboxPrimitive.Item.Props`.
+<PropsTable extends={["ComboboxPrimitive.Item.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### ComboboxGroup
 
 Groups related options and takes its own `items`.
 
-Accepts every prop of `ComboboxPrimitive.Group.Props`.
+<PropsTable extends={["ComboboxPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### ComboboxLabel
 
 The visible label of a group.
 
-Accepts every prop of `ComboboxPrimitive.GroupLabel.Props`.
+<PropsTable extends={["ComboboxPrimitive.GroupLabel.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### ComboboxCollection
 
 Renders the items of a group through a render function.
 
-Accepts every prop of `ComboboxPrimitive.Collection.Props`.
+<PropsTable extends={["ComboboxPrimitive.Collection.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### ComboboxEmpty
 
 Content shown when no options match the typed text.
 
-Accepts every prop of `ComboboxPrimitive.Empty.Props`.
+<PropsTable extends={["ComboboxPrimitive.Empty.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### ComboboxSeparator
 
 A divider between groups.
 
-Accepts every prop of `ComboboxPrimitive.Separator.Props`.
+<PropsTable extends={["ComboboxPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### ComboboxChips
 
 The field that holds selected values as chips in multiple selection.
 
-Accepts every prop of `React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>` and `ComboboxPrimitive.Chips.Props`.
+<PropsTable extends={["React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips>","ComboboxPrimitive.Chips.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
 
 ### ComboboxChip
 
 A selected value shown as a chip, with an optional remove button.
 
-Accepts every prop of `ComboboxPrimitive.Chip.Props`.
+<PropsTable extends={["ComboboxPrimitive.Chip.Props"]} props={[{"name":"showRemove","type":"boolean","default":"true","description":"Shows a button inside the chip that removes the value."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showRemove` | `boolean` | `true` | Shows a button inside the chip that removes the value. |
+</ApiPart>
+
+<ApiPart index={14}>
 
 ### ComboboxChipsInput
 
 The text field placed after the chips in multiple selection.
 
-Accepts every prop of `ComboboxPrimitive.Input.Props`.
+<PropsTable extends={["ComboboxPrimitive.Input.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

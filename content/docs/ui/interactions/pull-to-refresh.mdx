@@ -513,15 +513,15 @@ export function PullToRefreshEmptyListExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### PullToRefresh
 
 The scroll container that tracks the pull and shows the refresh indicator.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"onRefresh","type":"() => Promise<unknown> | unknown","required":true,"description":"Called when the user releases past the threshold; may return a promise."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onRefresh` | `() => Promise<unknown> \| unknown` | Required | Called when the user releases past the threshold; may return a promise. |
+</ApiPart>
 
 ## Accessibility
 

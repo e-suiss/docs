@@ -609,59 +609,87 @@ export function SheetWithCloseLabelExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Sheet","href":"#sheet","children":[{"name":"SheetTrigger","href":"#sheettrigger","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Sheet
 
 The root that holds the open state.
 
-Accepts every prop of `SheetPrimitive.Root.Props`.
+<PropsTable extends={["SheetPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SheetTrigger
 
 The element that opens the sheet.
 
-Accepts every prop of `SheetPrimitive.Trigger.Props`.
+<PropsTable extends={["SheetPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SheetClose
 
 An element that closes the sheet when pressed.
 
-Accepts every prop of `SheetPrimitive.Close.Props`.
+<PropsTable extends={["SheetPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SheetContent
 
 The sliding panel, rendered in a portal with a backdrop.
 
-Accepts every prop of `SheetPrimitive.Popup.Props`.
+<PropsTable extends={["SheetPrimitive.Popup.Props"]} props={[{"name":"side","type":"\"top\" | \"right\" | \"bottom\" | \"left\"","default":"\"right\"","description":"Chooses the edge the sheet slides in from."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the built-in close button in the top corner."},{"name":"closeLabel","type":"string","description":"Shows this text in the close button instead of an icon."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | Chooses the edge the sheet slides in from. |
-| `showCloseButton` | `boolean` | `true` | Shows the built-in close button in the top corner. |
-| `closeLabel` | `string` | — | Shows this text in the close button instead of an icon. |
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### SheetHeader
 
 A padded stack for the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### SheetFooter
 
 A padded stack for actions, pushed to the bottom of the panel.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### SheetTitle
 
 The sheet's title, which names the dialog.
 
-Accepts every prop of `SheetPrimitive.Title.Props`.
+<PropsTable extends={["SheetPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### SheetDescription
 
 Supporting text, which describes the dialog.
 
-Accepts every prop of `SheetPrimitive.Description.Props`.
+<PropsTable extends={["SheetPrimitive.Description.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

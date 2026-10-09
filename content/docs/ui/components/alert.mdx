@@ -267,33 +267,47 @@ export function AlertWithActionExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Alert","href":"#alert","children":[{"name":"AlertTitle","href":"#alerttitle","children":[]},{"name":"AlertDescription","href":"#alertdescription","children":[]},{"name":"AlertAction","href":"#alertaction","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Alert
 
 The container that lays out the icon, text and action.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"Icon color. `default` uses the accent color; `destructive` uses the danger color."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Icon color. `default` uses the accent color; `destructive` uses the danger color. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### AlertTitle
 
 The bold headline of the message.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### AlertDescription
 
 Secondary text that explains the message.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### AlertAction
 
 An absolutely positioned slot for a button or link in the top-end corner.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

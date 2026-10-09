@@ -587,29 +587,15 @@ export function SearchPickerFloatingExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### SearchPicker
 
 The complete searchable picker, rendered from the `items` array.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `SearchPickerItem[]` | Required | The items to choose from, each with a `value`, `label`, and optional `group` and `disabled`. |
-| `value` | `string \| null` | — | The selected value when controlled, or `null` for no selection. |
-| `defaultValue` | `string \| null` | — | The initially selected value when uncontrolled. |
-| `onValueChange` | `(value: string \| null) => void` | — | Called with the new value, or `null`, when the selection changes. |
-| `placeholder` | `string` | — | Text shown when nothing is selected. |
-| `searchPlaceholder` | `string` | `"Search..."` | Placeholder of the search input in the mobile drawer. |
-| `emptyText` | `string` | `"No results found."` | Text shown when no item matches the search. |
-| `title` | `string` | — | A visible heading for the mobile drawer. When omitted, the drawer title is visually hidden and falls back to `placeholder` or `aria-label`. |
-| `disabled` | `boolean` | — | Disables the field. |
-| `floating` | `boolean` | — | Insets the mobile drawer from the screen edges. |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the mobile drawer. |
-| `closeLabel` | `string` | — | Text for the mobile close button in place of the icon. |
-| `id` | `string` | — | The ID of the input on desktop or the trigger button on mobile. |
-| `className` | `string` | — | Classes applied to the input on desktop or the trigger button on mobile. |
-| `aria-invalid` | `boolean` | — | Marks the field as invalid and applies the error style. |
-| `aria-label` | `string` | — | The accessible name of the field. |
-| `aria-describedby` | `string` | — | The ID of an element that describes the field. |
+<PropsTable props={[{"name":"items","type":"SearchPickerItem[]","required":true,"description":"The items to choose from, each with a `value`, `label`, and optional `group` and `disabled`."},{"name":"value","type":"string | null","description":"The selected value when controlled, or `null` for no selection."},{"name":"defaultValue","type":"string | null","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string | null) => void","description":"Called with the new value, or `null`, when the selection changes."},{"name":"placeholder","type":"string","description":"Text shown when nothing is selected."},{"name":"searchPlaceholder","type":"string","default":"\"Search...\"","description":"Placeholder of the search input in the mobile drawer."},{"name":"emptyText","type":"string","default":"\"No results found.\"","description":"Text shown when no item matches the search."},{"name":"title","type":"string","description":"A visible heading for the mobile drawer. When omitted, the drawer title is visually hidden and falls back to `placeholder` or `aria-label`."},{"name":"disabled","type":"boolean","description":"Disables the field."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the mobile drawer."},{"name":"closeLabel","type":"string","description":"Text for the mobile close button in place of the icon."},{"name":"id","type":"string","description":"The ID of the input on desktop or the trigger button on mobile."},{"name":"className","type":"string","description":"Classes applied to the input on desktop or the trigger button on mobile."},{"name":"aria-invalid","type":"boolean","description":"Marks the field as invalid and applies the error style."},{"name":"aria-label","type":"string","description":"The accessible name of the field."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the field."}]} />
+
+</ApiPart>
 
 ## Accessibility
 

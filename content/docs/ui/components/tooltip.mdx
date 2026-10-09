@@ -222,29 +222,47 @@ export function TooltipWithShortcutExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"TooltipProvider","href":"#tooltipprovider","children":[{"name":"Tooltip","href":"#tooltip","children":[{"name":"TooltipTrigger","href":"#tooltiptrigger","children":[]},{"name":"TooltipContent","href":"#tooltipcontent","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### TooltipProvider
 
 Shares delay timing across the tooltips inside it.
 
-Accepts every prop of `TooltipPrimitive.Provider.Props`.
+<PropsTable extends={["TooltipPrimitive.Provider.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### Tooltip
 
 The root that holds a tooltip's open state.
 
-Accepts every prop of `TooltipPrimitive.Root.Props`.
+<PropsTable extends={["TooltipPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### TooltipTrigger
 
 The element that shows the tooltip on hover or focus.
 
-Accepts every prop of `TooltipPrimitive.Trigger.Props`.
+<PropsTable extends={["TooltipPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### TooltipContent
 
 The positioned label with its arrow, rendered in a portal.
 
-Accepts every prop of `TooltipPrimitive.Popup.Props` and `TooltipPrimitive.Positioner.Props`.
+<PropsTable extends={["TooltipPrimitive.Popup.Props","TooltipPrimitive.Positioner.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

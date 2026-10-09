@@ -861,99 +861,147 @@ export function DrawerSheetWithDetentsExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Drawer","href":"#drawer","children":[{"name":"DrawerTrigger","href":"#drawertrigger","children":[]},{"name":"DrawerContent","href":"#drawercontent","children":[{"name":"DrawerHeader","href":"#drawerheader","children":[{"name":"DrawerTitle","href":"#drawertitle","children":[]},{"name":"DrawerDescription","href":"#drawerdescription","children":[]}]},{"name":"DrawerFooter","href":"#drawerfooter","children":[{"name":"DrawerClose","href":"#drawerclose","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### DrawerProvider
 
 Coordinates drawers with `DrawerIndent` so the page can react when a drawer opens.
 
-Accepts every prop of `DrawerPrimitive.Provider.Props`.
+<PropsTable extends={["DrawerPrimitive.Provider.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### DrawerIndentBackground
 
 The dark layer shown behind the page when it scales down.
 
-Accepts every prop of `DrawerPrimitive.IndentBackground.Props`.
+<PropsTable extends={["DrawerPrimitive.IndentBackground.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### DrawerIndent
 
 Wraps the page content and scales it down while a bottom drawer is open.
 
-Accepts every prop of `DrawerPrimitive.Indent.Props`.
+<PropsTable extends={["DrawerPrimitive.Indent.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### Drawer
 
 The root that manages the open state, swipe direction and snap points.
 
-Accepts every prop of `DrawerPrimitive.Root.Props`.
+<PropsTable extends={["DrawerPrimitive.Root.Props"]} props={[{"name":"floating","type":"boolean","default":"false","description":"Insets the drawer from the screen edges and rounds all of its corners."},{"name":"showSwipeHandle","type":"boolean","default":"false","description":"Shows a grab bar on the edge of the panel that faces the screen center."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `floating` | `boolean` | `false` | Insets the drawer from the screen edges and rounds all of its corners. |
-| `showSwipeHandle` | `boolean` | `false` | Shows a grab bar on the edge of the panel that faces the screen center. |
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### DrawerTrigger
 
 The button that opens the drawer.
 
-Accepts every prop of `DrawerPrimitive.Trigger.Props`.
+<PropsTable extends={["DrawerPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### DrawerPortal
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Accepts every prop of `DrawerPrimitive.Portal.Props`.
+<PropsTable extends={["DrawerPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### DrawerClose
 
 A button that closes the drawer.
 
-Accepts every prop of `DrawerPrimitive.Close.Props`.
+<PropsTable extends={["DrawerPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### DrawerOverlay
 
 The dimmed layer behind a modal drawer, which fades as the drawer is swiped away.
 
-Accepts every prop of `DrawerPrimitive.Backdrop.Props`.
+<PropsTable extends={["DrawerPrimitive.Backdrop.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### DrawerSwipeHandle
 
 The grab bar people drag to move or dismiss the drawer.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### DrawerContent
 
 The drawer panel, rendered in a portal with an optional overlay, swipe handle and close button.
 
-Accepts every prop of `DrawerPrimitive.Popup.Props`.
+<PropsTable extends={["DrawerPrimitive.Popup.Props"]} props={[{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the top corner."},{"name":"closeLabel","type":"string","description":"Replaces the close button's icon with this text."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the top corner. |
-| `closeLabel` | `string` | — | Replaces the close button's icon with this text. |
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### DrawerHeader
 
 Groups the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### DrawerFooter
 
 Holds the drawer's actions at the bottom of the panel.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
 
 ### DrawerTitle
 
 The drawer's title, which also names it for assistive technology.
 
-Accepts every prop of `DrawerPrimitive.Title.Props`.
+<PropsTable extends={["DrawerPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
 
 ### DrawerDescription
 
 Supporting text that describes the drawer for assistive technology.
 
-Accepts every prop of `DrawerPrimitive.Description.Props`.
+<PropsTable extends={["DrawerPrimitive.Description.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

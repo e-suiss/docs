@@ -364,37 +364,37 @@ export function PreviewWithCloseLabelExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Preview","href":"#preview","children":[{"name":"PreviewTrigger","href":"#previewtrigger","children":[]},{"name":"PreviewContent","href":"#previewcontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Preview
 
 The root that chooses HoverCard or Drawer and holds the open state.
 
-Accepts every prop of `React.ComponentProps<typeof HoverCard>`.
+<PropsTable extends={["React.ComponentProps<typeof HoverCard>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called with the new open state when the preview opens or closes."},{"name":"floating","type":"boolean","default":"true","description":"Insets the mobile drawer from the screen edges. Has no effect on desktop."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called with the new open state when the preview opens or closes. |
-| `floating` | `boolean` | `true` | Insets the mobile drawer from the screen edges. Has no effect on desktop. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### PreviewTrigger
 
 The link-styled element that opens the preview.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"href","type":"string","description":"The link destination on desktop. Ignored on mobile."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `href` | `string` | — | The link destination on desktop. Ignored on mobile. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### PreviewContent
 
 The card or drawer that holds the preview.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>` and `React.ComponentProps<typeof HoverCardContent>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof HoverCardContent>"]} props={[{"name":"showCloseButton","type":"boolean","description":"Shows a close button in the mobile drawer."},{"name":"closeLabel","type":"string","description":"Text for the mobile close button in place of the icon."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | — | Shows a close button in the mobile drawer. |
-| `closeLabel` | `string` | — | Text for the mobile close button in place of the icon. |
+</ApiPart>
 
 ## Accessibility
 

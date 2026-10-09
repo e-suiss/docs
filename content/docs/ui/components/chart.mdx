@@ -834,42 +834,35 @@ export function ChartDonutExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### ChartContainer
 
 Provides the config, injects the color variables and makes the chart responsive.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"config","type":"ChartConfig","required":true,"description":"Maps data keys to a `label`, optional `icon`, and a `color` or per-theme `theme` colors."},{"name":"children","type":"React.ComponentProps< typeof RechartsPrimitive.ResponsiveContainer >[\"children\"]","required":true,"description":"The Recharts chart element to render responsively."},{"name":"initialDimension","type":"{ width: number height: number }","default":"INITIAL_DIMENSION","description":"Width and height used before the container is measured. Defaults to 320 by 200."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `config` | `ChartConfig` | Required | Maps data keys to a `label`, optional `icon`, and a `color` or per-theme `theme` colors. |
-| `children` | `React.ComponentProps< typeof RechartsPrimitive.ResponsiveContainer >["children"]` | Required | The Recharts chart element to render responsively. |
-| `initialDimension` | `{ width: number height: number }` | `INITIAL_DIMENSION` | Width and height used before the container is measured. Defaults to 320 by 200. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ChartTooltipContent
 
 A styled tooltip body that lists each series with its indicator, label and value.
 
-Accepts every prop of `React.ComponentProps<typeof RechartsPrimitive.Tooltip>` and `React.ComponentProps<"div">` and `RechartsPrimitive.DefaultTooltipContentProps< TooltipValueType, TooltipNameType >`.
+<PropsTable extends={["React.ComponentProps<typeof RechartsPrimitive.Tooltip>","React.ComponentProps<\"div\">","RechartsPrimitive.DefaultTooltipContentProps< TooltipValueType, TooltipNameType >"]} props={[{"name":"hideLabel","type":"boolean","default":"false","description":"Hides the tooltip's heading label."},{"name":"hideIndicator","type":"boolean","default":"false","description":"Hides the color indicator next to each series."},{"name":"indicator","type":"\"line\" | \"dot\" | \"dashed\"","default":"\"dot\"","description":"Shape of the series indicator: `dot`, `line` or `dashed`."},{"name":"nameKey","type":"string","description":"Field used to look up each item's config entry instead of its name or data key."},{"name":"labelKey","type":"string","description":"Field used to look up the heading label in the config."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `hideLabel` | `boolean` | `false` | Hides the tooltip's heading label. |
-| `hideIndicator` | `boolean` | `false` | Hides the color indicator next to each series. |
-| `indicator` | `"line" \| "dot" \| "dashed"` | `"dot"` | Shape of the series indicator: `dot`, `line` or `dashed`. |
-| `nameKey` | `string` | — | Field used to look up each item's config entry instead of its name or data key. |
-| `labelKey` | `string` | — | Field used to look up the heading label in the config. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ChartLegendContent
 
 A styled legend that lists series in config order with a swatch or icon.
 
-Accepts every prop of `React.ComponentProps<"div">` and `RechartsPrimitive.DefaultLegendContentProps`.
+<PropsTable extends={["React.ComponentProps<\"div\">","RechartsPrimitive.DefaultLegendContentProps"]} props={[{"name":"hideIcon","type":"boolean","default":"false","description":"Shows a color swatch even when the config entry has an `icon`."},{"name":"nameKey","type":"string","description":"Field used to look up each legend item's config entry instead of its data key."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `hideIcon` | `boolean` | `false` | Shows a color swatch even when the config entry has an `icon`. |
-| `nameKey` | `string` | — | Field used to look up each legend item's config entry instead of its data key. |
+</ApiPart>
 
 ## Accessibility
 

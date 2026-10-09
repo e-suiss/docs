@@ -225,21 +225,27 @@ export function KbdInInputGroupExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Kbd","href":"#kbd","children":[]},{"name":"KbdGroup","href":"#kbdgroup","children":[{"name":"Kbd","href":"#kbd","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Kbd
 
 Renders one key as a `kbd` element, optionally prefixed with the platform modifier.
 
-Accepts every prop of `React.ComponentProps<"kbd">`.
+<PropsTable extends={["React.ComponentProps<\"kbd\">"]} props={[{"name":"mod","type":"boolean","description":"Prepends the platform's primary modifier key: `⌘` on macOS and iOS, `Ctrl` on other platforms."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | — | Prepends the platform's primary modifier key: `⌘` on macOS and iOS, `Ctrl` on other platforms. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### KbdGroup
 
 Groups several keys into a single inline key combination.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

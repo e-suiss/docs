@@ -578,40 +578,37 @@ export function CommandPaletteFloatingExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"CommandPalette","href":"#commandpalette","children":[{"name":"CommandPaletteContent","href":"#commandpalettecontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### CommandPalette
 
 The root that renders a `Dialog` on desktop and a `Drawer` on mobile and registers the hotkey.
 
-Accepts every prop of `React.ComponentProps<typeof Dialog>`.
+<PropsTable extends={["React.ComponentProps<typeof Dialog>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the palette opens or closes, including through the hotkey."},{"name":"hotkey","type":"string | false","default":"\"k\"","description":"The letter that toggles the palette together with `Cmd` on macOS or `Ctrl` elsewhere; `false` disables it."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the palette opens or closes, including through the hotkey. |
-| `hotkey` | `string \| false` | `"k"` | The letter that toggles the palette together with `Cmd` on macOS or `Ctrl` elsewhere; `false` disables it. |
-| `floating` | `boolean` | — | Insets the mobile drawer from the screen edges with fully rounded corners. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### CommandPaletteTrigger
 
 The button that opens the palette.
 
-Accepts every prop of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the default button element with your own element, such as a `Button`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | — | Replaces the default button element with your own element, such as a `Button`. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### CommandPaletteContent
 
 The popup that wraps a `Command` with a visually hidden title and description.
 
-Accepts every prop of `React.ComponentProps<typeof Command>`.
+<PropsTable extends={["React.ComponentProps<typeof Command>"]} props={[{"name":"title","type":"string","default":"\"Command Palette\"","description":"Accessible name of the dialog, rendered visually hidden."},{"name":"description","type":"string","default":"\"Search for a command to run...\"","description":"Accessible description of the dialog, rendered visually hidden."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows a close button in the corner of the popup."},{"name":"closeLabel","type":"string","description":"Replaces the close icon with this text; requires `showCloseButton`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `string` | `"Command Palette"` | Accessible name of the dialog, rendered visually hidden. |
-| `description` | `string` | `"Search for a command to run..."` | Accessible description of the dialog, rendered visually hidden. |
-| `showCloseButton` | `boolean` | `false` | Shows a close button in the corner of the popup. |
-| `closeLabel` | `string` | — | Replaces the close icon with this text; requires `showCloseButton`. |
+</ApiPart>
 
 ## Accessibility
 

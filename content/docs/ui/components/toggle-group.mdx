@@ -520,22 +520,27 @@ export function ToggleGroupDisabledExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"ToggleGroup","href":"#togglegroup","children":[{"name":"ToggleGroupItem","href":"#togglegroupitem","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### ToggleGroup
 
 The container that holds the pressed values and shared styles.
 
-Accepts every prop of `ToggleGroupPrimitive.Props`.
+<PropsTable extends={["ToggleGroupPrimitive.Props"]} props={[{"name":"spacing","type":"number","default":"2","description":"Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant."},{"name":"orientation","type":"\"horizontal\" | \"vertical\"","default":"\"horizontal\"","description":"Lays items out in a row or a column, and sets which arrow keys move focus."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `spacing` | `number` | `2` | Sets the gap between items on the spacing scale; `0` attaches them, or makes a segmented control with the `default` variant. |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Lays items out in a row or a column, and sets which arrow keys move focus. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ToggleGroupItem
 
 A toggle button within the group, identified by its `value`.
 
-Accepts every prop of `TogglePrimitive.Props`.
+<PropsTable extends={["TogglePrimitive.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

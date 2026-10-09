@@ -334,39 +334,47 @@ export function BubbleInteractiveExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Bubble","href":"#bubble","children":[{"name":"BubbleContent","href":"#bubblecontent","children":[]}]},{"name":"BubbleGroup","href":"#bubblegroup","children":[{"name":"Bubble","href":"#bubble","children":[{"name":"BubbleContent","href":"#bubblecontent","children":[]},{"name":"BubbleReactions","href":"#bubblereactions","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### BubbleGroup
 
 A vertical stack of bubbles.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### Bubble
 
 The positioned wrapper that sets variant and alignment.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"secondary\" | \"muted\" | \"tinted\" | \"outline\" | \"ghost\" | \"destructive\"","default":"\"default\"","description":"Background and text color: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`."},{"name":"align","type":"\"start\" | \"end\"","default":"\"start\"","description":"Which side of the conversation the bubble sits on: `start` or `end`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` | Background and text color: `default` (accent), `secondary`, `muted`, `tinted`, `outline`, `ghost` (no background or padding) or `destructive`. |
-| `align` | `"start" \| "end"` | `"start"` | Which side of the conversation the bubble sits on: `start` or `end`. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### BubbleContent
 
 The rounded message body, with the tail.
 
-Accepts every prop of `useRender.ComponentProps<"div">`.
+<PropsTable extends={["useRender.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### BubbleReactions
 
 A small pill for reactions, overlapping the bubble's edge.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"start\" | \"end\"","default":"\"end\"","description":"Horizontal position along the bubble edge: `start` or `end`."},{"name":"side","type":"\"top\" | \"bottom\"","default":"\"bottom\"","description":"Which edge of the bubble the reactions overlap: `top` or `bottom`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"start" \| "end"` | `"end"` | Horizontal position along the bubble edge: `start` or `end`. |
-| `side` | `"top" \| "bottom"` | `"bottom"` | Which edge of the bubble the reactions overlap: `top` or `bottom`. |
+</ApiPart>
 
 ## Accessibility
 

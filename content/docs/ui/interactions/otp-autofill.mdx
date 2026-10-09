@@ -564,39 +564,35 @@ export function OtpAutofillWrongCodeExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### OtpAutofill
 
 The root that holds the code value and verification state.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"maxLength","type":"number","required":true,"description":"The number of characters in the code; verification runs once it is reached."},{"name":"onVerify","type":"(code: string) => Promise<boolean> | boolean","required":true,"description":"Called with the complete code; return or resolve `true` to accept it or `false` to reject it."},{"name":"webOtp","type":"boolean","default":"true","description":"Listens for SMS codes through the WebOTP API, where supported."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `maxLength` | `number` | Required | The number of characters in the code; verification runs once it is reached. |
-| `onVerify` | `(code: string) => Promise<boolean> \| boolean` | Required | Called with the complete code; return or resolve `true` to accept it or `false` to reject it. |
-| `webOtp` | `boolean` | `true` | Listens for SMS codes through the WebOTP API, where supported. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### OtpAutofillInput
 
 The `InputOTP` field wired to the autofill state.
 
-Accepts every prop of `React.ComponentProps<"input">`.
+<PropsTable extends={["React.ComponentProps<\"input\">"]} props={[{"name":"containerClassName","type":"string","description":"Classes for the slot container, merged with the state styles."},{"name":"children","type":"React.ReactNode","required":true,"description":"The slot groups and separators that make up the field."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `containerClassName` | `string` | — | Classes for the slot container, merged with the state styles. |
-| `children` | `React.ReactNode` | Required | The slot groups and separators that make up the field. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### OtpAutofillSuggestion
 
 The button that offers the received code and fills it when pressed.
 
-Accepts every prop of `React.ComponentProps<"button">`.
+<PropsTable extends={["React.ComponentProps<\"button\">"]} props={[{"name":"code","type":"string | null | undefined","required":true,"description":"The received code to offer; the suggestion is hidden while it is empty."},{"name":"source","type":"React.ReactNode","default":"\"From Messages\"","description":"The label that names where the code came from."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `code` | `string \| null \| undefined` | Required | The received code to offer; the suggestion is hidden while it is empty. |
-| `source` | `React.ReactNode` | `"From Messages"` | The label that names where the code came from. |
+</ApiPart>
 
 ## Accessibility
 

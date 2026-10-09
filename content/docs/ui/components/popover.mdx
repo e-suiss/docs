@@ -285,41 +285,67 @@ export function PopoverSimpleExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Popover","href":"#popover","children":[{"name":"PopoverTrigger","href":"#popovertrigger","children":[]},{"name":"PopoverContent","href":"#popovercontent","children":[{"name":"PopoverHeader","href":"#popoverheader","children":[{"name":"PopoverTitle","href":"#popovertitle","children":[]},{"name":"PopoverDescription","href":"#popoverdescription","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Popover
 
 The root that manages the popover's open state.
 
-Accepts every prop of `PopoverPrimitive.Root.Props`.
+<PropsTable extends={["PopoverPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### PopoverTrigger
 
 The button that opens and closes the popover.
 
-Accepts every prop of `PopoverPrimitive.Trigger.Props`.
+<PropsTable extends={["PopoverPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### PopoverContent
 
 The positioned panel that renders in a portal.
 
-Accepts every prop of `PopoverPrimitive.Popup.Props` and `PopoverPrimitive.Positioner.Props`.
+<PropsTable extends={["PopoverPrimitive.Popup.Props","PopoverPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### PopoverHeader
 
 Groups the title and description at the top of the panel.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### PopoverTitle
 
 The heading that names the popover.
 
-Accepts every prop of `PopoverPrimitive.Title.Props`.
+<PropsTable extends={["PopoverPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### PopoverDescription
 
 Secondary text that describes the popover.
 
-Accepts every prop of `PopoverPrimitive.Description.Props`.
+<PropsTable extends={["PopoverPrimitive.Description.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

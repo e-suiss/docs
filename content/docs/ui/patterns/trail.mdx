@@ -399,19 +399,15 @@ export function TrailTwoLevelsExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### Trail
 
 The navigation element that renders the breadcrumbs or the mobile back link.
 
-Accepts every prop of `React.ComponentProps<"nav">`.
+<PropsTable extends={["React.ComponentProps<\"nav\">"]} props={[{"name":"items","type":"TrailItem[]","required":true,"description":"The pages from the root to the current page."},{"name":"maxItems","type":"number","description":"The maximum number of items shown on desktop before the middle collapses into an ellipsis."},{"name":"backLabel","type":"string","description":"Text for the mobile back link; defaults to the parent's label."},{"name":"ellipsisLabel","type":"string","default":"\"More\"","description":"The accessible label of the collapsed ellipsis."},{"name":"render","type":"React.ReactElement","default":"<TrailAnchor />","description":"The element used to render links."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `TrailItem[]` | Required | The pages from the root to the current page. |
-| `maxItems` | `number` | — | The maximum number of items shown on desktop before the middle collapses into an ellipsis. |
-| `backLabel` | `string` | — | Text for the mobile back link; defaults to the parent's label. |
-| `ellipsisLabel` | `string` | `"More"` | The accessible label of the collapsed ellipsis. |
-| `render` | `React.ReactElement` | `<TrailAnchor />` | The element used to render links. |
+</ApiPart>
 
 ## Accessibility
 

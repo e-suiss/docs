@@ -366,81 +366,127 @@ export function AlertDialogWithMediaExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"AlertDialog","href":"#alertdialog","children":[{"name":"AlertDialogTrigger","href":"#alertdialogtrigger","children":[]},{"name":"AlertDialogContent","href":"#alertdialogcontent","children":[{"name":"AlertDialogHeader","href":"#alertdialogheader","children":[{"name":"AlertDialogTitle","href":"#alertdialogtitle","children":[]},{"name":"AlertDialogDescription","href":"#alertdialogdescription","children":[]},{"name":"AlertDialogMedia","href":"#alertdialogmedia","children":[]}]},{"name":"AlertDialogFooter","href":"#alertdialogfooter","children":[{"name":"AlertDialogCancel","href":"#alertdialogcancel","children":[]},{"name":"AlertDialogAction","href":"#alertdialogaction","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### AlertDialog
 
 The root that manages the open state.
 
-Accepts every prop of `AlertDialogPrimitive.Root.Props`.
+<PropsTable extends={["AlertDialogPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### AlertDialogTrigger
 
 The control that opens the dialog.
 
-Accepts every prop of `AlertDialogPrimitive.Trigger.Props`.
+<PropsTable extends={["AlertDialogPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### AlertDialogPortal
 
 Renders the dialog into a portal outside the DOM hierarchy.
 
-Accepts every prop of `AlertDialogPrimitive.Portal.Props`.
+<PropsTable extends={["AlertDialogPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### AlertDialogOverlay
 
 The full-screen scrim behind the dialog.
 
-Accepts every prop of `AlertDialogPrimitive.Backdrop.Props`.
+<PropsTable extends={["AlertDialogPrimitive.Backdrop.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### AlertDialogContent
 
 The dialog surface, rendered with its own portal and overlay.
 
-Accepts every prop of `AlertDialogPrimitive.Popup.Props`.
+<PropsTable extends={["AlertDialogPrimitive.Popup.Props"]} props={[{"name":"size","type":"\"default\" | \"sm\"","default":"\"default\"","description":"Maximum width of the dialog. `sm` is narrower than `default`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm"` | `"default"` | Maximum width of the dialog. `sm` is narrower than `default`. |
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### AlertDialogHeader
 
 A centered layout wrapper for the media, title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### AlertDialogFooter
 
 A two-column grid for the cancel and action buttons.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### AlertDialogMedia
 
 A circular container for an icon or image above the title.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### AlertDialogTitle
 
 The heading that names the dialog.
 
-Accepts every prop of `React.ComponentProps<typeof AlertDialogPrimitive.Title>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Title>"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### AlertDialogDescription
 
 Supporting text that describes the dialog.
 
-Accepts every prop of `React.ComponentProps<typeof AlertDialogPrimitive.Description>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogPrimitive.Description>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### AlertDialogAction
 
 A button that confirms and closes the dialog.
 
-Accepts every prop of `AlertDialogPrimitive.Close.Props` and `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["AlertDialogPrimitive.Close.Props","React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### AlertDialogCancel
 
 A button that dismisses the dialog without acting.
 
-Accepts every prop of `AlertDialogPrimitive.Close.Props` and `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["AlertDialogPrimitive.Close.Props","React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

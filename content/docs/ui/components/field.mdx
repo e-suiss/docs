@@ -762,85 +762,107 @@ export function FieldSeparatorWithTextExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]},{"name":"FieldError","href":"#fielderror","children":[]}]},{"name":"FieldSet","href":"#fieldset","children":[{"name":"FieldLegend","href":"#fieldlegend","children":[]},{"name":"FieldGroup","href":"#fieldgroup","children":[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]}]}]},{"name":"FieldDescription","href":"#fielddescription","children":[]},{"name":"FieldLabel","href":"#fieldlabel","children":[{"name":"Field","href":"#field","children":[{"name":"FieldContent","href":"#fieldcontent","children":[{"name":"FieldTitle","href":"#fieldtitle","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]}]}]}]},{"name":"FieldGroup","href":"#fieldgroup","children":[{"name":"Field","href":"#field","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldContent","href":"#fieldcontent","children":[{"name":"FieldLabel","href":"#fieldlabel","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldSet","href":"#fieldset","children":[{"name":"FieldLegend","href":"#fieldlegend","children":[]},{"name":"FieldDescription","href":"#fielddescription","children":[]}]},{"name":"FieldSeparator","href":"#fieldseparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### FieldSet
 
 Groups related fields in a native `fieldset`.
 
-Accepts every prop of `React.ComponentProps<"fieldset">`.
+<PropsTable extends={["React.ComponentProps<\"fieldset\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### FieldLegend
 
 The caption of a field set.
 
-Accepts every prop of `React.ComponentProps<"legend">`.
+<PropsTable extends={["React.ComponentProps<\"legend\">"]} props={[{"name":"variant","type":"\"legend\" | \"label\"","default":"\"legend\"","description":"Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"legend" \| "label"` | `"legend"` | Sets `data-variant` to `legend` or `label` so the legend can be styled as a section caption or as a field label. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### FieldGroup
 
 Stacks fields with consistent spacing, or groups them into an inset list.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"inset\"","default":"\"default\"","description":"`inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "inset"` | `"default"` | `inset` groups the fields into a rounded list on a secondary surface, with separators between rows and inputs aligned to the end. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### Field
 
 Wraps a single control with its label, description and error.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"orientation","type":"\"vertical\" | \"horizontal\" | \"responsive\"","default":"\"vertical\"","description":"`vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"vertical" \| "horizontal" \| "responsive"` | `"vertical"` | `vertical` stacks the label above the control, `horizontal` places them side by side, and `responsive` switches to horizontal when the field group is wide enough. |
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### FieldContent
 
 Stacks a label and description next to a control in a horizontal field.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### FieldLabel
 
 The label of a field's control.
 
-Accepts every prop of `React.ComponentProps<typeof Label>`.
+<PropsTable extends={["React.ComponentProps<typeof Label>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### FieldTitle
 
 A heading inside a field that is not a label, such as the title of a choice card.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### FieldDescription
 
 Supporting text that describes the control.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### FieldSeparator
 
 A divider between sections, with optional centered text.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"children","type":"React.ReactNode","description":"Optional text centered on the separator line."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | — | Optional text centered on the separator line. |
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### FieldError
 
 An error message for the field.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"errors","type":"Array<{ message?: string } | undefined>","description":"A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `errors` | `Array<{ message?: string } \| undefined>` | — | A list of error objects to display. Duplicate messages are removed; one message renders as text and several render as a list. Ignored when children are provided. |
+</ApiPart>
 
 ## Accessibility
 

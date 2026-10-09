@@ -171,13 +171,73 @@ const labelOf = (key) => {
   return words.charAt(0).toUpperCase() + words.slice(1);
 };
 
+/** Reads the nesting of `names` from JSX, skipping over other tags. */
+function jsxTree(jsx, names) {
+  const root = { children: [] };
+  const stack = [root];
+  let i = 0;
+  while ((i = jsx.indexOf("<", i)) !== -1) {
+    const match = /^<(\/?)([A-Z][\w.]*)/.exec(jsx.slice(i));
+    if (!match) {
+      i++;
+      continue;
+    }
+    // Find the tag's end, stepping over `{...}` attribute values.
+    let j = i + match[0].length;
+    let depth = 0;
+    while (j < jsx.length && !(jsx[j] === ">" && depth === 0)) {
+      if (jsx[j] === "{") depth++;
+      if (jsx[j] === "}") depth--;
+      j++;
+    }
+    const [, closing, name] = match;
+    const selfClosing = jsx[j - 1] === "/";
+    i = j + 1;
+    if (!names.has(name)) continue;
+    if (closing) {
+      while (stack.length > 1 && stack.pop().name !== name);
+      continue;
+    }
+    const node = { name, children: [] };
+    stack.at(-1).children.push(node);
+    if (!selfClosing) stack.push(node);
+  }
+  return root.children;
+}
+
+/** Merges trees by part name, so repeated siblings appear once and a part
+ * nested inside itself folds into its ancestor. */
+function mergeTrees(into, from, ancestors = []) {
+  for (const node of from) {
+    const ancestor = ancestors.find((other) => other.name === node.name);
+    if (ancestor) {
+      mergeTrees(ancestor.children, node.children, ancestors);
+      continue;
+    }
+    let same = into.find((other) => other.name === node.name);
+    if (!same) into.push((same = { name: node.name, children: [] }));
+    mergeTrees(same.children, node.children, [...ancestors, same]);
+  }
+  return into;
+}
+
+function slug(text) {
+  return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+}
+
 function propsTable(part, text) {
-  const rows = part.props.map((prop) => {
-    const type = prop.type.replace(/\|/g, "\\|");
-    const fallback = prop.default ? `\`${prop.default.replace(/\|/g, "\\|")}\`` : prop.required ? "Required" : "—";
-    return `| \`${prop.name}\` | \`${type}\` | ${fallback} | ${mdx(text?.[prop.name] ?? "")} |`;
-  });
-  return ["| Prop | Type | Default | Description |", "| --- | --- | --- | --- |", ...rows].join("\n");
+  const props = part.props.map((prop) => ({
+    name: prop.name,
+    type: prop.type,
+    ...(prop.default ? { default: prop.default } : {}),
+    ...(prop.required ? { required: true } : {}),
+    ...(text?.[prop.name] ? { description: text[prop.name] } : {}),
+  }));
+  const attrs = [
+    part.extends.length ? ` extends={${JSON.stringify(part.extends)}}` : "",
+    props.length ? ` props={${JSON.stringify(props)}}` : "",
+  ].join("");
+  return `<PropsTable${attrs} />`;
 }
 
 function page(item) {
@@ -245,12 +305,17 @@ function page(item) {
   const documented = parts.filter((part) => part.props.length > 0 || part.extends.length > 0);
   if (documented.length) {
     lines.push("## API Reference", "");
-    for (const part of documented) {
-      lines.push(`### ${part.name}`, "");
+    const known = new Set(parts.map((part) => part.name));
+    const tree = examples.reduce((into, example) => mergeTrees(into, jsxTree(example.jsx, known)), []);
+    const linked = new Set(documented.map((part) => part.name));
+    const anchors = (nodes) =>
+      nodes.map((node) => ({ name: node.name, ...(linked.has(node.name) ? { href: `#${slug(node.name)}` } : {}), children: anchors(node.children) }));
+    if (tree.length > 1 || tree[0]?.children.length) lines.push(`<Anatomy tree={${JSON.stringify(anchors(tree))}} />`, "");
+    documented.forEach((part, index) => {
+      lines.push(`<ApiPart index={${index + 1}}>`, "", `### ${part.name}`, "");
       if (text.parts?.[part.name]) lines.push(mdx(text.parts[part.name]), "");
-      if (part.extends.length) lines.push(`Accepts every prop of ${part.extends.map((type) => `\`${type}\``).join(" and ")}.`, "");
-      if (part.props.length) lines.push(propsTable(part, text.props?.[part.name]), "");
-    }
+      lines.push(propsTable(part, text.props?.[part.name]), "", "</ApiPart>", "");
+    });
   }
 
   if (text.accessibility) lines.push("## Accessibility", "", mdx(text.accessibility), "");

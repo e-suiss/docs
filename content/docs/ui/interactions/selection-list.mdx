@@ -660,48 +660,55 @@ export function SelectionListIconActionsExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### SelectionList
 
 The root that holds the editing state and the selected values.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"editing","type":"boolean","description":"Whether the list is in editing mode, for controlled use."},{"name":"defaultEditing","type":"boolean","default":"false","description":"Whether the list starts in editing mode when uncontrolled."},{"name":"onEditingChange","type":"(editing: boolean) => void","description":"Called when editing mode turns on or off."},{"name":"value","type":"string[]","description":"The selected row values, for controlled use."},{"name":"defaultValue","type":"string[]","default":"[]","description":"The rows selected initially when uncontrolled."},{"name":"onValueChange","type":"(value: string[]) => void","description":"Called with the new array of selected values."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `editing` | `boolean` | — | Whether the list is in editing mode, for controlled use. |
-| `defaultEditing` | `boolean` | `false` | Whether the list starts in editing mode when uncontrolled. |
-| `onEditingChange` | `(editing: boolean) => void` | — | Called when editing mode turns on or off. |
-| `value` | `string[]` | — | The selected row values, for controlled use. |
-| `defaultValue` | `string[]` | `[]` | The rows selected initially when uncontrolled. |
-| `onValueChange` | `(value: string[]) => void` | — | Called with the new array of selected values. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SelectionListTrigger
 
 The button that enters and leaves editing.
 
-Accepts every prop of `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SelectionListItem
 
 A row that becomes a selectable checkbox while editing.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"value","type":"string","required":true,"description":"The unique value that identifies the row in the selection."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The unique value that identifies the row in the selection. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SelectionListBar
 
 The floating toolbar shown while editing.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### SelectionListCount
 
 A live label with the number of selected rows.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

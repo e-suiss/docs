@@ -297,59 +297,97 @@ export function ConfirmDismissibleExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Confirm","href":"#confirm","children":[{"name":"ConfirmTrigger","href":"#confirmtrigger","children":[]},{"name":"ConfirmContent","href":"#confirmcontent","children":[{"name":"ConfirmHeader","href":"#confirmheader","children":[{"name":"ConfirmTitle","href":"#confirmtitle","children":[]},{"name":"ConfirmDescription","href":"#confirmdescription","children":[]}]},{"name":"ConfirmFooter","href":"#confirmfooter","children":[{"name":"ConfirmCancel","href":"#confirmcancel","children":[]},{"name":"ConfirmAction","href":"#confirmaction","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Confirm
 
 The root that renders an `AlertDialog` on desktop and an `AlertSheet` on mobile.
 
-Accepts every prop of `React.ComponentProps<typeof AlertSheet>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertSheet>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ConfirmTrigger
 
 The button that opens the confirmation.
 
-Accepts every prop of `React.ComponentProps<typeof AlertDialogTrigger>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogTrigger>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ConfirmContent
 
 The popup; on mobile it regroups the footer buttons into the sheet layout.
 
-Accepts every prop of `React.ComponentProps<typeof AlertDialogContent>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ConfirmHeader
 
 Groups the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ConfirmFooter
 
 Holds the cancel and action buttons on desktop; on mobile its buttons are moved into the sheet.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ConfirmTitle
 
 The prompt's title, used as the dialog's accessible name.
 
-Accepts every prop of `React.ComponentProps<typeof AlertDialogTitle>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogTitle>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### ConfirmDescription
 
 Supporting text, used as the dialog's accessible description.
 
-Accepts every prop of `React.ComponentProps<typeof AlertDialogDescription>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertDialogDescription>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### ConfirmAction
 
 A button that performs the action and closes the prompt.
 
-Accepts every prop of `React.ComponentProps<typeof AlertSheetAction>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetAction>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### ConfirmCancel
 
 A button that closes the prompt without acting; shown separately below the actions on mobile.
 
-Accepts every prop of `React.ComponentProps<typeof AlertSheetCancel>`.
+<PropsTable extends={["React.ComponentProps<typeof AlertSheetCancel>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

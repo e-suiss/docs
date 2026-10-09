@@ -360,59 +360,67 @@ export function ActionMenuNotDismissibleExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"ActionMenu","href":"#actionmenu","children":[{"name":"ActionMenuTrigger","href":"#actionmenutrigger","children":[]},{"name":"ActionMenuContent","href":"#actionmenucontent","children":[{"name":"ActionMenuLabel","href":"#actionmenulabel","children":[]},{"name":"ActionMenuItem","href":"#actionmenuitem","children":[]},{"name":"ActionMenuSeparator","href":"#actionmenuseparator","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### ActionMenu
 
 The root that renders a `DropdownMenu` on desktop and an `AlertSheet` on mobile.
 
-Accepts every prop of `React.ComponentProps<typeof DropdownMenu>`.
+<PropsTable extends={["React.ComponentProps<typeof DropdownMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu or sheet opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the menu or sheet opens or closes. |
-| `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ActionMenuTrigger
 
 The button that opens the menu or sheet.
 
-Accepts every prop of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the default button element with your own element, such as a `Button`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | — | Replaces the default button element with your own element, such as a `Button`. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ActionMenuContent
 
 The popup holding the actions; on mobile it adds a Cancel button below them.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>` and `React.ComponentProps<typeof DropdownMenuContent>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof DropdownMenuContent>"]} props={[{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button shown below the actions on mobile."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ActionMenuLabel
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ActionMenuItem
 
 An actionable entry that closes the menu when chosen.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | — | Use `destructive` to style the item as a destructive action. |
-| `disabled` | `boolean` | — | Prevents the item from being chosen. |
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ActionMenuSeparator
 
 A divider between groups of items, rendered on desktop only.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

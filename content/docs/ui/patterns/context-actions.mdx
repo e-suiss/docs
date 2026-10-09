@@ -431,55 +431,67 @@ export function ContextActionsNotDismissibleExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"ContextActions","href":"#contextactions","children":[{"name":"ContextActionsTrigger","href":"#contextactionstrigger","children":[]},{"name":"ContextActionsContent","href":"#contextactionscontent","children":[{"name":"ContextActionsLabel","href":"#contextactionslabel","children":[]},{"name":"ContextActionsItem","href":"#contextactionsitem","children":[]},{"name":"ContextActionsSeparator","href":"#contextactionsseparator","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### ContextActions
 
 The root that renders a `ContextMenu` on desktop and an `AlertSheet` on mobile.
 
-Accepts every prop of `React.ComponentProps<typeof ContextMenu>`.
+<PropsTable extends={["React.ComponentProps<typeof ContextMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu or sheet opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the menu or sheet opens or closes. |
-| `dismissible` | `boolean` | `true` | When `true`, the mobile sheet closes on an outside press; when `false`, it uses an alert dialog that closes only through an action or Cancel. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ContextActionsTrigger
 
 The area that opens the actions on right click, or on long press and keyboard on mobile.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ContextActionsContent
 
 The popup holding the actions; on mobile it adds a Cancel button below them.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button shown below the actions on mobile."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button shown below the actions on mobile. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ContextActionsLabel
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ContextActionsItem
 
 An actionable entry that closes the actions when chosen.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | — | Use `destructive` to style the item as a destructive action. |
-| `disabled` | `boolean` | — | Prevents the item from being chosen. |
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ContextActionsSeparator
 
 A divider between groups of items, rendered on desktop only.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

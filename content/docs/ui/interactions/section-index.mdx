@@ -522,38 +522,45 @@ export function SectionIndexCompactExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### SectionIndex
 
 The relative container that holds the list and the index bar.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SectionIndexSection
 
 A section of the list identified by a letter.
 
-Accepts every prop of `React.ComponentProps<"section">`.
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"value","type":"string","required":true,"description":"The letter this section belongs to."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The letter this section belongs to. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SectionIndexHeader
 
 The sticky title at the top of a section.
 
-Accepts every prop of `React.ComponentProps<"h3">`.
+<PropsTable extends={["React.ComponentProps<\"h3\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SectionIndexBar
 
 The vertical letter bar that jumps between sections.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"letters","type":"string[]","default":"LETTERS","description":"The letters shown on the bar; defaults to `A` through `Z` followed by `#`."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the letter whenever the bar jumps to a section."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `letters` | `string[]` | `LETTERS` | The letters shown on the bar; defaults to `A` through `Z` followed by `#`. |
-| `onValueChange` | `(value: string) => void` | — | Called with the letter whenever the bar jumps to a section. |
+</ApiPart>
 
 ## Accessibility
 

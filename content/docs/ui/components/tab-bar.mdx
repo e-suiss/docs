@@ -987,61 +987,87 @@ export function TabBarDisabledItemExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"TabBar","href":"#tabbar","children":[{"name":"TabBarList","href":"#tabbarlist","children":[{"name":"TabBarItem","href":"#tabbaritem","children":[]}]},{"name":"TabBarContent","href":"#tabbarcontent","children":[]},{"name":"TabBarTrigger","href":"#tabbartrigger","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### TabBar
 
 The floating `nav` container that holds the open state.
 
-Accepts every prop of `React.ComponentProps<"nav">` and `TabBarProps`.
+<PropsTable extends={["React.ComponentProps<\"nav\">","TabBarProps"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### TabBarList
 
 The row of primary items; items that don't fit move into the content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### TabBarItem
 
 A primary destination in the list, rendered as a button by default.
 
-Accepts every prop of `useRender.ComponentProps<"button">` and `React.ComponentProps<"button">`.
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the item as the current page with `aria-current=\"page\"`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the item as the current page with `aria-current="page"`. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### TabBarTrigger
 
 The More button that expands and collapses the content.
 
-Accepts every prop of `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### TabBarContent
 
 The expandable area above the list that holds overflowed items and sections.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### TabBarSection
 
 A column of related links in the content.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### TabBarSectionTitle
 
 The heading of a section, marked with a small dot.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### TabBarLink
 
 A link inside a section that closes the bar when chosen.
 
-Accepts every prop of `useRender.ComponentProps<"a">` and `React.ComponentProps<"a">`.
+<PropsTable extends={["useRender.ComponentProps<\"a\">","React.ComponentProps<\"a\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the link as the current page with `aria-current=\"page\"`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the link as the current page with `aria-current="page"`. |
+</ApiPart>
 
 ## Accessibility
 

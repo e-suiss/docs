@@ -1,23 +1,12 @@
 "use client";
 
 import type * as PageTree from "fumadocs-core/page-tree";
+import { cn } from "cn";
 import { usePathname } from "next/navigation";
+import type * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar";
 
 type Group = { label?: string; nodes: PageTree.Node[] };
 
@@ -33,9 +22,6 @@ function groupNodes(nodes: PageTree.Node[]) {
   }
   return groups.filter((group) => group.nodes.length > 0);
 }
-
-const itemClass =
-  "h-8 rounded-lg text-[15px] tracking-[-0.015em] text-label/60 hover:bg-label/5 hover:text-label data-active:bg-label/6 data-active:font-semibold data-active:text-label";
 
 /** Every page URL inside a folder, its own index page included. */
 function urlsOf(nodes: PageTree.Node[]): string[] {
@@ -68,7 +54,7 @@ function prefixOf(folder: PageTree.Folder) {
  * the sidebar shows only the section being read: that folder's pages, or the
  * guides when the page is in none of them.
  */
-function sectionNodes(nodes: PageTree.Node[], pathname: string): PageTree.Node[] {
+function sectionOf(nodes: PageTree.Node[], pathname: string): { title: string; nodes: PageTree.Node[] } {
   const folders = nodes.filter((node): node is PageTree.Folder => node.type === "folder");
   const current = folders.find((folder) => {
     const prefix = prefixOf(folder);
@@ -79,94 +65,100 @@ function sectionNodes(nodes: PageTree.Node[], pathname: string): PageTree.Node[]
     const children = current.children.map((child) =>
       child.type === "page" && child.url === prefix ? { ...child, name: "Overview" } : child,
     );
-    return [...(current.index ? [{ ...current.index, name: "Overview" }] : []), ...children];
+    return {
+      title: String(current.name ?? ""),
+      nodes: [...(current.index ? [{ ...current.index, name: "Overview" }] : []), ...children],
+    };
   }
-  return nodes.filter((node) => node.type !== "folder");
-}
-
-function Pages({ nodes }: { nodes: PageTree.Node[] }) {
-  const pathname = usePathname();
-  const { setOpenMobile } = useSidebar();
-
-  return nodes.map((node) => {
-    if (node.type === "page") {
-      return (
-        <SidebarMenuItem key={node.url}>
-          <SidebarMenuButton
-            size="sm"
-            isActive={pathname === node.url}
-            className={itemClass}
-            render={<Anchor href={node.url} onClick={() => setOpenMobile(false)} />}
-          >
-            {node.name}
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      );
-    }
-    if (node.type === "folder") {
-      return (
-        <SidebarMenuItem key={node.$id ?? String(node.name)}>
-          {node.index ? (
-            <SidebarMenuButton
-              size="sm"
-              isActive={pathname === node.index.url}
-              className={itemClass}
-              render={<Anchor href={node.index.url} onClick={() => setOpenMobile(false)} />}
-            >
-              {node.name}
-            </SidebarMenuButton>
-          ) : (
-            <span className="flex h-8 items-center px-2 text-sm text-label-secondary">
-              {node.name}
-            </span>
-          )}
-          <SidebarMenuSub>
-            {node.children.map((child) =>
-              child.type === "page" ? (
-                <SidebarMenuSubItem key={child.url}>
-                  <SidebarMenuSubButton
-                    isActive={pathname === child.url}
-                    className={itemClass}
-                    render={<Anchor href={child.url} onClick={() => setOpenMobile(false)} />}
-                  >
-                    {child.name}
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              ) : null,
-            )}
-          </SidebarMenuSub>
-        </SidebarMenuItem>
-      );
-    }
-    return null;
-  });
+  return { title: "Docs", nodes: nodes.filter((node) => node.type !== "folder") };
 }
 
 /**
- * The docs navigator: suiss UI's sidebar, pinned below the product bar, with
- * mono group labels in the style of the home page's section markers.
+ * One entry: the page being read gets a rule in the margin and full weight;
+ * others slide on hover.
+ */
+function Row({ page, group }: { page: PageTree.Item; group?: string }) {
+  const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
+  const active = pathname === page.url;
+
+  return (
+    <li>
+      <Anchor
+        href={page.url}
+        onClick={() => setOpenMobile(false)}
+        aria-current={active ? "page" : undefined}
+        className="group/row relative flex h-8 items-center rounded-md ps-5 pe-2 outline-none focus-visible:focus-ring"
+      >
+        <span
+          aria-hidden
+          className={cn(
+            "absolute start-0 top-1/2 h-px -translate-y-1/2 bg-label transition-all duration-300 ease-out",
+            active ? "w-3 h-[2px]" : "w-0 group-hover/row:w-1.5 bg-label/30",
+          )}
+        />
+        <span
+          className={cn(
+            "truncate text-[15px] tracking-[-0.015em] transition-[color,transform] duration-300 ease-out",
+            active ? "font-semibold text-label" : "text-label/60 group-hover/row:translate-x-1 group-hover/row:text-label",
+          )}
+        >
+          {shortName(String(page.name), group)}
+        </span>
+      </Anchor>
+    </li>
+  );
+}
+
+/** Under a group label, "Area Chart Axes" reads as "Axes". */
+function shortName(name: string, group?: string) {
+  if (!group) return name;
+  const rest = name.replace(new RegExp(`^${group}( Chart)? `, "i"), "");
+  return rest === name ? name : rest.charAt(0).toUpperCase() + rest.slice(1);
+}
+
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="ps-5 pe-2 pt-5 pb-1.5 font-mono text-[11px] tracking-[0.04em] text-label-tertiary uppercase">
+      {children}
+    </div>
+  );
+}
+
+const pagesOf = (nodes: PageTree.Node[]) =>
+  nodes.flatMap((node): PageTree.Item[] =>
+    node.type === "page" ? [node] : node.type === "folder" ? [...(node.index ? [node.index] : []), ...pagesOf(node.children)] : [],
+  );
+
+/**
+ * The docs navigator: a mono section header, mono group labels and quiet
+ * entries marked with a rule, in the style of the table of contents.
  */
 export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
   const pathname = usePathname();
-  const nodes = sectionNodes(all, pathname);
+  const section = sectionOf(all, pathname);
+  const groups = groupNodes(section.nodes);
+  const pages = pagesOf(section.nodes).filter((page) => page.name !== "Overview");
 
   return (
     <Sidebar className="sticky top-12 h-[calc(100svh-(--spacing(12)))] border-e-0 [&>[data-slot=sidebar-inner]]:bg-surface">
-      <SidebarContent className="py-8">
-        {groupNodes(nodes).map((group, index) => (
-          <SidebarGroup key={group.label ?? index}>
-            {group.label && (
-              <SidebarGroupLabel className="font-mono text-[11px] tracking-[0.02em] text-label-tertiary uppercase">
-                {group.label}
-              </SidebarGroupLabel>
-            )}
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <Pages nodes={group.nodes} />
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+      <SidebarContent className="px-3 py-8">
+        <div className="flex items-baseline justify-between ps-5 pe-2 pb-3 font-mono text-[11px] tracking-[0.04em] text-label uppercase">
+          <span>{section.title}</span>
+          <span className="text-label-tertiary tabular-nums">{pages.length}</span>
+        </div>
+        <nav aria-label={section.title}>
+          {groups.map((group, index) => (
+            <div key={group.label ?? index}>
+              {group.label && <Label>{group.label}</Label>}
+              <ul>
+                {pagesOf(group.nodes).map((page) => (
+                  <Row key={page.url} page={page} group={group.label} />
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </SidebarContent>
     </Sidebar>
   );

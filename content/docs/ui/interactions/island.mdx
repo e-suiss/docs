@@ -806,41 +806,57 @@ export function IslandActivityWithNotificationsExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"IslandProvider","href":"#islandprovider","children":[{"name":"Island","href":"#island","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### IslandProvider
 
 Holds the island state and provides `notify`, `dismiss`, and the expanded state to everything inside it.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `React.ReactNode` | — | The content that can render the island and post notifications. |
+<PropsTable props={[{"name":"children","type":"React.ReactNode","description":"The content that can render the island and post notifications."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### Island
 
 The fixed pill that sizes itself to the active view and renders the built-in notice.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### IslandCompact
 
 The button shown in the collapsed pill; tapping it expands the island.
 
-Accepts every prop of `React.ComponentProps<"button">`.
+<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### IslandExpanded
 
 The detailed view shown when the island is expanded.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### IslandRing
 
 A small circular progress ring for the compact pill.
 
-Accepts every prop of `React.ComponentProps<"svg">`.
+<PropsTable extends={["React.ComponentProps<\"svg\">"]} props={[{"name":"value","type":"number","required":true,"description":"Progress from `0` to `1`; values outside the range are clamped."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number` | Required | Progress from `0` to `1`; values outside the range are clamped. |
+</ApiPart>
 
 ## Accessibility
 

@@ -205,23 +205,37 @@ export function HoverCardSidesExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"HoverCard","href":"#hovercard","children":[{"name":"HoverCardTrigger","href":"#hovercardtrigger","children":[]},{"name":"HoverCardContent","href":"#hovercardcontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### HoverCard
 
 The root that manages the card's open state.
 
-Accepts every prop of `PreviewCardPrimitive.Root.Props`.
+<PropsTable extends={["PreviewCardPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### HoverCardTrigger
 
 The link that opens the card on hover or focus.
 
-Accepts every prop of `PreviewCardPrimitive.Trigger.Props`.
+<PropsTable extends={["PreviewCardPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### HoverCardContent
 
 The floating card, rendered in a portal and positioned relative to the trigger.
 
-Accepts every prop of `PreviewCardPrimitive.Popup.Props` and `PreviewCardPrimitive.Positioner.Props`.
+<PropsTable extends={["PreviewCardPrimitive.Popup.Props","PreviewCardPrimitive.Positioner.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

@@ -255,27 +255,37 @@ export function MarkerWithLinkExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Marker","href":"#marker","children":[{"name":"MarkerContent","href":"#markercontent","children":[]},{"name":"MarkerIcon","href":"#markericon","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Marker
 
 The container row that applies the variant styling.
 
-Accepts every prop of `useRender.ComponentProps<"div">`.
+<PropsTable extends={["useRender.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"separator\" | \"border\"","default":"\"default\"","description":"Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "separator" \| "border"` | `"default"` | Sets the visual treatment: `default` for plain text, `separator` for text between two rules, or `border` for text above a bottom border. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### MarkerIcon
 
 A decorative icon slot shown before the content and hidden from assistive technology.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### MarkerContent
 
 Holds the marker text and any inline links.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

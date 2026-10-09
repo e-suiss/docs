@@ -641,63 +641,97 @@ export function SelectInvalidExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"SelectTrigger","href":"#selecttrigger","children":[{"name":"SelectValue","href":"#selectvalue","children":[]}]},{"name":"SelectContent","href":"#selectcontent","children":[{"name":"SelectGroup","href":"#selectgroup","children":[{"name":"SelectItem","href":"#selectitem","children":[]},{"name":"SelectLabel","href":"#selectlabel","children":[]}]},{"name":"SelectItem","href":"#selectitem","children":[]},{"name":"SelectSeparator","href":"#selectseparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### SelectGroup
 
 Groups related options; label it with a `SelectLabel`.
 
-Accepts every prop of `SelectPrimitive.Group.Props`.
+<PropsTable extends={["SelectPrimitive.Group.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SelectValue
 
 Shows the selected option's label, or the placeholder, inside the trigger.
 
-Accepts every prop of `SelectPrimitive.Value.Props`.
+<PropsTable extends={["SelectPrimitive.Value.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SelectTrigger
 
 The button that opens the popup and displays the current value.
 
-Accepts every prop of `SelectPrimitive.Trigger.Props`.
+<PropsTable extends={["SelectPrimitive.Trigger.Props"]} props={[{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"sm" \| "default"` | `"default"` | Sets the trigger height: `default` is 44px tall, `sm` is 36px with smaller corners. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SelectContent
 
 The positioned popup that holds the option list and scroll arrows.
 
-Accepts every prop of `SelectPrimitive.Popup.Props` and `SelectPrimitive.Positioner.Props`.
+<PropsTable extends={["SelectPrimitive.Popup.Props","SelectPrimitive.Positioner.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### SelectLabel
 
 A heading that names a `SelectGroup`.
 
-Accepts every prop of `SelectPrimitive.GroupLabel.Props`.
+<PropsTable extends={["SelectPrimitive.GroupLabel.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### SelectItem
 
 A selectable option, with a check mark when selected.
 
-Accepts every prop of `SelectPrimitive.Item.Props`.
+<PropsTable extends={["SelectPrimitive.Item.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### SelectSeparator
 
 A thin line that divides groups of options.
 
-Accepts every prop of `SelectPrimitive.Separator.Props`.
+<PropsTable extends={["SelectPrimitive.Separator.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### SelectScrollUpButton
 
 An arrow that scrolls the list up when it overflows; rendered by `SelectContent`.
 
-Accepts every prop of `React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>`.
+<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.ScrollUpArrow>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### SelectScrollDownButton
 
 An arrow that scrolls the list down when it overflows; rendered by `SelectContent`.
 
-Accepts every prop of `React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>`.
+<PropsTable extends={["React.ComponentProps<typeof SelectPrimitive.ScrollDownArrow>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

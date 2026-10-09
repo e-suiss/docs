@@ -756,21 +756,15 @@ export function NavbarMegaPanelExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### Navbar
 
 The header that renders the brand, navigation items and actions.
 
-Accepts every prop of `React.ComponentProps<"header">`.
+<PropsTable extends={["React.ComponentProps<\"header\">"]} props={[{"name":"items","type":"NavbarItem[]","required":true,"description":"The navigation items: links, groups of links, or mega items with columns."},{"name":"brand","type":"React.ReactNode","description":"Content shown at the start of the header, such as a logo."},{"name":"actions","type":"React.ReactNode","description":"Content shown at the end of the header, such as a sign-in button; it stays visible in the compact layout."},{"name":"menuLabel","type":"string","default":"\"Menu\"","description":"Accessible label of the compact menu button and title of the fullscreen menu."},{"name":"closeLabel","type":"string","description":"Text for the fullscreen menu's close button."},{"name":"layout","type":"\"popover\" | \"panel\"","default":"\"popover\"","description":"With `popover`, dropdowns float beneath their trigger; with `panel`, they open as a full-width panel anchored to the header."},{"name":"render","type":"React.ReactElement","default":"<NavbarAnchor />","description":"The element used for every link, defaulting to a plain anchor; replace it with your router's link component."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `NavbarItem[]` | Required | The navigation items: links, groups of links, or mega items with columns. |
-| `brand` | `React.ReactNode` | — | Content shown at the start of the header, such as a logo. |
-| `actions` | `React.ReactNode` | — | Content shown at the end of the header, such as a sign-in button; it stays visible in the compact layout. |
-| `menuLabel` | `string` | `"Menu"` | Accessible label of the compact menu button and title of the fullscreen menu. |
-| `closeLabel` | `string` | — | Text for the fullscreen menu's close button. |
-| `layout` | `"popover" \| "panel"` | `"popover"` | With `popover`, dropdowns float beneath their trigger; with `panel`, they open as a full-width panel anchored to the header. |
-| `render` | `React.ReactElement` | `<NavbarAnchor />` | The element used for every link, defaulting to a plain anchor; replace it with your router's link component. |
+</ApiPart>
 
 ## Accessibility
 

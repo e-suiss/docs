@@ -658,33 +658,47 @@ export function TabsManyTabsLineExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Tabs","href":"#tabs","children":[{"name":"TabsList","href":"#tabslist","children":[{"name":"TabsTrigger","href":"#tabstrigger","children":[]}]},{"name":"TabsContent","href":"#tabscontent","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Tabs
 
 The root that holds the selected value and orientation.
 
-Accepts every prop of `TabsPrimitive.Root.Props`.
+<PropsTable extends={["TabsPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### TabsList
 
 The row or column of tabs, with the sliding indicator.
 
-Accepts every prop of `TabsPrimitive.List.Props`.
+<PropsTable extends={["TabsPrimitive.List.Props"]} props={[{"name":"variant","type":"\"default\" | \"line\"","default":"\"default\"","description":"Chooses a filled `default` list with a raised pill, or a `line` list with an underline."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "line"` | `"default"` | Chooses a filled `default` list with a raised pill, or a `line` list with an underline. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### TabsTrigger
 
 A tab that selects its panel.
 
-Accepts every prop of `TabsPrimitive.Tab.Props`.
+<PropsTable extends={["TabsPrimitive.Tab.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### TabsContent
 
 The panel shown when its tab is selected.
 
-Accepts every prop of `TabsPrimitive.Panel.Props`.
+<PropsTable extends={["TabsPrimitive.Panel.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

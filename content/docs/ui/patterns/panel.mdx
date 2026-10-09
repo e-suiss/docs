@@ -666,78 +666,97 @@ export function PanelFloatingExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Panel","href":"#panel","children":[{"name":"PanelTrigger","href":"#paneltrigger","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Panel
 
 The root that chooses Sheet or Drawer and holds the open state.
 
-Accepts every prop of `React.ComponentProps<typeof Sheet>`.
+<PropsTable extends={["React.ComponentProps<typeof Sheet>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called with the new open state when the panel opens or closes."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges. Has no effect on desktop."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called with the new open state when the panel opens or closes. |
-| `floating` | `boolean` | — | Insets the mobile drawer from the screen edges. Has no effect on desktop. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### PanelTrigger
 
 The button that opens the panel.
 
-Accepts every prop of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the rendered element, for example with a `Button`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | — | Replaces the rendered element, for example with a `Button`. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### PanelContent
 
 The popup surface, with an optional close button.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"side","type":"\"top\" | \"right\" | \"bottom\" | \"left\"","default":"\"right\"","description":"The screen edge the desktop sheet slides in from. Ignored on mobile."},{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the built-in close button."},{"name":"closeLabel","type":"string","description":"Text for the close button in place of the icon."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"right"` | The screen edge the desktop sheet slides in from. Ignored on mobile. |
-| `showCloseButton` | `boolean` | `true` | Shows the built-in close button. |
-| `closeLabel` | `string` | — | Text for the close button in place of the icon. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### PanelHeader
 
 Groups the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### PanelTitle
 
 The panel's heading, which names the dialog.
 
-Accepts every prop of `React.HTMLAttributes<HTMLHeadingElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLHeadingElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### PanelDescription
 
 Supporting text that describes the dialog.
 
-Accepts every prop of `React.HTMLAttributes<HTMLParagraphElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLParagraphElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### PanelBody
 
 The padded main content area.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### PanelFooter
 
 Holds the panel's actions.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### PanelClose
 
 A button that closes the panel.
 
-Accepts every prop of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} props={[{"name":"render","type":"React.ReactElement","description":"Replaces the rendered element, for example with a `Button`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `render` | `React.ReactElement` | — | Replaces the rendered element, for example with a `Button`. |
+</ApiPart>
 
 ## Accessibility
 

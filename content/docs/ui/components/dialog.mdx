@@ -370,74 +370,107 @@ export function DialogDestructiveExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Dialog","href":"#dialog","children":[{"name":"DialogTrigger","href":"#dialogtrigger","children":[]},{"name":"DialogContent","href":"#dialogcontent","children":[{"name":"DialogHeader","href":"#dialogheader","children":[{"name":"DialogTitle","href":"#dialogtitle","children":[]},{"name":"DialogDescription","href":"#dialogdescription","children":[]}]},{"name":"DialogFooter","href":"#dialogfooter","children":[{"name":"DialogClose","href":"#dialogclose","children":[]}]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Dialog
 
 The root that manages the dialog's open state.
 
-Accepts every prop of `DialogPrimitive.Root.Props`.
+<PropsTable extends={["DialogPrimitive.Root.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### DialogTrigger
 
 The button that opens the dialog.
 
-Accepts every prop of `DialogPrimitive.Trigger.Props`.
+<PropsTable extends={["DialogPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### DialogPortal
 
 Renders its children into a portal outside the current DOM hierarchy.
 
-Accepts every prop of `DialogPrimitive.Portal.Props`.
+<PropsTable extends={["DialogPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### DialogClose
 
 A button that closes the dialog.
 
-Accepts every prop of `DialogPrimitive.Close.Props`.
+<PropsTable extends={["DialogPrimitive.Close.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### DialogOverlay
 
 The dimmed layer behind the dialog.
 
-Accepts every prop of `DialogPrimitive.Backdrop.Props`.
+<PropsTable extends={["DialogPrimitive.Backdrop.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### DialogContent
 
 The dialog window, rendered in a portal with an overlay and an optional close button.
 
-Accepts every prop of `DialogPrimitive.Popup.Props`.
+<PropsTable extends={["DialogPrimitive.Popup.Props"]} props={[{"name":"showCloseButton","type":"boolean","default":"true","description":"Shows the close button in the top corner."},{"name":"closeLabel","type":"string","description":"Replaces the close button's icon with this text."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `true` | Shows the close button in the top corner. |
-| `closeLabel` | `string` | — | Replaces the close button's icon with this text. |
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### DialogHeader
 
 Groups the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### DialogFooter
 
 Holds the dialog's actions.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"showCloseButton","type":"boolean","default":"false","description":"Adds a secondary Close button after the footer's actions."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `showCloseButton` | `boolean` | `false` | Adds a secondary Close button after the footer's actions. |
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### DialogTitle
 
 The dialog's title, which also names it for assistive technology.
 
-Accepts every prop of `DialogPrimitive.Title.Props`.
+<PropsTable extends={["DialogPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### DialogDescription
 
 Supporting text that describes the dialog for assistive technology.
 
-Accepts every prop of `DialogPrimitive.Description.Props`.
+<PropsTable extends={["DialogPrimitive.Description.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

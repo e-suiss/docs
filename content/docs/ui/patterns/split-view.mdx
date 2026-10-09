@@ -694,57 +694,55 @@ export function SplitViewStartOnSidebarExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### SplitView
 
 The root that lays out the panes and tracks the visible mobile column.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"column","type":"SplitViewColumn","description":"The visible mobile column when controlled: `sidebar`, `list` or `detail`."},{"name":"defaultColumn","type":"SplitViewColumn","default":"\"list\"","description":"The mobile column shown first when uncontrolled."},{"name":"onColumnChange","type":"(column: SplitViewColumn) => void","description":"Called with the new column when navigation changes it."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `column` | `SplitViewColumn` | — | The visible mobile column when controlled: `sidebar`, `list` or `detail`. |
-| `defaultColumn` | `SplitViewColumn` | `"list"` | The mobile column shown first when uncontrolled. |
-| `onColumnChange` | `(column: SplitViewColumn) => void` | — | Called with the new column when navigation changes it. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SplitViewSidebar
 
 The leading pane, usually for sources or categories.
 
-Accepts every prop of `React.ComponentProps<"section">`.
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"title","type":"React.ReactNode","description":"The pane heading and accessible name; also labels the back button in the list pane."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | — | The pane heading and accessible name; also labels the back button in the list pane. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SplitViewList
 
 The middle pane, usually a list of items.
 
-Accepts every prop of `React.ComponentProps<"section">`.
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"title","type":"React.ReactNode","description":"The pane heading and accessible name; visually hidden on desktop and used for the back button in the detail pane."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | — | The pane heading and accessible name; visually hidden on desktop and used for the back button in the detail pane. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SplitViewDetail
 
 The trailing pane that shows the selected item.
 
-Accepts every prop of `React.ComponentProps<"section">`.
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"title","type":"React.ReactNode","description":"The pane heading and accessible name."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `React.ReactNode` | — | The pane heading and accessible name. |
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### SplitViewItem
 
 A button row that marks the current selection and advances to the next column on mobile.
 
-Accepts every prop of `useRender.ComponentProps<"button">` and `React.ComponentProps<"button">`.
+<PropsTable extends={["useRender.ComponentProps<\"button\">","React.ComponentProps<\"button\">"]} props={[{"name":"isActive","type":"boolean","default":"false","description":"Marks the item as the current selection with `aria-current` and `data-active`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `isActive` | `boolean` | `false` | Marks the item as the current selection with `aria-current` and `data-active`. |
+</ApiPart>
 
 ## Accessibility
 

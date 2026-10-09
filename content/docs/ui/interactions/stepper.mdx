@@ -388,48 +388,67 @@ export function StepperPrintExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Stepper","href":"#stepper","children":[{"name":"StepperInput","href":"#stepperinput","children":[]},{"name":"StepperGroup","href":"#steppergroup","children":[{"name":"StepperDecrement","href":"#stepperdecrement","children":[]},{"name":"StepperSeparator","href":"#stepperseparator","children":[]},{"name":"StepperIncrement","href":"#stepperincrement","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Stepper
 
 The Number Field root that holds the value and its limits.
 
-Accepts every prop of `NumberFieldPrimitive.Root.Props`.
+<PropsTable extends={["NumberFieldPrimitive.Root.Props"]} props={[{"name":"step","type":"number","default":"1","description":"The amount each press adds or subtracts."},{"name":"value","type":"number","description":"The current value, for controlled use."},{"name":"defaultValue","type":"number","default":"0","description":"The initial value when uncontrolled."},{"name":"onValueChange","type":"(value: number) => void","description":"Called with the new value when it changes."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `step` | `number` | `1` | The amount each press adds or subtracts. |
-| `value` | `number` | — | The current value, for controlled use. |
-| `defaultValue` | `number` | `0` | The initial value when uncontrolled. |
-| `onValueChange` | `(value: number) => void` | — | Called with the new value when it changes. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### StepperInput
 
 The editable text field that shows the value.
 
-Accepts every prop of `NumberFieldPrimitive.Input.Props`.
+<PropsTable extends={["NumberFieldPrimitive.Input.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### StepperGroup
 
 The segmented container for the decrement and increment buttons.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### StepperDecrement
 
 The button that decreases the value by one step.
 
-Accepts every prop of `React.ComponentProps<"button">`.
+<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### StepperIncrement
 
 The button that increases the value by one step.
 
-Accepts every prop of `React.ComponentProps<"button">`.
+<PropsTable extends={["React.ComponentProps<\"button\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### StepperSeparator
 
 A thin divider between the two buttons.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

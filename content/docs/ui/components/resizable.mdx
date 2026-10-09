@@ -513,31 +513,37 @@ export function ResizableCardsVerticalExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"ResizablePanelGroup","href":"#resizablepanelgroup","children":[{"name":"ResizablePanel","href":"#resizablepanel","children":[]},{"name":"ResizableHandle","href":"#resizablehandle","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### ResizablePanelGroup
 
 The container that arranges panels and handles and tracks the layout.
 
-Accepts every prop of `ResizablePrimitive.GroupProps`.
+<PropsTable extends={["ResizablePrimitive.GroupProps"]} props={[{"name":"variant","type":"\"default\" | \"cards\"","default":"\"default\"","description":"Sets the visual style: `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "cards"` | `"default"` | Sets the visual style: `default` for flat panels with thin dividers, or `cards` for rounded panels with pill grips. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ResizablePanel
 
 One resizable section of the layout.
 
-Accepts every prop of `ResizablePrimitive.PanelProps`.
+<PropsTable extends={["ResizablePrimitive.PanelProps"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ResizableHandle
 
 The draggable divider between two panels.
 
-Accepts every prop of `ResizablePrimitive.SeparatorProps`.
+<PropsTable extends={["ResizablePrimitive.SeparatorProps"]} props={[{"name":"withHandle","type":"boolean","description":"Shows a visible grip on the divider."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `withHandle` | `boolean` | — | Shows a visible grip on the divider. |
+</ApiPart>
 
 ## Accessibility
 

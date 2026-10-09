@@ -566,50 +566,67 @@ export function InputGroupDisabledExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"InputGroup","href":"#inputgroup","children":[{"name":"InputGroupInput","href":"#inputgroupinput","children":[]},{"name":"InputGroupAddon","href":"#inputgroupaddon","children":[{"name":"InputGroupText","href":"#inputgrouptext","children":[]},{"name":"InputGroupButton","href":"#inputgroupbutton","children":[]}]},{"name":"InputGroupTextarea","href":"#inputgrouptextarea","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### InputGroup
 
 The container that draws the field and holds the control and addons.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### InputGroupAddon
 
 Holds icons, text or buttons beside, above or below the control.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"align","type":"\"inline-start\" | \"inline-end\" | \"block-start\" | \"block-end\"","default":"\"inline-start\"","description":"Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `align` | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` | Places the addon before (`inline-start`) or after (`inline-end`) the control, or above (`block-start`) or below (`block-end`) it. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### InputGroupButton
 
 A compact button sized to fit inside the field.
 
-Accepts every prop of `React.ComponentProps<typeof Button>`.
+<PropsTable extends={["React.ComponentProps<typeof Button>"]} props={[{"name":"size","type":"\"xs\" | \"sm\" | \"icon-xs\" | \"icon-sm\"","default":"\"xs\"","description":"`xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size."},{"name":"type","type":"\"button\" | \"submit\" | \"reset\"","default":"\"button\"","description":"The native button type. Defaults to `button` so the button does not submit forms."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"xs" \| "sm" \| "icon-xs" \| "icon-sm"` | `"xs"` | `xs` for a small text button, or `icon-xs` and `icon-sm` for square icon buttons. `sm` keeps the base button size. |
-| `type` | `"button" \| "submit" \| "reset"` | `"button"` | The native button type. Defaults to `button` so the button does not submit forms. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### InputGroupText
 
 Static text or an icon with text, such as a unit or prefix.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### InputGroupInput
 
 The single-line text control of the group.
 
-Accepts every prop of `React.ComponentProps<"input">`.
+<PropsTable extends={["React.ComponentProps<\"input\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### InputGroupTextarea
 
 The multi-line text control of the group.
 
-Accepts every prop of `React.ComponentProps<"textarea">`.
+<PropsTable extends={["React.ComponentProps<\"textarea\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

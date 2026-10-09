@@ -529,71 +529,97 @@ export function CommandDialogOpenExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Command","href":"#command","children":[{"name":"CommandInput","href":"#commandinput","children":[]},{"name":"CommandList","href":"#commandlist","children":[{"name":"CommandEmpty","href":"#commandempty","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Command
 
 The root that filters and manages the items.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive>"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### CommandDialog
 
 A modal dialog that presents a command menu as a palette.
 
-Accepts every prop of `React.ComponentProps<typeof Dialog>`.
+<PropsTable extends={["React.ComponentProps<typeof Dialog>"]} props={[{"name":"title","type":"string","default":"\"Command Palette\"","description":"The dialog's accessible title. It is visually hidden."},{"name":"description","type":"string","default":"\"Search for a command to run...\"","description":"The dialog's accessible description. It is visually hidden."},{"name":"className","type":"string","description":"Classes applied to the dialog's content panel."},{"name":"showCloseButton","type":"boolean","default":"false","description":"Shows the dialog's close button."},{"name":"children","type":"React.ReactNode","required":true,"description":"The dialog's content, typically a `Command`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `title` | `string` | `"Command Palette"` | The dialog's accessible title. It is visually hidden. |
-| `description` | `string` | `"Search for a command to run..."` | The dialog's accessible description. It is visually hidden. |
-| `className` | `string` | — | Classes applied to the dialog's content panel. |
-| `showCloseButton` | `boolean` | `false` | Shows the dialog's close button. |
-| `children` | `React.ReactNode` | Required | The dialog's content, typically a `Command`. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### CommandInput
 
 The search field, shown with a magnifying glass icon.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive.Input>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Input>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### CommandList
 
 The scrollable container for results.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive.List>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.List>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### CommandEmpty
 
 Content shown when no items match the search.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive.Empty>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Empty>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### CommandGroup
 
 A section of related items with an optional heading.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive.Group>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Group>"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### CommandSeparator
 
 A divider between groups.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive.Separator>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Separator>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### CommandItem
 
 A selectable command.
 
-Accepts every prop of `React.ComponentProps<typeof CommandPrimitive.Item>`.
+<PropsTable extends={["React.ComponentProps<typeof CommandPrimitive.Item>"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### CommandShortcut
 
 Displays a keyboard shortcut at the end of an item.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"mod","type":"boolean","description":"Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `mod` | `boolean` | — | Prefixes the shortcut with the platform modifier key, `⌘` on Apple platforms and `Ctrl+` elsewhere. |
+</ApiPart>
 
 ## Accessibility
 

@@ -351,37 +351,47 @@ export function InputOtpDisabledExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"InputOTP","href":"#inputotp","children":[{"name":"InputOTPGroup","href":"#inputotpgroup","children":[{"name":"InputOTPSlot","href":"#inputotpslot","children":[]}]},{"name":"InputOTPSeparator","href":"#inputotpseparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### InputOTP
 
 The root that holds the code in a single hidden input.
 
-Accepts every prop of `React.ComponentProps<typeof OTPInput>`.
+<PropsTable extends={["React.ComponentProps<typeof OTPInput>"]} props={[{"name":"containerClassName","type":"string","description":"Classes applied to the element that wraps the slots."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `containerClassName` | `string` | — | Classes applied to the element that wraps the slots. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### InputOTPGroup
 
 Groups adjacent slots.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### InputOTPSlot
 
 Displays one character of the code and a caret when active.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"index","type":"number","required":true,"description":"The position of the character this slot displays."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `index` | `number` | Required | The position of the character this slot displays. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### InputOTPSeparator
 
 A dash shown between groups of slots.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

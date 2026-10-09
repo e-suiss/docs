@@ -993,73 +993,85 @@ export function ActionBarFloatingExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### ActionBar
 
 The root that renders a `Menubar` on desktop and a More actions button with a `Drawer` on mobile.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"open","type":"boolean","description":"Controls whether the mobile More actions drawer is open."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the mobile More actions drawer starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the mobile More actions drawer opens or closes."},{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel."},{"name":"floating","type":"boolean","description":"Insets the mobile drawer from the screen edges with fully rounded corners."},{"name":"moreLabel","type":"string","default":"\"More actions\"","description":"Accessible label of the mobile More actions button and title of its drawer."},{"name":"cancelLabel","type":"string","default":"\"Cancel\"","description":"Text of the Cancel button appended to each mobile sheet."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | — | Controls whether the mobile More actions drawer is open. |
-| `defaultOpen` | `boolean` | `false` | Whether the mobile More actions drawer starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the mobile More actions drawer opens or closes. |
-| `dismissible` | `boolean` | `true` | When `true`, mobile sheets close on an outside press; when `false`, they use an alert dialog that closes only through an action or Cancel. |
-| `floating` | `boolean` | — | Insets the mobile drawer from the screen edges with fully rounded corners. |
-| `moreLabel` | `string` | `"More actions"` | Accessible label of the mobile More actions button and title of its drawer. |
-| `cancelLabel` | `string` | `"Cancel"` | Text of the Cancel button appended to each mobile sheet. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### ActionBarMenu
 
 One menu in the bar; a `MenubarMenu` on desktop and an `AlertSheet` on mobile.
 
-Accepts every prop of `React.ComponentProps<typeof MenubarMenu>`.
+<PropsTable extends={["React.ComponentProps<typeof MenubarMenu>"]} props={[{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when this menu opens or closes."},{"name":"children","type":"React.ReactNode","description":"The menu's `ActionBarTrigger` and `ActionBarContent`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when this menu opens or closes. |
-| `children` | `React.ReactNode` | — | The menu's `ActionBarTrigger` and `ActionBarContent`. |
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### ActionBarTrigger
 
 The menu's button; a menubar trigger on desktop and a drawer row with a chevron on mobile.
 
-Accepts every prop of `React.ButtonHTMLAttributes<HTMLButtonElement>`.
+<PropsTable extends={["React.ButtonHTMLAttributes<HTMLButtonElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### ActionBarContent
 
 The menu's items; a `MenubarContent` popup on desktop and an `AlertSheetContent` with a Cancel button on mobile.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>` and `React.ComponentProps<typeof MenubarContent>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>","React.ComponentProps<typeof MenubarContent>"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### ActionBarLabel
 
 A non-interactive heading; a menu label on desktop and the sheet title on mobile.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### ActionBarItem
 
 An actionable entry; a `MenubarItem` on desktop and an `AlertSheetAction` on mobile.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","description":"Use `destructive` to style the item as a destructive action."},{"name":"disabled","type":"boolean","description":"Prevents the item from being chosen."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | — | Use `destructive` to style the item as a destructive action. |
-| `disabled` | `boolean` | — | Prevents the item from being chosen. |
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### ActionBarSeparator
 
 A divider between item groups, rendered on desktop only.
 
-Accepts every prop of `React.HTMLAttributes<HTMLElement>`.
+<PropsTable extends={["React.HTMLAttributes<HTMLElement>"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### ActionBarShortcut
 
 A keyboard shortcut hint aligned to the end of an item, rendered on desktop only.
 
-Accepts every prop of `React.ComponentProps<typeof MenubarShortcut>`.
+<PropsTable extends={["React.ComponentProps<typeof MenubarShortcut>"]} />
+
+</ApiPart>
 
 ## Accessibility
 

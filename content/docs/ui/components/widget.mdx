@@ -1064,73 +1064,97 @@ export function WidgetDashboardExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Widget","href":"#widget","children":[{"name":"WidgetHeader","href":"#widgetheader","children":[{"name":"WidgetIcon","href":"#widgeticon","children":[]},{"name":"WidgetTitle","href":"#widgettitle","children":[]},{"name":"WidgetAction","href":"#widgetaction","children":[]}]},{"name":"WidgetContent","href":"#widgetcontent","children":[{"name":"WidgetValue","href":"#widgetvalue","children":[]},{"name":"WidgetDescription","href":"#widgetdescription","children":[]}]},{"name":"WidgetFooter","href":"#widgetfooter","children":[]},{"name":"WidgetValue","href":"#widgetvalue","children":[]},{"name":"WidgetDescription","href":"#widgetdescription","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Widget
 
 The rounded card that sets the size, alignment and resize behavior.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"size","type":"WidgetSize | \"auto\"","description":"Controls the current size, or `auto` to fill the parent."},{"name":"defaultSize","type":"WidgetSize | \"auto\"","description":"Sets the starting size when uncontrolled; double-clicking the handle also returns to it."},{"name":"onSizeChange","type":"(size: WidgetSize | \"auto\") => void","description":"Called with the new size when a drag snaps to a different size or the size is reset."},{"name":"sizes","type":"WidgetSize[]","default":"[\"small\", \"medium\", \"large\", \"extra-large\"]","description":"Lists the sizes a drag can snap to; the largest also caps free resizing."},{"name":"resizable","type":"boolean | \"free\"","default":"false","description":"Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer."},{"name":"handle","type":"\"inside\" | \"outside\"","default":"\"outside\"","description":"Places the resize handle `inside` or `outside` the bottom corner."},{"name":"align","type":"\"start\" | \"center\"","default":"\"start\"","description":"Centers the content horizontally and vertically when set to `center`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `WidgetSize \| "auto"` | — | Controls the current size, or `auto` to fill the parent. |
-| `defaultSize` | `WidgetSize \| "auto"` | — | Sets the starting size when uncontrolled; double-clicking the handle also returns to it. |
-| `onSizeChange` | `(size: WidgetSize \| "auto") => void` | — | Called with the new size when a drag snaps to a different size or the size is reset. |
-| `sizes` | `WidgetSize[]` | `["small", "medium", "large", "extra-large"]` | Lists the sizes a drag can snap to; the largest also caps free resizing. |
-| `resizable` | `boolean \| "free"` | `false` | Adds a resize handle; `true` snaps to `sizes`, and `free` follows the pointer. |
-| `handle` | `"inside" \| "outside"` | `"outside"` | Places the resize handle `inside` or `outside` the bottom corner. |
-| `align` | `"start" \| "center"` | `"start"` | Centers the content horizontally and vertically when set to `center`. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### WidgetHeader
 
 A row that holds the icon, title and action.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### WidgetIcon
 
 A decorative icon, shown on a tile in the `default` and `lg` sizes.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"lg\"","default":"\"default\"","description":"Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm" \| "lg"` | `"default"` | Sets the icon size: `sm` without a tile, or `default` and `lg` on a rounded tile. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### WidgetTitle
 
 The widget's title, truncated to one line.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### WidgetAction
 
 A slot at the end of the header for a control; hidden when centered.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### WidgetDescription
 
 Secondary text that explains the content.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### WidgetValue
 
 A large figure in tabular numbers, such as a total or temperature.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### WidgetContent
 
 A flexible column that fills the remaining space.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### WidgetFooter
 
 Small secondary text pinned to the bottom of the widget.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

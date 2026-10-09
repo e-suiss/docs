@@ -1230,123 +1230,157 @@ export function QuestionnaireStartOnLaterQuestionExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Questionnaire","href":"#questionnaire","children":[{"name":"QuestionnaireProgress","href":"#questionnaireprogress","children":[]},{"name":"QuestionnaireItem","href":"#questionnaireitem","children":[{"name":"QuestionnaireTitle","href":"#questionnairetitle","children":[]},{"name":"QuestionnaireDescription","href":"#questionnairedescription","children":[]},{"name":"QuestionnaireChoices","href":"#questionnairechoices","children":[{"name":"QuestionnaireChoice","href":"#questionnairechoice","children":[{"name":"QuestionnaireChoiceDescription","href":"#questionnairechoicedescription","children":[]}]}]},{"name":"QuestionnaireError","href":"#questionnaireerror","children":[]},{"name":"QuestionnaireInput","href":"#questionnaireinput","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Questionnaire
 
 The `form` root that tracks the active question and handles navigation and submission.
 
-Accepts every prop of `React.ComponentProps<"form">`.
+<PropsTable extends={["React.ComponentProps<\"form\">"]} props={[{"name":"defaultItem","type":"string","description":"The `name` of the item shown first when uncontrolled."},{"name":"item","type":"string","description":"The `name` of the active item, for controlled use."},{"name":"items","type":"readonly QuestionnaireItemDefinition[]","description":"Optional item definitions with `name`, `required`, `disabled` and `choices`, used to define the sequence and shortcut order."},{"name":"onItemChange","type":"(item: string) => void","description":"Called with the next item's `name` when the active question changes."},{"name":"shortcuts","type":"QuestionnaireShortcutMode","description":"Enables single-key answer shortcuts using `letters` (A to Z) or `numbers` (1 to 9)."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `defaultItem` | `string` | — | The `name` of the item shown first when uncontrolled. |
-| `item` | `string` | — | The `name` of the active item, for controlled use. |
-| `items` | `readonly QuestionnaireItemDefinition[]` | — | Optional item definitions with `name`, `required`, `disabled` and `choices`, used to define the sequence and shortcut order. |
-| `onItemChange` | `(item: string) => void` | — | Called with the next item's `name` when the active question changes. |
-| `shortcuts` | `QuestionnaireShortcutMode` | — | Enables single-key answer shortcuts using `letters` (A to Z) or `numbers` (1 to 9). |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### QuestionnaireProgress
 
 Shows the position, such as `Question 2 of 3`, as a progress bar.
 
-Accepts every prop of `useRender.ComponentProps<"div", QuestionnaireState>`.
+<PropsTable extends={["useRender.ComponentProps<\"div\", QuestionnaireState>"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### QuestionnaireItem
 
 A `fieldset` for one question, visible only while it is active.
 
-Accepts every prop of `React.ComponentProps<"fieldset">`.
+<PropsTable extends={["React.ComponentProps<\"fieldset\">"]} props={[{"name":"invalid","type":"boolean","default":"false","description":"Forces the item into the invalid state."},{"name":"multiple","type":"boolean","default":"false","description":"Allows several answers, rendering choices as checkboxes."},{"name":"name","type":"string","required":true,"description":"The unique item name, used for navigation and as the form field name."},{"name":"onStatusChange","type":"(status: QuestionnaireItemStatus) => void","description":"Called when the item's status changes between `unanswered`, `answered` and `skipped`."},{"name":"required","type":"boolean","default":"false","description":"Requires an answer before moving on and hides the Skip button."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `invalid` | `boolean` | `false` | Forces the item into the invalid state. |
-| `multiple` | `boolean` | `false` | Allows several answers, rendering choices as checkboxes. |
-| `name` | `string` | Required | The unique item name, used for navigation and as the form field name. |
-| `onStatusChange` | `(status: QuestionnaireItemStatus) => void` | — | Called when the item's status changes between `unanswered`, `answered` and `skipped`. |
-| `required` | `boolean` | `false` | Requires an answer before moving on and hides the Skip button. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### QuestionnaireTitle
 
 The question text, rendered as the fieldset's `legend`.
 
-Accepts every prop of `useRender.ComponentProps<"legend">`.
+<PropsTable extends={["useRender.ComponentProps<\"legend\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### QuestionnaireDescription
 
 Supporting text that describes the question.
 
-Accepts every prop of `useRender.ComponentProps<"p">`.
+<PropsTable extends={["useRender.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### QuestionnaireChoices
 
 The grid that holds the answer choices.
 
-Accepts every prop of `useRender.ComponentProps< "div", { shortcuts: QuestionnaireShortcutMode | null } >`.
+<PropsTable extends={["useRender.ComponentProps< \"div\", { shortcuts: QuestionnaireShortcutMode | null } >"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### QuestionnaireChoice
 
 A selectable answer card containing a radio button or checkbox.
 
-Accepts every prop of `useRender.ComponentProps<"label", QuestionnaireChoiceState>`.
+<PropsTable extends={["useRender.ComponentProps<\"label\", QuestionnaireChoiceState>"]} props={[{"name":"checked","type":"boolean","description":"The checked state, for controlled use."},{"name":"defaultChecked","type":"boolean","default":"false","description":"Whether the choice starts checked when uncontrolled."},{"name":"disabled","type":"boolean","default":"false","description":"Prevents the choice from being selected."},{"name":"onChange","type":"React.ChangeEventHandler<HTMLInputElement>","description":"Called when the underlying input changes."},{"name":"value","type":"string","required":true,"description":"The value submitted for this choice."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `checked` | `boolean` | — | The checked state, for controlled use. |
-| `defaultChecked` | `boolean` | `false` | Whether the choice starts checked when uncontrolled. |
-| `disabled` | `boolean` | `false` | Prevents the choice from being selected. |
-| `onChange` | `React.ChangeEventHandler<HTMLInputElement>` | — | Called when the underlying input changes. |
-| `value` | `string` | Required | The value submitted for this choice. |
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### QuestionnaireChoiceDescription
 
 Secondary text inside a choice that describes it.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### QuestionnaireInput
 
 A text-style input for free-form answers.
 
-Accepts every prop of `useRender.ComponentProps<"input", QuestionnaireInputState>`.
+<PropsTable extends={["useRender.ComponentProps<\"input\", QuestionnaireInputState>"]} props={[{"name":"type","type":"QuestionnaireInputType","default":"\"text\"","description":"The input type, such as `text`, `email`, `number`, `date` or `url`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | `QuestionnaireInputType` | `"text"` | The input type, such as `text`, `email`, `number`, `date` or `url`. |
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### QuestionnaireError
 
 The validation message shown when the question needs an answer.
 
-Accepts every prop of `useRender.ComponentProps<"p", { invalid: boolean }>`.
+<PropsTable extends={["useRender.ComponentProps<\"p\", { invalid: boolean }>"]} />
+
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### QuestionnaireActions
 
 Lays out the navigation buttons in one row.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={12}>
 
 ### QuestionnairePrevious
 
 Goes back to the previous question; hidden on the first.
 
-Accepts every prop of `QuestionnaireNavigationProps`.
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={13}>
 
 ### QuestionnaireSkip
 
 Skips the current optional question; hidden when the question is required.
 
-Accepts every prop of `QuestionnaireNavigationProps`.
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={14}>
 
 ### QuestionnaireNext
 
 Validates the current question and moves to the next; hidden on the last.
 
-Accepts every prop of `QuestionnaireNavigationProps`.
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
+
+<ApiPart index={15}>
 
 ### QuestionnaireSubmit
 
 Submits the form; shown only on the last question.
 
-Accepts every prop of `QuestionnaireNavigationProps`.
+<PropsTable extends={["QuestionnaireNavigationProps"]} />
+
+</ApiPart>
 
 ## Accessibility
 

@@ -472,45 +472,67 @@ export function AvatarGroupWithIconCountExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Avatar","href":"#avatar","children":[{"name":"AvatarImage","href":"#avatarimage","children":[]},{"name":"AvatarFallback","href":"#avatarfallback","children":[]},{"name":"AvatarBadge","href":"#avatarbadge","children":[]}]},{"name":"AvatarGroup","href":"#avatargroup","children":[{"name":"Avatar","href":"#avatar","children":[{"name":"AvatarImage","href":"#avatarimage","children":[]},{"name":"AvatarFallback","href":"#avatarfallback","children":[]}]},{"name":"AvatarGroupCount","href":"#avatargroupcount","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Avatar
 
 The circular root that sets the size.
 
-Accepts every prop of `AvatarPrimitive.Root.Props`.
+<PropsTable extends={["AvatarPrimitive.Root.Props"]} props={[{"name":"size","type":"\"default\" | \"sm\" | \"lg\" | \"xl\"","default":"\"default\"","description":"Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `size` | `"default" \| "sm" \| "lg" \| "xl"` | `"default"` | Diameter of the avatar: `sm`, `default`, `lg` or `xl`. Also scales the fallback text and badge. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### AvatarImage
 
 The person's image, cropped to a circle.
 
-Accepts every prop of `AvatarPrimitive.Image.Props`.
+<PropsTable extends={["AvatarPrimitive.Image.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### AvatarFallback
 
 Content shown when the image is missing or still loading.
 
-Accepts every prop of `AvatarPrimitive.Fallback.Props`.
+<PropsTable extends={["AvatarPrimitive.Fallback.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### AvatarBadge
 
 A small status indicator pinned to the bottom-end corner.
 
-Accepts every prop of `React.ComponentProps<"span">`.
+<PropsTable extends={["React.ComponentProps<\"span\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### AvatarGroup
 
 A row that overlaps avatars with a ring between them.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### AvatarGroupCount
 
 A trailing circle that shows how many avatars are not displayed.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

@@ -385,79 +385,117 @@ export function AlertSheetMultipleActionsExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"AlertSheet","href":"#alertsheet","children":[{"name":"AlertSheetTrigger","href":"#alertsheettrigger","children":[]},{"name":"AlertSheetContent","href":"#alertsheetcontent","children":[{"name":"AlertSheetGroup","href":"#alertsheetgroup","children":[{"name":"AlertSheetHeader","href":"#alertsheetheader","children":[{"name":"AlertSheetTitle","href":"#alertsheettitle","children":[]},{"name":"AlertSheetDescription","href":"#alertsheetdescription","children":[]}]},{"name":"AlertSheetAction","href":"#alertsheetaction","children":[]}]},{"name":"AlertSheetCancel","href":"#alertsheetcancel","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### AlertSheet
 
 The root that manages the open state and dismissal behavior.
 
-Accepts every prop of `AlertSheetPrimitive.Root.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Root.Props"]} props={[{"name":"dismissible","type":"boolean","default":"true","description":"When `true`, renders as a dialog; when `false`, renders as an alert dialog."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `dismissible` | `boolean` | `true` | When `true`, renders as a dialog; when `false`, renders as an alert dialog. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### AlertSheetTrigger
 
 The control that opens the sheet.
 
-Accepts every prop of `AlertSheetPrimitive.Trigger.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### AlertSheetPortal
 
 Renders the sheet into a portal outside the DOM hierarchy.
 
-Accepts every prop of `AlertSheetPrimitive.Portal.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Portal.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### AlertSheetOverlay
 
 The full-screen scrim behind the sheet.
 
-Accepts every prop of `AlertSheetPrimitive.Backdrop.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Backdrop.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### AlertSheetContent
 
 The bottom-anchored container, rendered with its own portal and overlay.
 
-Accepts every prop of `AlertSheetPrimitive.Popup.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Popup.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### AlertSheetGroup
 
 A rounded surface that stacks the header and actions with dividers.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={7}>
 
 ### AlertSheetHeader
 
 A padded wrapper for the title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={8}>
 
 ### AlertSheetTitle
 
 The heading that names the sheet.
 
-Accepts every prop of `AlertSheetPrimitive.Title.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Title.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={9}>
 
 ### AlertSheetDescription
 
 Supporting text that describes the sheet.
 
-Accepts every prop of `AlertSheetPrimitive.Description.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Description.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={10}>
 
 ### AlertSheetAction
 
 A full-width row button that performs an action and closes the sheet.
 
-Accepts every prop of `AlertSheetPrimitive.Close.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Close.Props"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"Text color of the action. `default` uses the link color; `destructive` uses the danger color."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Text color of the action. `default` uses the link color; `destructive` uses the danger color. |
+</ApiPart>
+
+<ApiPart index={11}>
 
 ### AlertSheetCancel
 
 A separate, bold button that dismisses the sheet.
 
-Accepts every prop of `AlertSheetPrimitive.Close.Props`.
+<PropsTable extends={["AlertSheetPrimitive.Close.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

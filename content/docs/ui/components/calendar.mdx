@@ -509,22 +509,25 @@ export function CalendarDisabledDaysExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### Calendar
 
 The date grid, with month navigation and caption.
 
-Accepts every prop of `React.ComponentProps<typeof DayPicker>`.
+<PropsTable extends={["React.ComponentProps<typeof DayPicker>"]} props={[{"name":"buttonVariant","type":"React.ComponentProps<typeof Button>[\"variant\"]","default":"\"plain\"","description":"`Button` variant used for the previous and next month buttons. Defaults to `plain`."},{"name":"size","type":"\"sm\" | \"default\" | \"lg\"","default":"\"default\"","description":"Cell size and type scale: `sm`, `default` or `lg`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `buttonVariant` | `React.ComponentProps<typeof Button>["variant"]` | `"plain"` | `Button` variant used for the previous and next month buttons. Defaults to `plain`. |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Cell size and type scale: `sm`, `default` or `lg`. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### CalendarDayButton
 
 The button rendered for each day, styled by its selection state.
 
-Accepts every prop of `DayButtonProps`.
+<PropsTable extends={["DayButtonProps"]} />
+
+</ApiPart>
 
 ## Accessibility
 

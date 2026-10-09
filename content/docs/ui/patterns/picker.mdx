@@ -512,46 +512,37 @@ export function PickerControlledExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Picker","href":"#picker","children":[{"name":"PickerGroup","href":"#pickergroup","children":[{"name":"PickerItem","href":"#pickeritem","children":[]}]},{"name":"PickerSeparator","children":[]}]}]} />
+
+<ApiPart index={1}>
+
 ### Picker
 
 The root that renders the Select or native select and holds the value.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | — | The selected value when controlled. |
-| `defaultValue` | `string` | — | The initially selected value when uncontrolled. |
-| `onValueChange` | `(value: string) => void` | — | Called with the new value when the user picks an option. |
-| `placeholder` | `string` | — | Text shown when no value is selected; on mobile it is a disabled first option. |
-| `items` | `PickerItemData[]` | — | Value and label pairs used to display the selected label; collected from `PickerItem` children when omitted. |
-| `size` | `"sm" \| "default"` | `"default"` | The control height. |
-| `id` | `string` | — | The ID of the trigger on desktop or the native select on mobile. |
-| `name` | `string` | — | The field name submitted with a form. |
-| `disabled` | `boolean` | — | Disables the picker. |
-| `required` | `boolean` | — | Marks the field as required for form validation. |
-| `className` | `string` | — | Classes applied to the trigger on desktop or the native select on mobile. |
-| `children` | `React.ReactNode` | — | The `PickerItem`, `PickerGroup` and `PickerSeparator` elements. |
-| `aria-invalid` | `boolean` | — | Marks the field as invalid and applies the error style. |
-| `aria-label` | `string` | — | The accessible name of the control. |
-| `aria-describedby` | `string` | — | The ID of an element that describes the control. |
+<PropsTable props={[{"name":"value","type":"string","description":"The selected value when controlled."},{"name":"defaultValue","type":"string","description":"The initially selected value when uncontrolled."},{"name":"onValueChange","type":"(value: string) => void","description":"Called with the new value when the user picks an option."},{"name":"placeholder","type":"string","description":"Text shown when no value is selected; on mobile it is a disabled first option."},{"name":"items","type":"PickerItemData[]","description":"Value and label pairs used to display the selected label; collected from `PickerItem` children when omitted."},{"name":"size","type":"\"sm\" | \"default\"","default":"\"default\"","description":"The control height."},{"name":"id","type":"string","description":"The ID of the trigger on desktop or the native select on mobile."},{"name":"name","type":"string","description":"The field name submitted with a form."},{"name":"disabled","type":"boolean","description":"Disables the picker."},{"name":"required","type":"boolean","description":"Marks the field as required for form validation."},{"name":"className","type":"string","description":"Classes applied to the trigger on desktop or the native select on mobile."},{"name":"children","type":"React.ReactNode","description":"The `PickerItem`, `PickerGroup` and `PickerSeparator` elements."},{"name":"aria-invalid","type":"boolean","description":"Marks the field as invalid and applies the error style."},{"name":"aria-label","type":"string","description":"The accessible name of the control."},{"name":"aria-describedby","type":"string","description":"The ID of an element that describes the control."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### PickerGroup
 
 Groups related options under an optional label.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string` | — | The group's heading; becomes the `optgroup` label on mobile. |
-| `children` | `React.ReactNode` | — | The options in the group. |
+<PropsTable props={[{"name":"label","type":"string","description":"The group's heading; becomes the `optgroup` label on mobile."},{"name":"children","type":"React.ReactNode","description":"The options in the group."}]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### PickerItem
 
 A selectable option.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | Required | The value selected by this option. |
-| `disabled` | `boolean` | — | Prevents selecting this option. |
-| `children` | `React.ReactNode` | — | The option's label. |
+<PropsTable props={[{"name":"value","type":"string","required":true,"description":"The value selected by this option."},{"name":"disabled","type":"boolean","description":"Prevents selecting this option."},{"name":"children","type":"React.ReactNode","description":"The option's label."}]} />
+
+</ApiPart>
 
 ## Accessibility
 

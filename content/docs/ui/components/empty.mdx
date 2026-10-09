@@ -322,45 +322,67 @@ export function EmptyWithSearchExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Empty","href":"#empty","children":[{"name":"EmptyHeader","href":"#emptyheader","children":[{"name":"EmptyMedia","href":"#emptymedia","children":[]},{"name":"EmptyTitle","href":"#emptytitle","children":[]},{"name":"EmptyDescription","href":"#emptydescription","children":[]}]},{"name":"EmptyContent","href":"#emptycontent","children":[{"name":"EmptyDescription","href":"#emptydescription","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Empty
 
 The centered container for the empty state.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### EmptyHeader
 
 Groups the media, title and description.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### EmptyMedia
 
 Holds an icon or image above the title.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"variant","type":"\"default\" | \"icon\"","default":"\"default\"","description":"`icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "icon"` | `"default"` | `icon` places the icon in a small rounded tile with a secondary surface; `default` renders the media without a background. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### EmptyTitle
 
 The short heading of the empty state.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### EmptyDescription
 
 Supporting text that explains the state or suggests a next step.
 
-Accepts every prop of `React.ComponentProps<"p">`.
+<PropsTable extends={["React.ComponentProps<\"p\">"]} />
+
+</ApiPart>
+
+<ApiPart index={6}>
 
 ### EmptyContent
 
 Holds actions such as buttons, inputs or links.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
 
 ## Accessibility
 

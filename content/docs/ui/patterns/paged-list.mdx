@@ -558,26 +558,15 @@ export function PagedListControlledExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### PagedList
 
 The root that renders the visible items and the pagination or Load more control.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"items","type":"T[]","required":true,"description":"The full array of items to page through."},{"name":"pageSize","type":"number","default":"10","description":"The number of items per page, and per Load more step on mobile."},{"name":"page","type":"number","description":"The current page when controlled."},{"name":"defaultPage","type":"number","default":"1","description":"The page shown first when uncontrolled."},{"name":"onPageChange","type":"(page: number) => void","description":"Called with the new page number when the user changes pages."},{"name":"getPageHref","type":"(page: number) => string","description":"Returns the `href` for a page link, turning pagination into real links."},{"name":"getKey","type":"(item: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns the React key for an item."},{"name":"renderItem","type":"(item: T, index: number) => React.ReactNode","required":true,"description":"Renders one item; receives the item and its index in `items`."},{"name":"loadMoreLabel","type":"string","default":"\"Load more\"","description":"The label of the mobile Load more button."},{"name":"previousLabel","type":"string","description":"Visible text for the previous link; it also becomes its accessible name."},{"name":"nextLabel","type":"string","description":"Visible text for the next link; it also becomes its accessible name."},{"name":"listClassName","type":"string","description":"Classes applied to the inner list element."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `T[]` | Required | The full array of items to page through. |
-| `pageSize` | `number` | `10` | The number of items per page, and per Load more step on mobile. |
-| `page` | `number` | — | The current page when controlled. |
-| `defaultPage` | `number` | `1` | The page shown first when uncontrolled. |
-| `onPageChange` | `(page: number) => void` | — | Called with the new page number when the user changes pages. |
-| `getPageHref` | `(page: number) => string` | — | Returns the `href` for a page link, turning pagination into real links. |
-| `getKey` | `(item: T, index: number) => React.Key` | `(_, index) => index` | Returns the React key for an item. |
-| `renderItem` | `(item: T, index: number) => React.ReactNode` | Required | Renders one item; receives the item and its index in `items`. |
-| `loadMoreLabel` | `string` | `"Load more"` | The label of the mobile Load more button. |
-| `previousLabel` | `string` | — | Visible text for the previous link; it also becomes its accessible name. |
-| `nextLabel` | `string` | — | Visible text for the next link; it also becomes its accessible name. |
-| `listClassName` | `string` | — | Classes applied to the inner list element. |
+</ApiPart>
 
 ## Accessibility
 

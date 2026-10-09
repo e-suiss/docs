@@ -576,19 +576,15 @@ export function TableListEmptyExample() {
 
 ## API Reference
 
+<ApiPart index={1}>
+
 ### TableList
 
 The section that renders the rows as a table or a grouped list.
 
-Accepts every prop of `React.ComponentProps<"section">`.
+<PropsTable extends={["React.ComponentProps<\"section\">"]} props={[{"name":"rows","type":"T[]","required":true,"description":"The data rows to display."},{"name":"columns","type":"TableListColumn<T>[]","required":true,"description":"The column definitions that render each row."},{"name":"getKey","type":"(row: T, index: number) => React.Key","default":"(_, index) => index","description":"Returns the React key for a row."},{"name":"title","type":"React.ReactNode","description":"A heading above the data that also names the section."},{"name":"emptyText","type":"React.ReactNode","default":"\"No results.\"","description":"Content shown when `rows` is empty."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `rows` | `T[]` | Required | The data rows to display. |
-| `columns` | `TableListColumn<T>[]` | Required | The column definitions that render each row. |
-| `getKey` | `(row: T, index: number) => React.Key` | `(_, index) => index` | Returns the React key for a row. |
-| `title` | `React.ReactNode` | — | A heading above the data that also names the section. |
-| `emptyText` | `React.ReactNode` | `"No results."` | Content shown when `rows` is empty. |
+</ApiPart>
 
 ## Accessibility
 

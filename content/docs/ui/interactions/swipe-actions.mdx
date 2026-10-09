@@ -741,38 +741,47 @@ export function SwipeActionsVariantsExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"SwipeActions","href":"#swipeactions","children":[{"name":"SwipeActionsContent","href":"#swipeactionscontent","children":[]},{"name":"SwipeActionsActions","href":"#swipeactionsactions","children":[{"name":"SwipeAction","href":"#swipeaction","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### SwipeActions
 
 The row container that tracks the swipe and manages open state.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### SwipeActionsContent
 
 The visible row content that moves with the swipe.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### SwipeActionsActions
 
 The group of actions revealed on one side of the row.
 
-Accepts every prop of `React.ComponentProps<"div">`.
+<PropsTable extends={["React.ComponentProps<\"div\">"]} props={[{"name":"side","type":"SwipeActionsSide","default":"\"trailing\"","description":"The edge the actions appear on: `leading` or `trailing`."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `side` | `SwipeActionsSide` | `"trailing"` | The edge the actions appear on: `leading` or `trailing`. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### SwipeAction
 
 A single action button revealed by the swipe.
 
-Accepts every prop of `React.ComponentProps<"button">`.
+<PropsTable extends={["React.ComponentProps<\"button\">"]} props={[{"name":"variant","type":"\"default\" | \"destructive\" | \"archive\" | \"neutral\"","default":"\"default\"","description":"The background color of the action: `default`, `destructive`, `archive`, or `neutral`."},{"name":"fullSwipe","type":"boolean","default":"false","description":"Lets a long swipe expand this action across the row and run it."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive" \| "archive" \| "neutral"` | `"default"` | The background color of the action: `default`, `destructive`, `archive`, or `neutral`. |
-| `fullSwipe` | `boolean` | `false` | Lets a long swipe expand this action across the row and run it. |
+</ApiPart>
 
 ## Accessibility
 

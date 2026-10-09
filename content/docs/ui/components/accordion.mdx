@@ -348,33 +348,47 @@ export function AccordionMultipleExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"Accordion","href":"#accordion","children":[{"name":"AccordionItem","href":"#accordionitem","children":[{"name":"AccordionTrigger","href":"#accordiontrigger","children":[]},{"name":"AccordionContent","href":"#accordioncontent","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### Accordion
 
 The root that groups items and manages which panels are open.
 
-Accepts every prop of `AccordionPrimitive.Root.Props`.
+<PropsTable extends={["AccordionPrimitive.Root.Props"]} props={[{"name":"variant","type":"\"default\" | \"filled\"","default":"\"default\"","description":"Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "filled"` | `"default"` | Visual style. `default` is plain with dividers; `filled` adds a rounded `bg-surface-secondary` container. |
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### AccordionItem
 
 A single section that pairs a trigger with its panel, identified by `value`.
 
-Accepts every prop of `AccordionPrimitive.Item.Props`.
+<PropsTable extends={["AccordionPrimitive.Item.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### AccordionTrigger
 
 The button, inside a heading, that toggles its item's panel and shows the caret indicator.
 
-Accepts every prop of `AccordionPrimitive.Trigger.Props`.
+<PropsTable extends={["AccordionPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### AccordionContent
 
 The collapsible panel holding the item's content.
 
-Accepts every prop of `AccordionPrimitive.Panel.Props`.
+<PropsTable extends={["AccordionPrimitive.Panel.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 

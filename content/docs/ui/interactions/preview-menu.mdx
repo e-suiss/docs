@@ -612,50 +612,57 @@ export function PreviewMenuCustomPreviewExample() {
 
 ## API Reference
 
+<Anatomy tree={[{"name":"PreviewMenu","href":"#previewmenu","children":[{"name":"PreviewMenuTrigger","href":"#previewmenutrigger","children":[]},{"name":"PreviewMenuContent","href":"#previewmenucontent","children":[{"name":"PreviewMenuItem","href":"#previewmenuitem","children":[]}]}]}]} />
+
+<ApiPart index={1}>
+
 ### PreviewMenu
 
 The root that manages open state and measures the preview frame.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `open` | `boolean` | — | Whether the menu is open, for controlled use. |
-| `defaultOpen` | `boolean` | `false` | Whether the menu starts open when uncontrolled. |
-| `onOpenChange` | `(open: boolean) => void` | — | Called when the menu opens or closes. |
-| `aspectRatio` | `number` | — | The width-to-height ratio of the preview; defaults to the trigger's ratio. |
-| `children` | `React.ReactNode` | — | The trigger and content. |
+<PropsTable props={[{"name":"open","type":"boolean","description":"Whether the menu is open, for controlled use."},{"name":"defaultOpen","type":"boolean","default":"false","description":"Whether the menu starts open when uncontrolled."},{"name":"onOpenChange","type":"(open: boolean) => void","description":"Called when the menu opens or closes."},{"name":"aspectRatio","type":"number","description":"The width-to-height ratio of the preview; defaults to the trigger's ratio."},{"name":"children","type":"React.ReactNode","description":"The trigger and content."}]} />
+
+</ApiPart>
+
+<ApiPart index={2}>
 
 ### PreviewMenuTrigger
 
 The element that opens the menu on touch and hold or right-click.
 
-Accepts every prop of `ContextMenuPrimitive.Trigger.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Trigger.Props"]} />
+
+</ApiPart>
+
+<ApiPart index={3}>
 
 ### PreviewMenuContent
 
 The backdrop, lifted preview, and popup that holds the menu items.
 
-Accepts every prop of `ContextMenuPrimitive.Popup.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Popup.Props"]} props={[{"name":"preview","type":"React.ReactNode","description":"Custom content to show in the preview instead of the trigger's content."},{"name":"previewClassName","type":"string","description":"Classes for the clipped preview container."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `preview` | `React.ReactNode` | — | Custom content to show in the preview instead of the trigger's content. |
-| `previewClassName` | `string` | — | Classes for the clipped preview container. |
+</ApiPart>
+
+<ApiPart index={4}>
 
 ### PreviewMenuItem
 
 An action in the menu.
 
-Accepts every prop of `ContextMenuPrimitive.Item.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Item.Props"]} props={[{"name":"variant","type":"\"default\" | \"destructive\"","default":"\"default\"","description":"The item style; `destructive` renders the label in the danger color."}]} />
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | The item style; `destructive` renders the label in the danger color. |
+</ApiPart>
+
+<ApiPart index={5}>
 
 ### PreviewMenuSeparator
 
 A thick divider between groups of items.
 
-Accepts every prop of `ContextMenuPrimitive.Separator.Props`.
+<PropsTable extends={["ContextMenuPrimitive.Separator.Props"]} />
+
+</ApiPart>
 
 ## Accessibility
 
