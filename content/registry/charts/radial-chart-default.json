@@ -1,6 +1,6 @@
 {
   "description": "Concentric radial bars, one per device, each running around a gray background track.",
-  "overview": "Uses `RadialBarChart` with `innerRadius=\"25%\"`, `outerRadius=\"100%\"` and `barSize={12}`, and one `RadialBar` (`dataKey=\"users\"`, `cornerRadius={10}`) with `background={{ fill: \"var(--control)\" }}`. `chartData` holds four `{ device, users, fill }` records, where each `fill` is `var(--color-<device>)`, and `chartConfig` defines `users` (label only) plus `phone`, `laptop`, `tablet` and `watch` colored `var(--blue)`, `var(--teal)`, `var(--indigo)` and `var(--orange)`. The tooltip uses `hideLabel` and `nameKey=\"device\"`.",
-  "usage": "Replace `chartData` with your categories, giving each a `fill` of `var(--color-<key>)`, and add a matching `chartConfig` entry with `label` and `color`. Update the tooltip's `nameKey` if you rename the `device` field. Without a `PolarAngleAxis`, bar lengths are scaled relative to the largest value; add one with a numeric `domain` if you need a fixed scale.",
-  "notes": "`accessibilityLayer` is set on `RadialBarChart`, so the chart is focusable from the keyboard."
+  "overview": "Concentric radial bars, one per category, each running along a gray background track. Use it as a compact, circular alternative to a bar chart for a few categories.",
+  "usage": "Give each record a category key, a value and a `fill` that points at its color, and add each key to `chartConfig`. Adjust `barSize` for ring thickness and `innerRadius` to open up the center.",
+  "notes": "Arc lengths are relative to the largest value, which always closes a full circle; add a `PolarAngleAxis` with a fixed `domain` if bars should be measured against a known maximum. The first record sits on the innermost ring, where the same value looks shorter than on outer rings."
 }

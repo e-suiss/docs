@@ -1,6 +1,6 @@
 {
   "description": "Two areas stacked on top of each other so the top edge shows the combined total, with a legend.",
-  "overview": "Uses `AreaChart` with two `Area` series sharing `stackId=\"a\"`: `mobile` forms the base layer and `desktop` stacks on top, both `type=\"natural\"` at `fillOpacity={0.2}`. `chartData` holds six months of `{ month, desktop, mobile }` records; `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. `ChartLegend` with `ChartLegendContent` labels both series, and the tooltip uses `indicator=\"dot\"`.",
-  "usage": "Replace `chartData` keeping one category key and one numeric key per series. To add a layer, add a `chartConfig` entry with `label` and `color`, then an `Area` with the same `stackId`. Series are stacked in the order the `Area` elements appear, so list the base layer first.",
-  "notes": "The legend reads labels and colors from `chartConfig`. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between months."
+  "overview": "Two series stacked so the top edge shows the combined total, with a legend underneath. Use it when both the total and each part's contribution matter, as in desktop plus mobile traffic.",
+  "usage": "Replace `chartData` and rename the series keys in the data, both areas and `chartConfig`. Give every series the same `stackId` to stack them; the first one declared sits at the bottom. The legend picks up labels and colors from the config automatically.",
+  "notes": "The tooltip follows the cursor or the arrow keys once the plot has focus."
 }

@@ -92,14 +92,14 @@ const index = Object.fromEntries(
 );
 writeFileSync(path.join(demos, "items.json"), `${JSON.stringify(index, null, 2)}\n`);
 
-const contentRoot = path.join(root, "content/docs/ui");
+const contentRoot = path.join(root, "content/docs");
 
 function requiresLinks(item) {
   return item.requires
     .map((name) => {
       const required = byName.get(name);
       if (!required) return `\`${name}\``;
-      return `[${required.title}](/docs/ui/${categories[required.type].folder}/${name})`;
+      return `[${required.title}](/docs/${categories[required.type].folder}/${name})`;
     })
     .join(", ");
 }
@@ -305,7 +305,7 @@ for (const [type, category] of Object.entries(categories)) {
       "---",
       `title: ${category.title}`,
       `description: ${members.length} ${category.title.toLowerCase()}, each copied into your project with the CLI.`,
-      "eyebrow: suiss UI",
+      "eyebrow: suiss/ui",
       MARKER,
       "---",
       "",

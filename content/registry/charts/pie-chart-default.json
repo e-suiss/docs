@@ -1,6 +1,6 @@
 {
   "description": "A full pie split into five device slices, separated by thin surface-colored borders.",
-  "overview": "Uses `PieChart` with one `Pie` (`dataKey=\"users\"`, `nameKey=\"device\"`, `outerRadius=\"85%\"`) and a 2-pixel `stroke` of `var(--surface-secondary)` between slices. `chartData` holds five `{ device, users, fill }` records, where each `fill` is `var(--color-<device>)`. `chartConfig` defines `users` (label only) plus `phone`, `laptop`, `tablet`, `watch` and `other` colored `var(--blue)`, `var(--teal)`, `var(--indigo)`, `var(--orange)` and `var(--gray)`. The tooltip uses `ChartTooltipContent` with `hideLabel` and `nameKey=\"device\"`.",
-  "usage": "Replace `chartData` with your categories, giving each record a `fill` of `var(--color-<key>)`, and add a matching `chartConfig` entry with `label` and `color` for every key. Keep `dataKey` and `nameKey` on `Pie` pointed at your value and category fields, and update the tooltip's `nameKey` if you rename the category field. Adjust `outerRadius` to change the pie's size within the container.",
-  "notes": "Slice colors come from each record's `fill`, which resolves through the `--color-<key>` properties that `ChartContainer` generates from `chartConfig`. `accessibilityLayer` is set on `PieChart`, so the chart is focusable and arrow keys move between slices."
+  "overview": "A full pie split into five slices separated by thin gaps, with a tooltip for each slice. Use it for a quick part-to-whole view of a small number of categories.",
+  "usage": "Give each record a category key, a value and a `fill` that references its color, then add a label and color for every key in `chartConfig`. Point `dataKey` and `nameKey` on the `Pie` at your value and category fields.",
+  "notes": "Pies work best with about five slices or fewer; group the long tail into an Other slice."
 }

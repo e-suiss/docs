@@ -1,6 +1,6 @@
 {
   "description": "A single line with a dot and a printed value at every point, and no grid.",
-  "overview": "Uses `LineChart` with one `Line` (`type=\"natural\"`, `strokeWidth={2.5}`) whose `dot` draws a 4-pixel filled marker, and a nested `LabelList` with `position=\"top\"`, `offset={10}` and `fontSize={12}`. There is no `CartesianGrid`, and the top margin is 24 to leave room for labels. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted with `chartConfig.desktop` (`var(--blue)`). The tooltip uses `hideLabel`.",
-  "usage": "Replace `chartData` and rename the `chartConfig` entry to match your series. Pass a `formatter` to `LabelList` to add units, or change `position` to place labels below points. Increase the `margin` if labels are clipped at the edges.",
-  "notes": "Labels use the `fill-label` class so they follow the label color in light and dark appearance. `accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between points."
+  "overview": "A single smooth line with a dot and a printed value at every point and no grid. Choose it for short series where readers want the exact numbers without hovering.",
+  "usage": "Replace `chartData`, point each `dataKey` at your fields and set the label and color in `chartConfig`. Move the value labels with the `position` prop on `LabelList`, and raise the chart's top margin if labels get clipped.",
+  "notes": "Labels overlap quickly on long or dense series; keep this variant to a dozen points or fewer."
 }

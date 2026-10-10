@@ -1,6 +1,5 @@
 {
   "description": "A single radar shape drawn over circular rings instead of polygonal grid lines.",
-  "overview": "Uses `RadarChart` with `outerRadius=\"70%\"`, a `PolarAngleAxis` on `skill`, a `PolarGrid` with `gridType=\"circle\"` stroked with `var(--separator)`, and one `Radar` for `thisMonth` at `fillOpacity={0.3}`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
-  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. Switch `gridType` back to `\"polygon\"` (the Recharts default) for straight grid edges.",
-  "notes": "`accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+  "overview": "The default radar shape drawn over concentric circles instead of polygon rings. Circles look softer and avoid suggesting straight edges between axes that the data doesn't have.",
+  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Switch back to polygon rings by removing `gridType` from `PolarGrid`."
 }

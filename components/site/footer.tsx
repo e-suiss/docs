@@ -7,16 +7,16 @@ import * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
 import { ThemeToggle } from "@/components/ui/theme";
-import { products } from "@/lib/products";
+import { repository, sections } from "@/lib/sections";
 import { strings } from "@/lib/strings";
 
 const frame = "mx-auto w-full max-w-[1680px] px-5 md:px-10";
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 
 const paths = [
-  { label: "Install UI", href: "/docs/ui/installation" },
-  { label: "Install UIM", href: "/docs/uim/installation" },
-  { label: "Read the specs", href: "/docs/access/concepts" },
+  { label: "Install", href: "/docs/installation" },
+  { label: "Browse components", href: "/docs/components" },
+  { label: "Read the CLI", href: "/docs/cli" },
 ];
 
 type Column = { title: string; links: { label: string; href: string }[] };
@@ -25,31 +25,25 @@ const columns: Column[] = [
   {
     title: "Get started",
     links: [
-      { label: "Install UI", href: "/docs/ui/installation" },
-      { label: "Install UIM", href: "/docs/uim/installation" },
-      { label: "Theming", href: "/docs/ui/theming" },
-      { label: "CLI", href: "/docs/ui/cli" },
-      { label: "Components", href: "/docs/ui/components/button" },
+      { label: "Introduction", href: "/docs" },
+      { label: "Installation", href: "/docs/installation" },
+      { label: "Theming", href: "/docs/theming" },
+      { label: "CLI", href: "/docs/cli" },
     ],
   },
   {
-    title: strings.interfaceFamily,
-    links: products
-      .filter((product) => product.family === "interface")
-      .map((product) => ({ label: `suiss ${product.name}`, href: `/docs/${product.slug}` })),
-  },
-  {
-    title: strings.platformFamily,
-    links: products
-      .filter((product) => product.family === "platform")
-      .map((product) => ({ label: `suiss ${product.name}`, href: `/docs/${product.slug}` })),
+    title: "Library",
+    links: sections
+      .filter((section) => section.path !== "/docs")
+      .map((section) => ({ label: section.label, href: section.path })),
   },
   {
     title: "Source",
-    links: products
-      .filter((product) => product.repository !== "https://github.com/e-suiss")
-      .map((product) => ({ label: `e-suiss/${product.slug}`, href: product.repository }))
-      .concat({ label: "All repositories", href: "https://github.com/e-suiss" }),
+    links: [
+      { label: "e-suiss/ui", href: repository },
+      { label: "e-suiss/docs", href: "https://github.com/e-suiss/docs" },
+      { label: "@esuiss/ui on npm", href: "https://www.npmjs.com/package/@esuiss/ui" },
+    ],
   },
 ];
 
@@ -83,7 +77,7 @@ function FitWord({ children, className }: { children: string; className?: string
 
 function Directory() {
   return (
-    <div className={cn(frame, "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-label/15 py-14 md:grid-cols-4")}>
+    <div className={cn(frame, "grid grid-cols-2 gap-x-6 gap-y-10 border-t border-label/15 py-14 md:grid-cols-3")}>
       {columns.map((column) => (
         <nav key={column.title} aria-label={column.title} className="flex flex-col gap-4">
           <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">{column.title}</p>
@@ -142,7 +136,7 @@ export function Footer() {
     <footer className="dark overflow-hidden bg-surface text-label">
       <div className={cn(frame, "grid gap-12 pt-24 pb-16 md:grid-cols-[1fr_minmax(0,34rem)] md:pt-32")}>
         <div className="flex flex-col gap-6">
-          <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">(05) Start</p>
+          <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">(04) Start</p>
           <h2 className="text-[clamp(3.5rem,8vw,8rem)] leading-[0.84] font-semibold tracking-[-0.065em]">
             Start
             <br />
@@ -183,7 +177,7 @@ export function Footer() {
 
     
       <div aria-hidden className={cn(frame, "mb-[-4.5vw] select-none")}>
-        <FitWord className="pe-[0.075em] leading-[0.8] font-semibold tracking-[-0.075em]">suiss</FitWord>
+        <FitWord className="pe-[0.075em] leading-[0.8] font-semibold tracking-[-0.075em]">suiss/ui</FitWord>
       </div>
     </footer>
   );

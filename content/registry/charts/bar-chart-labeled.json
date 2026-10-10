@@ -1,6 +1,6 @@
 {
   "description": "A single bar series with each value printed above its bar and no grid lines.",
-  "overview": "Uses `BarChart` with one `Bar` (`radius={6}`, `maxBarSize={36}`) containing a `LabelList` with `position=\"top\"`, `offset={8}` and `fontSize={12}`. There is no `CartesianGrid`, and the top margin is raised to 22 to leave room for the labels. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted with `chartConfig.desktop` (`var(--blue)`). The tooltip uses `hideLabel` and `cursor={false}`.",
-  "usage": "Replace `chartData` keeping the category and value keys, and rename the `chartConfig` entry to match. Change `LabelList` `position` (for example `\"inside\"` or `\"insideTop\"`) to move labels, and pass a `formatter` to `LabelList` if values need units. Increase the top `margin` if larger labels are clipped.",
-  "notes": "Labels are styled with the `fill-label` class so they follow the label color token in light and dark appearance. `accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between bars."
+  "overview": "A single bar series with each value printed above its bar and no grid lines. Use it when exact numbers matter and there are few enough bars for the labels to fit.",
+  "usage": "Replace `chartData`, set each `dataKey` and rename the `chartConfig` entry for the label and color. Move the labels with the `position` prop on `LabelList`, for example inside the bar. Increase the chart's top margin if larger labels get clipped.",
+  "notes": "Labels follow the theme's text color in light and dark mode. Focus the chart and use the arrow keys to move between bars."
 }

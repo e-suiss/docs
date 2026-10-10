@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   agentRules: false,
   cacheComponents: true,
   partialPrefetching: true,
+  async redirects() {
+    return [
+      { source: "/docs/ui", destination: "/docs", permanent: true },
+      { source: "/docs/ui/:path*", destination: "/docs/:path*", permanent: true },
+      { source: "/docs/:product(uim|access|relay|work|one)/:path*", destination: "/docs", permanent: true },
+    ];
+  },
   turbopack: {
     resolveAlias: {
       "storybook/test": "./lib/storybook/test.ts",

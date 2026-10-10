@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
+import { useActiveSection } from "@/components/site/local-nav";
 import { Logo } from "@/components/site/logo";
 import { Search } from "@/components/site/search";
-import { products } from "@/lib/products";
+import { repository, sections } from "@/lib/sections";
 import { strings } from "@/lib/strings";
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
@@ -63,6 +64,7 @@ export function GlobalNav() {
     return () => clearTimeout(timeout);
   }, [menuOpen]);
   const home = pathname === "/";
+  const isActive = useActiveSection();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: close the menu on navigation
   React.useEffect(() => setMenuOpen(false), [pathname]);
@@ -80,6 +82,8 @@ export function GlobalNav() {
     };
   }, [menuOpen]);
 
+  if (pathname.startsWith("/docs")) return null;
+
   return (
     <header
       style={home && !menuOpen ? ({ "--label": "oklch(0.2316 0.0038 286.09)" } as React.CSSProperties) : undefined}
@@ -96,30 +100,24 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
           <Logo />
         </Anchor>
 
-        <ul
-          className={cn(
-            "absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 rounded-full p-1 lg:flex",
-            home ? "bg-white/35 backdrop-blur-2xl backdrop-saturate-150" : "bg-label/5",
-          )}
-        >
-          {products.map((product) => (
-            <li key={product.slug}>
-              <RollLink
-                href={`/docs/${product.slug}`}
-                active={pathname.startsWith(`/docs/${product.slug}`)}
-              >
-                {product.name}
-              </RollLink>
-            </li>
-          ))}
-        </ul>
+        {home && (
+          <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 rounded-full bg-white/35 p-1 backdrop-blur-2xl backdrop-saturate-150 lg:flex">
+            {sections.map((section) => (
+              <li key={section.path}>
+                <RollLink href={section.path} active={isActive(section.path)}>
+                  {section.label}
+                </RollLink>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="ms-auto flex items-center gap-2">
           {!home && (
             <Search className="size-10 rounded-full bg-label/5 text-label transition-colors duration-300 hover:bg-label/10" />
           )}
           <Anchor
-            href="https://github.com/e-suiss"
+            href={repository}
             className={cn(
               "group hidden h-10 items-center gap-2 rounded-full bg-label ps-4.5 pe-1 text-sm font-medium text-surface outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex",
               home && "bg-[#1d1d1f] text-white",
@@ -160,10 +158,10 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
           )}
         >
           <ul className="flex flex-col">
-            {products.map((product, index) => (
+            {sections.map((section, index) => (
               <li
-                key={product.slug}
-                style={{ transitionDelay: `${(menuOpen ? index : products.length - 1 - index) * 40}ms` }}
+                key={section.path}
+                style={{ transitionDelay: `${(menuOpen ? index : sections.length - 1 - index) * 40}ms` }}
                 className={cn(
                   "border-t border-label/15 transition-[opacity,translate] duration-500",
                   ease,
@@ -173,22 +171,22 @@ className={cn("z-50 text-label", home ? "absolute inset-x-0 top-0" : "relative b
                 )}
               >
                 <Anchor
-                  href={`/docs/${product.slug}`}
+                  href={section.path}
                   className="flex items-baseline gap-4 py-3 outline-none focus-visible:focus-ring"
                 >
                   <span className="font-mono text-xs text-label-secondary">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[clamp(2.75rem,12vw,5rem)] leading-[0.95] font-semibold tracking-tighter">
-                    {product.name}
+                    {section.label}
                   </span>
                 </Anchor>
               </li>
             ))}
           </ul>
           <div className="mt-auto flex gap-6 border-t border-label/15 pt-6 text-[15px] font-medium">
-            <Anchor href="/docs">{strings.documentation}</Anchor>
-            <Anchor href="https://github.com/e-suiss">{strings.github}</Anchor>
+            <Anchor href="/docs/installation">{strings.getStarted}</Anchor>
+            <Anchor href={repository}>{strings.github}</Anchor>
           </div>
         </div>
       )}

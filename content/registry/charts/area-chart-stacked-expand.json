@@ -1,6 +1,6 @@
 {
   "description": "Two stacked areas normalized so every month fills 100%, showing each series' share rather than its value.",
-  "overview": "Uses `AreaChart` with `stackOffset=\"expand\"` and two `Area` series (`mobile`, then `desktop`) sharing `stackId=\"a\"`, `type=\"natural\"` at `fillOpacity={0.35}`. `chartData` holds six months of `{ month, desktop, mobile }` records; `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. A right-aligned `YAxis` shows `ticks={[0, 0.5, 1]}` formatted as percentages with `tickFormatter`.",
-  "usage": "Replace `chartData` with raw values; `stackOffset=\"expand\"` converts them to proportions for you. Add series by adding a `chartConfig` entry and an `Area` with the same `stackId`. Keep the `YAxis` `tickFormatter` that multiplies by 100, because the expanded domain runs from 0 to 1.",
-  "notes": "The tooltip still reports the original values from `chartData`, not the percentages. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between months."
+  "overview": "Two stacked areas stretched so every month fills the full height, turning absolute numbers into shares. Pick it over the regular stacked chart when the split between series matters more than the total.",
+  "usage": "Replace `chartData` and rename the series keys consistently in the data, the areas and `chartConfig`. Every series must share the same `stackId` to be normalized together. The right-hand axis is already formatted as percentages.",
+  "notes": "The tooltip shows the original values, not percentages; add a tooltip formatter if readers need the share. Focus the plot and use the arrow keys to move the tooltip between months."
 }

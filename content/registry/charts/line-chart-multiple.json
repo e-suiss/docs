@@ -1,6 +1,6 @@
 {
   "description": "Two lines compared on the same axes, with a legend identifying each series.",
-  "overview": "Uses `LineChart` with two `Line` elements, `desktop` and `mobile`, both `type=\"monotone\"` with `strokeWidth={2.5}` and `dot={false}`. `chartData` holds six months of `{ month, desktop, mobile }` records; `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. `ChartLegend` renders `ChartLegendContent`, and the tooltip uses the default `ChartTooltipContent` with a label and dot indicators.",
-  "usage": "Replace `chartData` with one numeric key per series. To add a line, add a `chartConfig` entry with `label` and `color` and a `Line` with `stroke=\"var(--color-<key>)\"`; the legend and tooltip pick it up from `chartConfig`.",
-  "notes": "`accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between points."
+  "overview": "Two series as smooth lines on shared axes, with a legend below. Use it to compare how two metrics move over the same period.",
+  "usage": "Replace `chartData` and rename the series keys in the data, both `Line` elements and `chartConfig`. Add another `Line` with its own config entry for more series; the legend and tooltip pick them up automatically.",
+  "notes": "Beyond four or five lines the chart gets hard to read; consider the interactive variant that lets readers toggle series."
 }

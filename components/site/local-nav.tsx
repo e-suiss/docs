@@ -5,54 +5,51 @@ import { cn } from "cn";
 import { usePathname } from "next/navigation";
 
 import { Anchor } from "@/components/site/anchor";
+import { Logo } from "@/components/site/logo";
+import { Search } from "@/components/site/search";
 import { useSidebar } from "@/components/ui/sidebar";
-import { getProduct, type ProductSlug } from "@/lib/products";
+import { repository, sections } from "@/lib/sections";
 import { strings } from "@/lib/strings";
 
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 
-export function LocalNav({ slug }: { slug: ProductSlug }) {
+export function useActiveSection() {
   const pathname = usePathname();
+  const owns = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
+  return (path: string) =>
+    path === "/docs"
+      ? owns(path) && !sections.some((section) => section.path !== "/docs" && owns(section.path))
+      : owns(path);
+}
+
+export function LocalNav() {
   const { toggleSidebar } = useSidebar();
-  const product = getProduct(slug);
-
-  if (!product) return null;
-  const base = `/docs/${product.slug}`;
-  const owns = (path: string) => {
-    const prefix = `${base}/${path.split("/")[1]}`;
-    return pathname === prefix || pathname.startsWith(`${prefix}/`);
-  };
-  const isActive = (path: string) => {
-    if (path !== "") return owns(path);
-    return !product.sections.some((section) => section.path !== "" && owns(section.path));
-  };
-
-  const cta =
-    product.family === "interface"
-      ? { label: strings.getStarted, href: `${base}/installation` }
-      : { label: strings.github, href: product.repository };
+  const isActive = useActiveSection();
 
   return (
-    <div className="sticky top-0 z-40 border-b border-label/10 bg-surface/85 backdrop-blur-xl backdrop-saturate-180">
+    <header className="sticky top-0 z-40 border-b border-label/10 bg-surface/85 backdrop-blur-xl backdrop-saturate-180">
       <nav
-        aria-label={product.name}
-        className="mx-auto flex h-12 w-full max-w-[1680px] items-stretch gap-6 px-5 md:px-10"
+        aria-label={strings.documentation}
+        className="mx-auto flex h-16 w-full max-w-[1680px] items-stretch gap-8 px-5 md:px-10"
       >
         <button
           type="button"
           aria-label={strings.menu}
           onClick={toggleSidebar}
-          className="-ms-1.5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-label/6 focus-visible:focus-ring md:hidden"
+          className="-ms-1.5 -me-5 flex size-9 items-center justify-center self-center rounded-full outline-none hover:bg-label/6 focus-visible:focus-ring md:hidden"
         >
           <SidebarIcon className="size-4.5" />
         </button>
-        <ul className="no-scrollbar flex min-w-0 items-stretch gap-6 overflow-x-auto max-sm:[mask-image:linear-gradient(to_right,black_85%,transparent)] max-sm:pe-6">
-          {product.sections.map((section) => {
+        <Anchor href="/" className="flex items-center self-center rounded-sm outline-none focus-visible:focus-ring">
+          <Logo />
+        </Anchor>
+        <ul className="hidden min-w-0 items-stretch gap-6 md:flex">
+          {sections.map((section) => {
             const active = isActive(section.path);
             return (
               <li key={section.path} className="flex">
                 <Anchor
-                  href={`${base}${section.path}`}
+                  href={section.path}
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "relative flex items-center text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none transition-colors duration-300 focus-visible:focus-ring",
@@ -67,24 +64,30 @@ export function LocalNav({ slug }: { slug: ProductSlug }) {
             );
           })}
         </ul>
-        <div className="ms-auto hidden shrink-0 items-center gap-4 sm:flex">
-          {product.status && (
-            <span className="hidden rounded-full bg-label/6 px-2.5 py-0.5 font-mono text-[11px] tracking-[0.02em] text-label-secondary uppercase sm:inline">
-              {strings.preAlpha}
-            </span>
-          )}
+        <div className="ms-auto flex shrink-0 items-center gap-2">
+          <Search className="size-10 rounded-full bg-label/5 text-label transition-colors duration-300 hover:bg-label/10" />
           <Anchor
-            href={cta.href}
-            className="group flex items-center gap-1 text-sm font-medium whitespace-nowrap tracking-[-0.01em] outline-none focus-visible:focus-ring"
+            href={repository}
+            className="hidden h-10 items-center rounded-full px-4 text-sm font-medium tracking-[-0.01em] outline-none transition-colors hover:bg-label/5 focus-visible:focus-ring lg:flex"
           >
-            {cta.label}
-            <ArrowUpRightIcon
-              weight="bold"
-              className={cn("size-3 transition-transform duration-500 group-hover:rotate-45", ease)}
-            />
+            {strings.github}
+          </Anchor>
+          <Anchor
+            href="/docs/installation"
+            className="group hidden h-10 items-center gap-2 rounded-full bg-label ps-4.5 pe-1 text-sm font-medium text-surface outline-none focus-visible:focus-ring [--focus-ring-offset:3px] sm:flex"
+          >
+            {strings.getStarted}
+            <span
+              className={cn(
+                "flex size-8 items-center justify-center rounded-full bg-surface text-label transition-transform duration-500 group-hover:rotate-45",
+                ease,
+              )}
+            >
+              <ArrowUpRightIcon weight="bold" className="size-3.5" />
+            </span>
           </Anchor>
         </div>
       </nav>
-    </div>
+    </header>
   );
 }

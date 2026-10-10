@@ -1,6 +1,6 @@
 {
   "description": "A weight trend with a dot at every monthly reading and a fixed value axis on the right.",
-  "overview": "Uses `LineChart` with one `Line` (`type=\"linear\"`, `strokeWidth={2}`) whose `dot` draws a 3.5-pixel marker and whose `activeDot` grows to 5 pixels. `chartData` is mapped from ten weights into `{ month, weight }` records, with `month` produced by `Intl.DateTimeFormat`. `chartConfig.weight` uses `var(--purple)`. A right-hand `YAxis` uses `domain={[76, 84]}` and `ticks={[76, 80, 84]}`, and the `XAxis` labels every third month via `interval={2}`.",
-  "usage": "Replace the weight array with your readings and set the `YAxis` `domain` and `ticks` to bracket your range. The tooltip uses `hideIndicator` and a `formatter` that appends `kg`; change the unit there. The header value and summary line are static text, so update them alongside the data.",
-  "notes": "The header uses plain paragraphs rather than `CardTitle`. `accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between points."
+  "overview": "A health-style weight card with a dot on every monthly reading and a fixed value axis on the right. The dots make it clear where measurements actually exist, so use this variant when readings are sparse or irregular.",
+  "usage": "Replace the list of readings in `chartData` and rename `weight` in the data, the line and `chartConfig`. Set the value axis `domain` and `ticks` to a range that suits your numbers, and change the unit in the tooltip formatter.",
+  "notes": "The headline value and the change below it are hard-coded text, so update them along with the data or compute them from it."
 }

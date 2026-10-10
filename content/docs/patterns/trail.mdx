@@ -1,0 +1,100 @@
+---
+title: Trail
+description: "A navigation trail that shows breadcrumbs on desktop and a back link with history on mobile."
+eyebrow: Pattern
+generated: true
+---
+
+<Example kind="pattern" name="trail" story="Default">
+
+<Code lang="tsx" code={"import { Trail, type TrailItem } from \"@/components/patterns/trail\"\n\nconst article: TrailItem[] = [\n  { label: \"Support\", href: \"#support\" },\n  { label: \"Account\", href: \"#account\" },\n  { label: \"Security\", href: \"#security\" },\n  { label: \"Turn on two-factor authentication\" },\n]\n\nexport function TrailExample() {\n  return (\n    <Trail items={article} />\n  )\n}"} />
+
+</Example>
+
+`Trail` shows where the current page sits in a hierarchy. On desktop it renders a suiss/ui `Breadcrumb` that links every ancestor and marks the last item as the current page; with `maxItems`, it keeps the root and the nearest ancestors and folds the rest into an ellipsis.
+
+On mobile (below `48rem`, via `useIsMobile`) it renders a single back link to the parent page, like an iOS navigation bar. When there is more than one ancestor, a long press, right-click, the Context Menu key or Shift+F10 opens a menu of all ancestors, nearest first. Use it on documentation, support and settings pages with nested structure.
+
+## Installation
+
+### CLI
+
+<Code lang="bash" title="Terminal" code={"npx @esuiss/ui@latest add patterns trail"} />
+
+### Manual
+
+1. Install the dependencies:
+
+<Code lang="bash" title="Terminal" code={"npm install @base-ui/react @phosphor-icons/react cn"} />
+
+2. Add the pieces it builds on: [Breadcrumb](/docs/components/breadcrumb), `use-mobile`.
+
+3. Copy the source into `components/patterns/trail.tsx`:
+
+<SourceFile path="components/patterns/trail.tsx" />
+
+4. Update the import paths to match your project.
+
+## Usage
+
+<Code lang="tsx" code={"import { Trail } from \"@/components/patterns/trail\""} />
+
+<Code lang="tsx" code={"<Trail items={article} />"} />
+
+- Pass `items` in order from the root to the current page. Each `TrailItem` has a `label` and an optional `href`; the last item is the current page.
+- On mobile, nothing renders when there is only one item.
+- Use `render` to output links through your router, for example a framework `Link` element. It applies to breadcrumb links, the mobile back link and the history menu items.
+
+## Examples
+
+### Collapsed
+
+Folds the middle of a deep trail into an ellipsis with `maxItems`.
+
+<Example kind="pattern" name="trail" story="Collapsed">
+
+<Code lang="tsx" code={"import { Trail, type TrailItem } from \"@/components/patterns/trail\"\n\nconst deep: TrailItem[] = [\n  { label: \"Support\", href: \"#support\" },\n  { label: \"Products\", href: \"#products\" },\n  { label: \"Workspace\", href: \"#workspace\" },\n  { label: \"Billing\", href: \"#billing\" },\n  { label: \"Invoices\", href: \"#invoices\" },\n  { label: \"Download an invoice as PDF\" },\n]\n\nexport function TrailCollapsedExample() {\n  return (\n    <Trail items={deep} maxItems={4} />\n  )\n}"} />
+
+</Example>
+
+### Back label
+
+Labels the mobile back link Back instead of the parent's name.
+
+<Example kind="pattern" name="trail" story="BackLabel">
+
+<Code lang="tsx" code={"import { Trail, type TrailItem } from \"@/components/patterns/trail\"\n\nconst article: TrailItem[] = [\n  { label: \"Support\", href: \"#support\" },\n  { label: \"Account\", href: \"#account\" },\n  { label: \"Security\", href: \"#security\" },\n  { label: \"Turn on two-factor authentication\" },\n]\n\nexport function TrailBackLabelExample() {\n  return (\n    <Trail items={article} backLabel=\"Back\" />\n  )\n}"} />
+
+</Example>
+
+### Two levels
+
+Shows a trail with one parent and the current page.
+
+<Example kind="pattern" name="trail" story="TwoLevels">
+
+<Code lang="tsx" code={"import { Trail, type TrailItem } from \"@/components/patterns/trail\"\n\nconst article: TrailItem[] = [\n  { label: \"Support\", href: \"#support\" },\n  { label: \"Account\", href: \"#account\" },\n  { label: \"Security\", href: \"#security\" },\n  { label: \"Turn on two-factor authentication\" },\n]\n\nexport function TrailTwoLevelsExample() {\n  return (\n    <Trail items={article.slice(2)} />\n  )\n}"} />
+
+</Example>
+
+## API Reference
+
+<ApiPart index={1}>
+
+### Trail
+
+The navigation element that renders the breadcrumbs or the mobile back link.
+
+<PropsTable extends={["React.ComponentProps<\"nav\">"]} props={[{"name":"items","type":"TrailItem[]","required":true,"description":"The pages from the root to the current page."},{"name":"maxItems","type":"number","description":"The maximum number of items shown on desktop before the middle collapses into an ellipsis."},{"name":"backLabel","type":"string","description":"Text for the mobile back link; defaults to the parent's label."},{"name":"ellipsisLabel","type":"string","default":"\"More\"","description":"The accessible label of the collapsed ellipsis."},{"name":"render","type":"React.ReactElement","default":"<TrailAnchor />","description":"The element used to render links."}]} />
+
+</ApiPart>
+
+## Accessibility
+
+- On desktop the trail is a navigation landmark named breadcrumb, and the current page has `aria-current="page"`.
+- On mobile it is a navigation landmark named Back. When a history menu is available, the back link has `aria-haspopup="menu"` and `aria-expanded`.
+- The history menu opens from the keyboard with the Context Menu key or Shift+F10.
+
+## Notes
+
+Styling hooks: `data-slot="trail"`, `trail-back`, `trail-history` and `trail-history-item`. A long press opens the history only for touch and pen input, and cancels if the pointer moves more than 10 pixels; the press does not also follow the back link.

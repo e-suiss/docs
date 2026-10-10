@@ -1,6 +1,6 @@
 {
   "description": "A single smooth line through six months of values, without point markers.",
-  "overview": "Uses `LineChart` with one `Line` (`type=\"natural\"`, `strokeWidth={2.5}`, `dot={false}`), a dashed horizontal `CartesianGrid` and an `XAxis` on `month` abbreviated to three letters. `chartData` holds six months of `{ month, desktop, mobile }` records; only `desktop` is plotted with `chartConfig.desktop` (`var(--blue)`). The tooltip uses `ChartTooltipContent` with `hideLabel`.",
-  "usage": "Replace `chartData` keeping a category key for `XAxis dataKey` and a numeric key for `Line dataKey`, and rename the `chartConfig` entry and `var(--color-desktop)` stroke to match. Change `type` to `\"monotone\"`, `\"linear\"` or `\"step\"` to alter the curve, or set `dot` to show markers.",
-  "notes": "`accessibilityLayer` is set on `LineChart`, so the plot is focusable and arrow keys move the tooltip between points."
+  "overview": "The starting line chart: one smooth series without point markers, a month axis and a tooltip. Use it to show a trend over time when the overall shape matters more than individual readings.",
+  "usage": "Replace `chartData`, point each `dataKey` at your fields and rename the `chartConfig` entry to set the label and color. Switch the `type` on the line to change the curve, or set `dot` to show markers.",
+  "notes": "Focus the chart and use the arrow keys to step the tooltip through the points."
 }

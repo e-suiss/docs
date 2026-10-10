@@ -1,6 +1,6 @@
 {
   "description": "Twenty-four thin bars of screen time per hour, with a dashed line marking the hourly average.",
-  "overview": "Uses `BarChart` with one `Bar` (`dataKey=\"minutes\"`, `radius={[3, 3, 0, 0]}`, `maxBarSize={8}`). `chartData` is mapped from a 24-value array into `{ hour, minutes }` records, and `chartConfig.minutes` uses `var(--blue)`. The `XAxis` shows only `ticks={[0, 6, 12, 18]}` formatted as hours, a right-hand `YAxis` shows three ticks in minutes, and a dashed `ReferenceLine` in `var(--green)` sits at the computed `average`. The header shows the day's `total` in hours and minutes.",
-  "usage": "Replace the 24-value array with your own hourly figures; `total` and `average` are derived from `chartData`. The tooltip uses `hideIndicator`, a `labelFormatter` that prints the hour as `H:00`, and a `formatter` that appends `min`; change these for other units. Remove the `ReferenceLine` if you don't need the average.",
-  "notes": "The header uses plain paragraphs rather than `CardTitle`. `accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between hours."
+  "overview": "A screen-time card with 24 thin hourly bars, a total in the header and a dashed line at the hourly average. Use it for any day-at-a-glance metric with many small periods.",
+  "usage": "Replace the 24 values in `chartData` with your own per-hour numbers; the total and the average line are computed from them. Change the axis `ticks` to label different hours, and update the minute unit in the axis, tooltip and header if you measure something else.",
+  "notes": "With 24 narrow bars, the tooltip is the most reliable way to read a single hour. Focus the chart and use the arrow keys to step through the hours."
 }

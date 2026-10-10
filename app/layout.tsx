@@ -14,8 +14,8 @@ const fontInter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: `%s – ${strings.brand} ${strings.docs}`,
-    default: `${strings.brand} ${strings.docs}`,
+    template: `%s – ${strings.brand}`,
+    default: strings.brand,
   },
   description: strings.heroSubtitle,
 };

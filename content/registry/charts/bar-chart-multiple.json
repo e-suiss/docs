@@ -1,6 +1,6 @@
 {
   "description": "Two series drawn as grouped bars side by side for each month.",
-  "overview": "Uses `BarChart` with `barGap={3}` and two `Bar` elements, `desktop` and `mobile`, each with `radius={4}`. `chartData` holds six months of `{ month, desktop, mobile }` records; `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. The grid and an `XAxis` on `month` whose `tickFormatter` shortens labels to three letters match the default bar chart, and the tooltip uses `indicator=\"dashed\"` with `cursor={false}`.",
-  "usage": "Replace `chartData` with one numeric field per series. To add a series, add a `chartConfig` entry with `label` and `color` and another `Bar` with `fill=\"var(--color-<key>)\"`. Change `barGap` to control the space between bars within a group.",
-  "notes": "`accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between bars."
+  "overview": "Two series drawn as grouped bars side by side for each month. Pick it over the stacked variant when readers need to compare the series directly rather than see their total.",
+  "usage": "Replace `chartData` and rename the series keys in the data, the two `Bar` elements and `chartConfig`. Add a third `Bar` for another series. Tune `barGap` to control the space between bars in a group.",
+  "notes": "Grouped bars get thin quickly; beyond three series or a dozen categories, consider stacked bars or a line chart. The arrow keys move the tooltip between months once the chart has focus."
 }

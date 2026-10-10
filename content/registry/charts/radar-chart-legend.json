@@ -1,6 +1,5 @@
 {
   "description": "Two overlapping radar shapes with a legend beneath that names each series.",
-  "overview": "Uses `RadarChart` with `cy=\"45%\"` and `outerRadius=\"62%\"` to leave room below, a `ChartLegend` with `verticalAlign=\"bottom\"` rendering `ChartLegendContent`, a `PolarGrid`, a `PolarAngleAxis` on `skill`, and two `Radar` series (`lastMonth`, `thisMonth`) at `fillOpacity={0.2}`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
-  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. The legend reads labels and colors from `chartConfig`. Adjust `cy` and `outerRadius` together if the legend overlaps the chart in a shorter container.",
-  "notes": "`accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+  "overview": "Two overlapping radar shapes with a legend underneath naming each series. Pick it over the plain multiple-series chart when readers need to know which shape is which without hovering.",
+  "usage": "Replace `chartData` and rename the series keys in the data, both `Radar` elements and `chartConfig`; the legend reads labels and colors from the config. The series declared last is drawn on top."
 }

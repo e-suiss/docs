@@ -1,6 +1,6 @@
 {
   "description": "A stacked bar chart whose tooltip shows an icon for each series in place of a color swatch.",
-  "overview": "Uses a `BarChart` with two `Bar` elements, `desktop` and `mobile`, stacked with `stackId=\"a\"` (`maxBarSize={30}`, outer corners rounded), and an `XAxis` on `month` abbreviated to three letters. `chartData` holds six months of `{ month, desktop, mobile }` records, and `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. Each `chartConfig` entry also sets an `icon` (`DesktopIcon` and `DeviceMobileIcon` from `@phosphor-icons/react`). When an entry has an `icon`, `ChartTooltipContent` renders it instead of the indicator. `ChartTooltip` sets `defaultIndex={3}` so the tooltip is visible on load, and `cursor={false}`; the chart's top `margin` of 70 leaves room for it above the bars.",
-  "usage": "Add an `icon` component to any `chartConfig` entry to show it in the tooltip; entries without one fall back to the color indicator. Remove `defaultIndex` if the tooltip should appear only on hover or focus.",
-  "notes": "`ChartLegendContent` also renders `chartConfig` icons unless `hideIcon` is set. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between categories."
+  "overview": "A stacked bar chart whose tooltip shows a small icon for each series instead of a color swatch. Use icons when series map to recognizable things, like device types, and color alone isn't enough to tell them apart.",
+  "usage": "Add an `icon` component to each series entry in `chartConfig`; the tooltip picks it up automatically. Replace `chartData` and the series keys to match your data.",
+  "notes": "Icons replace the color indicator in every tooltip and legend that uses this config, so add them only where you want them everywhere. The tooltip opens on a preset month when the chart loads."
 }

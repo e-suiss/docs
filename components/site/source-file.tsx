@@ -12,7 +12,7 @@ async function highlighted(code: string, lang: string, title?: string) {
     themes: { light: "github-light", dark: "github-dark" },
     defaultColor: false,
     components: {
-      pre: (props) => <CodeBlock {...props} title={title} />,
+      pre: (props) => <CodeBlock {...props} title={title} raw={code.trimEnd()} />,
     },
   });
 }

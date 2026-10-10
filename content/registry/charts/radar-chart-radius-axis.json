@@ -1,6 +1,6 @@
 {
   "description": "A single radar shape with a visible 0 to 100 value scale along the vertical axis.",
-  "overview": "Uses `RadarChart` with `outerRadius=\"70%\"`, a `PolarAngleAxis` on `skill`, a `PolarGrid`, and a `PolarRadiusAxis` with `angle={90}`, `domain={[0, 100]}`, `tickCount={5}` and `axisLine={false}`, whose ticks use the `fill-label-tertiary` class. One `Radar` plots `thisMonth` at `fillOpacity={0.3}`. `chartData` holds six `{ skill, thisMonth, lastMonth }` records. `chartConfig` colors `thisMonth` with `var(--green)` and `lastMonth` with `var(--gray)`. The tooltip uses `ChartTooltipContent` with `indicator=\"line\"` and `cursor={false}`.",
-  "usage": "Replace `chartData` with one record per axis, keeping a category key for `PolarAngleAxis dataKey` and a numeric key per series. Rename series in `chartConfig` and in the `var(--color-<key>)` references on each `Radar`. Set the `PolarRadiusAxis` `domain` to your scale and `tickCount` to the number of rings you want labeled; change `angle` to place the labels along a different spoke.",
-  "notes": "A fixed `domain` keeps the scale stable when values change, so shapes remain comparable across datasets. `accessibilityLayer` is set on `RadarChart`, so the chart is focusable and arrow keys move between axes."
+  "overview": "A single radar shape with a 0 to 100 scale printed along the vertical axis. Choose it when readers need to estimate values, or when several radar charts must share the same scale.",
+  "usage": "Replace `chartData`, set the axis and value keys, and rename the series in `chartConfig`. Set `domain` on `PolarRadiusAxis` to your score range and `tickCount` for the number of labels. Change its angle to move the scale to another direction.",
+  "notes": "A fixed domain keeps shapes comparable across charts, as long as your scores stay inside it."
 }

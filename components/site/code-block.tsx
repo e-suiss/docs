@@ -27,11 +27,12 @@ export function CodeBlock({
   title,
   className,
   children,
+  raw,
   ...props
-}: React.ComponentProps<"pre"> & { title?: string; icon?: unknown }) {
+}: React.ComponentProps<"pre"> & { title?: string; icon?: unknown; raw?: string }) {
   const { icon, ...rest } = props;
   const terminal = isTerminal(title, icon);
-  const command = terminal ? textOf(children).trim() : "";
+  const command = terminal ? (raw ?? textOf(children)).trim() : "";
   const caption = terminal ? undefined : title;
   const ref = React.useRef<HTMLPreElement>(null);
   const [copied, setCopied] = React.useState(false);

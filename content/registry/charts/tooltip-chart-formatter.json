@@ -1,6 +1,6 @@
 {
   "description": "A bar chart of daily active energy whose tooltip shows a name, value and kcal unit through a custom formatter.",
-  "overview": "Uses `BarChart` with one `Bar` (`dataKey=\"energy\"`, `radius={4}`, `maxBarSize={26}`). `chartData` takes the last seven of fourteen values and maps them into `{ date, energy }` records, with `date` as a `YYYY-MM-DD` string from `dayKey`; the `XAxis` formats it as a short weekday. `chartConfig.energy` uses `var(--red)`. The tooltip is `ChartTooltipContent` with `hideLabel` and a `formatter` that returns the name, the value formatted with `toLocaleString`, and `kcal`. `ChartTooltip` sets `defaultIndex={3}` so the tooltip is visible on load, and `cursor={false}`; the chart's top `margin` of 70 leaves room for it above the bars.",
-  "usage": "Replace the value array and dates with your own data, keeping `date` and `energy` or renaming them in the axis and bar. Edit the `formatter` to change the label text and unit. A custom `formatter` replaces the whole row, so include the indicator yourself if you need one.",
-  "notes": "The `XAxis` parses dates at noon (`T12:00:00`) to avoid shifting to the previous day in time zones behind UTC. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between categories."
+  "overview": "A week of active-energy bars whose tooltip row is rewritten by a formatter to show a name, value and kcal unit. Use a formatter like this when values need units, thousands separators or extra context.",
+  "usage": "Pass a `formatter` to `ChartTooltipContent`; it receives each row's value and name and returns the markup for that row. Change the label text, number format and unit inside it, and replace `chartData` and `chartConfig` with your series.",
+  "notes": "Dates are parsed at noon so the weekday labels don't shift a day in time zones behind UTC; keep that if you use date strings as categories."
 }

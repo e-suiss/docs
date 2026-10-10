@@ -1,5 +1,0 @@
-{
-  "title": "UIM",
-  "root": true,
-  "pages": ["---Get Started---", "index", "installation", "theming", "cli", "---Components---", "...components"]
-}

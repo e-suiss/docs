@@ -26,7 +26,7 @@ export function RegistryIndex({ category }: { category: keyof typeof items }) {
             {members.map((item) => (
               <li key={item.name} className="border-b border-label/12 sm:odd:border-e sm:odd:pe-6 sm:even:ps-6">
                 <Anchor
-                  href={`/docs/ui/${category}/${item.name}`}
+                  href={`/docs/${category}/${item.name}`}
                   className="group flex items-center justify-between gap-4 py-3.5 text-[17px] tracking-[-0.02em] outline-none focus-visible:focus-ring"
                 >
                   <span className="transition-transform duration-500 ease-[cubic-bezier(0.32,0.08,0.24,1)] group-hover:translate-x-1.5">

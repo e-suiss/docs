@@ -1,6 +1,6 @@
 {
-  "description": "A gradient area chart whose tooltip heading spells out the full date, such as weekday, month and day.",
-  "overview": "Uses `AreaChart` with one `Area` (`type=\"monotone\"`) filled by a vertical `linearGradient` whose `id` comes from `React.useId()`. `chartData` holds fourteen `{ date, energy }` records with `YYYY-MM-DD` dates; the `XAxis` shows the day number for every third point (`interval={2}`). `chartConfig.energy` uses `var(--red)`. The tooltip is `ChartTooltipContent` with `indicator=\"line\"` and a `labelFormatter` that formats the hovered record's `date` with `Intl.DateTimeFormat` (`weekday`, `month` and `day` in long form). `ChartTooltip` sets `defaultIndex={8}`.",
-  "usage": "Replace `chartData` with your dated records, keeping ISO date strings so both the axis and `labelFormatter` can parse them. Change the options passed to `Intl.DateTimeFormat` in `longDate` to adjust the heading format. Remove `defaultIndex` if the tooltip should appear only on interaction.",
-  "notes": "`labelFormatter` reads the date from `payload[0].payload` rather than its first argument, so it works regardless of what the axis displays. `accessibilityLayer` is set on the chart, so the plot is focusable and arrow keys move the tooltip between categories."
+  "description": "A gradient area chart whose tooltip heading shows a longer date than the axis ticks.",
+  "overview": "Two weeks of active energy as a gradient area, where the axis shows only day numbers but the tooltip heading spells out the weekday. Use a label formatter when the axis needs short labels and the tooltip has room for the full context.",
+  "usage": "Pass a `labelFormatter` to `ChartTooltipContent` and build the heading from the hovered record, which arrives in its second argument. Adjust the date format there to add the month or year if your range spans more than one month.",
+  "notes": "The demo format shows the day number and weekday but not the month, which can be ambiguous across month boundaries."
 }

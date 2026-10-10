@@ -1,6 +1,6 @@
 {
   "description": "Monthly cash flow bars that turn green above zero and red below it, with a zero baseline.",
-  "overview": "Uses `BarChart` with one `Bar` (`dataKey=\"flow\"`, `radius={4}`, `maxBarSize={18}`) whose children are one `Cell` per record, filled with `var(--green)` when `flow` is zero or more and `var(--red)` otherwise. A `ReferenceLine` at `y={0}` draws the baseline with `var(--separator-strong)`. `chartData` holds twelve `{ month, flow }` records, and `chartConfig` provides only a `label` for `flow`. The `XAxis` shows every other month with `interval={1}`, and the tooltip uses `hideIndicator`.",
-  "usage": "Replace `chartData` with signed values, keeping `month` and `flow` or renaming them in the `XAxis`, `Bar` and `Cell` logic. Change the condition or colors inside the `Cell` map to apply your own thresholds. Set `interval={0}` on `XAxis` to show every label when space allows.",
-  "notes": "Color here is applied per `Cell` rather than through `chartConfig`, so the tooltip shows no indicator swatch. `accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between bars."
+  "overview": "Monthly cash flow where bars rise green above a zero line and drop red below it. Use it for any value that can be negative, such as profit, net change or deltas against a target.",
+  "usage": "Replace `chartData` with your values and rename `flow` in the data, the bar and `chartConfig`. The color for each bar is chosen per `Cell` based on its sign, so change the two colors there. Set `interval` on the axis to show more or fewer month labels.",
+  "notes": "Because colors are set per bar instead of in the config, the tooltip has no color swatch, and green and red alone carry the sign; keep the zero line so the direction is clear without color. Focus the chart and use the arrow keys to move between months."
 }

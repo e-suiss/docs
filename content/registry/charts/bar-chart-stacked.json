@@ -1,6 +1,6 @@
 {
   "description": "Two series stacked into one bar per month, with a legend below the plot.",
-  "overview": "Uses `BarChart` with two `Bar` elements sharing `stackId=\"a\"`: `desktop` at the bottom with `radius={[0, 0, 4, 4]}` and `mobile` on top with `radius={[4, 4, 0, 0]}`, so only the outer corners are rounded. `chartData` holds six months of `{ month, desktop, mobile }` records; `chartConfig` colors `desktop` with `var(--blue)` and `mobile` with `var(--teal)`. `ChartLegend` renders `ChartLegendContent`, and the tooltip uses `hideLabel`.",
-  "usage": "Replace `chartData` keeping one numeric key per segment. Add a segment by adding a `chartConfig` entry and a `Bar` with the same `stackId`. When you add or reorder segments, move the rounded `radius` so the bottom segment rounds its lower corners and the top segment rounds its upper corners.",
-  "notes": "The legend reads labels and colors from `chartConfig`. `accessibilityLayer` is set on `BarChart`, so the plot is focusable and arrow keys move between bars."
+  "overview": "Two series stacked into one bar per month, with a legend under the plot. Use it when the total per month matters as well as how each series contributes to it.",
+  "usage": "Replace `chartData` and rename the series keys in the data, both `Bar` elements and `chartConfig`. Every bar in the stack needs the same `stackId`; the first one sits at the bottom. If you add a series, move the rounded top corners via `radius` to whichever bar is on top.",
+  "notes": "The legend takes labels and colors from the config. Focus the chart and use the arrow keys to move between months."
 }

@@ -6,6 +6,9 @@ import { usePathname } from "next/navigation";
 import type * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
+import { useActiveSection } from "@/components/site/local-nav";
+import { sections } from "@/lib/sections";
+import { strings } from "@/lib/strings";
 import { Sidebar, SidebarContent, useSidebar } from "@/components/ui/sidebar";
 
 type Group = { label?: string; nodes: PageTree.Node[] };
@@ -114,6 +117,26 @@ const pagesOf = (nodes: PageTree.Node[]) =>
     node.type === "page" ? [node] : node.type === "folder" ? [...(node.index ? [node.index] : []), ...pagesOf(node.children)] : [],
   );
 
+function SectionSwitcher() {
+  const { setOpenMobile } = useSidebar();
+  const isActive = useActiveSection();
+  return (
+    <nav aria-label={strings.documentation} className="mb-6 flex flex-wrap gap-1.5 ps-5 pe-2 md:hidden">
+      {sections.map((item) => (
+        <Anchor
+          key={item.path}
+          href={item.path}
+          onClick={() => setOpenMobile(false)}
+          aria-current={isActive(item.path) ? "page" : undefined}
+          className="flex h-8 items-center rounded-full bg-label/6 px-3.5 text-sm font-medium tracking-[-0.01em] text-label/70 outline-none aria-[current=page]:bg-label aria-[current=page]:text-surface focus-visible:focus-ring"
+        >
+          {item.label}
+        </Anchor>
+      ))}
+    </nav>
+  );
+}
+
 export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
   const pathname = usePathname();
   const section = sectionOf(all, pathname);
@@ -121,8 +144,9 @@ export function DocsSidebar({ nodes: all }: { nodes: PageTree.Node[] }) {
   const pages = pagesOf(section.nodes).filter((page) => page.name !== "Overview");
 
   return (
-    <Sidebar className="sticky top-12 h-[calc(100svh-(--spacing(12)))] border-e-0 [&>[data-slot=sidebar-inner]]:bg-surface">
+    <Sidebar className="sticky top-16 h-[calc(100svh-(--spacing(16)))] border-e-0 [&>[data-slot=sidebar-inner]]:bg-surface">
       <SidebarContent className="px-3 py-8">
+        <SectionSwitcher />
         <div className="flex items-baseline justify-between ps-5 pe-2 pb-3 font-mono text-[11px] tracking-[0.04em] text-label uppercase">
           <span>{section.title}</span>
           <span className="text-label-tertiary tabular-nums">{pages.length}</span>
