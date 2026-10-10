@@ -5,17 +5,16 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { Anchor } from "@/components/site/anchor";
-import { LiquidBackground } from "@/components/site/liquid-background";
 import { getProduct, type ProductSlug } from "@/lib/products";
 import { strings } from "@/lib/strings";
 
 type Slide = { slug: ProductSlug; image: string };
 
 const slides: Slide[] = [
-  { slug: "access", image: "/images/platform-access-v4.jpg" },
-  { slug: "relay", image: "/images/platform-relay.jpg" },
-  { slug: "work", image: "/images/platform-work.jpg" },
-  { slug: "one", image: "/images/platform-one.jpg" },
+  { slug: "access", image: "/images/platform-access-photo.jpg" },
+  { slug: "relay", image: "/images/platform-relay-photo.jpg" },
+  { slug: "work", image: "/images/platform-work-photo.jpg" },
+  { slug: "one", image: "/images/platform-one-photo.jpg" },
 ];
 
 const grain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
@@ -23,26 +22,27 @@ const grain = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 const ease = "ease-[cubic-bezier(0.32,0.08,0.24,1)]";
 
 function Card({ slide, index }: { slide: Slide; index: number }) {
-  const [active, setActive] = React.useState(false);
   const product = getProduct(slide.slug);
   if (!product) return null;
 
   return (
     <Anchor
       href={`/docs/${slide.slug}`}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
-      onFocus={() => setActive(true)}
-      onBlur={() => setActive(false)}
       className="group relative flex h-full w-[min(86vw,68rem)] shrink-0 snap-start flex-col overflow-hidden rounded-[32px] bg-black text-white outline-none focus-visible:focus-ring"
     >
-      <LiquidBackground image={slide.image} active={active} />
+      <div aria-hidden style={{ backgroundImage: `url(${slide.image})` }} className="absolute inset-0 bg-cover bg-center" />
       <div
         aria-hidden
         style={{ backgroundImage: grain }}
         className="pointer-events-none absolute inset-0 opacity-25 mix-blend-overlay"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.35),rgba(0,0,0,0)_55%)]" />
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0) 28%), linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 70%)",
+        }}
+      />
 
       <div className="relative flex items-start justify-between gap-4 p-6 md:p-10">
         <div className="flex items-center gap-2">

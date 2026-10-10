@@ -4,6 +4,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { ComponentPreview } from "@/components/site/component-preview";
+import { SourceCode } from "@/components/site/source-code";
 
 type Kind = React.ComponentProps<typeof ComponentPreview>["kind"];
 
@@ -44,8 +45,8 @@ export function Example({
       <div hidden={tab !== "preview"}>
         <ComponentPreview kind={kind} name={name} story={story} />
       </div>
-      <div hidden={tab !== "code"} className="[&>figure]:mt-[1.2em]">
-        {children}
+      <div hidden={tab !== "code"}>
+        <SourceCode>{children}</SourceCode>
       </div>
     </div>
   );

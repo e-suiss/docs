@@ -1,6 +1,6 @@
 export const strings = {
   brand: "suiss",
-  developer: "Developer",
+  docs: "Docs",
   search: "Search",
   searchPlaceholder: "Search documentation",
   searchEmpty: "No results found.",
@@ -19,7 +19,6 @@ export const strings = {
   preAlpha: "Pre-alpha",
   copyright: "Copyright © 2026 suiss. All rights reserved.",
   license: "Released under open-source licenses.",
-  heroEyebrow: "suiss Developer",
   heroTitle: "Build with suiss.",
   heroSubtitle:
     "Components for every screen and open services for identity, messaging and work — documented in one place.",
