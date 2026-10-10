@@ -94,13 +94,14 @@ async function DocPage(props: { params: PageProps<"/docs/[[...slug]]">["params"]
   const eyebrow = page.data.eyebrow;
   const kind = eyebrow && eyebrow !== strings.brand ? eyebrow : undefined;
   const { body: MDX, toc } = await page.data.load();
+  const wide = /^\/docs\/(patterns|interactions|blocks)(\/|$)/.test(page.url);
   const { previous, next } = findNeighbour(source.getPageTree(), page.url, {
     separateRoot: true,
   });
 
   return (
     <div className="flex gap-12 px-5 pt-14 pb-24 md:px-10 md:pt-20 xl:pe-10">
-      <article className="mx-auto w-full max-w-205 min-w-0">
+      <article className={cn("mx-auto w-full min-w-0", wide ? "max-w-[72rem]" : "max-w-205")}>
         <header className="mb-14 flex flex-col gap-5 md:mb-16">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <p className="font-mono text-xs tracking-[0.02em] text-label-secondary uppercase">

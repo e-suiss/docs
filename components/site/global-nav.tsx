@@ -82,7 +82,7 @@ export function GlobalNav() {
     };
   }, [menuOpen]);
 
-  if (pathname.startsWith("/docs")) return null;
+  if (pathname.startsWith("/docs") || pathname.startsWith("/preview")) return null;
 
   return (
     <header

@@ -124,6 +124,7 @@ function BottomBar() {
 
 export function Footer() {
   const pathname = usePathname();
+  if (pathname.startsWith("/preview")) return null;
   if (pathname !== "/") {
     return (
       <footer className="bg-surface text-label">

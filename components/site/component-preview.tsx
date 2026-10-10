@@ -3,6 +3,7 @@
 import { cn } from "cn";
 import * as React from "react";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { components, stories } from "@/demos/registry";
 
 type Kind = "ui" | "pattern" | "interaction" | "chart" | "block";
@@ -248,4 +249,48 @@ export function ComponentPreview({ kind, name, story }: { kind: Kind; name: stri
   }
   if (kind === "chart" || kind === "block") return <ComponentPreviewOf name={name} wide={wide} />;
   return <StoryPreviewOf name={name} story={story} />;
+}
+
+export function PreviewCanvas({ kind, name, story: only }: { kind: Kind; name: string; story?: string }) {
+  const [module, setModule] = React.useState<Record<string, unknown>>();
+  const [Component, setComponent] = React.useState<React.ComponentType>();
+  React.useEffect(() => {
+    if (kind === "block" || kind === "chart") components[name]?.().then((loaded) => setComponent(() => loaded));
+    else stories[name]?.().then(setModule);
+  }, [kind, name]);
+
+  if (Component) {
+    return (
+      <ScrollArea className="h-svh">
+        <Boundary>
+          <Component />
+        </Boundary>
+      </ScrollArea>
+    );
+  }
+  if (!module) return null;
+
+  const meta = (module.default ?? {}) as Meta;
+  const closed = overlays.has(name);
+  const entries = Object.entries(module).filter(([key, value]) => key !== "default" && value && typeof value === "object");
+  const found = entries.find(([key]) => key === only) ?? entries[0];
+  if (!found) return null;
+  const story = found[1] as Story;
+  const layout = story.parameters?.layout ?? meta.parameters?.layout ?? "centered";
+
+  return (
+    <ScrollArea className="h-svh">
+      <div
+        className={cn(
+          "min-h-svh",
+          layout === "centered" && "flex flex-wrap items-center justify-center gap-3 p-6 sm:p-10",
+          layout === "padded" && "p-4 sm:p-6",
+        )}
+      >
+        <Boundary>
+          <StoryView meta={meta} story={story} closed={closed} />
+        </Boundary>
+      </div>
+    </ScrollArea>
+  );
 }

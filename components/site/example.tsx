@@ -4,6 +4,7 @@ import { cn } from "cn";
 import * as React from "react";
 
 import { ComponentPreview } from "@/components/site/component-preview";
+import { ResponsivePreview, ResponsiveToolbar, useResponsivePreview } from "@/components/site/responsive-preview";
 import { SourceCode } from "@/components/site/source-code";
 
 type Kind = React.ComponentProps<typeof ComponentPreview>["kind"];
@@ -20,6 +21,9 @@ export function Example({
   children: React.ReactNode;
 }) {
   const [tab, setTab] = React.useState<"preview" | "code">("preview");
+  const responsive = kind === "pattern" || kind === "interaction" || kind === "block";
+  const preview = useResponsivePreview();
+  const src = `/preview/${kind}/${name}${story ? `/${story}` : ""}`;
 
   return (
     <div data-not-prose className="mt-[1.2em]">
@@ -41,9 +45,14 @@ export function Example({
             {item}
           </button>
         ))}
+        {responsive && <ResponsiveToolbar src={src} state={preview} onSelect={() => setTab("preview")} />}
       </div>
       <div hidden={tab !== "preview"}>
-        <ComponentPreview kind={kind} name={name} story={story} />
+        {responsive ? (
+          <ResponsivePreview src={src} height={kind === "block" ? 800 : 560} state={preview} />
+        ) : (
+          <ComponentPreview kind={kind} name={name} story={story} />
+        )}
       </div>
       <div hidden={tab !== "code"}>
         <SourceCode>{children}</SourceCode>
